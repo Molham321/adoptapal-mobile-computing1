@@ -91,11 +91,6 @@ object Libs {
             const val core = "com.google.maps.android:maps-compose:$maps_compose_verion"
             const val play_services = "com.google.android.gms:play-services-maps:$play_services_version"
         }
-
-        object MaterialDesign {
-            private const val version = "1.9.0"
-            const val core = "com.google.android.material:material:$version"
-        }
     }
 
     // https://developer.android.com/jetpack/androidx/releases/room
