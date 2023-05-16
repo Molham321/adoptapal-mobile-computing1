@@ -1,26 +1,18 @@
 plugins {
-    id(Libs.Plugins.android_library)
-    id(Libs.Plugins.kotlin_android)
-    id(Libs.Plugins.kotlin_kapt)
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
 }
-
 
 android {
     namespace = "de.fhe.data"
-    compileSdk = Config.compile_sdk_version
+    compileSdk = 33
 
     defaultConfig {
-        minSdk = Config.min_sdk_version
-        targetSdk = Config.target_sdk_version
+        minSdk = 29
+        targetSdk = 33
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments["room.schemaLocation"] = "$projectDir/schemas"
-            }
-        }
     }
 
     buildTypes {
@@ -33,27 +25,20 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = Config.jvm_target
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
 
-    implementation( project(mapOf("path" to ":domain")) )
-    implementation( project(mapOf("path" to ":android-core")) )
-    implementation( Libs.AndroidX.coreKtx )
-    implementation( Libs.Coroutines.android )
-
-    kapt( Libs.Room.compiler )
-    implementation( Libs.Room.runtime )
-    implementation( Libs.Room.ktx )
-    androidTestImplementation( Libs.Room.testing )
-
-    testImplementation( Libs.JUnit.core )
-    androidTestImplementation( Libs.JUnit.ktx )
-    androidTestImplementation( Libs.AndroidX.Espresso.core )
+    implementation("androidx.core:core-ktx:1.8.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.9.0")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
