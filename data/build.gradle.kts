@@ -6,7 +6,7 @@ plugins {
 
 
 android {
-    namespace = "de.fhe.data"
+    namespace = "de.fhe.adoptapal.data"
     compileSdk = Config.compile_sdk_version
 
     defaultConfig {
