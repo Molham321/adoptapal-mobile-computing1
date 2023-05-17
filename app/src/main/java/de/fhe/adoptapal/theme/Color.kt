@@ -1,4 +1,4 @@
-package com.fhe.adoptapal.ui.theme
+package de.fhe.adoptapal.theme
 
 import androidx.compose.ui.graphics.Color
 
