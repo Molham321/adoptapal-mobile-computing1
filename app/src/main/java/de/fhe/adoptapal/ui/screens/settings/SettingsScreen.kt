@@ -1,9 +1,9 @@
-package de.fhe.adoptapal.ui.screens.home
+package de.fhe.adoptapal.ui.screens.settings
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun HomeScreen() {
-    Text(text = "Home")
+fun SettingsScreen() {
+    Text("Settings")
 }
