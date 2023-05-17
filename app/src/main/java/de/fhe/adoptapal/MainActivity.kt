@@ -16,8 +16,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             AndroidAdoptapalTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    Home()
-                    //AppScaffold()
+//                    Home()
+                    AppScaffold()
                 }
             }
         }
