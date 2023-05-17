@@ -12,8 +12,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Adoptapal"
-include ':app'
-include ':domain'
-include ':android-core'
-include ':data'
+rootProject.name = ("Adoptapal")
+include (":app")
+include (":domain")
+include (":android-core")
+include (":data")

@@ -1,6 +1,10 @@
 plugins {
-    id("java-library")
-    id("org.jetbrains.kotlin.jvm")
+    id(Libs.Plugins.java_library)
+    id(Libs.Plugins.kotlin_jvm)
+}
+
+dependencies {
+    implementation( Libs.Coroutines.core )
 }
 
 java {
