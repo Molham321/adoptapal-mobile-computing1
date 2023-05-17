@@ -7,13 +7,17 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import de.fhe.adoptapal.ui.screens.detail.DetailScreen
+import de.fhe.adoptapal.ui.screens.home.HomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
-            Greeting(name = "Hans Richard")
+            //Greeting(name = "Hans Richard")
+            HomeScreen()
+            //DetailScreen()
         }
     }
 }
