@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 
 @Entity
 abstract class BaseModel(
-    @PrimaryKey(autoGenerate = true) var id:Long = 0,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
     var createdTimestamp: LocalDateTime = LocalDateTime.now(),
     var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
     var isDeleted: Boolean = false
@@ -19,7 +19,7 @@ data class AddressModel(
     val houseNumber: String,
     val street: String,
     val city: String,
-    val zipCode:String
+    val zipCode: String
 ) : BaseModel()
 
 @Entity

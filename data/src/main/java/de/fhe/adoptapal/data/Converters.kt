@@ -16,13 +16,13 @@ class Converters {
     }
 
     @TypeConverter
-    fun localDateTimeToString(dateTime: LocalDateTime?): String? {
+    fun localDateTimeToString(dateTime: LocalDateTime?): String {
         return dateTime.toString()
     }
 
 
     @TypeConverter
-    fun stringToLocalDate(dateString: String?) : LocalDate {
+    fun stringToLocalDate(dateString: String?): LocalDate {
         return if (dateString == null) {
             LocalDate.MIN
         } else {
@@ -31,7 +31,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun localDateToString(date: LocalDate?) : String? {
+    fun localDateToString(date: LocalDate?): String {
         return date.toString()
     }
 }
