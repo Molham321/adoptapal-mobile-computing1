@@ -6,9 +6,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import de.fhe.adoptapal.ui.screens.detail.DetailScreen
+import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreen
 import de.fhe.adoptapal.ui.screens.home.HomeScreen
-import de.fhe.adoptapal.ui.screens.input.InputScreen
+import de.fhe.adoptapal.ui.screens.addAnimal.InputScreen
 import de.fhe.adoptapal.ui.screens.login.LoginScreen
 import de.fhe.adoptapal.ui.screens.map.MapScreen
 import de.fhe.adoptapal.ui.screens.register.RegisterScreen

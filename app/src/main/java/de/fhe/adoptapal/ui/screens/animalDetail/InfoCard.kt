@@ -1,4 +1,4 @@
-package de.fhe.adoptapal.ui.screens.detail
+package de.fhe.adoptapal.ui.screens.animalDetail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
