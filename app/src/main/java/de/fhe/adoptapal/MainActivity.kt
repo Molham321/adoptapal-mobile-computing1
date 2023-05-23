@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import de.fhe.adoptapal.ui.screens.detail.DetailScreen
 import de.fhe.adoptapal.ui.screens.home.HomeScreen
+import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
