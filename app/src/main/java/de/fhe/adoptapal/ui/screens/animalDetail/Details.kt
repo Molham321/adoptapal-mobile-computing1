@@ -22,25 +22,29 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
+import de.fhe.adoptapal.data.FakeDatabase
 
 
 // -----------------------------------------------------
 // Details
 // -----------------------------------------------------
-@Preview
 @Composable
-fun Details() {
+fun Details(animalId: Int, modifier: Modifier = Modifier ) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = colorResource(id = R.color.black))
+            .background(color = colorResource(id = R.color.background))
     ) {
+
+        val animal = FakeDatabase.AnimalList[animalId]
+
         item {
-            val dogImage: Painter = painterResource(R.drawable.hund)
+            val dogImage: Painter = painterResource(animal.image)
             Image(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -52,25 +56,24 @@ fun Details() {
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            InfoCard()
+            AnimalInfoCard(animal.name, animal.gender, animal.location)
         }
 
+        // My story details
         item {
 
             Spacer(modifier = Modifier.height(24.dp))
+            Title(title = "My Story")
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "ABOUT NAME \n" +
-                        "Beschreibung Beschreibung \n" +
-                        "Beschreibung Beschreibung \n" +
-                        "Beschreibung Beschreibung \n" +
-                        "Beschreibung Beschreibung \n" +
-                        "Beschreibung Beschreibung \n",
+                text = "ABOUT ${animal.name} \n" +
+                        "${animal.about}",
 
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
-                color = colorResource(id = R.color.white),
-                style = MaterialTheme.typography.caption,
+                color = colorResource(id = R.color.text),
+                style = MaterialTheme.typography.body2,
                 textAlign = TextAlign.Start
             )
         }
@@ -79,52 +82,70 @@ fun Details() {
 
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "Rasse: RASSE",
+                text = "Rasse: ${animal.breed}",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
-                color = colorResource(id = R.color.white),
-                style = MaterialTheme.typography.h5,
+                color = colorResource(id = R.color.text),
+                style = MaterialTheme.typography.body2,
                 textAlign = TextAlign.Start
             )
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                GenderTag("GENDER", Color.Red)
-                GenderTag("Alter", Color.Blue)
-                GenderTag("Gewicht", Color.White)
+                GenderTag(animal.gender, Color.Red)
+                GenderTag(animal.age.toString(), Color.Blue)
+                GenderTag(animal.weight.toString(), Color.DarkGray)
             }
 
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "Alter: ALTER",
+                text = "Alter: ${animal.age}",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
-                color = colorResource(id = R.color.white),
-                style = MaterialTheme.typography.h5,
+                color = colorResource(id = R.color.text),
+                style = MaterialTheme.typography.body2,
                 textAlign = TextAlign.Start
             )
 
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "Geschlecht: GESCHLECHT",
+                text = "Geschlecht: ${animal.gender}",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
-                color = colorResource(id = R.color.white),
-                style = MaterialTheme.typography.h5,
+                color = colorResource(id = R.color.text),
+                style = MaterialTheme.typography.body2,
                 textAlign = TextAlign.Start
             )
+        }
+
+        // Quick info
+        item {
+            Spacer(modifier = Modifier.height(24.dp))
+            Title(title = "Animal info")
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp, 0.dp, 16.dp, 0.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                InfoCard(title = "Age", value = animal.age.toString().plus(" yrs"))
+                InfoCard(title = "Color", value = animal.color)
+                InfoCard(title = "Weight", value = animal.weight.toString().plus("Kg"))
+            }
         }
 
         // Owner info
         item {
 
             Spacer(modifier = Modifier.height(24.dp))
-            Text(text = "Owner info", color = Color.White)
+            Title(title = "Owner info")
             Spacer(modifier = Modifier.height(16.dp))
 
-            OwnerCard()
+            OwnerCard(animal.owner.name, animal.owner.bio, animal.owner.image)
         }
 
         // CTA - Adopt me button
@@ -146,4 +167,18 @@ fun Details() {
             Spacer(modifier = Modifier.height(24.dp))
         }
     }
+}
+
+@Composable
+fun Title(title: String) {
+    Text(
+        text = title,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp, 0.dp, 0.dp, 0.dp),
+        color = colorResource(id = R.color.text),
+        style = MaterialTheme.typography.subtitle1,
+        fontWeight = FontWeight.W600,
+        textAlign = TextAlign.Start
+    )
 }

@@ -11,7 +11,13 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 // test colors
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+//val Purple200 = Color(0xFFBB86FC)
+//val Purple500 = Color(0xFF6200EE)
+//val Purple700 = Color(0xFF3700B3)
+//val Teal200 = Color(0xFF03DAC5)
+
+// molham colors
+val Purple200 = Color(0xFF696866)
+val Purple500 = Color(0xFF947563)
+val Purple700 = Color(0xFF975C4E)
+val Teal200 = Color(0xFF8A2521)

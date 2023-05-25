@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,7 +32,7 @@ import de.fhe.adoptapal.R
 
 
 @Composable
-fun OwnerCard() {
+fun OwnerCard(name: String, bio: String, image: Int) {
 
     Row(
         modifier = Modifier
@@ -40,7 +42,7 @@ fun OwnerCard() {
             .clip(RoundedCornerShape(16.dp))
     ) {
         // getting the image from the drawable
-        val personImage: Painter = painterResource(id = R.drawable.user)
+        val personImage: Painter = painterResource(id = image)
 
         Image(
             modifier = Modifier
@@ -56,14 +58,16 @@ fun OwnerCard() {
 
         Column(modifier = Modifier) {
             Text(
-                text = "NAME",
+                text = name,
                 fontWeight = FontWeight.W600,
                 textAlign = TextAlign.Start
             )
 
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "bio" ,
+                text = bio ,
+                color = colorResource(id = R.color.text),
+                style = MaterialTheme.typography.caption
             )
         }
 

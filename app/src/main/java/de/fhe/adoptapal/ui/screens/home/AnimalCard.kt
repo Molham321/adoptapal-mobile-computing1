@@ -1,6 +1,7 @@
 package de.fhe.adoptapal.ui.screens.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,27 +27,34 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
+import de.fhe.adoptapal.model.Animal
 
 //----------------------------------------------
 // ItemAnimalCard Component for HomeScreen
 //----------------------------------------------
 @Composable
-fun AnimalCard() {
+fun AnimalCard(
+    animal: Animal,
+    modifier: Modifier = Modifier,
+    onItemPressed: (itemId: Int) -> Unit = {}
+) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(8.dp)
-            .clip(RoundedCornerShape(16.dp)),
+            .clip(RoundedCornerShape(16.dp))
+            .clickable(onClick = { onItemPressed(animal.id) }),
+        elevation = 0.dp
     ) {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
 
-            val image: Painter = painterResource(id = R.drawable.hund)
+            val image: Painter = painterResource(id = animal.image)
             Image(
-                modifier = Modifier
+                modifier = modifier
                     .size(80.dp, 80.dp)
                     .clip(RoundedCornerShape(16.dp)),
                 painter = image,
@@ -54,24 +63,26 @@ fun AnimalCard() {
                 contentScale = ContentScale.Crop
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = modifier.width(16.dp))
 
-            Column(modifier = Modifier.align(Alignment.CenterVertically)) {
+            Column(modifier = modifier.align(Alignment.CenterVertically)) {
                 Text(
-                    text = "NAME",
-                    modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
+                    text = animal.name,
+                    modifier = modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = modifier.height(8.dp))
 
                 Text(
                     text = buildString {
-                        append("RASSE")
+                        append(animal.age)
                         append(" | ")
-                        append("TIERART - 2Y")
+                        append(animal.breed)
+                        append(" | ")
+                        append(animal.art)
                     },
-                    modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
+                    modifier = modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
                     color = Color.Gray,
                 )
 
@@ -82,24 +93,24 @@ fun AnimalCard() {
                     Icon(
                         painter = location,
                         contentDescription = null,
-                        modifier = Modifier.size(16.dp, 16.dp),
+                        modifier = modifier.size(16.dp, 16.dp),
                         tint = Color.Black
                     )
 
                     Text(
-                        text = "2.3 KM ENTFERNT",
-                        modifier = Modifier.padding(8.dp, 12.dp, 12.dp, 0.dp),
+                        text = animal.location,
+                        modifier = modifier.padding(8.dp, 12.dp, 12.dp, 0.dp),
                         color = Color.Gray,
                     )
                 }
             }
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(
-                    text = "TIER GENDER",
-                    modifier = Modifier.padding(8.dp, 12.dp, 12.dp, 0.dp),
+                    text = animal.gender,
+                    modifier = modifier.padding(8.dp, 12.dp, 12.dp, 0.dp),
                     color = Color.Black,
                 )
             }

@@ -60,6 +60,6 @@ fun UserDetailScreen() {
         Spacer(modifier = Modifier.height(16.dp))
         UserInfo()
 
-        HomeScreen()
+//        HomeScreen()
     }
 }

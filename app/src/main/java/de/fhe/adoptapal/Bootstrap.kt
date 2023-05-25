@@ -2,6 +2,7 @@ package de.fhe.adoptapal
 
 import android.app.Application
 import de.fhe.adoptapal.di.modules.androidCoreModule
+import de.fhe.adoptapal.di.modules.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -16,6 +17,7 @@ class Bootstrap : Application() {
 
             // modules
             modules(androidCoreModule)
+            modules(viewModelModule)
         }
     }
 }

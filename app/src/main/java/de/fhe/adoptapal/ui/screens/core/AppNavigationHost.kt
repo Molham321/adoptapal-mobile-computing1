@@ -3,16 +3,21 @@ package de.fhe.adoptapal.ui.screens.core
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreen
 import de.fhe.adoptapal.ui.screens.home.HomeScreen
 import de.fhe.adoptapal.ui.screens.addAnimal.InputScreen
+import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
+import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreen
 import de.fhe.adoptapal.ui.screens.map.MapScreen
 import de.fhe.adoptapal.ui.screens.register.RegisterScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreen
+import org.koin.androidx.compose.getKoin
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun AppNavigationHost(
@@ -50,12 +55,23 @@ fun AppNavigationHost(
         modifier = modifier
     ) {
         composable(Screen.Home.route) {
+           val vm by getKoin().inject<HomeScreenViewModel>()
+
+            Screen.Home.prepareAppBarActions(vm)
             onNavigation(Screen.Home)
-            HomeScreen()
+            HomeScreen(vm)
         }
-        composable(Screen.Detail.route) {
+        composable(
+            Screen.Detail.route,
+            Screen.Detail.navigationCommand(0).arguments
+        ) { entry ->
+            val animalId = entry.arguments?.getInt("animalId")
+            val vm by getKoin().inject<DetailScreenViewModel>(parameters = { parametersOf(animalId) })
+
+            Screen.Detail.prepareAppBarActions(LocalContext.current, vm)
             onNavigation(Screen.Detail)
-            DetailScreen()
+
+            DetailScreen(vm)
         }
         composable(Screen.Map.route) {
             onNavigation(Screen.Map)

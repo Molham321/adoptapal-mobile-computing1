@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import de.fhe.adoptapal.ui.screens.core.AppScaffold
-import de.fhe.adoptapal.ui.screens.home.Home
 import de.fhe.adoptapal.ui.theme.AndroidAdoptapalTheme
 
 class MainActivity : ComponentActivity() {
@@ -16,7 +15,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             AndroidAdoptapalTheme {
                 Surface(color = MaterialTheme.colors.background) {
-//                    Home()
                     AppScaffold()
                 }
             }
