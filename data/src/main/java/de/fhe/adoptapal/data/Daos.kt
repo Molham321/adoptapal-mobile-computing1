@@ -2,7 +2,7 @@ package de.fhe.adoptapal.data
 
 import androidx.room.Dao
 import androidx.room.Delete
-import androidx.room.Insert
+import androidx.room.Upsert
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
@@ -19,8 +19,8 @@ interface UserModelDao {
     @Query("SELECT * FROM UserModel WHERE id = :id")
     suspend fun get(id: Long): UserModel?
 
-    @Insert
-    suspend fun insert(entity: UserModel): Long
+    @Upsert
+    suspend fun upsert(entity: UserModel): Long
 
     @Delete
     suspend fun delete(entity: UserModel)
@@ -44,8 +44,8 @@ interface AddressModelDao {
     @Query("SELECT * FROM AddressModel WHERE id = :id")
     suspend fun get(id: Long): AddressModel?
 
-    @Insert
-    suspend fun insert(entity: AddressModel): Long
+    @Upsert
+    suspend fun upsert(entity: AddressModel): Long
 
     @Delete
     suspend fun delete(entity: AddressModel)
@@ -81,8 +81,8 @@ interface RatingModelDao {
     suspend fun getByRatingIsAbove(rating: Int): RatingModel?
 
 
-    @Insert
-    suspend fun insert(entity: RatingModel): Long
+    @Upsert
+    suspend fun upsert(entity: RatingModel): Long
 
     @Delete
     suspend fun delete(entity: RatingModel)
@@ -116,8 +116,8 @@ interface AnimalModelDao {
     @Query("SELECT * FROM AnimalModel WHERE animalCategoryId = :animalCategoryId")
     suspend fun getByAnimalCategoryId(animalCategoryId: Long): AnimalModel?
 
-    @Insert
-    suspend fun insert(entity: AnimalModel): Long
+    @Upsert
+    suspend fun upsert(entity: AnimalModel): Long
 
     @Delete
     suspend fun delete(entity: AnimalModel)
@@ -148,8 +148,8 @@ interface FavoriteModelDao {
     @Query("SELECT * FROM FavoriteModel WHERE animalId = :animalId")
     suspend fun getByAnimalId(animalId: Long): FavoriteModel?
 
-    @Insert
-    suspend fun insert(entity: FavoriteModel): Long
+    @Upsert
+    suspend fun upsert(entity: FavoriteModel): Long
 
     @Delete
     suspend fun delete(entity: FavoriteModel)
@@ -173,8 +173,8 @@ interface AnimalCategoryModelDao {
     @Query("SELECT * FROM AnimalCategoryModel WHERE id = :id")
     suspend fun get(id: Long): AnimalCategoryModel?
 
-    @Insert
-    suspend fun insert(entity: AnimalCategoryModel): Long
+    @Upsert
+    suspend fun upsert(entity: AnimalCategoryModel): Long
 
     @Delete
     suspend fun delete(entity: AnimalCategoryModel)
@@ -198,8 +198,8 @@ interface ColorModelDao {
     @Query("SELECT * FROM ColorModel WHERE id = :id")
     suspend fun get(id: Long): ColorModel?
 
-    @Insert
-    suspend fun insert(entity: ColorModel): Long
+    @Upsert
+    suspend fun upsert(entity: ColorModel): Long
 
     @Delete
     suspend fun delete(entity: ColorModel)
@@ -229,8 +229,8 @@ interface RequestModelDao {
     @Query("SELECT * FROM RequestModel WHERE seekerId = :seekerId")
     suspend fun getBySeekerId(seekerId: Long): RequestModel?
 
-    @Insert
-    suspend fun insert(entity: RequestModel): Long
+    @Upsert
+    suspend fun upsert(entity: RequestModel): Long
 
     @Delete
     suspend fun delete(entity: RequestModel)

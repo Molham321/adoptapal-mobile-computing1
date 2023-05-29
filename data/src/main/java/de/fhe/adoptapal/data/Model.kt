@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 
 @Entity
 abstract class BaseModel(
-    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    @PrimaryKey(autoGenerate = true) open var id: Long = 0,
     var createdTimestamp: LocalDateTime = LocalDateTime.now(),
     var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
     var isDeleted: Boolean = false
@@ -26,8 +26,8 @@ data class AddressModel(
 data class UserModel(
     val name: String,
     val email: String,
-    val addressId: Long,
-    val phoneNumber: String
+    val addressId: Long?,
+    val phoneNumber: String?
 ) : BaseModel()
 
 @Entity
@@ -39,6 +39,7 @@ data class RatingModel(
 
 @Entity
 data class AnimalModel(
+    override var id: Long,
     val name: String,
     val birthday: LocalDate,
     val supplierId: Long,
@@ -52,11 +53,13 @@ data class AnimalModel(
 
 @Entity
 data class ColorModel(
+    override var id: Long,
     val name: String
 ) : BaseModel()
 
 @Entity
 data class AnimalCategoryModel(
+    override var id: Long,
     val name: String
 ) : BaseModel()
 
