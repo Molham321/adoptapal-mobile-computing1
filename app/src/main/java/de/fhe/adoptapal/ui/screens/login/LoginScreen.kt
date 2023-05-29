@@ -44,7 +44,7 @@ fun LoginScreen() {
             .background(color = colorResource(id = R.color.white)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(240.dp))
+        Spacer(modifier = Modifier.height(160.dp))
         Text(
             text =  "Willkommen zurück!",
 

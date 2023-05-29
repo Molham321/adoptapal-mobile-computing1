@@ -36,7 +36,7 @@ fun UserDetailScreen() {
         modifier = Modifier
             .fillMaxSize()
             .background(color = colorResource(id = R.color.white))
-            .padding(16.dp, 40.dp, 16.dp, 16.dp)
+            .padding(16.dp, 16.dp, 16.dp, 16.dp)
     ) {
         UserInfo()
     }
