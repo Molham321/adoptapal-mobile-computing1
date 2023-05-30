@@ -14,6 +14,7 @@ import androidx.compose.material.icons.outlined.Star
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,11 +35,21 @@ fun RatingBar(
     Column(modifier = modifier) {
         Row(modifier = modifier) {
             repeat(filledStars) {
-                Icon(imageVector = Icons.Outlined.Star, contentDescription = null, modifier = Modifier.size(32.dp, 32.dp), tint = filledStarsColor)
+                Icon(
+                    imageVector = Icons.Outlined.Star,
+                    contentDescription = null,
+                    modifier = Modifier.size(48.dp, 48.dp),
+                    tint = filledStarsColor
+                )
             }
 
             repeat(unfilledStars) {
-                Icon(imageVector = Icons.Outlined.Star, contentDescription = null, modifier = Modifier.size(32.dp, 32.dp), tint = unfilledStarsColor)
+                Icon(
+                    imageVector = Icons.Outlined.Star,
+                    contentDescription = null,
+                    modifier = Modifier.size(48.dp, 48.dp),
+                    tint = unfilledStarsColor
+                )
             }
             /*        if (halfStar) {
                         Icon(
@@ -61,9 +72,9 @@ fun RatingBar(
             Text(
                 text = "$rating Sterne (200 Bewertungen)",
                 modifier = Modifier.padding(4.dp, 2.dp, 12.dp, 0.dp),
-                color = MaterialTheme.colors.surface,
+                color = Color.Black,
                 style = MaterialTheme.typography.overline,
-                fontSize = 10.sp
+                fontSize = 14.sp
             )
         }
     }

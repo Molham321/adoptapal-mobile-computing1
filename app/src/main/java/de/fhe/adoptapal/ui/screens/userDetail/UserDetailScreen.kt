@@ -35,29 +35,9 @@ fun UserDetailScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = colorResource(id = R.color.black))
+            .background(color = colorResource(id = R.color.white))
+            .padding(16.dp, 16.dp, 16.dp, 16.dp)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-        ) {
-            Text(
-                text = "ANBIETER",
-                modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
-                color = MaterialTheme.colors.surface,
-                fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.h5
-            )
-            Row(modifier = Modifier, horizontalArrangement = Arrangement.End) {
-                Icon(imageVector = Icons.Outlined.LocationOn, contentDescription = null, tint = Color.LightGray)
-            }
-
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        RatingBar(rating = 4.0)
-
-        Spacer(modifier = Modifier.height(16.dp))
         UserInfo()
 
 //        HomeScreen()
