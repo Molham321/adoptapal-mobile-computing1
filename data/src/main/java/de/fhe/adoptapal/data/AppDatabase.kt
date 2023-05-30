@@ -43,6 +43,7 @@ abstract class AppDatabase : RoomDatabase() {
             return db as AppDatabase
         }
 
+        // create dao get methods
         fun getUserModelDao(app: Context): UserModelDao {
             return getDatabase(app).userModelDao()
         }

@@ -1,6 +1,7 @@
 package de.fhe.adoptapal.domain
 
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 
 enum class AsyncOperationState {
@@ -39,14 +40,18 @@ data class AsyncOperation(val status: AsyncOperationState, val message: String, 
 
 data class User(
     var id: Long = 0,
+    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
+    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
     var name: String,
     var email: String,
     var address: Address?,
-    var phoneNumber: String
+    var phoneNumber: String?
 )
 
 data class Address(
     var id: Long = 0,
+    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
+    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
     var houseNumber: String,
     var street: String,
     var city: String,
@@ -55,24 +60,30 @@ data class Address(
 
 data class Animal(
     var id: Long = 0,
+    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
+    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
     val name: String,
     val birthday: LocalDate,
     val supplier: User,
-    var animalCategory: AnimalCategory? = null,
+    var animalCategory: AnimalCategory,
     val description: String,
-    var color: Color? = null,
-    val imageFilePath: String,
+    var color: Color,
+    val imageFilePath: String?,
     val isMale: Boolean,
     val weight: Float
 )
 
 data class Color(
     var id: Long = 0,
+    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
+    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
     var name: String
 )
 
 data class AnimalCategory(
     var id: Long = 0,
+    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
+    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
     var name: String
 )
 

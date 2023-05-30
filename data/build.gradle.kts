@@ -43,17 +43,17 @@ android {
 
 dependencies {
 
-    implementation( project(mapOf("path" to ":domain")) )
-    implementation( project(mapOf("path" to ":android-core")) )
-    implementation( Libs.AndroidX.coreKtx )
-    implementation( Libs.Coroutines.android )
+    implementation(project(mapOf("path" to ":domain")))
+    implementation(project(mapOf("path" to ":android-core")))
+    implementation(Libs.AndroidX.coreKtx)
+    implementation(Libs.Coroutines.android)
 
-    kapt( Libs.Room.compiler )
-    implementation( Libs.Room.runtime )
-    implementation( Libs.Room.ktx )
-    androidTestImplementation( Libs.Room.testing )
+    kapt(Libs.Room.compiler)
+    implementation(Libs.Room.runtime)
+    implementation(Libs.Room.ktx)
+    androidTestImplementation(Libs.Room.testing)
 
-    testImplementation( Libs.JUnit.core )
-    androidTestImplementation( Libs.JUnit.ktx )
-    androidTestImplementation( Libs.AndroidX.Espresso.core )
+    testImplementation(Libs.JUnit.core)
+    androidTestImplementation(Libs.JUnit.ktx)
+    androidTestImplementation(Libs.AndroidX.Espresso.core)
 }

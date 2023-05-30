@@ -7,71 +7,92 @@ import java.time.LocalDateTime
 
 
 @Entity
-abstract class BaseModel(
-    @PrimaryKey(autoGenerate = true) open var id: Long = 0,
+data class AddressModel(
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
     var createdTimestamp: LocalDateTime = LocalDateTime.now(),
     var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
-    var isDeleted: Boolean = false
-)
-
-@Entity
-data class AddressModel(
+    var isDeleted: Boolean = false,
     val houseNumber: String,
     val street: String,
     val city: String,
     val zipCode: String
-) : BaseModel()
+)
 
 @Entity
 data class UserModel(
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
+    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
+    var isDeleted: Boolean = false,
     val name: String,
     val email: String,
     val addressId: Long?,
     val phoneNumber: String?
-) : BaseModel()
+)
 
 @Entity
 data class RatingModel(
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
+    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
+    var isDeleted: Boolean = false,
     val supplierId: Long,
     val seekerId: Long,
     val rating: RatingEnum
-) : BaseModel()
+)
 
 @Entity
 data class AnimalModel(
-    override var id: Long,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
+    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
+    var isDeleted: Boolean = false,
     val name: String,
     val birthday: LocalDate,
     val supplierId: Long,
     val animalCategoryId: Long,
     val description: String,
     val colorId: Long,
-    val imageFilePath: String,
+    val imageFilePath: String?,
     val isMale: Boolean,
     val weight: Float
-) : BaseModel()
+)
 
 @Entity
 data class ColorModel(
-    override var id: Long,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
+    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
+    var isDeleted: Boolean = false,
     val name: String
-) : BaseModel()
+)
 
 @Entity
 data class AnimalCategoryModel(
-    override var id: Long,
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
+    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
+    var isDeleted: Boolean = false,
     val name: String
-) : BaseModel()
+)
 
 @Entity
 data class RequestModel(
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
+    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
+    var isDeleted: Boolean = false,
     val seekerId: Long,
     val animalCategoryId: Long,
     val description: String
-) : BaseModel()
+)
 
 @Entity
 data class FavoriteModel(
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
+    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
+    var isDeleted: Boolean = false,
     val seekerId: Long,
     val animalId: Long
-) : BaseModel()
+)
