@@ -153,6 +153,8 @@ interface FavoriteModelDao {
 
     @Delete
     suspend fun delete(entity: FavoriteModel)
+    @Query("DELETE FROM FavoriteModel WHERE animalId = :animalId")
+    suspend fun deleteByAnimalId(animalId : Long)
 
     @Delete
     suspend fun delete(vararg entities: FavoriteModel)

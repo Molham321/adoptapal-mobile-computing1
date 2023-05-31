@@ -5,7 +5,9 @@ import kotlinx.coroutines.flow.Flow
 interface Repository {
     // Animals
     fun getAllAnimals(): Flow<List<Animal>>
+    suspend fun getAnimal(animalId: Long): Animal?
     suspend fun insertAnimal(animal: Animal): Long
+    suspend fun deleteAnimal(animal: Animal)
 
     // Colors
     fun getAllColors(): Flow<List<Color>>
@@ -19,6 +21,8 @@ interface Repository {
 
 
     // User
+    fun getAllUsers(): Flow<List<User>>
+    fun getUsersByRange(location: Location, distance: Int): Flow<List<User>>
     suspend fun getUser(userId: Long): User?
     suspend fun insertUser(user: User): Long
 

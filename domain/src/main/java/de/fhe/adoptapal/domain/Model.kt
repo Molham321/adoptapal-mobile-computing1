@@ -58,6 +58,11 @@ data class Address(
     var zipCode: String
 )
 
+data class Location(
+    var latitude: Double = 0.0,
+    var longitude: Double = 0.0
+)
+
 data class Animal(
     var id: Long = 0,
     var createdTimestamp: LocalDateTime = LocalDateTime.now(),

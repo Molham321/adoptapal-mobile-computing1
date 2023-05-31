@@ -4,9 +4,11 @@ import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AnimalCategory
 import de.fhe.adoptapal.domain.Color
+import de.fhe.adoptapal.domain.Location
 import de.fhe.adoptapal.domain.Repository
 import de.fhe.adoptapal.domain.User
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 
 class RepositoryImpl(
@@ -20,38 +22,45 @@ class RepositoryImpl(
     private val requestModelDao: RequestModelDao
 ) : Repository {
 
-    /**
-     *
-     */
     override fun getAllAnimals(): Flow<List<Animal>> {
         return animalModelDao.getAllAsFlow().map { animalEntityList ->
             animalEntityList.map { animalEntity ->
-
-                // get Data for Animal
-                val animalCategory = animalCategoryModelDao.get(animalEntity.animalCategoryId)
-                    ?.toDomain()
-                val color = colorModelDao.get(animalEntity.colorId)?.toDomain()
-                val supplierEntity = userModelDao.get(animalEntity.supplierId)
-                val address = supplierEntity?.addressId?.let { addressModelDao.get(it)?.toDomain() }
-                val supplier = supplierEntity?.toDomain(address)
-
-                val animal = animalEntity.toDomain(
-                    supplier = supplier!!,
-                    animalCategory = animalCategory!!,
-                    color = color!!
-                )
-
+                val animal = getAnimalWithContent(animalEntity)
                 animal
             }
         }
     }
 
+    override suspend fun getAnimal(animalId: Long): Animal? {
+        val animalEntity = animalModelDao.get(animalId)
+        return if(animalEntity != null) getAnimalWithContent(animalEntity) else null
+    }
+
+    private suspend fun getAnimalWithContent(animalEntity: AnimalModel) : Animal {
+        // get Data for Animal
+        val animalCategory = animalCategoryModelDao.get(animalEntity.animalCategoryId)
+            ?.toDomain()
+        val color = colorModelDao.get(animalEntity.colorId)?.toDomain()
+        val supplierEntity = userModelDao.get(animalEntity.supplierId)
+        val address = supplierEntity?.addressId?.let { addressModelDao.get(it)?.toDomain() }
+        val supplier = supplierEntity?.toDomain(address)
+
+        val animal = animalEntity.toDomain(
+            supplier = supplier!!,
+            animalCategory = animalCategory!!,
+            color = color!!
+        )
+
+        return animal
+    }
+
     override suspend fun insertAnimal(animal: Animal): Long {
-        val animalEntity = animal.fromDomain()
+        return animalModelDao.upsert(animal.fromDomain());
+    }
 
-        val animalId = animalModelDao.upsert(animalEntity)
-
-        return animalId;
+    override suspend fun deleteAnimal(animal: Animal) {
+        animalModelDao.delete(animal.fromDomain())
+        favoriteModelDao.deleteByAnimalId(animal.id)
     }
 
     override fun getAllColors(): Flow<List<Color>> {
@@ -63,11 +72,7 @@ class RepositoryImpl(
     }
 
     override suspend fun insertColor(color: Color): Long {
-        val colorEntity = color.fromDomain()
-
-        val colorId = colorModelDao.upsert(colorEntity)
-
-        return colorId
+        return colorModelDao.upsert(color.fromDomain())
     }
 
     override suspend fun getColor(colorId: Long): Color? {
@@ -83,15 +88,23 @@ class RepositoryImpl(
     }
 
     override suspend fun insertAnimalCategory(animalCategory: AnimalCategory): Long {
-        val animalCategoryEntity = animalCategory.fromDomain()
-
-        val animalCategoryId = animalCategoryModelDao.upsert(animalCategoryEntity)
-
-        return animalCategoryId
+        return animalCategoryModelDao.upsert(animalCategory.fromDomain())
     }
 
     override suspend fun getAnimalCategory(animalCategoryId: Long): AnimalCategory? {
         return animalCategoryModelDao.get(animalCategoryId)?.toDomain()
+    }
+
+    override fun getAllUsers(): Flow<List<User>> {
+        return userModelDao.getAllAsFlow().map{ userEntityList ->
+            userEntityList.map{ userEntity ->
+                    userEntity.toDomain(userEntity.addressId?.let { getAddress(it) })
+            }
+        }
+    }
+
+    override fun getUsersByRange(location: Location, distance: Int): Flow<List<User>> {
+        TODO("Not yet implemented")
     }
 
     override suspend fun getUser(userId: Long): User? {
@@ -102,11 +115,7 @@ class RepositoryImpl(
     }
 
     override suspend fun insertUser(user: User): Long {
-        val userEntity = user.fromDomain()
-
-        val userId = userModelDao.upsert(userEntity)
-
-        return userId
+        return userModelDao.upsert(user.fromDomain())
     }
 
     override suspend fun getAddress(addressId: Long): Address? {
@@ -116,6 +125,4 @@ class RepositoryImpl(
     override suspend fun insertAddress(address: Address): Long {
         return addressModelDao.upsert(address.fromDomain())
     }
-
-
 }
