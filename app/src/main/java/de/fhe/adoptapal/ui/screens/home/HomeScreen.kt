@@ -27,6 +27,7 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
 
         if (animalList.isNotEmpty()) {
+
             SearchBar(onSearch = {})
 
             val filters = listOf("Filter 1", "Filter 2", "Filter 3")

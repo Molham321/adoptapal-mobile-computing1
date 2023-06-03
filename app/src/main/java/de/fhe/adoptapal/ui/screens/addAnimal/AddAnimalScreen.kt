@@ -5,5 +5,5 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun InputScreen() {
-    Text("Input")
+    Text("Input Page")
 }
