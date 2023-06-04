@@ -1,6 +1,6 @@
 package de.fhe.adoptapal.model
 
-data class Animal (
+data class Animal(
     val id: Int,
     val name: String,
     val age: Double,
@@ -13,4 +13,4 @@ data class Animal (
     val owner: Owner,
     val breed: String,
     val art: String
-    )
+)

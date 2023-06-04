@@ -2,9 +2,7 @@ package de.fhe.adoptapal.di.modules
 
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
-import de.fhe.adoptapal.data.UserModelDao
 import de.fhe.adoptapal.domain.Repository
-import org.koin.dsl.module
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel

@@ -24,7 +24,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.data.FakeDatabase
@@ -34,7 +33,7 @@ import de.fhe.adoptapal.data.FakeDatabase
 // Details
 // -----------------------------------------------------
 @Composable
-fun Details(animalId: Int, modifier: Modifier = Modifier ) {
+fun Details(animalId: Int, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()

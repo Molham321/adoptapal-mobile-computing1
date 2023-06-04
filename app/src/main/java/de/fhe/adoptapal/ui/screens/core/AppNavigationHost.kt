@@ -7,10 +7,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreen
-import de.fhe.adoptapal.ui.screens.home.HomeScreen
 import de.fhe.adoptapal.ui.screens.addAnimal.InputScreen
+import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreen
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
+import de.fhe.adoptapal.ui.screens.home.HomeScreen
 import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreen
 import de.fhe.adoptapal.ui.screens.map.MapScreen
@@ -33,7 +33,7 @@ fun AppNavigationHost(
             if (command.destination == "go_back")
                 navController.popBackStack()
             // Destination is a Root Screen, we clean up the back stack
-            else if(RootScreens.any { it.route == command.destination }) {
+            else if (RootScreens.any { it.route == command.destination }) {
                 navController.navigate(command.destination) {
                     navController.graph.startDestinationRoute?.let { route ->
                         popUpTo(route) {
@@ -55,7 +55,7 @@ fun AppNavigationHost(
         modifier = modifier
     ) {
         composable(Screen.Home.route) {
-           val vm by getKoin().inject<HomeScreenViewModel>()
+            val vm by getKoin().inject<HomeScreenViewModel>()
 
             Screen.Home.prepareAppBarActions(vm)
             onNavigation(Screen.Home)

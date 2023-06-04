@@ -8,7 +8,6 @@ import de.fhe.adoptapal.domain.Location
 import de.fhe.adoptapal.domain.Repository
 import de.fhe.adoptapal.domain.User
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.map
 
 class RepositoryImpl(
@@ -33,10 +32,10 @@ class RepositoryImpl(
 
     override suspend fun getAnimal(animalId: Long): Animal? {
         val animalEntity = animalModelDao.get(animalId)
-        return if(animalEntity != null) getAnimalWithContent(animalEntity) else null
+        return if (animalEntity != null) getAnimalWithContent(animalEntity) else null
     }
 
-    private suspend fun getAnimalWithContent(animalEntity: AnimalModel) : Animal {
+    private suspend fun getAnimalWithContent(animalEntity: AnimalModel): Animal {
         // get Data for Animal
         val animalCategory = animalCategoryModelDao.get(animalEntity.animalCategoryId)
             ?.toDomain()
@@ -96,9 +95,9 @@ class RepositoryImpl(
     }
 
     override fun getAllUsers(): Flow<List<User>> {
-        return userModelDao.getAllAsFlow().map{ userEntityList ->
-            userEntityList.map{ userEntity ->
-                    userEntity.toDomain(userEntity.addressId?.let { getAddress(it) })
+        return userModelDao.getAllAsFlow().map { userEntityList ->
+            userEntityList.map { userEntity ->
+                userEntity.toDomain(userEntity.addressId?.let { getAddress(it) })
             }
         }
     }

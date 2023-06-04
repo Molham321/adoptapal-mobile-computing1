@@ -12,7 +12,11 @@ enum class AsyncOperationState {
     UNDEFINED;
 }
 
-data class AsyncOperation(val status: AsyncOperationState, val message: String, val payload: Any = Unit) {
+data class AsyncOperation(
+    val status: AsyncOperationState,
+    val message: String,
+    val payload: Any = Unit
+) {
 
     companion object {
 

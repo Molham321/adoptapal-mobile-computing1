@@ -14,7 +14,8 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import org.koin.androidx.compose.getKoin
 
-val LocalScaffoldState = staticCompositionLocalOf<ScaffoldState> { error("no scaffolded state set") }
+val LocalScaffoldState =
+    staticCompositionLocalOf<ScaffoldState> { error("no scaffolded state set") }
 
 @Composable
 fun AppScaffold() {

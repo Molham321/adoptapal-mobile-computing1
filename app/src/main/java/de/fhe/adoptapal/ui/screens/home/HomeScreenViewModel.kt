@@ -14,7 +14,9 @@ class HomeScreenViewModel(
 ) : ViewModel() {
     var animalList by mutableStateOf(emptyList<Animal>())
 
-    init { this.getAnimalsFromDb() }
+    init {
+        this.getAnimalsFromDb()
+    }
 
     private fun getAnimalsFromDb() {
         animalList = FakeDatabase.AnimalList

@@ -4,5 +4,5 @@ import androidx.lifecycle.ViewModel
 
 class DetailScreenViewModel(
     val animalId: Int
-    ) : ViewModel() {
+) : ViewModel() {
 }

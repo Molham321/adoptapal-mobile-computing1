@@ -2,7 +2,9 @@ package de.fhe.adoptapal
 
 import android.app.Application
 import android.util.Log
+import de.fhe.adoptapal.di.modules.androidCoreModule
 import de.fhe.adoptapal.di.modules.databaseModule
+import de.fhe.adoptapal.di.modules.viewModelModule
 import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AnimalCategory
@@ -20,10 +22,6 @@ import org.koin.core.component.inject
 import org.koin.core.context.startKoin
 import java.time.LocalDate
 import java.time.LocalDateTime
-import de.fhe.adoptapal.di.modules.androidCoreModule
-import de.fhe.adoptapal.di.modules.viewModelModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
 
 class Bootstrap : Application() {
 

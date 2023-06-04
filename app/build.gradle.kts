@@ -32,7 +32,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -60,23 +63,23 @@ dependencies {
     implementation(project(mapOf("path" to ":data")))
 //    implementation(project(mapOf("path" to ":network")))
 
-    implementation( Libs.Coroutines.core )
-    implementation( Libs.Coroutines.android )
+    implementation(Libs.Coroutines.core)
+    implementation(Libs.Coroutines.android)
 
-    implementation( Libs.AndroidX.coreKtx)
-    implementation( Libs.AndroidX.Activity.activityCompose )
-    implementation( Libs.AndroidX.Compose.ui )
-    implementation( Libs.AndroidX.Compose.material )
-    implementation( Libs.AndroidX.Compose.toolingPreview )
-    implementation( Libs.AndroidX.Navigation.compose )
-    implementation( Libs.AndroidX.Lifecycle.runtime )
-    implementation( Libs.AndroidX.Lifecycle.viewmodel )
-    implementation( Libs.AndroidX.Lifecycle.viewModelCompose )
+    implementation(Libs.AndroidX.coreKtx)
+    implementation(Libs.AndroidX.Activity.activityCompose)
+    implementation(Libs.AndroidX.Compose.ui)
+    implementation(Libs.AndroidX.Compose.material)
+    implementation(Libs.AndroidX.Compose.toolingPreview)
+    implementation(Libs.AndroidX.Navigation.compose)
+    implementation(Libs.AndroidX.Lifecycle.runtime)
+    implementation(Libs.AndroidX.Lifecycle.viewmodel)
+    implementation(Libs.AndroidX.Lifecycle.viewModelCompose)
 
-    implementation( Libs.Koin.core )
-    implementation( Libs.Koin.android )
-    implementation( Libs.Koin.compose )
-    implementation( Libs.Koin.navigation )
+    implementation(Libs.Koin.core)
+    implementation(Libs.Koin.android)
+    implementation(Libs.Koin.compose)
+    implementation(Libs.Koin.navigation)
 
     implementation(Libs.AndroidX.MaterialDesign.core)
 
@@ -86,11 +89,11 @@ dependencies {
 //    implementation( Libs.Accompanist.swipeRefresh )
 //    implementation( Libs.Accompanist.placeholder )
 
-    testImplementation( Libs.JUnit.core )
-    androidTestImplementation( Libs.AndroidX.Compose.uiTest )
-    androidTestImplementation( Libs.AndroidX.Espresso.core )
-    androidTestImplementation( Libs.JUnit.ktx )
-    androidTestImplementation( Libs.Koin.test )
+    testImplementation(Libs.JUnit.core)
+    androidTestImplementation(Libs.AndroidX.Compose.uiTest)
+    androidTestImplementation(Libs.AndroidX.Espresso.core)
+    androidTestImplementation(Libs.JUnit.ktx)
+    androidTestImplementation(Libs.Koin.test)
 
-    debugImplementation( Libs.AndroidX.Compose.tooling )
+    debugImplementation(Libs.AndroidX.Compose.tooling)
 }

@@ -36,11 +36,11 @@ android {
 dependencies {
 
     implementation(project(mapOf("path" to ":domain")))
-    implementation( Libs.AndroidX.coreKtx )
+    implementation(Libs.AndroidX.coreKtx)
 
 //    implementation( Libs.Timber.core )
 
-    testImplementation( Libs.JUnit.core )
-    androidTestImplementation( Libs.JUnit.ktx )
-    androidTestImplementation( Libs.AndroidX.Espresso.core )
+    testImplementation(Libs.JUnit.core)
+    androidTestImplementation(Libs.JUnit.ktx)
+    androidTestImplementation(Libs.AndroidX.Espresso.core)
 }

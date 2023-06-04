@@ -8,8 +8,8 @@ import kotlinx.coroutines.flow.flow
 // Animals
 // ----------------
 class GetAllAnimals(private val repository: Repository) {
-    operator fun invoke() : Flow<AsyncOperation> = flow {
-        emit (AsyncOperation.loading("Start loading animals..."))
+    operator fun invoke(): Flow<AsyncOperation> = flow {
+        emit(AsyncOperation.loading("Start loading animals..."))
         repository.getAllAnimals().collect() {
             emit(AsyncOperation.success("Users loaded", it))
             emit(AsyncOperation.undefined())
@@ -17,8 +17,8 @@ class GetAllAnimals(private val repository: Repository) {
     }
 }
 
- class CreateAnimalAsync(private val repository: Repository) {
-    operator fun invoke(newAnimal: Animal) : Flow<AsyncOperation> = flow {
+class CreateAnimalAsync(private val repository: Repository) {
+    operator fun invoke(newAnimal: Animal): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start creating animal..."))
         val animalId = repository.insertAnimal(newAnimal)
         emit(AsyncOperation.success("Animal saved with ID $animalId", animalId))
@@ -26,10 +26,10 @@ class GetAllAnimals(private val repository: Repository) {
 }
 
 class GetAnimalAsync(private val repository: Repository) {
-    operator fun invoke(animalId: Long) : Flow<AsyncOperation> = flow {
+    operator fun invoke(animalId: Long): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Loading animal with id $animalId"))
         val animal = repository.getAnimal(animalId)
-        if(animal != null) {
+        if (animal != null) {
             emit(AsyncOperation.success("Loaded animal with id $animalId", animal))
         } else {
             emit(AsyncOperation.error("Failed to load animal with id $animalId"))
@@ -38,7 +38,7 @@ class GetAnimalAsync(private val repository: Repository) {
 }
 
 class DeleteAnimalAsync(private val repository: Repository) {
-    operator fun invoke(animal: Animal) : Flow<AsyncOperation> = flow {
+    operator fun invoke(animal: Animal): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Deleting animal with id ${animal.id}"))
         repository.deleteAnimal(animal)
         emit(AsyncOperation.success("Deleted animal with id ${animal.id}"))
@@ -50,7 +50,7 @@ class DeleteAnimalAsync(private val repository: Repository) {
 // COLORS
 // ----------------
 class GetAllColors(private val repository: Repository) {
-    operator fun invoke() : Flow<AsyncOperation> = flow {
+    operator fun invoke(): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading colors..."))
         repository.getAllColors().collect() {
             emit(AsyncOperation.success("Colors loaded", it))
@@ -60,7 +60,7 @@ class GetAllColors(private val repository: Repository) {
 }
 
 class CreateColorAsync(private val repository: Repository) {
-    operator fun invoke(newColor: Color) : Flow<AsyncOperation> = flow {
+    operator fun invoke(newColor: Color): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start creating color..."))
         val colorId = repository.insertColor(newColor)
         emit(AsyncOperation.success("Color saved with ID $colorId", colorId))
@@ -68,10 +68,10 @@ class CreateColorAsync(private val repository: Repository) {
 }
 
 class GetColorAsync(private val repository: Repository) {
-    operator fun invoke(colorId: Long) : Flow<AsyncOperation> = flow {
+    operator fun invoke(colorId: Long): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading color with id $colorId"))
         val color = repository.getColor(colorId)
-        if(color != null) {
+        if (color != null) {
             emit(AsyncOperation.success("Color loaded with id $colorId", color))
         } else {
             emit(AsyncOperation.error("Failed to load color with id $colorId"))
@@ -83,7 +83,7 @@ class GetColorAsync(private val repository: Repository) {
 // Animal Category
 // ----------------
 class GetAllAnimalCategories(private val repository: Repository) {
-    operator fun invoke() :Flow<AsyncOperation> = flow {
+    operator fun invoke(): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading animalCategories..."))
         repository.getAllAnimalCategories().collect() {
             emit(AsyncOperation.success("AnimalCategories loaded", it))
@@ -93,19 +93,29 @@ class GetAllAnimalCategories(private val repository: Repository) {
 }
 
 class CreateAnimalCategoryAsync(private val repository: Repository) {
-    operator fun invoke(newAnimalCategory: AnimalCategory) : Flow<AsyncOperation> = flow {
+    operator fun invoke(newAnimalCategory: AnimalCategory): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start creating animalCategory..."))
         val animalCategoryId = repository.insertAnimalCategory(newAnimalCategory)
-        emit(AsyncOperation.success("AnimalCategory saved with ID $animalCategoryId", animalCategoryId))
+        emit(
+            AsyncOperation.success(
+                "AnimalCategory saved with ID $animalCategoryId",
+                animalCategoryId
+            )
+        )
     }
 }
 
 class GetAnimalCategoryAsync(private val repository: Repository) {
-    operator fun invoke(animalCategoryId: Long) : Flow<AsyncOperation> = flow {
+    operator fun invoke(animalCategoryId: Long): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading animalCategory with id $animalCategoryId"))
         val animalCategory = repository.getAnimalCategory(animalCategoryId)
-        if(animalCategory != null) {
-            emit(AsyncOperation.success("AnimalCategory loaded with id $animalCategoryId", animalCategory))
+        if (animalCategory != null) {
+            emit(
+                AsyncOperation.success(
+                    "AnimalCategory loaded with id $animalCategoryId",
+                    animalCategory
+                )
+            )
         } else {
             emit(AsyncOperation.error("Failed to load animalCategory with id $animalCategoryId"))
         }
@@ -136,10 +146,10 @@ class GetUsersByRangeAsync(private val repository: Repository) {
 }
 
 class GetUserAsync(private val repository: Repository) {
-    operator fun invoke(userId: Long) : Flow<AsyncOperation> = flow {
+    operator fun invoke(userId: Long): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading user with id $userId"))
         val user = repository.getUser(userId)
-        if(user != null) {
+        if (user != null) {
             emit(AsyncOperation.success("Successfully loaded user with id $userId", user))
         } else {
             emit(AsyncOperation.error("Failed to load user with id $userId"))
@@ -148,7 +158,7 @@ class GetUserAsync(private val repository: Repository) {
 }
 
 class InsertUserAsync(private val repository: Repository) {
-    operator fun invoke(newUser: User) : Flow<AsyncOperation> = flow {
+    operator fun invoke(newUser: User): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start creating user..."))
         val userId = repository.insertUser(newUser)
         emit(AsyncOperation.success("Created user with id $userId", userId))
@@ -159,10 +169,10 @@ class InsertUserAsync(private val repository: Repository) {
 // User
 // ----------------
 class GetAddressAsync(private val repository: Repository) {
-    operator fun invoke(addressId: Long) : Flow<AsyncOperation> = flow {
+    operator fun invoke(addressId: Long): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading address with id $addressId"))
         val address = repository.getAddress(addressId)
-        if(address != null) {
+        if (address != null) {
             emit(AsyncOperation.success("Successfully loaded address with id $addressId", address))
         } else {
             emit(AsyncOperation.error("Failed to load address with id $addressId"))
@@ -171,7 +181,7 @@ class GetAddressAsync(private val repository: Repository) {
 }
 
 class InsertAddressAsync(private val repository: Repository) {
-    operator fun invoke(address: Address) : Flow<AsyncOperation> = flow {
+    operator fun invoke(address: Address): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start saving address..."))
         val addressId = repository.insertAddress(address)
         emit(AsyncOperation.success("Created address with id $addressId", addressId))
