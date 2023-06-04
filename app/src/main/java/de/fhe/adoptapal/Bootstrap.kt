@@ -20,6 +20,10 @@ import org.koin.core.component.inject
 import org.koin.core.context.startKoin
 import java.time.LocalDate
 import java.time.LocalDateTime
+import de.fhe.adoptapal.di.modules.androidCoreModule
+import de.fhe.adoptapal.di.modules.viewModelModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class Bootstrap : Application() {
 
@@ -31,8 +35,9 @@ class Bootstrap : Application() {
             androidContext(this@Bootstrap)
 
             // modules
-            // modules(androidCoreModule)
             modules(databaseModule)
+            modules(androidCoreModule)
+            modules(viewModelModule)
         }
 
         // test Database

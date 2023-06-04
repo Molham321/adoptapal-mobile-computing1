@@ -1,4 +1,4 @@
-package de.fhe.adoptapal.ui.screens.detail
+package de.fhe.adoptapal.ui.screens.animalDetail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,13 +16,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
 
+
 @Composable
-fun InfoCard() {
+fun AnimalInfoCard(name: String, gender: String, location: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -31,9 +33,9 @@ fun InfoCard() {
 
         Column(modifier = Modifier.align(Alignment.CenterVertically)) {
             Text(
-                text = "NAME",
+                text = name,
                 modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
-                color = MaterialTheme.colors.surface,
+                color = colorResource(id = R.color.text),
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.h5
             )
@@ -51,9 +53,9 @@ fun InfoCard() {
                 )
 
                 Text(
-                    text = "LOCATION",
+                    text = location,
                     modifier = Modifier.padding(8.dp, 12.dp, 12.dp, 0.dp),
-                    color = MaterialTheme.colors.surface,
+                    color = colorResource(id = R.color.text),
                     style = MaterialTheme.typography.caption
                 )
             }
@@ -63,12 +65,12 @@ fun InfoCard() {
             Text(
                 text = "12 mins ago",
                 modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
-                color = MaterialTheme.colors.surface,
+                color = colorResource(id = R.color.text),
                 style = MaterialTheme.typography.overline
             )
         }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-            GenderTag("GENDER")
+            GenderTag(gender)
         }
     }
 }
