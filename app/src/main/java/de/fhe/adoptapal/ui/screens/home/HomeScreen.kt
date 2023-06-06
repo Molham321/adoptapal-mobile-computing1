@@ -13,12 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import de.fhe.adoptapal.data.FakeDatabase
-import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
-import de.fhe.adoptapal.ui.screens.core.NavigationManager
-import de.fhe.adoptapal.ui.screens.core.Screen
 import de.fhe.adoptapal.ui.screens.util.FullscreenPlaceholderView
-import org.koin.androidx.compose.getKoin
 
 @Composable
 fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {

@@ -65,7 +65,7 @@ fun OwnerCard(name: String, bio: String, image: Int) {
 
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = bio ,
+                text = bio,
                 color = colorResource(id = R.color.text),
                 style = MaterialTheme.typography.caption
             )

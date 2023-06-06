@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation( Libs.Coroutines.core )
+    implementation(Libs.Coroutines.core)
 }
 
 java {

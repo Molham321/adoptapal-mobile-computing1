@@ -14,6 +14,9 @@
 .cxx
 local.properties
 
+# Created database schema
+data/schemas
+
 
 # Created by https://www.toptal.com/developers/gitignore/api/android,androidstudio,java,maven,gradle,jetbrains+all,visualstudiocode,macos,windows,linux,kotlin,git,tortoisegit,tower
 # Edit at https://www.toptal.com/developers/gitignore?templates=android,androidstudio,java,maven,gradle,jetbrains+all,visualstudiocode,macos,windows,linux,kotlin,git,tortoisegit,tower

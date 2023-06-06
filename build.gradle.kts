@@ -1,4 +1,3 @@
-
 plugins {
     id(Libs.Plugins.android_app) version Config.gradle_version apply false
     id(Libs.Plugins.android_library) version Config.gradle_version apply false
@@ -10,7 +9,7 @@ plugins {
     id(Libs.Plugins.gradle_versions) version Libs.Plugins.gradle_versions_version
 }
 
-tasks.register("clean",Delete::class){
+tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
 

@@ -1,8 +1,8 @@
 package de.fhe.adoptapal.data
 
+import de.fhe.adoptapal.R
 import de.fhe.adoptapal.model.Animal
 import de.fhe.adoptapal.model.Owner
-import  de.fhe.adoptapal.R
 
 object FakeDatabase {
     val owner = Owner("Spikey Sanju", "Developer & Pet Lover", R.drawable.user)

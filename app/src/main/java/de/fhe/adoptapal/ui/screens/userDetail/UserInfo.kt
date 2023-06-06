@@ -1,11 +1,9 @@
 package de.fhe.adoptapal.ui.screens.userDetail
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -55,7 +53,12 @@ fun UserInfo(
                     )
                     Spacer(Modifier.weight(1f))
                     Row(modifier = Modifier, horizontalArrangement = Arrangement.End) {
-                        Icon(modifier = Modifier.size(32.dp, 32.dp), imageVector = Icons.Outlined.LocationOn, contentDescription = null, tint = Color.Black)
+                        Icon(
+                            modifier = Modifier.size(32.dp, 32.dp),
+                            imageVector = Icons.Outlined.LocationOn,
+                            contentDescription = null,
+                            tint = Color.Black
+                        )
                     }
 
                 }

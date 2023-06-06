@@ -15,7 +15,6 @@ import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -46,7 +45,7 @@ sealed class Screen(
         override val destination = route
     }
 
-   // Actual Screen Definitions
+    // Actual Screen Definitions
 
     object Home : Screen(
         title = "Home",
@@ -87,6 +86,7 @@ sealed class Screen(
 
             appBarActions = {}
         }
+
         override fun navigationCommand(vararg value: Any) = object : NavigationCommand {
 
             override val arguments = listOf(
@@ -125,6 +125,7 @@ sealed class Screen(
         icon = Icons.Filled.Menu,
         route = "Login"
     )
+
     object Register : Screen(
         title = "Register",
         icon = Icons.Filled.Menu,

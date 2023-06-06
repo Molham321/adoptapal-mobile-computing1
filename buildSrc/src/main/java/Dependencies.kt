@@ -1,4 +1,4 @@
-import java.util.*
+import java.util.Locale
 
 object Libs {
 
@@ -49,7 +49,8 @@ object Libs {
             const val foundation = "androidx.compose.foundation:foundation:$version"
             const val layout = "androidx.compose.foundation:foundation-layout:$version"
             const val material = "androidx.compose.material:material:$version"
-            const val materialIconsExtended = "androidx.compose.material:material-icons-extended:$version"
+            const val materialIconsExtended =
+                "androidx.compose.material:material-icons-extended:$version"
             const val runtime = "androidx.compose.runtime:runtime:$version"
             const val runtimeLivedata = "androidx.compose.runtime:runtime-livedata:$version"
             const val tooling = "androidx.compose.ui:ui-tooling:$version"
@@ -71,7 +72,8 @@ object Libs {
             private const val version = "2.5.3"
             const val fragment = "androidx.navigation:navigation-fragment-ktx:$version"
             const val ui = "androidx.navigation:navigation-ui-ktx:$version"
-            const val dynamicFeature = "androidx.navigation:navigation-dynamic-features-fragment:$version"
+            const val dynamicFeature =
+                "androidx.navigation:navigation-dynamic-features-fragment:$version"
             const val test = "androidx.navigation:navigation-testing:$version"
             const val compose = "androidx.navigation:navigation-compose:$version"
         }
@@ -89,7 +91,8 @@ object Libs {
             private const val maps_compose_verion = "2.2.1"
             private const val play_services_version = "18.1.0"
             const val core = "com.google.maps.android:maps-compose:$maps_compose_verion"
-            const val play_services = "com.google.android.gms:play-services-maps:$play_services_version"
+            const val play_services =
+                "com.google.android.gms:play-services-maps:$play_services_version"
         }
 
         object MaterialDesign {
@@ -102,7 +105,7 @@ object Libs {
     object Room {
         private const val version = "2.5.1"
         const val runtime = "androidx.room:room-runtime:$version"
-        const val compiler ="androidx.room:room-compiler:$version"
+        const val compiler = "androidx.room:room-compiler:$version"
         const val ktx = "androidx.room:room-ktx:$version"
         const val testing = "androidx.room:room-testing:$version"
     }
@@ -152,7 +155,8 @@ object Libs {
 
         const val core = "com.squareup.retrofit2:retrofit:$retrofit_version"
         const val converter_moshi = "com.squareup.retrofit2:converter-moshi:$retrofit_version"
-        const val logging_interceptor = "com.squareup.okhttp3:logging-interceptor:$interceptor_version"
+        const val logging_interceptor =
+            "com.squareup.okhttp3:logging-interceptor:$interceptor_version"
     }
 
     object Ktor {
@@ -185,7 +189,8 @@ object Libs {
 
     @JvmStatic
     fun isNonStable(version: String): Boolean {
-        val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.uppercase(Locale.ROOT).contains(it) }
+        val stableKeyword =
+            listOf("RELEASE", "FINAL", "GA").any { version.uppercase(Locale.ROOT).contains(it) }
         val regex = "^[0-9,.v-]+(-r)?$".toRegex()
         val isStable = stableKeyword || regex.matches(version)
         return isStable.not()

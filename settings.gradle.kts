@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = ("Adoptapal")
-include (":app")
-include (":domain")
-include (":android-core")
-include (":data")
+include(":app")
+include(":domain")
+include(":android-core")
+include(":data")
