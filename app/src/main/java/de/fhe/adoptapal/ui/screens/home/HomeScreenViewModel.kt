@@ -26,6 +26,10 @@ class HomeScreenViewModel(
         navigationManager.navigate(Screen.Input.navigationCommand())
     }
 
+    fun navigateToSearch() {
+        navigationManager.navigate(Screen.Search.navigationCommand())
+    }
+
     fun navigateToAnimal(animalId: Int) {
         navigationManager.navigate(Screen.Detail.navigationCommand(animalId))
     }

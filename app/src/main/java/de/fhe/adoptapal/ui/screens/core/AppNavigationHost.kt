@@ -15,6 +15,7 @@ import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreen
 import de.fhe.adoptapal.ui.screens.map.MapScreen
 import de.fhe.adoptapal.ui.screens.register.RegisterScreen
+import de.fhe.adoptapal.ui.screens.search.SearchScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreen
 import org.koin.androidx.compose.getKoin
 import org.koin.core.parameter.parametersOf
@@ -84,6 +85,10 @@ fun AppNavigationHost(
         composable(Screen.Input.route) {
             onNavigation(Screen.Input)
             InputScreen()
+        }
+        composable(Screen.Search.route) {
+            onNavigation(Screen.Search)
+            SearchScreen()
         }
         composable(Screen.Login.route) {
             onNavigation(Screen.Login)

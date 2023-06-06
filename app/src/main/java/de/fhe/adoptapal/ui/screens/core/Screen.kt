@@ -12,6 +12,8 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Place
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.Composable
@@ -61,6 +63,12 @@ sealed class Screen(
                 ) {
                     Icon(Icons.Filled.Add, contentDescription = null)
                 }
+
+                IconButton(
+                    onClick = { viewModel.navigateToSearch() }
+                ) {
+                    Icon(Icons.Filled.Search, contentDescription = null)
+                }
             }
         }
     }
@@ -107,7 +115,11 @@ sealed class Screen(
         icon = Icons.Filled.Create,
         route = "Input"
     )
-
+    object Search : Screen(
+        title = "Search",
+        icon = Icons.Filled.Search,
+        route = "Search"
+    )
     object Login : Screen(
         title = "Login",
         icon = Icons.Filled.Menu,
