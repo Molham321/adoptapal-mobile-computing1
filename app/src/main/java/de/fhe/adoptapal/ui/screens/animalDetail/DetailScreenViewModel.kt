@@ -1,6 +1,7 @@
 package de.fhe.adoptapal.ui.screens.animalDetail
 
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.fhe.adoptapal.domain.Animal
@@ -14,25 +15,23 @@ class DetailScreenViewModel(
     private val animalId: Long,
     private val getAnimalAsync: GetAnimalAsync
 ) : ViewModel() {
-    var animal: Animal? = null
+
+    var animal = mutableStateOf<Animal?>(null)
     var dbOp = mutableStateOf(AsyncOperation.undefined())
 
     init {
-     animal  = this.getAnimalFromDb(animalId)
-}
+        getAnimalFromDb(animalId)
+    }
 
-    private fun getAnimalFromDb(id: Long) : Animal?{
 
+    private fun getAnimalFromDb(id: Long) {
         viewModelScope.launch {
-            getAnimalAsync.invoke(id).map {
+            getAnimalAsync.invoke(id).collect {
                 dbOp.value = it
                 if (it.status == AsyncOperationState.SUCCESS) {
-                    return@map it.payload
-                } else {
-                    return@map null
+                    animal.value = it.payload as Animal
                 }
             }
         }
-        return null
     }
 }
