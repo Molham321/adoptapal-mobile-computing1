@@ -1,14 +1,12 @@
 package de.fhe.adoptapal.ui.screens.animalDetail
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.GetAnimalAsync
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class DetailScreenViewModel(

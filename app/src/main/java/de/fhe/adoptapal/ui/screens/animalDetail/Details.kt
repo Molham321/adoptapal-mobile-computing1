@@ -53,7 +53,11 @@ fun Details(animal: Animal, modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            AnimalInfoCard(animal.name, animal.isMale.toString(), animal.supplier.address.toString())
+            AnimalInfoCard(
+                animal.name,
+                animal.isMale.toString(),
+                animal.supplier.address.toString()
+            )
         }
 
         // My story details
@@ -143,8 +147,10 @@ fun Details(animal: Animal, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(16.dp))
 
             animal.supplier.phoneNumber?.let {
-                OwnerCard(animal.supplier.name,
-                    it, 11)
+                OwnerCard(
+                    animal.supplier.name,
+                    it, 11
+                )
             }
         }
 

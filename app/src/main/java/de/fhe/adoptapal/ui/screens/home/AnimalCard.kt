@@ -77,8 +77,8 @@ fun AnimalCard(
                     text = buildString {
                         append(animal.birthday)
                         append(" | ")
-/*                        append(animal.description)
-                        append(" | ")*/
+                        /*                        append(animal.description)
+                                                append(" | ")*/
                         append(animal.animalCategory)
                     },
                     modifier = modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),

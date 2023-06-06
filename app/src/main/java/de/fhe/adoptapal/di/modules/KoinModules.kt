@@ -36,7 +36,7 @@ val androidCoreModule = module {
 val useCaseModule = module {
     factory { GetAllAnimals(get()) }
     factory { GetAnimalAsync(get()) }
-    }
+}
 
 val viewModelModule = module {
     viewModel { HomeScreenViewModel(get(), get()) }

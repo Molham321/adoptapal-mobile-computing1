@@ -4,8 +4,8 @@ import android.app.Application
 import android.util.Log
 import de.fhe.adoptapal.di.modules.androidCoreModule
 import de.fhe.adoptapal.di.modules.databaseModule
-import de.fhe.adoptapal.di.modules.viewModelModule
 import de.fhe.adoptapal.di.modules.useCaseModule
+import de.fhe.adoptapal.di.modules.viewModelModule
 import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AnimalCategory
