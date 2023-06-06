@@ -5,13 +5,13 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import de.fhe.adoptapal.model.Animal
+import de.fhe.adoptapal.domain.Animal
 
 @Composable
 fun AnimalList(
     animals: List<Animal>,
     modifier: Modifier = Modifier,
-    onItemPressed: (itemId: Int) -> Unit = {}
+    onItemPressed: (itemId: Long) -> Unit = {}
 ) {
     val scrollState = rememberLazyListState()
 

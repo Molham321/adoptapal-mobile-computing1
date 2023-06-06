@@ -6,9 +6,12 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun DetailScreen(vm: DetailScreenViewModel, modifier: Modifier = Modifier) {
+
+    val animal = vm.animal
     Column(modifier = modifier) {
+
         Details(
-            animalId = vm.animalId,
+            animal = animal!! ,
             modifier = modifier
         )
     }

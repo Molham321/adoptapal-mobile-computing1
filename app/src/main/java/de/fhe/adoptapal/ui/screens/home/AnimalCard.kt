@@ -26,7 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
-import de.fhe.adoptapal.model.Animal
+import de.fhe.adoptapal.domain.Animal
 
 //----------------------------------------------
 // ItemAnimalCard Component for HomeScreen
@@ -35,7 +35,7 @@ import de.fhe.adoptapal.model.Animal
 fun AnimalCard(
     animal: Animal,
     modifier: Modifier = Modifier,
-    onItemPressed: (itemId: Int) -> Unit = {}
+    onItemPressed: (itemId: Long) -> Unit = {}
 ) {
     Card(
         modifier = modifier
@@ -51,7 +51,7 @@ fun AnimalCard(
                 .padding(16.dp)
         ) {
 
-            val image: Painter = painterResource(id = animal.image)
+            val image: Painter = painterResource(id = R.drawable.hund /*animal.image*/)
             Image(
                 modifier = modifier
                     .size(80.dp, 80.dp)
@@ -75,11 +75,11 @@ fun AnimalCard(
 
                 Text(
                     text = buildString {
-                        append(animal.age)
+                        append(animal.birthday)
                         append(" | ")
-                        append(animal.breed)
-                        append(" | ")
-                        append(animal.art)
+/*                        append(animal.description)
+                        append(" | ")*/
+                        append(animal.animalCategory)
                     },
                     modifier = modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
                     color = Color.Gray,
@@ -96,11 +96,13 @@ fun AnimalCard(
                         tint = Color.Black
                     )
 
-                    Text(
-                        text = animal.location,
-                        modifier = modifier.padding(8.dp, 12.dp, 12.dp, 0.dp),
-                        color = Color.Gray,
-                    )
+                    animal.supplier.address?.city?.let {
+                        Text(
+                            text = it,
+                            modifier = modifier.padding(8.dp, 12.dp, 12.dp, 0.dp),
+                            color = Color.Gray,
+                        )
+                    }
                 }
             }
             Row(
@@ -108,7 +110,7 @@ fun AnimalCard(
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(
-                    text = animal.gender,
+                    text = animal.isMale.toString(),
                     modifier = modifier.padding(8.dp, 12.dp, 12.dp, 0.dp),
                     color = Color.Black,
                 )

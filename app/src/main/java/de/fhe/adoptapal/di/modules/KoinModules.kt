@@ -2,6 +2,7 @@ package de.fhe.adoptapal.di.modules
 
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
+import de.fhe.adoptapal.domain.GetAllAnimals
 import de.fhe.adoptapal.domain.Repository
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
@@ -30,8 +31,15 @@ val androidCoreModule = module {
         NavigationManager()
     }
 }
+    val useCaseModule = module {
+        factory { GetAllAnimals(get()) }
+//        factory { GetUsersAsync(get()) }
+//        factory { AddUserAsync(get()) }
+//        factory { LoadUsersFromNetwork(get(), get()) }
+    }
+
 
 val viewModelModule = module {
-    viewModel { HomeScreenViewModel(get()) }
-    viewModel { DetailScreenViewModel(get()) }
+    viewModel { HomeScreenViewModel(get(), get()) }
+    viewModel { DetailScreenViewModel(get(), get()) }
 }

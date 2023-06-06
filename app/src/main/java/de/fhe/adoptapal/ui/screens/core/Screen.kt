@@ -91,7 +91,7 @@ sealed class Screen(
 
             override val arguments = listOf(
                 navArgument("animalId") {
-                    type = NavType.IntType
+                    type = NavType.LongType
                 }
             )
             override val destination = "Detail/${value[0]}"

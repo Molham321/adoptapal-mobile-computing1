@@ -26,24 +26,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
-import de.fhe.adoptapal.data.FakeDatabase
+import de.fhe.adoptapal.domain.Animal
 
 
 // -----------------------------------------------------
 // Details
 // -----------------------------------------------------
 @Composable
-fun Details(animalId: Int, modifier: Modifier = Modifier) {
+fun Details(animal: Animal, modifier: Modifier = Modifier) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .background(color = colorResource(id = R.color.background))
     ) {
 
-        val animal = FakeDatabase.AnimalList[animalId]
-
         item {
-            val dogImage: Painter = painterResource(animal.image)
+            val dogImage: Painter = painterResource(R.drawable.hund /*animal.imageFilePath*/)
             Image(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -55,7 +53,7 @@ fun Details(animalId: Int, modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            AnimalInfoCard(animal.name, animal.gender, animal.location)
+            AnimalInfoCard(animal.name, animal.isMale.toString(), animal.supplier.address.toString())
         }
 
         // My story details
@@ -66,7 +64,7 @@ fun Details(animalId: Int, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "ABOUT ${animal.name} \n" +
-                        "${animal.about}",
+                        "${animal.description}",
 
                 modifier = Modifier
                     .fillMaxWidth()
@@ -81,7 +79,7 @@ fun Details(animalId: Int, modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "Rasse: ${animal.breed}",
+                text = "Rasse: ${"Hunde Breed"/*animal.breed*/}",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -91,14 +89,14 @@ fun Details(animalId: Int, modifier: Modifier = Modifier) {
             )
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                GenderTag(animal.gender, Color.Red)
-                GenderTag(animal.age.toString(), Color.Blue)
+                GenderTag(animal.isMale.toString(), Color.Red)
+                GenderTag(animal.birthday.toString(), Color.Blue)
                 GenderTag(animal.weight.toString(), Color.DarkGray)
             }
 
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "Alter: ${animal.age}",
+                text = "Alter: ${animal.birthday}",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -109,7 +107,7 @@ fun Details(animalId: Int, modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "Geschlecht: ${animal.gender}",
+                text = "Geschlecht: ${animal.isMale}",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -131,8 +129,8 @@ fun Details(animalId: Int, modifier: Modifier = Modifier) {
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                InfoCard(title = "Age", value = animal.age.toString().plus(" yrs"))
-                InfoCard(title = "Color", value = animal.color)
+                InfoCard(title = "Age", value = animal.birthday.toString().plus(" yrs"))
+                InfoCard(title = "Color", value = animal.color.name)
                 InfoCard(title = "Weight", value = animal.weight.toString().plus("Kg"))
             }
         }
@@ -144,7 +142,10 @@ fun Details(animalId: Int, modifier: Modifier = Modifier) {
             Title(title = "Owner info")
             Spacer(modifier = Modifier.height(16.dp))
 
-            OwnerCard(animal.owner.name, animal.owner.bio, animal.owner.image)
+            animal.supplier.phoneNumber?.let {
+                OwnerCard(animal.supplier.name,
+                    it, 11)
+            }
         }
 
         // CTA - Adopt me button

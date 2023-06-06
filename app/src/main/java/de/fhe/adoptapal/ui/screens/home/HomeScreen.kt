@@ -17,11 +17,11 @@ import de.fhe.adoptapal.ui.screens.util.FullscreenPlaceholderView
 
 @Composable
 fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
-    val animalList = vm.animalList
+    val animalList = remember { vm.animalList }
 
     Column(modifier = modifier) {
 
-        if (animalList.isNotEmpty()) {
+        if (animalList.value.isNotEmpty()) {
 
             SearchBar(onSearch = {})
 
@@ -33,7 +33,7 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
             }
 
             AnimalList(
-                animalList,
+                animalList.value,
                 modifier = modifier
             ) {
                 vm.navigateToAnimal(it)

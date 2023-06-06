@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
-import de.fhe.adoptapal.model.Animal
+import de.fhe.adoptapal.domain.Animal
 
 @Composable
 fun Filter(onSubmit: (Animal) -> Unit) {

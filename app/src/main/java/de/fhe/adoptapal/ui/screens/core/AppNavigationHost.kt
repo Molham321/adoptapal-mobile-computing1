@@ -66,7 +66,7 @@ fun AppNavigationHost(
             Screen.Detail.route,
             Screen.Detail.navigationCommand(0).arguments
         ) { entry ->
-            val animalId = entry.arguments?.getInt("animalId")
+            val animalId = entry.arguments?.getLong("animalId")
             val vm by getKoin().inject<DetailScreenViewModel>(parameters = { parametersOf(animalId) })
 
             Screen.Detail.prepareAppBarActions(LocalContext.current, vm)
