@@ -1,13 +1,9 @@
 package de.fhe.adoptapal.ui.screens.home
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -17,11 +13,11 @@ import de.fhe.adoptapal.ui.screens.util.FullscreenPlaceholderView
 
 @Composable
 fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
-    val animalList = vm.animalList
+    val animalList = remember { vm.animalList }
 
     Column(modifier = modifier) {
 
-        if (animalList.isNotEmpty()) {
+        if (animalList.value.isNotEmpty()) {
 
             SearchBar(onSearch = {})
 
@@ -33,7 +29,7 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
             }
 
             AnimalList(
-                animalList,
+                animalList.value,
                 modifier = modifier
             ) {
                 vm.navigateToAnimal(it)
