@@ -52,6 +52,16 @@ data class User(
     var phoneNumber: String?
 )
 
+//data class User(
+//    var name: String,
+//    var email: String,
+//    var phoneNumber: String?,
+//    var address: MutableList<Address> = mutableListOf(),
+//    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
+//    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
+//    var id: Long = 0
+//)
+
 data class Address(
     var id: Long = 0,
     var createdTimestamp: LocalDateTime = LocalDateTime.now(),

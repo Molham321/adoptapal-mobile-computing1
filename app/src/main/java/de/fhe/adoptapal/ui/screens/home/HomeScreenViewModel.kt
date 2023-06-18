@@ -44,6 +44,10 @@ class HomeScreenViewModel(
         navigationManager.navigate(Screen.Search.navigationCommand())
     }
 
+    fun navigateToLogin() {
+        navigationManager.navigate(Screen.Login.navigationCommand())
+    }
+
     fun navigateToAnimal(animalId: Long) {
         navigationManager.navigate(Screen.Detail.navigationCommand(animalId))
     }

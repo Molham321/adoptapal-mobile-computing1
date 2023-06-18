@@ -27,76 +27,11 @@ import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.R
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Preview
 @Composable
-fun RegisterScreen() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = colorResource(id = R.color.white)),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.height(100.dp))
-        Text(
-            text = "Willkommen bei AdoptAPal!",
-
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp, 0.dp, 16.dp, 0.dp),
-            fontSize = 25.sp,
-            color = colorResource(id = R.color.black),
-            style = MaterialTheme.typography.h1,
-            textAlign = TextAlign.Center
-        )
-        Spacer(modifier = Modifier.height(20.dp))
-        InputField(inputPlaceholder = "Name")
-        Text(
-            text = "*ihr Name oder der Name ihrer Einrichtung",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp, 0.dp, 16.dp, 0.dp),
-            fontSize = 10.sp,
-            color = colorResource(id = R.color.black),
-            textAlign = TextAlign.Center
-        )
-        InputField(inputPlaceholder = "Email-Adresse")
-        InputField(inputPlaceholder = "Telefonnummer")
-//        Row(
-//            modifier = Modifier
-//                .fillMaxSize()
-//        ) {
-//            InputField(inputPlaceholder = "Passwort")
-//            InputField(inputPlaceholder = "Passwort wiederholen")
-//        }
-        InputField(inputPlaceholder = "Passwort")
-        InputField(inputPlaceholder = "Passwort wiederholen")
-        Spacer(modifier = Modifier.height(20.dp))
-        Button(
-            onClick = {},
-            shape = RoundedCornerShape(20.dp),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.Green
-            ),
-            modifier = Modifier
-                .width(250.dp)
-                .padding(16.dp, 8.dp, 16.dp, 8.dp),
-
-            ) {
-            Text(text = "Registrieren")
-        }
-        Button(
-            onClick = {},
-            shape = RoundedCornerShape(20.dp),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.Transparent
-            ),
-            elevation = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp, 8.dp, 16.dp, 8.dp),
-
-            ) {
-            Text(text = "Bereits Mitglied? zum Login", textDecoration = TextDecoration.Underline)
+fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
+    Column( modifier = modifier) {
+        Register(modifier = modifier) {
+            vm.navigateToLogin()
         }
     }
 }
