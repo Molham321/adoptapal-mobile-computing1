@@ -4,6 +4,7 @@ import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AnimalCategory
 import de.fhe.adoptapal.domain.Color
+import de.fhe.adoptapal.domain.Rating
 import de.fhe.adoptapal.domain.User
 
 fun AnimalModel.toDomain(supplier: User, animalCategory: AnimalCategory, color: Color) = Animal(
@@ -18,7 +19,8 @@ fun AnimalModel.toDomain(supplier: User, animalCategory: AnimalCategory, color: 
     description = description,
     imageFilePath = imageFilePath,
     isMale = isMale,
-    weight = weight
+    weight = weight,
+    isFavorite = isFavorite
 )
 
 fun Animal.fromDomain() =
@@ -33,7 +35,8 @@ fun Animal.fromDomain() =
         colorId = color.id,
         imageFilePath = imageFilePath,
         isMale = isMale,
-        weight = weight
+        weight = weight,
+        isFavorite = isFavorite
     )
 
 
@@ -105,4 +108,25 @@ fun User.fromDomain() = UserModel(
     addressId = address?.id,
     phoneNumber = phoneNumber,
     useCoarseLocation = useCoarseLocation
+)
+
+fun RatingModel.toDomain(seeker: User, supplier: User) = Rating(
+    id = id,
+    createdTimestamp = createdTimestamp,
+    lastChangeTimestamp = lastChangeTimestamp,
+    seeker = seeker,
+    supplier = supplier,
+    rating = rating,
+    comment = comment
+)
+
+fun Rating.fromDomain() = RatingModel(
+    id = id,
+    createdTimestamp = createdTimestamp,
+    lastChangeTimestamp = lastChangeTimestamp,
+    supplierId = supplier.id,
+    seekerId = seeker.id,
+    rating = rating,
+    comment = comment
+
 )

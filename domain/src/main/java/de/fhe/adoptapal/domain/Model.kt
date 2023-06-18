@@ -100,3 +100,18 @@ data class AnimalCategory(
     var name: String
 )
 
+
+data class Rating(
+    var id: Long = 0,
+    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
+    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
+    var seeker: User,
+    var supplier: User,
+    var rating: RatingEnum,
+    var comment: String
+)
+
+
+enum class RatingEnum {
+    ONE_STAR, TWO_STARS, THREE_STARS, FOUR_STARS, FIVE_STARS
+}

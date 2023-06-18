@@ -2,6 +2,7 @@ package de.fhe.adoptapal.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import de.fhe.adoptapal.domain.RatingEnum
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -41,7 +42,8 @@ data class RatingModel(
     var isDeleted: Boolean = false,
     val supplierId: Long,
     val seekerId: Long,
-    val rating: RatingEnum
+    val rating: RatingEnum,
+    val comment: String
 )
 
 @Entity

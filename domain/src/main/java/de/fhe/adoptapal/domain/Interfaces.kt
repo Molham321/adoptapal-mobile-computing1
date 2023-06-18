@@ -5,9 +5,13 @@ import kotlinx.coroutines.flow.Flow
 interface Repository {
     // Animals
     fun getAllAnimals(): Flow<List<Animal>>
+    fun getAllFavoriteAnimals(): Flow<List<Animal>>
+    fun getAnimalsByRange(location: Location): Flow<List<Animal>>
     suspend fun getAnimal(animalId: Long): Animal?
     suspend fun insertAnimal(animal: Animal): Long
     suspend fun deleteAnimal(animal: Animal)
+
+
 
     // Colors
     fun getAllColors(): Flow<List<Color>>
@@ -29,4 +33,11 @@ interface Repository {
     // Address
     suspend fun getAddress(addressId: Long): Address?
     suspend fun insertAddress(address: Address): Long
+
+    // Rating
+    suspend fun getRating(ratingId: Long): Rating?
+    suspend fun insertRating(rating: Rating): Long
+    suspend fun getAllRatingsBySupplierIdAsFlow(supplierId: Long): Flow<List<Rating>>
+    suspend fun getAllRatingsBySeekerIdAsFlow(seekerId: Long): Flow<List<Rating>>
+
 }
