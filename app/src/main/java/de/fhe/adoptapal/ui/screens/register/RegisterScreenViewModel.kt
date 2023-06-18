@@ -17,20 +17,20 @@ class RegisterScreenViewModel(
 
     val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
 
-//    fun addUser(userName: String, userEmail: String, userPhoneNumber: String) {
-//        viewModelScope.launch {
-//
-//            if (userName.isBlank() || userEmail.isBlank() || userPhoneNumber.isBlank() ) {
-//                saveFeedbackFlow.emit(AsyncOperation.error("User name, email and phone are missing"))
-//            } else {
-//                val newUser = User(userName, userEmail, userPhoneNumber)
-//
-//                InsertUserAsyncUseCase(newUser).collect {
-//                    saveFeedbackFlow.emit(it)
-//                }
-//            }
-//        }
-//    }
+    fun addUser(userName: String, userEmail: String, userPhoneNumber: String) {
+        viewModelScope.launch {
+
+            if (userName.isBlank() || userEmail.isBlank() || userPhoneNumber.isBlank() ) {
+                saveFeedbackFlow.emit(AsyncOperation.error("User name, email and phone are missing"))
+            } else {
+                val newUser = User(userName, userEmail, userPhoneNumber)
+
+                InsertUserAsyncUseCase(newUser).collect {
+                    saveFeedbackFlow.emit(it)
+                }
+            }
+        }
+    }
 
     fun navigateToLogin() {
         navigationManager.navigate(Screen.Login.navigationCommand())

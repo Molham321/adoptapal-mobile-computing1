@@ -145,15 +145,7 @@ sealed class Screen(
         title = "Register",
         icon = Icons.Filled.Menu,
         route = "Register"
-    ) {
-        override fun prepareAppBarActions(vararg values: Any) {
-            if (values[0] !is RegisterScreenViewModel)
-                error("First Parameter must be of type *RegisterScreenViewModel*")
-            val viewModel = values[0] as RegisterScreenViewModel
-
-            appBarActions = {}
-        }
-    }
+    )
 
     object Undefined : Screen(
         title = "Undefined",

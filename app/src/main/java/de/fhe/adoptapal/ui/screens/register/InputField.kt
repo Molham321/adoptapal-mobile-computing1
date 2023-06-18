@@ -11,15 +11,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 
 @Composable
 fun InputField(
-    // inputText: TextFieldValue,
+    text: TextFieldValue,
     editing: Boolean = false,
-    // onTextChange: (TextFieldValue) -> Unit
+    onTextChange: (TextFieldValue) -> Unit,
     inputPlaceholder: String = ""
 ) {
     val focusManager = LocalFocusManager.current
@@ -27,8 +28,8 @@ fun InputField(
     if (!editing) focusManager.clearFocus()
 
     OutlinedTextField(
-        value = inputPlaceholder,
-        onValueChange = { newValue -> "value changed" },
+        value = text,
+        onValueChange = { newValue -> onTextChange(newValue) },
         modifier = Modifier
             .padding(8.dp),
         shape = RoundedCornerShape(20.dp),
@@ -43,8 +44,8 @@ fun InputField(
 
 }
 
-@Preview
-@Composable
-fun InputFieldPreview() {
-    InputField(inputPlaceholder = "Name")
-}
+//@Preview
+//@Composable
+//fun InputFieldPreview() {
+//    InputField(inputPlaceholder = "Name")
+//}

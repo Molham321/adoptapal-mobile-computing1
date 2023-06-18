@@ -100,11 +100,8 @@ fun AppNavigationHost(
             LoginScreen(vm)
         }
         composable(Screen.Register.route) {
-            val vm by getKoin().inject<RegisterScreenViewModel>()
-
-            Screen.Register.prepareAppBarActions(vm)
             onNavigation(Screen.Register)
-            RegisterScreen(vm)
+            RegisterScreen()
         }
     }
 }
