@@ -10,13 +10,14 @@ import de.fhe.adoptapal.domain.GetAddressAsync
 import de.fhe.adoptapal.domain.GetAllAnimalCategories
 import de.fhe.adoptapal.domain.GetAllAnimals
 import de.fhe.adoptapal.domain.GetAllColors
+import de.fhe.adoptapal.domain.GetAllFavoriteAnimalsAsync
 import de.fhe.adoptapal.domain.GetAllRatingsBySeekerId
 import de.fhe.adoptapal.domain.GetAllRatingsBySupplierId
 import de.fhe.adoptapal.domain.GetAllUsers
 import de.fhe.adoptapal.domain.GetAnimalAsync
+import de.fhe.adoptapal.domain.GetAnimalByRangeAsync
 import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
 import de.fhe.adoptapal.domain.GetColorAsync
-import de.fhe.adoptapal.domain.GetAllFavoriteAnimalsAsync
 import de.fhe.adoptapal.domain.GetRatingAsync
 import de.fhe.adoptapal.domain.GetUserAsync
 import de.fhe.adoptapal.domain.GetUsersByRangeAsync
@@ -54,6 +55,7 @@ val androidCoreModule = module {
 val useCaseModule = module {
     // animal
     factory { GetAllAnimals(get()) }
+    factory { GetAnimalByRangeAsync(get()) }
     factory { CreateAnimalAsync(get()) }
     factory { GetAnimalAsync(get()) }
     factory { GetAllFavoriteAnimalsAsync(get()) }

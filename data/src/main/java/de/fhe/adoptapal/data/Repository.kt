@@ -40,8 +40,18 @@ class RepositoryImpl(
         }
     }
 
-    override fun getAnimalsByRange(location: Location): Flow<List<Animal>> {
-        TODO("Not yet implemented")
+    override fun getAnimalsByRange(location: Location, range: Double): Flow<List<Animal>> {
+        return this.getAllAnimals().map { animalList ->
+            animalList.filter { animal ->
+                animal.supplier.address?.let {
+                    location.isWithinRangeOf(
+                        it.latitude,
+                        it.longitude,
+                        range
+                    )
+                } ?: false
+            }
+        }
     }
 
 
@@ -123,8 +133,13 @@ class RepositoryImpl(
         }
     }
 
-    override fun getUsersByRange(location: Location, distance: Int): Flow<List<User>> {
-        TODO("Not yet implemented")
+    override fun getUsersByRange(location: Location, distance: Double): Flow<List<User>> {
+        return this.getAllUsers().map { userList ->
+            userList.filter { user ->
+                user.address?.let { location.isWithinRangeOf(it.latitude, it.longitude, distance) }
+                    ?: false
+            }
+        }
     }
 
     override suspend fun getUser(userId: Long): User? {

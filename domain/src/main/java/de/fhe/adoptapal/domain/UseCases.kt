@@ -17,6 +17,16 @@ class GetAllAnimals(private val repository: Repository) {
     }
 }
 
+class GetAnimalByRangeAsync(private val repository: Repository) {
+    operator fun invoke(location: Location, distance: Double): Flow<AsyncOperation> = flow {
+        emit(AsyncOperation.loading("Start loading animals by range..."))
+        repository.getUsersByRange(location, distance).collect {
+            emit(AsyncOperation.success("Users loaded", it))
+            emit(AsyncOperation.undefined())
+        }
+    }
+}
+
 class CreateAnimalAsync(private val repository: Repository) {
     operator fun invoke(newAnimal: Animal): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start creating animal..."))
@@ -146,15 +156,13 @@ class GetAllUsers(private val repository: Repository) {
 }
 
 class GetUsersByRangeAsync(private val repository: Repository) {
-    // TODO implement
-
-//    operator fun invoke(location: Location, distance: Int): Flow<AsyncOperation> = flow {
-//        emit(AsyncOperation.loading("Start loading users..."))
-//        repository.getUsersByRange(location, distance).collect {
-//            emit(AsyncOperation.success("Users loaded", it))
-//            emit(AsyncOperation.undefined())
-//        }
-//    }
+    operator fun invoke(location: Location, distance: Double): Flow<AsyncOperation> = flow {
+        emit(AsyncOperation.loading("Start loading users by range..."))
+        repository.getUsersByRange(location, distance).collect {
+            emit(AsyncOperation.success("Users loaded", it))
+            emit(AsyncOperation.undefined())
+        }
+    }
 }
 
 class GetUserAsync(private val repository: Repository) {

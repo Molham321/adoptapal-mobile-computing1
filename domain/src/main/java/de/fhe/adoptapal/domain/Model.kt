@@ -2,6 +2,11 @@ package de.fhe.adoptapal.domain
 
 import java.time.LocalDate
 import java.time.LocalDateTime
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 
 enum class AsyncOperationState {
@@ -68,7 +73,62 @@ data class Address(
 data class Location(
     var latitude: Double = 0.0,
     var longitude: Double = 0.0
-)
+) {
+
+    fun calculateDistanceTo(lat2: Double, long2: Double): Double {
+        return calculateDistance(this.latitude, this.longitude, lat2, long2)
+    }
+
+    fun isWithinRangeOf(lat2: Double, long2: Double, distanceInKm: Double): Boolean {
+        return isLocationWithinRange(
+            this.latitude,
+            this.longitude,
+            lat2,
+            long2,
+            distanceInKm.toDouble()
+        )
+    }
+
+    companion object {
+        private const val EARTH_RADIUS = 6371.0 // Earth's radius in kilometers
+
+        /**
+         * calculate if the distance between two LatLong points is in a range in KM
+         */
+        fun isLocationWithinRange(
+            lat1: Double,
+            lon1: Double,
+            lat2: Double,
+            lon2: Double,
+            rangeInKm: Double
+        ): Boolean {
+            val distance = calculateDistance(lat1, lon1, lat2, lon2)
+            return distance <= rangeInKm
+        }
+
+        /**
+         * calculate the distance between two LatLong points
+         */
+        fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
+            // Convert latitude and longitude to radians
+            val lat1Rad = Math.toRadians(lat1)
+            val lon1Rad = Math.toRadians(lon1)
+            val lat2Rad = Math.toRadians(lat2)
+            val lon2Rad = Math.toRadians(lon2)
+
+            // Calculate the differences between the coordinates
+            val dLat = lat2Rad - lat1Rad
+            val dLon = lon2Rad - lon1Rad
+
+            // Apply the Haversine formula
+            val a = sin(dLat / 2).pow(2) + cos(lat1Rad) * cos(lat2Rad) * sin(dLon / 2).pow(2)
+            val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+            val distance = EARTH_RADIUS * c
+
+            return distance
+        }
+    }
+}
 
 data class Animal(
     var id: Long = 0,

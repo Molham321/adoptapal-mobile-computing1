@@ -6,11 +6,10 @@ interface Repository {
     // Animals
     fun getAllAnimals(): Flow<List<Animal>>
     fun getAllFavoriteAnimals(): Flow<List<Animal>>
-    fun getAnimalsByRange(location: Location): Flow<List<Animal>>
+    fun getAnimalsByRange(location: Location, range: Double): Flow<List<Animal>>
     suspend fun getAnimal(animalId: Long): Animal?
     suspend fun insertAnimal(animal: Animal): Long
     suspend fun deleteAnimal(animal: Animal)
-
 
 
     // Colors
@@ -26,7 +25,7 @@ interface Repository {
 
     // User
     fun getAllUsers(): Flow<List<User>>
-    fun getUsersByRange(location: Location, distance: Int): Flow<List<User>>
+    fun getUsersByRange(location: Location, range: Double): Flow<List<User>>
     suspend fun getUser(userId: Long): User?
     suspend fun insertUser(user: User): Long
 
