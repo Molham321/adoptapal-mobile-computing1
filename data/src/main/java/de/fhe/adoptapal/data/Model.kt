@@ -15,7 +15,9 @@ data class AddressModel(
     val houseNumber: String,
     val street: String,
     val city: String,
-    val zipCode: String
+    val zipCode: String,
+    val latitude: Double,
+    val longitude: Double
 )
 
 @Entity
@@ -27,7 +29,8 @@ data class UserModel(
     val name: String,
     val email: String,
     val addressId: Long?,
-    val phoneNumber: String?
+    val phoneNumber: String?,
+    val useCoarseLocation: Boolean
 )
 
 @Entity
@@ -55,7 +58,8 @@ data class AnimalModel(
     val colorId: Long,
     val imageFilePath: String?,
     val isMale: Boolean,
-    val weight: Float
+    val weight: Float,
+    val isFavorite: Boolean
 )
 
 @Entity
@@ -87,12 +91,3 @@ data class RequestModel(
     val description: String
 )
 
-@Entity
-data class FavoriteModel(
-    @PrimaryKey(autoGenerate = true) var id: Long = 0,
-    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
-    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
-    var isDeleted: Boolean = false,
-    val seekerId: Long,
-    val animalId: Long
-)

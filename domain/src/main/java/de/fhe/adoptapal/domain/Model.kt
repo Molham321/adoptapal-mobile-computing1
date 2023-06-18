@@ -49,7 +49,8 @@ data class User(
     var name: String,
     var email: String,
     var address: Address?,
-    var phoneNumber: String?
+    var phoneNumber: String?,
+    var useCoarseLocation: Boolean
 )
 
 data class Address(
@@ -59,7 +60,9 @@ data class Address(
     var houseNumber: String,
     var street: String,
     var city: String,
-    var zipCode: String
+    var zipCode: String,
+    var latitude: Double,
+    var longitude: Double
 )
 
 data class Location(
@@ -79,7 +82,8 @@ data class Animal(
     var color: Color,
     val imageFilePath: String?,
     val isMale: Boolean,
-    val weight: Float
+    val weight: Float,
+    val isFavorite: Boolean
 )
 
 data class Color(

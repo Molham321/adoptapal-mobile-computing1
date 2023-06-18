@@ -110,17 +110,32 @@ class DbTest : KoinComponent {
             )
 
             // create address
-            val address = Address(
+            val address1 = Address(
                 id = 1,
                 createdTimestamp = LocalDateTime.of(2023, 5, 30, 22, 11),
                 lastChangeTimestamp = LocalDateTime.now(),
-                houseNumber = "17a",
+                houseNumber = "17",
                 street = "AltonaerStraße",
                 city = "Erfurt",
-                zipCode = "55192"
+                zipCode = "99085",
+                latitude = 50.985522,
+                longitude = 11.038992
             )
-            repo.insertAddress(address)
 
+            val address2 = Address(
+                id = 1,
+                createdTimestamp = LocalDateTime.of(2023, 5, 30, 22, 11),
+                lastChangeTimestamp = LocalDateTime.now(),
+                houseNumber = "10",
+                street = "Erfurter Straße",
+                city = "Weimar",
+                zipCode = "99423",
+                latitude = 50.980106,
+                longitude = 11.322003
+            )
+
+            repo.insertAddress(address1)
+            repo.insertAddress(address2)
 
             // create user
             val user1 = User(
@@ -129,8 +144,9 @@ class DbTest : KoinComponent {
                 lastChangeTimestamp = LocalDateTime.now(),
                 name = "Hans Meyer",
                 email = "hans.meyer@fakemail.io",
-                address = address,
-                phoneNumber = null
+                address = address1,
+                phoneNumber = null,
+                useCoarseLocation = true
             )
             val user2 = User(
                 id = 2,
@@ -138,8 +154,9 @@ class DbTest : KoinComponent {
                 lastChangeTimestamp = LocalDateTime.now(),
                 name = "Gabi Schnitzler",
                 email = "gabi.schnitzler@tierheim.de",
-                address = address,
-                phoneNumber = null
+                address = address2,
+                phoneNumber = null,
+                useCoarseLocation = false
             )
             repo.insertUser(user1)
             repo.insertUser(user2)

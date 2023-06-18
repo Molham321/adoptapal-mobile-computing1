@@ -70,7 +70,9 @@ fun AddressModel.toDomain() = Address(
     houseNumber = houseNumber,
     street = street,
     city = city,
-    zipCode = zipCode
+    zipCode = zipCode,
+    latitude = latitude,
+    longitude = longitude
 )
 
 fun Address.fromDomain() = AddressModel(
@@ -79,7 +81,9 @@ fun Address.fromDomain() = AddressModel(
     houseNumber = houseNumber,
     street = street,
     city = city,
-    zipCode = zipCode
+    zipCode = zipCode,
+    latitude = latitude,
+    longitude = longitude
 )
 
 fun UserModel.toDomain(address: Address?) = User(
@@ -89,7 +93,8 @@ fun UserModel.toDomain(address: Address?) = User(
     name = name,
     email = email,
     address = address,
-    phoneNumber = phoneNumber
+    phoneNumber = phoneNumber,
+    useCoarseLocation = useCoarseLocation
 )
 
 fun User.fromDomain() = UserModel(
@@ -98,5 +103,6 @@ fun User.fromDomain() = UserModel(
     name = name,
     email = email,
     addressId = address?.id,
-    phoneNumber = phoneNumber
+    phoneNumber = phoneNumber,
+    useCoarseLocation = useCoarseLocation
 )
