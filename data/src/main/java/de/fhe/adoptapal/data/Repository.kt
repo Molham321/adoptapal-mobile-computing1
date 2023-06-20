@@ -5,6 +5,7 @@ import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AnimalCategory
 import de.fhe.adoptapal.domain.Color
 import de.fhe.adoptapal.domain.Location
+import de.fhe.adoptapal.domain.Rating
 import de.fhe.adoptapal.domain.Repository
 import de.fhe.adoptapal.domain.User
 import kotlinx.coroutines.flow.Flow
@@ -15,20 +16,44 @@ class RepositoryImpl(
     private val addressModelDao: AddressModelDao,
     private val ratingModelDao: RatingModelDao,
     private val animalModelDao: AnimalModelDao,
-    private val favoriteModelDao: FavoriteModelDao,
     private val animalCategoryModelDao: AnimalCategoryModelDao,
     private val colorModelDao: ColorModelDao,
     private val requestModelDao: RequestModelDao
 ) : Repository {
 
+    // ----------------
+    // Animal
+    // ----------------
     override fun getAllAnimals(): Flow<List<Animal>> {
         return animalModelDao.getAllAsFlow().map { animalEntityList ->
             animalEntityList.map { animalEntity ->
-                val animal = getAnimalWithContent(animalEntity)
-                animal
+                getAnimalWithContent(animalEntity)
             }
         }
     }
+
+    override fun getAllFavoriteAnimals(): Flow<List<Animal>> {
+        return animalModelDao.getAllFavoriteAnimalsAsFlow().map { animalEntityList ->
+            animalEntityList.map { animalEntity ->
+                getAnimalWithContent(animalEntity)
+            }
+        }
+    }
+
+    override fun getAnimalsByRange(location: Location, range: Double): Flow<List<Animal>> {
+        return this.getAllAnimals().map { animalList ->
+            animalList.filter { animal ->
+                animal.supplier.address?.let {
+                    location.isWithinRangeOf(
+                        it.latitude,
+                        it.longitude,
+                        range
+                    )
+                } ?: false
+            }
+        }
+    }
+
 
     override suspend fun getAnimal(animalId: Long): Animal? {
         val animalEntity = animalModelDao.get(animalId)
@@ -44,13 +69,11 @@ class RepositoryImpl(
         val address = supplierEntity?.addressId?.let { addressModelDao.get(it)?.toDomain() }
         val supplier = supplierEntity?.toDomain(address)
 
-        val animal = animalEntity.toDomain(
+        return animalEntity.toDomain(
             supplier = supplier!!,
             animalCategory = animalCategory!!,
             color = color!!
         )
-
-        return animal
     }
 
     override suspend fun insertAnimal(animal: Animal): Long {
@@ -59,9 +82,11 @@ class RepositoryImpl(
 
     override suspend fun deleteAnimal(animal: Animal) {
         animalModelDao.delete(animal.fromDomain())
-        favoriteModelDao.deleteByAnimalId(animal.id)
     }
 
+    // ----------------
+    // Colors
+    // ----------------
     override fun getAllColors(): Flow<List<Color>> {
         return colorModelDao.getAllAsFlow().map { colorEntityList ->
             colorEntityList.map {
@@ -78,6 +103,9 @@ class RepositoryImpl(
         return colorModelDao.get(colorId)?.toDomain()
     }
 
+    // ----------------
+    // AnimalCategory
+    // ----------------
     override fun getAllAnimalCategories(): Flow<List<AnimalCategory>> {
         return animalCategoryModelDao.getAllAsFlow().map { animalCategoryEntityList ->
             animalCategoryEntityList.map {
@@ -94,6 +122,9 @@ class RepositoryImpl(
         return animalCategoryModelDao.get(animalCategoryId)?.toDomain()
     }
 
+    // ----------------
+    // User
+    // ----------------
     override fun getAllUsers(): Flow<List<User>> {
         return userModelDao.getAllAsFlow().map { userEntityList ->
             userEntityList.map { userEntity ->
@@ -102,8 +133,13 @@ class RepositoryImpl(
         }
     }
 
-    override fun getUsersByRange(location: Location, distance: Int): Flow<List<User>> {
-        TODO("Not yet implemented")
+    override fun getUsersByRange(location: Location, distance: Double): Flow<List<User>> {
+        return this.getAllUsers().map { userList ->
+            userList.filter { user ->
+                user.address?.let { location.isWithinRangeOf(it.latitude, it.longitude, distance) }
+                    ?: false
+            }
+        }
     }
 
     override suspend fun getUser(userId: Long): User? {
@@ -117,6 +153,9 @@ class RepositoryImpl(
         return userModelDao.upsert(user.fromDomain())
     }
 
+    // ----------------
+    // Address
+    // ----------------
     override suspend fun getAddress(addressId: Long): Address? {
         return addressModelDao.get(addressId)?.toDomain()
     }
@@ -124,4 +163,39 @@ class RepositoryImpl(
     override suspend fun insertAddress(address: Address): Long {
         return addressModelDao.upsert(address.fromDomain())
     }
+
+    // ----------------
+    // Rating
+    // ----------------
+
+    override suspend fun getRating(ratingId: Long): Rating? {
+        val ratingModel = ratingModelDao.get(ratingId) ?: return null
+        val seeker = getUser(ratingModel.seekerId) ?: return null
+        val supplier = getUser(ratingModel.supplierId) ?: return null
+
+        return ratingModel.toDomain(seeker, supplier)
+    }
+
+    override suspend fun insertRating(rating: Rating): Long {
+        return ratingModelDao.upsert(rating.fromDomain())
+    }
+
+    override suspend fun getAllRatingsBySupplierIdAsFlow(supplierId: Long): Flow<List<Rating>> {
+        val supplier = getUser(supplierId)
+        return ratingModelDao.getAllBySupplierIdAsFlow(supplierId).map { ratingModelList ->
+            ratingModelList.map { ratingModel ->
+                ratingModel.toDomain(getUser(ratingModel.seekerId)!!, supplier!!)
+            }
+        }
+    }
+
+    override suspend fun getAllRatingsBySeekerIdAsFlow(seekerId: Long): Flow<List<Rating>> {
+        val seeker = getUser(seekerId)
+        return ratingModelDao.getAllBySupplierIdAsFlow(seekerId).map { ratingModelList ->
+            ratingModelList.map { ratingModel ->
+                ratingModel.toDomain(seeker!!, getUser(ratingModel.supplierId)!!)
+            }
+        }
+    }
+
 }

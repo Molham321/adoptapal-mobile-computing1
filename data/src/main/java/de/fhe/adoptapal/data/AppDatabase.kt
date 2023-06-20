@@ -16,7 +16,6 @@ import androidx.room.TypeConverters
         ColorModel::class,
         AnimalCategoryModel::class,
         RequestModel::class,
-        FavoriteModel::class
     ], version = 1
 )
 @TypeConverters(Converters::class)
@@ -25,7 +24,6 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun addressModelDao(): AddressModelDao
     abstract fun ratingModelDao(): RatingModelDao
     abstract fun animalModelDao(): AnimalModelDao
-    abstract fun favoriteModelDao(): FavoriteModelDao
     abstract fun animalCategoryDao(): AnimalCategoryModelDao
     abstract fun colorModelDao(): ColorModelDao
     abstract fun requestModelDao(): RequestModelDao
@@ -60,9 +58,6 @@ abstract class AppDatabase : RoomDatabase() {
             return getDatabase(app).animalModelDao()
         }
 
-        fun getFavoriteModelDao(app: Context): FavoriteModelDao {
-            return getDatabase(app).favoriteModelDao()
-        }
 
         fun getAnimalCategoryModelDao(app: Context): AnimalCategoryModelDao {
             return getDatabase(app).animalCategoryDao()
