@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Search
@@ -22,6 +23,8 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
+import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
+import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
 
 val RootScreens = listOf(
     Screen.Home,
@@ -57,16 +60,16 @@ sealed class Screen(
             val viewModel = values[0] as HomeScreenViewModel
 
             appBarActions = {
-                IconButton(
-                    onClick = { viewModel.navigateToAddAnimal() }
+                IconButton(onClick = { viewModel.navigateToAddAnimal() }
                 ) {
                     Icon(Icons.Filled.Add, contentDescription = null)
                 }
-
-                IconButton(
-                    onClick = { viewModel.navigateToSearch() }
+                IconButton(onClick = { viewModel.navigateToSearch() }
                 ) {
                     Icon(Icons.Filled.Search, contentDescription = null)
+                }
+                IconButton(onClick = { viewModel.navigateToLogin() }) {
+                    Icon(Icons.Filled.Lock, contentDescription = "Login Icon")
                 }
             }
         }
@@ -125,7 +128,15 @@ sealed class Screen(
         title = "Login",
         icon = Icons.Filled.Menu,
         route = "Login"
-    )
+    ) {
+        override fun prepareAppBarActions(vararg values: Any) {
+            if (values[0] !is LoginScreenViewModel)
+                error("First Parameter must be of type *LoginScreenViewModel*")
+            val viewModel = values[0] as LoginScreenViewModel
+
+            appBarActions = {}
+        }
+    }
 
     object Register : Screen(
         title = "Register",

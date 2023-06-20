@@ -54,9 +54,14 @@ data class User(
     var name: String,
     var email: String,
     var address: Address?,
-    var phoneNumber: String?,
-    var useCoarseLocation: Boolean
-)
+    var phoneNumber: String?
+) {
+    constructor(
+        name: String,
+        email: String,
+        phoneNumber: String?
+    ): this(0, LocalDateTime.now(), LocalDateTime.now(), name, email, null, phoneNumber )
+}
 
 data class Address(
     var id: Long = 0,

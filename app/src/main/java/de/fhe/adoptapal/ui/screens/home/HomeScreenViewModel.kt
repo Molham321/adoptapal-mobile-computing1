@@ -19,7 +19,6 @@ class HomeScreenViewModel(
     var animalList = mutableStateOf(emptyList<Animal>())
     var dbOp = mutableStateOf(AsyncOperation.undefined())
 
-
     init {
         this.getAnimalsFromDb()
     }
@@ -42,6 +41,10 @@ class HomeScreenViewModel(
 
     fun navigateToSearch() {
         navigationManager.navigate(Screen.Search.navigationCommand())
+    }
+
+    fun navigateToLogin() {
+        navigationManager.navigate(Screen.Login.navigationCommand())
     }
 
     fun navigateToAnimal(animalId: Long) {
