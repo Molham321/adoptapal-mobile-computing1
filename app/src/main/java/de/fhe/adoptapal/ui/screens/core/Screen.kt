@@ -60,14 +60,11 @@ sealed class Screen(
             val viewModel = values[0] as HomeScreenViewModel
 
             appBarActions = {
-                IconButton(
-                    onClick = { viewModel.navigateToAddAnimal() }
+                IconButton(onClick = { viewModel.navigateToAddAnimal() }
                 ) {
                     Icon(Icons.Filled.Add, contentDescription = null)
                 }
-
-                IconButton(
-                    onClick = { viewModel.navigateToSearch() }
+                IconButton(onClick = { viewModel.navigateToSearch() }
                 ) {
                     Icon(Icons.Filled.Search, contentDescription = null)
                 }

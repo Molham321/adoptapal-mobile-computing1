@@ -19,7 +19,6 @@ class HomeScreenViewModel(
     var animalList = mutableStateOf(emptyList<Animal>())
     var dbOp = mutableStateOf(AsyncOperation.undefined())
 
-
     init {
         this.getAnimalsFromDb()
     }

@@ -111,13 +111,13 @@ fun RegisterScreen() {
             inputPlaceholder = "User Phone Number"
         )
 
-        InputField(
+        PasswordInputField(
             text = userPasswordTextFieldValue,
             editing = true,
             onTextChange = {newValue -> userPasswordTextFieldValue = newValue},
             inputPlaceholder = "User Passwort"
         )
-        InputField(
+        PasswordInputField(
             text = userConfirmPasswordTextFieldValue,
             editing = true,
             onTextChange = {newValue -> userConfirmPasswordTextFieldValue = newValue},
