@@ -54,13 +54,14 @@ data class User(
     var name: String,
     var email: String,
     var address: Address?,
-    var phoneNumber: String?
+    var phoneNumber: String?,
+    var useCoarseLocation: Boolean,
 ) {
     constructor(
         name: String,
         email: String,
         phoneNumber: String?
-    ): this(0, LocalDateTime.now(), LocalDateTime.now(), name, email, null, phoneNumber )
+    ): this(0, LocalDateTime.now(), LocalDateTime.now(), name, email, null, phoneNumber,  true )
 }
 
 data class Address(
