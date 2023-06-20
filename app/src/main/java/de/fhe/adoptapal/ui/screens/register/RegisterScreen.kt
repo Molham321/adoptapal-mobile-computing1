@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.R
 
+import de.fhe.adoptapal.ui.screens.sharedComponents.InputField
+
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Preview
 @Composable

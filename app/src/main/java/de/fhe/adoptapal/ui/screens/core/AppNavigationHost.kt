@@ -7,7 +7,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import de.fhe.adoptapal.ui.screens.addAnimal.InputScreen
+import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalScreen
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreen
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.home.HomeScreen
@@ -84,7 +84,7 @@ fun AppNavigationHost(
         }
         composable(Screen.Input.route) {
             onNavigation(Screen.Input)
-            InputScreen()
+            AddAnimalScreen()
         }
         composable(Screen.Search.route) {
             onNavigation(Screen.Search)
