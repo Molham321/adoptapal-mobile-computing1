@@ -71,10 +71,10 @@ interface RatingModelDao {
 
 
     @Query("SELECT * FROM RatingModel WHERE supplierId = :supplierId")
-    suspend fun getBySuppliedId(supplierId: Long): RatingModel?
+    fun getAllBySupplierIdAsFlow(supplierId: Long): Flow<List<RatingModel>>
 
     @Query("SELECT * FROM RatingModel WHERE seekerId = :seekerId")
-    suspend fun getBySeekerId(seekerId: Long): RatingModel?
+    fun getAllBySeekerIdAsFlow(seekerId: Long): Flow<List<RatingModel>>
 
 
     @Query("SELECT * FROM RatingModel WHERE rating > :rating")
@@ -101,6 +101,9 @@ interface AnimalModelDao {
     @Query("SELECT * FROM AnimalModel")
     fun getAllAsFlow(): Flow<List<AnimalModel>>
 
+    @Query("SELECT * FROM AnimalModel WHERE isFavorite = 1")
+    fun getAllFavoriteAnimalsAsFlow(): Flow<List<AnimalModel>>
+
     @Query("SELECT * FROM AnimalModel")
     suspend fun getAll(): List<AnimalModel>
 
@@ -108,7 +111,7 @@ interface AnimalModelDao {
     suspend fun get(id: Long): AnimalModel?
 
     @Query("SELECT * FROM AnimalModel WHERE supplierId = :supplierId")
-    suspend fun getByUserId(supplierId: Long): AnimalModel?
+    suspend fun getBySupplierId(supplierId: Long): AnimalModel?
 
     @Query("SELECT * FROM AnimalModel WHERE colorId = :colorId")
     suspend fun getByColorId(colorId: Long): AnimalModel?
@@ -129,40 +132,6 @@ interface AnimalModelDao {
     suspend fun deleteAll()
 }
 
-
-@Dao
-interface FavoriteModelDao {
-
-    @Query("SELECT * FROM FavoriteModel")
-    fun getAllAsFlow(): Flow<List<FavoriteModel>>
-
-    @Query("SELECT * FROM FavoriteModel")
-    suspend fun getAll(): List<FavoriteModel>
-
-    @Query("SELECT * FROM FavoriteModel WHERE id = :id")
-    suspend fun get(id: Long): FavoriteModel?
-
-    @Query("SELECT * FROM FavoriteModel WHERE seekerId = :seekerId")
-    suspend fun getBySeekerId(seekerId: Long): FavoriteModel?
-
-    @Query("SELECT * FROM FavoriteModel WHERE animalId = :animalId")
-    suspend fun getByAnimalId(animalId: Long): FavoriteModel?
-
-    @Upsert
-    suspend fun upsert(entity: FavoriteModel): Long
-
-    @Delete
-    suspend fun delete(entity: FavoriteModel)
-
-    @Query("DELETE FROM FavoriteModel WHERE animalId = :animalId")
-    suspend fun deleteByAnimalId(animalId: Long)
-
-    @Delete
-    suspend fun delete(vararg entities: FavoriteModel)
-
-    @Query("DELETE FROM FavoriteModel")
-    suspend fun deleteAll()
-}
 
 @Dao
 interface AnimalCategoryModelDao {
