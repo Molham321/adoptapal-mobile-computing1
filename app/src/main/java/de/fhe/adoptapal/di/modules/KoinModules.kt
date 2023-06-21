@@ -20,6 +20,7 @@ import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
 import de.fhe.adoptapal.domain.GetColorAsync
 import de.fhe.adoptapal.domain.GetRatingAsync
 import de.fhe.adoptapal.domain.GetUserAsync
+import de.fhe.adoptapal.domain.GetUserByEmailAsync
 import de.fhe.adoptapal.domain.GetUsersByRangeAsync
 import de.fhe.adoptapal.domain.InsertAddressAsync
 import de.fhe.adoptapal.domain.InsertRatingAsync
@@ -78,6 +79,7 @@ val useCaseModule = module {
     factory { GetAllUsers(get()) }
     factory { GetUsersByRangeAsync(get()) }
     factory { GetUserAsync(get()) }
+    factory { GetUserByEmailAsync(get()) }
     factory { InsertUserAsync(get()) }
 
     // Address
