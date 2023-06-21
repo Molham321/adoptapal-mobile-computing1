@@ -146,7 +146,14 @@ class RepositoryImpl(
         val userModel = userModelDao.get(userId)
         val addressModel = userModel?.addressId?.let { addressModelDao.get(it) }
 
-        return userModelDao.get(userId)?.toDomain(addressModel?.toDomain())
+        return userModel?.toDomain(addressModel?.toDomain())
+    }
+
+    override suspend fun getUserByEmail(userEmail: String): User? {
+        val userModel = userModelDao.getUserByEmail(userEmail)
+        val address = userModel?.addressId?.let { addressModelDao.get(it) }
+
+        return userModel?.toDomain(address?.toDomain())
     }
 
     override suspend fun insertUser(user: User): Long {
