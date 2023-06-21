@@ -49,6 +49,11 @@ fun MapAppBar() {
 fun SettingsAppBar() {
     AppBar(screen = Screen.Settings)
 }
+@Preview()
+@Composable
+fun ProfileAppBar() {
+    AppBar(screen = Screen.Profile)
+}
 
 @Preview()
 @Composable

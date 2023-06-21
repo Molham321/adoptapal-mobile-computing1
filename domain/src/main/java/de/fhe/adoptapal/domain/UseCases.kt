@@ -177,6 +177,18 @@ class GetUserAsync(private val repository: Repository) {
     }
 }
 
+//class FindUserAsync(private val repository: Repository) {
+//    operator  fun invoke(userEmail: String): Flow<AsyncOperation> = flow {
+//        emit(AsyncOperation.loading("Start loading user with email $userEmail"))
+//        val user = repository.findUser(userEmail)
+//        if (user != null) {
+//            emit(AsyncOperation.success("Successfully loaded user with email $userEmail", user))
+//        } else {
+//            emit(AsyncOperation.error("Failed to load user with email $userEmail"))
+//        }
+//    }
+//}
+
 class InsertUserAsync(private val repository: Repository) {
     operator fun invoke(newUser: User): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start creating user..."))

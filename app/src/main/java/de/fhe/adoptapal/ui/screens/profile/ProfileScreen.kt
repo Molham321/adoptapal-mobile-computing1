@@ -1,10 +1,11 @@
-package de.fhe.adoptapal.ui.screens.settings
+package de.fhe.adoptapal.ui.screens.profile
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun SettingsScreen() {
+fun ProfileScreen() {
     Column() {
         val user = User(
             name = "John Doe",
@@ -12,6 +13,6 @@ fun SettingsScreen() {
             phoneNumber = "1234567890",
             address = Address("123 Main St", "Apt 4B", "Cityville", "12345")
         )
-        Settings(user, onSave = {})
+        Profile(user)
     }
 }

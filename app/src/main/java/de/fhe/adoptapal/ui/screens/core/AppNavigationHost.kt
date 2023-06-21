@@ -15,6 +15,8 @@ import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreen
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
 import de.fhe.adoptapal.ui.screens.map.MapScreen
+import de.fhe.adoptapal.ui.screens.profile.ProfileScreen
+import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreen
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
 import de.fhe.adoptapal.ui.screens.search.SearchScreen
@@ -80,14 +82,25 @@ fun AppNavigationHost(
             onNavigation(Screen.Map)
             MapScreen()
         }
+
         composable(Screen.Settings.route) {
             onNavigation(Screen.Settings)
             SettingsScreen()
         }
+
+        composable(Screen.Profile.route) {
+            val vm by getKoin().inject<ProfileScreenViewModel>()
+
+            Screen.Profile.prepareAppBarActions(vm)
+            onNavigation(Screen.Profile)
+            ProfileScreen()
+        }
+
         composable(Screen.Input.route) {
             onNavigation(Screen.Input)
             InputScreen()
         }
+
         composable(Screen.Search.route) {
             onNavigation(Screen.Search)
             SearchScreen()

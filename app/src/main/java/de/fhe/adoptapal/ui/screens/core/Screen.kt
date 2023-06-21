@@ -8,10 +8,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -24,12 +26,13 @@ import androidx.navigation.navArgument
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
+import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
 
 val RootScreens = listOf(
-    Screen.Home,
     Screen.Map,
-    Screen.Settings
+    Screen.Home,
+    Screen.Profile
 )
 
 sealed class Screen(
@@ -111,6 +114,24 @@ sealed class Screen(
         icon = Icons.Filled.Settings,
         route = "Settings"
     )
+    object Profile : Screen(
+        title = "Profile",
+        icon = Icons.Filled.Person,
+        route = "Profile"
+    ) {
+        override fun prepareAppBarActions(vararg values: Any) {
+            if (values[0] !is ProfileScreenViewModel)
+                error("First Parameter must be of type *ProfileScreenViewModel*")
+            val viewModel = values[0] as ProfileScreenViewModel
+
+            appBarActions = {
+                IconButton(onClick = { viewModel.navigateToSettings() }
+                ) {
+                    Icon(Icons.Filled.Edit, contentDescription = null)
+                }
+            }
+        }
+    }
 
     object Input : Screen(
         title = "Input",
