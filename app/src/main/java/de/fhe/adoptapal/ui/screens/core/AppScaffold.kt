@@ -12,6 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.rememberNavController
 import org.koin.androidx.compose.getKoin
 
 val LocalScaffoldState =
@@ -23,15 +24,17 @@ fun AppScaffold() {
     var currentScreen by remember { mutableStateOf<Screen>(Screen.Undefined) }
 
     val navigationManager by getKoin().inject<NavigationManager>()
+    val navController = rememberNavController()
 
     CompositionLocalProvider(LocalScaffoldState provides scaffoldState) {
         Scaffold(
             scaffoldState = scaffoldState,
-            topBar = { AppBar(currentScreen) },
+            topBar = { AppBar(currentScreen, navController) },
             bottomBar = { BottomBar(navigationManager, currentScreen) }
         ) { innerPadding ->
             AppNavigationHost(
                 navigationManager,
+                navController,
                 onNavigation = {
                     currentScreen = it
                 },

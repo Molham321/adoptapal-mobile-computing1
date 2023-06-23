@@ -96,7 +96,7 @@ val useCaseModule = module {
 val viewModelModule = module {
     viewModel { HomeScreenViewModel(get(), get()) }
     viewModel { DetailScreenViewModel(get(), get()) }
-    viewModel { LoginScreenViewModel(get()) }
+    viewModel { LoginScreenViewModel(get(), get()) }
     viewModel { RegisterScreenViewModel(get(), get()) }
     viewModel { ProfileScreenViewModel(get()) }
 

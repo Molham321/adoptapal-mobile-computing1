@@ -27,6 +27,7 @@ class RegisterScreenViewModel(
 
                 InsertUserAsyncUseCase(newUser).collect {
                     saveFeedbackFlow.emit(it)
+                    navigateToLogin()
                 }
             }
         }

@@ -38,7 +38,8 @@ val RootScreens = listOf(
 sealed class Screen(
     val title: String = "Title",
     val icon: ImageVector = Icons.Filled.Favorite,
-    val route: String = ""
+    val route: String = "",
+    val hasReturn: Boolean = true
 ) {
     var appBarActions: @Composable RowScope.() -> Unit = {}
         protected set
@@ -55,7 +56,8 @@ sealed class Screen(
     object Home : Screen(
         title = "Home",
         icon = Icons.Filled.Home,
-        route = "Home"
+        route = "Home",
+        hasReturn = false
     ) {
         override fun prepareAppBarActions(vararg values: Any) {
             if (values[0] !is HomeScreenViewModel)
@@ -106,7 +108,8 @@ sealed class Screen(
     object Map : Screen(
         title = "Map",
         icon = Icons.Filled.Place,
-        route = "Map"
+        route = "Map",
+        hasReturn = false
     )
 
     object Settings : Screen(
@@ -117,7 +120,8 @@ sealed class Screen(
     object Profile : Screen(
         title = "Profile",
         icon = Icons.Filled.Person,
-        route = "Profile"
+        route = "Profile",
+        hasReturn = false
     ) {
         override fun prepareAppBarActions(vararg values: Any) {
             if (values[0] !is ProfileScreenViewModel)
@@ -163,7 +167,15 @@ sealed class Screen(
         title = "Register",
         icon = Icons.Filled.Menu,
         route = "Register"
-    )
+    ) {
+        override fun prepareAppBarActions(vararg values: Any) {
+            if (values[0] !is RegisterScreenViewModel)
+                error("First Parameter must be of type *RegisterScreenViewModel*")
+            val viewModel = values[0] as RegisterScreenViewModel
+
+            appBarActions = {}
+        }
+    }
 
     object Undefined : Screen(
         title = "Undefined",
