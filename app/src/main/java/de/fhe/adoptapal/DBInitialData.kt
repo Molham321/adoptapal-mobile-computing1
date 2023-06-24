@@ -36,6 +36,8 @@ class DBInitialData : KoinComponent {
 
             Log.i(logTag, "Koin DB-Test started")
 
+            repo.deleteAllUsers()
+
             // create colors
             val color1 =
                 Color(1, LocalDateTime.of(2023, 5, 30, 22, 11), LocalDateTime.now(), "White")

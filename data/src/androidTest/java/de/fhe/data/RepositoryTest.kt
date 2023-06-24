@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import de.fhe.adoptapal.data.AddressModelDao
 import de.fhe.adoptapal.data.AnimalCategoryModelDao
 import de.fhe.adoptapal.data.AnimalModelDao
@@ -31,7 +30,7 @@ import java.io.IOException
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class RepositoryTest {
 
 
 
