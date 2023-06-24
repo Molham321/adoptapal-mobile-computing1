@@ -95,7 +95,7 @@ fun AppNavigationHost(
 
             Screen.Profile.prepareAppBarActions(vm)
             onNavigation(Screen.Profile)
-            ProfileScreen()
+            ProfileScreen(vm)
         }
 
         composable(Screen.Input.route) {

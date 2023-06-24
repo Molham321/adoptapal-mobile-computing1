@@ -1,26 +1,20 @@
 package de.fhe.adoptapal.ui.screens.profile
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.tooling.preview.Preview
-
-data class User(
-    val name: String,
-    val email: String,
-    val phoneNumber: String,
-    val address: Address
-)
-
-data class Address(
-    val street: String,
-    val houseNumber: String,
-    val city: String,
-    val zip: String
-)
+import de.fhe.adoptapal.domain.User
 
 @Composable
 fun Profile(user: User) {
@@ -37,17 +31,25 @@ fun Profile(user: User) {
         )
         ProfileItem(label = "Name", value = user.name)
         ProfileItem(label = "Email", value = user.email)
-        ProfileItem(label = "Phone Number", value = user.phoneNumber)
+        user.phoneNumber?.let { ProfileItem(label = "Phone Number", value = it) }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = "Address",
             style = MaterialTheme.typography.h6,
             modifier = Modifier.padding(bottom = 8.dp)
         )
-        ProfileItem(label = "Street", value = user.address.street)
-        ProfileItem(label = "House Number", value = user.address.houseNumber)
-        ProfileItem(label = "City", value = user.address.city)
-        ProfileItem(label = "ZIP", value = user.address.zip)
+        if (user.address == null) {
+            Text(
+                text = "No address data available",
+                style = MaterialTheme.typography.body1,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+        } else {
+            user.address?.let { ProfileItem(label = "Street", value = it.street) }
+            user.address?.let { ProfileItem(label = "House Number", value = it.houseNumber) }
+            user.address?.let { ProfileItem(label = "City", value = it.city) }
+            user.address?.let { ProfileItem(label = "ZIP", value = it.zipCode) }
+        }
     }
 }
 
@@ -68,16 +70,4 @@ fun ProfileItem(label: String, value: String) {
             modifier = Modifier.padding(start = 8.dp)
         )
     }
-}
-
-@Preview
-@Composable
-fun ProfilePreview() {
-    val user = User(
-        name = "John Doe",
-        email = "johndoe@example.com",
-        phoneNumber = "1234567890",
-        address = Address("123 Main St", "Apt 4B", "Cityville", "12345")
-    )
-    Profile(user)
 }

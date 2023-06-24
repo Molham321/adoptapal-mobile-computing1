@@ -27,10 +27,6 @@ class LoginScreenViewModel(
 
     val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
 
-    init {
-//        login("molhamalkhodari@gmail.com", "123")
-    }
-
     fun login(userEmail: String, userPassword: String) {
         viewModelScope.launch {
             if (userEmail.isBlank() || userPassword.isBlank()) {
@@ -54,7 +50,7 @@ class LoginScreenViewModel(
         navigationManager.navigate(Screen.Register.navigationCommand())
     }
 
-    fun navigateToProfile() {
+     fun navigateToProfile() {
         navigationManager.navigate(Screen.Profile.navigationCommand())
     }
 }

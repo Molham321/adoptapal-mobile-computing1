@@ -16,30 +16,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-
-data class User(
-    var name: String,
-    var email: String,
-    var phoneNumber: String,
-    var address: Address
-)
-
-data class Address(
-    var street: String,
-    var houseNumber: String,
-    var city: String,
-    var zip: String
-)
+import de.fhe.adoptapal.domain.User
 
 @Composable
 fun Settings(user: User, onSave: (User) -> Unit) {
     var name by remember { mutableStateOf(user.name) }
     var email by remember { mutableStateOf(user.email) }
     var phoneNumber by remember { mutableStateOf(user.phoneNumber) }
-    var street by remember { mutableStateOf(user.address.street) }
-    var houseNumber by remember { mutableStateOf(user.address.houseNumber) }
-    var city by remember { mutableStateOf(user.address.city) }
-    var zip by remember { mutableStateOf(user.address.zip) }
+
+
+    var street by remember { mutableStateOf(user.address?.street ?: "") }
+    var houseNumber by remember { mutableStateOf(user.address?.houseNumber ?: "") }
+    var city by remember { mutableStateOf(user.address?.city ?: "") }
+    var zip by remember { mutableStateOf(user.address?.zipCode ?: "") }
 
     Column(
         modifier = Modifier
@@ -65,12 +54,14 @@ fun Settings(user: User, onSave: (User) -> Unit) {
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
-        TextField(
-            value = phoneNumber,
-            onValueChange = { phoneNumber = it },
-            label = { Text("Phone Number") },
-            modifier = Modifier.fillMaxWidth()
-        )
+        phoneNumber?.let {
+            TextField(
+                value = it,
+                onValueChange = { phoneNumber = it },
+                label = { Text("Phone Number") },
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = "Address",
@@ -107,24 +98,11 @@ fun Settings(user: User, onSave: (User) -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                val updatedUser = User(name, email, phoneNumber, Address(street, houseNumber, city, zip))
-                onSave(updatedUser)
+//                onSave(updatedUser)
             },
             modifier = Modifier.align(Alignment.End)
         ) {
             Text("Save")
         }
     }
-}
-
-@Preview
-@Composable
-fun ProfilePreview() {
-    val user = User(
-        name = "John Doe",
-        email = "johndoe@example.com",
-        phoneNumber = "1234567890",
-        address = Address("123 Main St", "Apt 4B", "Cityville", "12345")
-    )
-    Settings(user, onSave = {})
 }
