@@ -10,6 +10,7 @@ import de.fhe.adoptapal.domain.Repository
 import de.fhe.adoptapal.domain.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.LocalDateTime
 
 class RepositoryImpl(
     private val userModelDao: UserModelDao,
@@ -158,6 +159,24 @@ class RepositoryImpl(
 
     override suspend fun insertUser(user: User): Long {
         return userModelDao.upsert(user.fromDomain())
+    }
+
+    override suspend fun updateUser(user: User): Long {
+
+        userModelDao.get(user.id)?.let { savedEntity ->
+            // Update User
+            val userEntity = user.fromDomain()
+            userEntity.lastChangeTimestamp = LocalDateTime.now()
+            userEntity.createdTimestamp = savedEntity.createdTimestamp
+            userModelDao.upsert(userEntity)
+
+            return user.id
+        }
+        return -1
+    }
+
+    override suspend fun deleteAllUsers() {
+        userModelDao.deleteAll()
     }
 
     // ----------------

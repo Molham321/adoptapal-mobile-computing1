@@ -177,6 +177,8 @@ class GetUserAsync(private val repository: Repository) {
     }
 }
 
+
+
 class GetUserByEmailAsync(private val repository: Repository) {
     operator  fun invoke(userEmail: String): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading user with email $userEmail"))
@@ -196,6 +198,15 @@ class InsertUserAsync(private val repository: Repository) {
         emit(AsyncOperation.success("Created user with id $userId", userId))
     }
 }
+
+class UpdateUserAsync(private val repository: Repository) {
+    operator fun invoke(user: User): Flow<AsyncOperation> = flow {
+        emit(AsyncOperation.loading("Start updating user with id: ${user.id} ..."))
+        val userId = repository.updateUser(user)
+        emit(AsyncOperation.success("Updated user with id $userId", userId))
+    }
+}
+
 
 // ----------------
 // Address

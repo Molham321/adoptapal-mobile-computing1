@@ -1,7 +1,6 @@
 package de.fhe.adoptapal
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
 import de.fhe.adoptapal.domain.AsyncOperationState
@@ -29,9 +28,10 @@ import de.fhe.adoptapal.domain.InsertAddressAsync
 import de.fhe.adoptapal.domain.InsertRatingAsync
 import de.fhe.adoptapal.domain.InsertUserAsync
 import de.fhe.adoptapal.domain.Repository
+import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
-import kotlinx.coroutines.flow.first
+import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel.Companion.user
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.*
@@ -96,6 +96,7 @@ class UseCaseTests: KoinTest {
         factory { GetUserAsync(get()) }
         factory { GetUserByEmailAsync(get()) }
         factory { InsertUserAsync(get()) }
+        factory { UpdateUserAsync(get()) }
 
         // Address
         factory { GetAddressAsync(get()) }
@@ -134,4 +135,51 @@ class UseCaseTests: KoinTest {
             }
         }
     }
+
+    @Test
+    fun testUpdateUserAsyncUseCase() = runBlocking {
+
+        val repo = get<Repository>()
+
+
+        val userEmail = "user@mailhot.net"
+
+        var user = User("Name", userEmail, null, null)
+
+        val userId = repo.insertUser(user)
+        user.id = userId
+
+        // test if user is there
+        val getUserByEmailAsync = get<GetUserByEmailAsync>()
+        getUserByEmailAsync.invoke(userEmail).collect {
+            if(it.status == AsyncOperationState.SUCCESS) {
+                assertTrue("User with provided email should exist", (it.payload as User).email == userEmail)
+                assertTrue("User id is equal to existing user id", (it.payload as User).id == userId)
+                user = it.payload as User
+            }
+        }
+
+        // test update
+        val updateUserAsync = get<UpdateUserAsync>()
+        val newUserEmail = "new@user.mail"
+
+        user.email = newUserEmail
+        updateUserAsync.invoke(user).collect{
+            if(it.status == AsyncOperationState.SUCCESS) {
+                assertTrue("User should have same id", (it.payload as Long) == user.id)
+            }
+        }
+
+        // test getUser again with new email
+        getUserByEmailAsync.invoke(newUserEmail).collect {
+            if(it.status == AsyncOperationState.SUCCESS) {
+                assertTrue("User with new email should exist", (it.payload as User).email == newUserEmail)
+                assertTrue("Id of user should be the same", (it.payload as User).id == userId)
+            }
+        }
+
+
+    }
+
+
 }

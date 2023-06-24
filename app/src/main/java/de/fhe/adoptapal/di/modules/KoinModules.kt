@@ -26,6 +26,7 @@ import de.fhe.adoptapal.domain.InsertAddressAsync
 import de.fhe.adoptapal.domain.InsertRatingAsync
 import de.fhe.adoptapal.domain.InsertUserAsync
 import de.fhe.adoptapal.domain.Repository
+import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
@@ -81,6 +82,7 @@ val useCaseModule = module {
     factory { GetUserAsync(get()) }
     factory { GetUserByEmailAsync(get()) }
     factory { InsertUserAsync(get()) }
+    factory { UpdateUserAsync(get()) }
 
     // Address
     factory { GetAddressAsync(get()) }
