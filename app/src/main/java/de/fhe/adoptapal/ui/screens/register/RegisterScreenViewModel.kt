@@ -23,7 +23,7 @@ class RegisterScreenViewModel(
             if (userName.isBlank() || userEmail.isBlank() || userPhoneNumber.isBlank() ) {
                 saveFeedbackFlow.emit(AsyncOperation.error("User name, email and phone are missing"))
             } else {
-                val newUser = User(userName, userEmail, userPhoneNumber)
+                val newUser = User(userName, userEmail, userPhoneNumber, null)
 
                 InsertUserAsyncUseCase(newUser).collect {
                     saveFeedbackFlow.emit(it)
