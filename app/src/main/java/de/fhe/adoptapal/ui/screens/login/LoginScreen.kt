@@ -80,13 +80,13 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
         InputField(
             text = userEmailTextFieldValue,
             editing = true,
-            onTextChange = {newValue -> userEmailTextFieldValue = newValue},
+            onTextChange = { newValue -> userEmailTextFieldValue = newValue },
             inputPlaceholder = "User Email"
         )
         PasswordInputField(
             text = userPasswordTextFieldValue,
             editing = true,
-            onTextChange = {newValue -> userPasswordTextFieldValue = newValue},
+            onTextChange = { newValue -> userPasswordTextFieldValue = newValue },
             inputPlaceholder = "User Passwort"
         )
         Spacer(modifier = modifier.height(20.dp))
@@ -98,7 +98,8 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
                 userPasswordTextFieldValue = TextFieldValue("")
                 // To hide keyboard
                 editingState = false
-              },
+
+            },
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color.Green
@@ -107,11 +108,11 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
                 .width(250.dp)
                 .padding(16.dp, 8.dp, 16.dp, 8.dp),
 
-            ){
+            ) {
             Text(text = "Login")
         }
         Button(
-            onClick = {vm.navigateToRegister()},
+            onClick = { vm.navigateToRegister() },
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color.Transparent
