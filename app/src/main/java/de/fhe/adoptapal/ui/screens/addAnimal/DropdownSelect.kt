@@ -15,6 +15,7 @@ import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
@@ -28,10 +29,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue // only if using var
+import androidx.compose.ui.text.input.TextFieldValue
 
 @Composable
 fun DropdownSelect(
     dropdownCat: String = "Dropdown",
+    dropdownValue: String,
     listItems: Array<String> = arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel")
 ) {
     // val listItems = arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel")

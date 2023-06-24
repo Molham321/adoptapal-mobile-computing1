@@ -38,21 +38,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
+import de.fhe.adoptapal.domain.GetAllAnimalCategories
 import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
 import org.koin.androidx.compose.getViewModel
 
 
+//@Preview
 @Composable
 fun AddAnimalScreen() {
-   // val vm = getViewModel<AddAnimalViewModel>()
+//   val vm = getViewModel<AddAnimalViewModel>()
+//
+//     val saveState by remember(vm) { vm.saveFeedbackFlow }
+//        .collectAsState(AsyncOperation.undefined())
 
-    // val saveState by remember(vm) { vm.saveFeedbackFlow }
-    //    .collectAsState(AsyncOperation.undefined())
+    // val dp0p = remember{ vm.dbOp }
+    // val animalCategoryList = remember{ vm.animalCategoryList }
 
     var animalNameTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var animalNameEditingState by remember { mutableStateOf(false) }
     var animalDescriptionTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var animalDescriptionEditingState by remember { mutableStateOf(false) }
+    var animalCategoryDropdownValue by remember { mutableStateOf("") }
+    var animalColorDropdownValue by remember { mutableStateOf("") }
 
     val scaffoldState = LocalScaffoldState.current
     val contextForToast = LocalContext.current.applicationContext
@@ -71,28 +78,38 @@ fun AddAnimalScreen() {
             .verticalScroll(rememberScrollState())
             .padding(8.dp)
     ) {
+        
+        // Text(text = animalCategoryList.toString())
 
         InputField(animalNameTextFieldValue, animalNameEditingState, "Name des Tieres") {
             animalNameTextFieldValue = it
             animalNameEditingState = true
         }
 
-        Spacer(Modifier.height(30.dp))
+        Spacer(Modifier.height(15.dp))
 
         InputField(animalDescriptionTextFieldValue, animalDescriptionEditingState, "Beschreibung des Tieres") {
             animalDescriptionTextFieldValue = it
             animalDescriptionEditingState = true
         }
 
-        Spacer(Modifier.height(30.dp))
+        Spacer(Modifier.height(15.dp))
 
-        DropdownSelect("Tierrasse", arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel"))
+        DropdownSelect("Tierrasse", animalCategoryDropdownValue, arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel", "Fisch"))
 
-        Spacer(Modifier.height(30.dp))
+        Spacer(Modifier.height(15.dp))
 
-        DropdownSelect("Fellfarbe", arrayOf("schwarz", "weiß", "blond", "orange", "braun", "gemustert", "kein Fell"))
+        DropdownSelect("Fellfarbe", animalColorDropdownValue, arrayOf("schwarz", "weiß", "blond", "orange", "braun", "gemustert", "kein Fell"))
 
-        Spacer(Modifier.height(30.dp))
+        Spacer(Modifier.height(15.dp))
+
+        DatePicker()
+
+        Spacer(Modifier.height(15.dp))
+
+        Switch()
+
+        Spacer(Modifier.height(15.dp))
 
         Button(
             modifier = Modifier
