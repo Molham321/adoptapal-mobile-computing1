@@ -14,15 +14,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.domain.User
 
 @Composable
-fun Settings(user: User, onSave: (User) -> Unit) {
+fun Settings(
+    user: User,
+    updateUser: (user: User) -> Unit = {}
+) {
     var name by remember { mutableStateOf(user.name) }
     var email by remember { mutableStateOf(user.email) }
-    var phoneNumber by remember { mutableStateOf(user.phoneNumber) }
+    var phoneNumber by remember { mutableStateOf(user.phoneNumber ?: "") }
 
 
     var street by remember { mutableStateOf(user.address?.street ?: "") }
@@ -98,7 +100,7 @@ fun Settings(user: User, onSave: (User) -> Unit) {
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-//                onSave(updatedUser)
+//                updateUser(name.text)
             },
             modifier = Modifier.align(Alignment.End)
         ) {

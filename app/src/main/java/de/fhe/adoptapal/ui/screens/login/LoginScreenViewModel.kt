@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class LoginScreenViewModel(
-    private val GetUserByEmailAsyncUseCase: GetUserByEmailAsync,
+    private val getUserByEmailAsyncUseCase: GetUserByEmailAsync,
     private val navigationManager: NavigationManager,
 ) : ViewModel() {
 
@@ -32,7 +32,7 @@ class LoginScreenViewModel(
             if (userEmail.isBlank() || userPassword.isBlank()) {
                 saveFeedbackFlow.emit(AsyncOperation.error("please enter Email and Password"))
             } else {
-                GetUserByEmailAsyncUseCase.invoke(userEmail).collect {
+                getUserByEmailAsyncUseCase.invoke(userEmail).collect {
                     dbOp.value = it
                     if (it.status == AsyncOperationState.SUCCESS) {
                         user.value = it.payload as User

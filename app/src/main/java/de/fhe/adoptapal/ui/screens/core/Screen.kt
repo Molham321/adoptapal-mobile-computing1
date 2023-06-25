@@ -28,6 +28,7 @@ import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
 import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
+import de.fhe.adoptapal.ui.screens.settings.SettingsScreenVieModel
 
 val RootScreens = listOf(
     Screen.Map,
@@ -116,7 +117,15 @@ sealed class Screen(
         title = "Settings",
         icon = Icons.Filled.Settings,
         route = "Settings"
-    )
+    ) {
+        override fun prepareAppBarActions(vararg values: Any) {
+            if (values[0] !is SettingsScreenVieModel)
+                error("First Parameter must be of type *SettingsScreenVieModel*")
+            val viewModel = values[0] as SettingsScreenVieModel
+
+            appBarActions = {}
+        }
+    }
     object Profile : Screen(
         title = "Profile",
         icon = Icons.Filled.Person,

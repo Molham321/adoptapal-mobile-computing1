@@ -1,5 +1,6 @@
 package de.fhe.adoptapal.ui.screens.profile
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,11 +9,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.domain.User
 
@@ -31,25 +34,27 @@ fun Profile(user: User) {
         )
         ProfileItem(label = "Name", value = user.name)
         ProfileItem(label = "Email", value = user.email)
-        user.phoneNumber?.let { ProfileItem(label = "Phone Number", value = it) }
+
+        val phoneNumber = user.phoneNumber ?: "N/A"
+        ProfileItem(label = "Phone Number", value = phoneNumber)
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = "Address",
-            style = MaterialTheme.typography.h6,
-            modifier = Modifier.padding(bottom = 8.dp)
+            style = MaterialTheme.typography.h4,
+            modifier = Modifier.padding(bottom = 16.dp)
         )
-        if (user.address == null) {
-            Text(
-                text = "No address data available",
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-        } else {
-            user.address?.let { ProfileItem(label = "Street", value = it.street) }
-            user.address?.let { ProfileItem(label = "House Number", value = it.houseNumber) }
-            user.address?.let { ProfileItem(label = "City", value = it.city) }
-            user.address?.let { ProfileItem(label = "ZIP", value = it.zipCode) }
-        }
+
+        val street = user.address?.street ?: "N/A"
+        ProfileItem(label = "Street", value = street)
+
+        val houseNumber = user.address?.houseNumber ?: "N/A"
+        ProfileItem(label = "House Number", value = houseNumber)
+
+        val city = user.address?.city ?: "N/A"
+        ProfileItem(label = "City", value = city)
+
+        val zipCode = user.address?.zipCode ?: "N/A"
+        ProfileItem(label = "ZIP", value = zipCode)
     }
 }
 
@@ -57,16 +62,27 @@ fun Profile(user: User) {
 fun ProfileItem(label: String, value: String) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.padding(vertical = 4.dp)
+        modifier = Modifier
+            .padding(vertical = 4.dp)
+            .border(
+                width = 1.dp,
+                color = Color.Gray,
+                shape = RoundedCornerShape(4.dp)
+            )
+            .padding(8.dp)
     ) {
         Text(
             text = "$label:",
             style = MaterialTheme.typography.body1,
-            modifier = Modifier.width(120.dp)
+            color = Color.Black,
+            modifier = Modifier
+                .width(120.dp)
+                .padding(end = 8.dp)
         )
         Text(
             text = value,
             style = MaterialTheme.typography.body2,
+            color = Color.Gray,
             modifier = Modifier.padding(start = 8.dp)
         )
     }

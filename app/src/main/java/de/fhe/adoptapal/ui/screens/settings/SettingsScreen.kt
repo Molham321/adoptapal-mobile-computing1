@@ -12,12 +12,14 @@ import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
 
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(vm: SettingsScreenVieModel, modifier: Modifier = Modifier) {
     if(LoginScreenViewModel.loggedIn && LoginScreenViewModel.user.value != null) {
         Column() {
             val user = LoginScreenViewModel.user.value
             if(user != null) {
-                Settings(user, onSave = {})
+                Settings(user) {
+                    vm.updateUser(it)
+                }
             }
 
         }
@@ -25,7 +27,7 @@ fun SettingsScreen() {
         Column() {
             Text(
                 text = "Du bist nicht angemeldet! Melde dich erstmal an.",
-                modifier = Modifier.padding(16.dp),
+                modifier = modifier.padding(16.dp),
                 style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)
             )
         }

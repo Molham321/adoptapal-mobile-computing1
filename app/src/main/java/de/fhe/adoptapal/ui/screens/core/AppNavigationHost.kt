@@ -23,6 +23,7 @@ import de.fhe.adoptapal.ui.screens.register.RegisterScreen
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
 import de.fhe.adoptapal.ui.screens.search.SearchScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreen
+import de.fhe.adoptapal.ui.screens.settings.SettingsScreenVieModel
 import org.koin.androidx.compose.getKoin
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -86,13 +87,14 @@ fun AppNavigationHost(
         }
 
         composable(Screen.Settings.route) {
+            val vm: SettingsScreenVieModel = koinViewModel()
+            Screen.Settings.prepareAppBarActions(vm)
             onNavigation(Screen.Settings)
-            SettingsScreen()
+            SettingsScreen(vm)
         }
 
         composable(Screen.Profile.route) {
             val vm: ProfileScreenViewModel = koinViewModel()
-
             Screen.Profile.prepareAppBarActions(vm)
             onNavigation(Screen.Profile)
             ProfileScreen(vm)
@@ -109,14 +111,12 @@ fun AppNavigationHost(
         }
         composable(Screen.Login.route) {
             val vm: LoginScreenViewModel = koinViewModel()
-
             Screen.Login.prepareAppBarActions(vm)
             onNavigation(Screen.Login)
             LoginScreen(vm)
         }
         composable(Screen.Register.route) {
             val vm: RegisterScreenViewModel = koinViewModel()
-
             Screen.Register.prepareAppBarActions(vm)
             onNavigation(Screen.Register)
             RegisterScreen(vm)
