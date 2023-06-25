@@ -27,15 +27,29 @@ fun InputField(
 
     if (!editing) focusManager.clearFocus()
 
-    OutlinedTextField(
-        value = text,
-        onValueChange = { newValue -> onTextChange(newValue) },
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth(),
-        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
-        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, keyboardType = KeyboardType.Text),
-        label = { Text(labelValue) },
-        placeholder = { Text("") },
-    )
+    if (labelValue == "Gewicht") {
+        OutlinedTextField(
+            value = text,
+            onValueChange = { newValue -> onTextChange(newValue) },
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth(),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, keyboardType = KeyboardType.Decimal),
+            label = { Text(labelValue + " in kg") },
+            placeholder = { Text("") },
+        )
+    } else {
+        OutlinedTextField(
+            value = text,
+            onValueChange = { newValue -> onTextChange(newValue) },
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth(),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, keyboardType = KeyboardType.Text),
+            label = { Text(labelValue) },
+            placeholder = { Text("") },
+        )
+    }
 }

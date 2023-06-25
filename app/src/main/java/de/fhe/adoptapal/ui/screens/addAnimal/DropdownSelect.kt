@@ -30,12 +30,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue // only if using var
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.lifecycle.ViewModel
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun DropdownSelect(
     dropdownCat: String = "Dropdown",
     dropdownValue: String,
-    listItems: Array<String> = arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel")
+    editing: Boolean = false,
+    listItems: Array<String> = arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel"),
+    onValueChange: (String) -> Unit
 ) {
     // val listItems = arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel")
     // val disabledItem = 1
@@ -43,6 +47,7 @@ fun DropdownSelect(
 
     var expanded by remember { mutableStateOf(false) }
     // var expanded = true
+    var selectedValue by remember { mutableStateOf("") }
 
     Box(
         contentAlignment = Alignment.Center
@@ -57,11 +62,19 @@ fun DropdownSelect(
                 expanded = true
             }
         ) {
-            Text(
-                // text = "Tierrasse   v",
-                text = dropdownCat + "   v",
-                color = Color.Gray
-            )
+            if(dropdownValue == "") {
+                Text(
+                    // text = "Tierrasse   v",
+                    text = dropdownCat + "   v",
+                    color = Color.Gray
+                )
+            } else {
+                Text(
+                    // text = "Tierrasse   v",
+                    text = dropdownCat + ": " + dropdownValue,
+                    color = Color.Gray
+                )
+            }
         }
 
         // drop down menu
@@ -75,6 +88,8 @@ fun DropdownSelect(
             listItems.forEachIndexed { itemIndex, itemValue ->
                 DropdownMenuItem(
                     onClick = {
+                        selectedValue = itemValue
+                        onValueChange(itemValue)
                         Toast.makeText(contextForToast, itemValue, Toast.LENGTH_SHORT)
                             .show()
                         expanded = false

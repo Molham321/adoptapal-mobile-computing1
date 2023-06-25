@@ -4,19 +4,24 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AnimalCategory
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.Color
+import de.fhe.adoptapal.domain.CreateAnimalAsync
 import de.fhe.adoptapal.domain.GetAllAnimalCategories
 import de.fhe.adoptapal.domain.GetAllColors
 import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class AddAnimalViewModel(
-//    private val createAnimalAsync: CreateAnimalAsync,
+    private val createAnimalAsync: CreateAnimalAsync,
     private val navigationManager: NavigationManager,
     private val getAllAnimalCategories: GetAllAnimalCategories,
     private val getAllColors: GetAllColors
@@ -26,16 +31,16 @@ class AddAnimalViewModel(
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
 
-    var animalCategoryArray = arrayOf<String>()
-    var animalCategories = mutableStateOf(emptyArray<String>())
+//    var animalCategoryArray = arrayOf<String>()
+//    var animalCategories = mutableStateOf(emptyArray<String>())
 
     init {
         this.getAnimalCategoriesFromDb()
         this.getColorsFromDb()
-        animalCategoryList.value.forEach {
-            animalCategoryArray += it.name
-        }
-        animalCategories = mutableStateOf(animalCategoryArray)
+//        animalCategoryList.value.forEach {
+//            animalCategoryArray += it.name
+//        }
+//        animalCategories = mutableStateOf(animalCategoryArray)
     }
 
     private fun getAnimalCategoriesFromDb() {
@@ -83,23 +88,47 @@ class AddAnimalViewModel(
     }
 
 
-//    fun addAnimal(animalName: String) {
-//        viewModelScope.launch {
+    fun addAnimal(
+        animalName: String,
+        animalDescription: String,
+        animalCategory: String,
+        animalColor: String,
+        animalBirthdate: String,
+        animalWeight: Float,
+        animalGender: Boolean
+    ) {
+        viewModelScope.launch {
+
+            if (animalName.isBlank()) {
+                saveFeedbackFlow.emit(AsyncOperation.error("Animal name missing"))
+            } else {
+                println(animalName)
+                println(animalDescription)
+                println(animalCategory)
+                println(animalColor)
+                println(animalBirthdate)
+                println(animalWeight)
+                println(animalGender)
+
+                val birthdate = LocalDateTime.parse(animalBirthdate, DateTimeFormatter.BASIC_ISO_DATE)
+
+//                val newAnimal = Animal(
+//                    animalName,
+//                    birthdate
 //
-//            if (animalName.isBlank()) {
-//                saveFeedbackFlow.emit(AsyncOperation.error("Animal name missing"))
-//            } else {
-////                val newUser = User(userName)
-////
-////                addUserAsyncUseCase(newUser).collect {
-////                    saveFeedbackFlow.emit(it)
-////
-////
-////                }
-////                println("$animalName")
-//            }
-//        }
-//    }
+//                )
+
+//                val newUser = User(userName)
+//
+//                addUserAsyncUseCase(newUser).collect {
+//                    saveFeedbackFlow.emit(it)
+//
+//
+//                }
+//                println("$animalName")
+            }
+        }
+    }
 
 //    fun navigateToUserList() {
 //        navigationManager.navigate(GoBackDestination)

@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import org.koin.androidx.compose.getViewModel
 import java.util.Calendar
 import java.util.Date
 
@@ -27,8 +28,11 @@ import java.util.Date
 // Calling this function as content
 // in the above function
 @Composable
-fun DatePicker(){
-
+fun DatePicker(
+    birthdateValue: String,
+    editing: Boolean = false,
+    onValueChange: (String) -> Unit
+){
     // Fetching the Local Context
     val mContext = LocalContext.current
 
@@ -57,7 +61,9 @@ fun DatePicker(){
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-            mDate.value = "$mDayOfMonth.${mMonth+1}.$mYear"
+            // mDate.value = "$mDayOfMonth.${mMonth+1}.$mYear"
+            mDate.value = "$mYear${mMonth+1}$mDay"
+            onValueChange(mDate.value)
         }, mYear, mMonth, mDay
     )
 
@@ -73,10 +79,10 @@ fun DatePicker(){
             onClick = {
             mDatePickerDialog.show()
         }, colors = ButtonDefaults.buttonColors(backgroundColor = Color.White) ) {
-            if (mDate.value == "") {
+            if (birthdateValue == "") {
                 Text(text = "Geburtsdatum", color = Color.Gray)
             } else {
-                Text(text = mDate.value, color = Color.Gray)
+                Text(text = "Geburtsdatum: " + birthdateValue, color = Color.Gray)
             }
         }
 
