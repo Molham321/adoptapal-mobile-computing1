@@ -52,7 +52,8 @@ fun AddAnimalScreen(vm: AddAnimalViewModel, modifier: Modifier = Modifier) {
 //        .collectAsState(AsyncOperation.undefined())
 
     // val dp0p = remember{ vm.dbOp }
-    // val animalCategoryList = remember{ vm.animalCategoryList }
+    val animalCategoryList = remember{ vm.animalCategoryList }
+    val animalColorList = remember { vm.animalColorList }
 
 
     var animalNameTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
@@ -79,8 +80,11 @@ fun AddAnimalScreen(vm: AddAnimalViewModel, modifier: Modifier = Modifier) {
             .verticalScroll(rememberScrollState())
             .padding(8.dp)
     ) {
-        
-        // Text(text = animalCategoryList.toString())
+
+//        animalCategoryList.value.forEach {
+//            Text(text = it.name)
+//        }
+//        Text(text = vm.getColorArray(animalColorList.value).joinToString())
 
         InputField(animalNameTextFieldValue, animalNameEditingState, "Name des Tieres") {
             animalNameTextFieldValue = it
@@ -96,11 +100,13 @@ fun AddAnimalScreen(vm: AddAnimalViewModel, modifier: Modifier = Modifier) {
 
         Spacer(Modifier.height(15.dp))
 
-        DropdownSelect("Tierrasse", animalCategoryDropdownValue, arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel", "Fisch"))
+        // DropdownSelect("Tierrasse", animalCategoryDropdownValue, arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel", "Fisch"))
+        DropdownSelect("Tierrasse", animalCategoryDropdownValue, vm.getCategoryArray(animalCategoryList.value))
 
         Spacer(Modifier.height(15.dp))
 
-        DropdownSelect("Fellfarbe", animalColorDropdownValue, arrayOf("schwarz", "weiß", "blond", "orange", "braun", "gemustert", "kein Fell"))
+        // DropdownSelect("Fellfarbe", animalColorDropdownValue, arrayOf("schwarz", "weiß", "blond", "orange", "braun", "gemustert", "kein Fell"))
+        DropdownSelect("Farbe des Tieres", animalColorDropdownValue, vm.getColorArray(animalColorList.value))
 
         Spacer(Modifier.height(15.dp))
 
@@ -117,7 +123,7 @@ fun AddAnimalScreen(vm: AddAnimalViewModel, modifier: Modifier = Modifier) {
                 .padding(8.dp)
                 .fillMaxWidth(),
             onClick = {
-                println("$animalNameTextFieldValue")
+                println(message = "$animalNameTextFieldValue")
                 Toast.makeText(contextForToast, "${animalNameTextFieldValue.text} ${animalDescriptionTextFieldValue.text}", Toast.LENGTH_SHORT)
                     .show()
                 // vm.addAnimal(animalNameTextFieldValue.text)
