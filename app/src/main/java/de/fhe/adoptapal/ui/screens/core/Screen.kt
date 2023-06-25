@@ -118,15 +118,15 @@ sealed class Screen(
         icon = Icons.Filled.Create,
         route = "AddAnimal"
     )
-//    {
-//        override fun prepareAppBarActions(vararg values: Any) {
-//            if (values[0] !is AddAnimalViewModel)
-//                error("First Parameter must be of type *AddAnimalViewModel*")
-//            val viewModel = values[0] as AddAnimalViewModel
-//
-//            appBarActions = {}
-//        }
-//    }
+    {
+        override fun prepareAppBarActions(vararg values: Any) {
+            if (values[0] !is AddAnimalViewModel)
+                error("First Parameter must be of type *AddAnimalViewModel*")
+            val viewModel = values[0] as AddAnimalViewModel
+
+            appBarActions = {}
+        }
+    }
 
     object Search : Screen(
         title = "Search",

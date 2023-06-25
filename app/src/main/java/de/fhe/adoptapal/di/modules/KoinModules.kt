@@ -25,6 +25,7 @@ import de.fhe.adoptapal.domain.InsertAddressAsync
 import de.fhe.adoptapal.domain.InsertRatingAsync
 import de.fhe.adoptapal.domain.InsertUserAsync
 import de.fhe.adoptapal.domain.Repository
+import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalViewModel
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
@@ -95,4 +96,5 @@ val viewModelModule = module {
     viewModel { DetailScreenViewModel(get(), get()) }
     viewModel { LoginScreenViewModel(get()) }
     viewModel { RegisterScreenViewModel(get(), get()) }
+    viewModel { AddAnimalViewModel(get(), get()) }
 }

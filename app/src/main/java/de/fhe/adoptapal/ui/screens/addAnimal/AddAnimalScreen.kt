@@ -45,7 +45,7 @@ import org.koin.androidx.compose.getViewModel
 
 //@Preview
 @Composable
-fun AddAnimalScreen() {
+fun AddAnimalScreen(vm: AddAnimalViewModel, modifier: Modifier = Modifier) {
 //   val vm = getViewModel<AddAnimalViewModel>()
 //
 //     val saveState by remember(vm) { vm.saveFeedbackFlow }
@@ -53,6 +53,7 @@ fun AddAnimalScreen() {
 
     // val dp0p = remember{ vm.dbOp }
     // val animalCategoryList = remember{ vm.animalCategoryList }
+
 
     var animalNameTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var animalNameEditingState by remember { mutableStateOf(false) }

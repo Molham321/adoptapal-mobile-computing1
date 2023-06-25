@@ -86,11 +86,11 @@ fun AppNavigationHost(
             SettingsScreen()
         }
         composable(Screen.AddAnimal.route) {
-            // val vm by getKoin().inject<AddAnimalViewModel>()
+            val vm by getKoin().inject<AddAnimalViewModel>()
 
-            // Screen.AddAnimal.prepareAppBarActions(vm)
+            Screen.AddAnimal.prepareAppBarActions(vm)
             onNavigation(Screen.AddAnimal)
-            AddAnimalScreen()
+            AddAnimalScreen(vm)
         }
         composable(Screen.Search.route) {
             onNavigation(Screen.Search)
