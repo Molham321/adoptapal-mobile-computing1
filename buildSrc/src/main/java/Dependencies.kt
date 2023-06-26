@@ -174,6 +174,7 @@ object Libs {
         private const val version = "0.30.1"
         const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
         const val placeholder = "com.google.accompanist:accompanist-placeholder-material:$version"
+        const val navAnimation = "com.google.accompanist:accompanist-navigation-animation:$version"
     }
 
     object JUnit {
