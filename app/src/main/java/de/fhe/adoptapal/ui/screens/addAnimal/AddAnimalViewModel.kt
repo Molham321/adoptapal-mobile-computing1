@@ -16,9 +16,11 @@ import de.fhe.adoptapal.domain.GetAllColors
 import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
 import de.fhe.adoptapal.domain.GetColorAsync
 import de.fhe.adoptapal.domain.GetUserAsync
+import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -35,6 +37,8 @@ class AddAnimalViewModel(
 ) : ViewModel() {
     var animalCategoryList = mutableStateOf(emptyList<AnimalCategory>())
     var animalColorList = mutableStateOf(emptyList<Color>())
+    var supplyingUser = mutableStateOf<User?>(null)
+
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
 
@@ -44,6 +48,7 @@ class AddAnimalViewModel(
     init {
         this.getAnimalCategoriesFromDb()
         this.getColorsFromDb()
+        this.getSupplyingUser(2)
 //        animalCategoryList.value.forEach {
 //            animalCategoryArray += it.name
 //        }
@@ -69,6 +74,17 @@ class AddAnimalViewModel(
                 dbOp.value = it
                 if (it.status == AsyncOperationState.SUCCESS) {
                     animalColorList.value = it.payload as List<Color>
+                }
+            }
+        }
+    }
+
+    private fun getSupplyingUser(id: Long) {
+        viewModelScope.launch {
+            getUserAsync(id).collect {
+                dbOp.value = it
+                if (it.status == AsyncOperationState.SUCCESS) {
+                    supplyingUser.value = it.payload as User
                 }
             }
         }
@@ -107,7 +123,7 @@ class AddAnimalViewModel(
         viewModelScope.launch {
 
             if (animalName.isBlank()) {
-                saveFeedbackFlow.emit(AsyncOperation.error("Animal name missing"))
+                saveFeedbackFlow.emit(AsyncOperation.error("Animal name, description, category, color, birthdate and weight missing"))
             } else {
                 println(animalName)
                 println(animalDescription)
@@ -118,7 +134,10 @@ class AddAnimalViewModel(
                 println(animalGender)
 
                 val birthdate = LocalDate.parse(animalBirthdate, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
-                val user = getUserAsync(2)
+
+
+                val user = supplyingUser.value!!
+
                 println("user: " + user)
 
 
@@ -127,7 +146,7 @@ class AddAnimalViewModel(
 //                val newAnimal = Animal(
 //                    animalName,
 //                    birthdate,
-//                    "user2",
+//                    user,
 //                    animalCategory,
 //                    animalDescription,
 //                    animalColor,
@@ -135,20 +154,13 @@ class AddAnimalViewModel(
 //                    animalGender,
 //                    animalWeight
 //                )
-
-//                val newUser = User(userName)
 //
-//                addUserAsyncUseCase(newUser).collect {
-//                    saveFeedbackFlow.emit(it)
-//
-//
-//                }
 //                println("$animalName")
             }
         }
     }
 
-//    fun navigateToUserList() {
-//        navigationManager.navigate(GoBackDestination)
-//    }
+    fun navigateToUserList() {
+        navigationManager.navigate(GoBackDestination)
+    }
 }

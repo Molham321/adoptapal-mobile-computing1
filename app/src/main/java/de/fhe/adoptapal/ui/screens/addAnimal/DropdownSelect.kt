@@ -90,8 +90,8 @@ fun DropdownSelect(
                     onClick = {
                         selectedValue = itemValue
                         onValueChange(itemValue)
-                        Toast.makeText(contextForToast, itemValue, Toast.LENGTH_SHORT)
-                            .show()
+//                        Toast.makeText(contextForToast, itemValue, Toast.LENGTH_SHORT)
+//                            .show()
                         expanded = false
                     },
                     // enabled = (itemIndex != disabledItem)

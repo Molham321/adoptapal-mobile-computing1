@@ -16,6 +16,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.LinearProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Slider
 import androidx.compose.material.SnackbarDuration
 import androidx.compose.material.Switch
@@ -30,12 +31,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.GetAllAnimalCategories
@@ -88,6 +91,21 @@ fun AddAnimalScreen(vm: AddAnimalViewModel, modifier: Modifier = Modifier) {
             .verticalScroll(rememberScrollState())
             .padding(8.dp)
     ) {
+        Spacer(Modifier.height(20.dp))
+
+        Text(
+            text = "Ein neues Tier hochladen",
+
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(16.dp, 0.dp, 16.dp, 0.dp),
+            fontSize = 25.sp,
+            color = colorResource(id = R.color.black),
+            style = MaterialTheme.typography.h1,
+            textAlign = TextAlign.Center
+        )
+
+        Spacer(Modifier.height(20.dp))
 
 //        animalCategoryList.value.forEach {
 //            Text(text = it.name)
@@ -145,42 +163,66 @@ fun AddAnimalScreen(vm: AddAnimalViewModel, modifier: Modifier = Modifier) {
 
         Spacer(Modifier.height(15.dp))
 
-        Button(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth(),
-            onClick = {
-                // println(message = "$animalNameTextFieldValue")
-                Toast.makeText(contextForToast, "${animalBirthdateValue} ${animalDescriptionTextFieldValue.text}", Toast.LENGTH_SHORT)
-                    .show()
-                vm.addAnimal(
-                    animalNameTextFieldValue.text,
-                    animalDescriptionTextFieldValue.text,
-                    animalCategoryDropdownValue,
-                    animalColorDropdownValue,
-                    animalBirthdateValue,
-                    animalWeightTextFieldValue.text.toFloat(),
-                    animalGenderValue
-                )
-                animalNameTextFieldValue = TextFieldValue("") // Clear Form
-                animalDescriptionTextFieldValue = TextFieldValue("")
-                animalCategoryDropdownValue = ""
-                animalColorDropdownValue = ""
-                animalBirthdateValue = ""
-                animalWeightTextFieldValue = TextFieldValue("")
-                animalGenderValue = false
-
-                animalNameEditingState = false // To hide keyboard
-                animalDescriptionEditingState = false
-                animalCategoryEditingState = false
-                animalColorEditingState = false
-                animalBirthdateEditingState = false
-                animalWeightEditingState = false
-                animalGenderEditingState = false
-            }
+        if(
+            animalNameTextFieldValue.text == "" ||
+            animalDescriptionTextFieldValue.text == "" ||
+            animalCategoryDropdownValue == "" ||
+            animalColorDropdownValue == "" ||
+            animalBirthdateValue == "" ||
+            animalWeightTextFieldValue.text == ""
         ) {
-            Text(text = "Save")
+            Button(
+                enabled = false ,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+                onClick = {
+
+                }
+            ) {
+                Text(text = "Tier speichern")
+            }
+        } else {
+            Button(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+                onClick = {
+                    // println(message = "$animalNameTextFieldValue")
+//                Toast.makeText(contextForToast, "${animalBirthdateValue} ${animalDescriptionTextFieldValue.text}", Toast.LENGTH_SHORT)
+//                    .show()
+                    vm.addAnimal(
+                        animalNameTextFieldValue.text,
+                        animalDescriptionTextFieldValue.text,
+                        animalCategoryDropdownValue,
+                        animalColorDropdownValue,
+                        animalBirthdateValue,
+                        animalWeightTextFieldValue.text.toFloat(),
+                        animalGenderValue
+                    )
+                    // clear form
+                    animalNameTextFieldValue = TextFieldValue("")
+                    animalDescriptionTextFieldValue = TextFieldValue("")
+                    animalCategoryDropdownValue = ""
+                    animalColorDropdownValue = ""
+                    animalBirthdateValue = ""
+                    animalWeightTextFieldValue = TextFieldValue("")
+                    animalGenderValue = false
+
+                    animalNameEditingState = false // To hide keyboard
+                    animalDescriptionEditingState = false
+                    animalCategoryEditingState = false
+                    animalColorEditingState = false
+                    animalBirthdateEditingState = false
+                    animalWeightEditingState = false
+                    animalGenderEditingState = false
+                }
+            ) {
+                Text(text = "Tier speichern")
+            }
         }
+
+
 
         Button(
             modifier = Modifier
@@ -188,10 +230,10 @@ fun AddAnimalScreen(vm: AddAnimalViewModel, modifier: Modifier = Modifier) {
                 .fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green),
             onClick = {
-//                vm.navigateToUserList()
+                vm.navigateToUserList()
             }
         ) {
-            Text(text = "Go Back")
+            Text(text = "zurück")
         }
     }
 }
