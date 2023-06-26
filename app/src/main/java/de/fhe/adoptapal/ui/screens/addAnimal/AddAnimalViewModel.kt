@@ -1,5 +1,6 @@
 package de.fhe.adoptapal.ui.screens.addAnimal
 
+import android.widget.Toast
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,9 @@ import de.fhe.adoptapal.domain.Color
 import de.fhe.adoptapal.domain.CreateAnimalAsync
 import de.fhe.adoptapal.domain.GetAllAnimalCategories
 import de.fhe.adoptapal.domain.GetAllColors
+import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
+import de.fhe.adoptapal.domain.GetColorAsync
+import de.fhe.adoptapal.domain.GetUserAsync
 import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,7 +28,10 @@ class AddAnimalViewModel(
     private val createAnimalAsync: CreateAnimalAsync,
     private val navigationManager: NavigationManager,
     private val getAllAnimalCategories: GetAllAnimalCategories,
-    private val getAllColors: GetAllColors
+    private val getAllColors: GetAllColors,
+    private val getUserAsync: GetUserAsync,
+    private val getAnimalCategoryAsync: GetAnimalCategoryAsync,
+    private val getAnimalColorAsync: GetColorAsync
 ) : ViewModel() {
     var animalCategoryList = mutableStateOf(emptyList<AnimalCategory>())
     var animalColorList = mutableStateOf(emptyList<Color>())
@@ -110,12 +117,23 @@ class AddAnimalViewModel(
                 println(animalWeight)
                 println(animalGender)
 
-                val birthdate = LocalDateTime.parse(animalBirthdate, DateTimeFormatter.BASIC_ISO_DATE)
+                val birthdate = LocalDate.parse(animalBirthdate, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                val user = getUserAsync(2)
+                println("user: " + user)
+
+
+                // println("selected date: " + birthdate)
 
 //                val newAnimal = Animal(
 //                    animalName,
-//                    birthdate
-//
+//                    birthdate,
+//                    "user2",
+//                    animalCategory,
+//                    animalDescription,
+//                    animalColor,
+//                    null,
+//                    animalGender,
+//                    animalWeight
 //                )
 
 //                val newUser = User(userName)

@@ -62,7 +62,15 @@ fun DatePicker(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
             // mDate.value = "$mDayOfMonth.${mMonth+1}.$mYear"
-            mDate.value = "$mYear${mMonth+1}$mDay"
+            val correctMonth = mMonth+1
+            if(correctMonth < 10) {
+                // mDate.value = "$mYear-0$correctMonth-$mDay"
+                mDate.value = "$mDay.0$correctMonth.$mYear"
+            } else {
+                // mDate.value = "$mYear-$correctMonth-$mDay"
+                mDate.value = "$mDay.$correctMonth.$mYear"
+            }
+            // mDate.value = "$mYear-${mMonth+1}-$mDay"
             onValueChange(mDate.value)
         }, mYear, mMonth, mDay
     )

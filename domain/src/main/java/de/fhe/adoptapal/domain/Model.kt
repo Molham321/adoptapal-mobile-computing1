@@ -150,7 +150,19 @@ data class Animal(
     val isMale: Boolean,
     val weight: Float,
     val isFavorite: Boolean
-)
+) {
+    constructor(
+        name: String,
+        birthday: LocalDate,
+        supplier: User,
+        animalCategory: AnimalCategory,
+        description: String,
+        color: Color,
+        imageFilePath: String?,
+        isMale: Boolean,
+        weight: Float
+    ): this(0, LocalDateTime.now(), LocalDateTime.now(), name, birthday, supplier, animalCategory, description, color, imageFilePath, isMale, weight, false)
+}
 
 data class Color(
     var id: Long = 0,
