@@ -93,6 +93,7 @@ object Libs {
             const val core = "com.google.maps.android:maps-compose:$maps_compose_verion"
             const val play_services =
                 "com.google.android.gms:play-services-maps:$play_services_version"
+            const val location = "com.google.android.gms:play-services-location:19.0.1"
         }
 
         object MaterialDesign {

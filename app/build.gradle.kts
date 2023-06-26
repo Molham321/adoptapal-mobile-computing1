@@ -113,6 +113,7 @@ dependencies {
 
     implementation( Libs.AndroidX.Maps.core )
     implementation( Libs.AndroidX.Maps.play_services )
+    implementation( Libs.AndroidX.Maps.location )
 
     implementation( Libs.Accompanist.navAnimation )
     implementation( Libs.Accompanist.placeholder )
