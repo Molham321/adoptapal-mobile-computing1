@@ -63,6 +63,11 @@ data class User(
         phoneNumber: String?,
         address: Address?
     ): this(0, LocalDateTime.now(), LocalDateTime.now(), name, email, address, phoneNumber,  true )
+    constructor(
+        name: String,
+        email: String,
+        phoneNumber: String?
+    ): this(0, LocalDateTime.now(), LocalDateTime.now(), name, email, null, phoneNumber,  true )
 
 }
 

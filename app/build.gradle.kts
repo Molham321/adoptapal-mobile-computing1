@@ -111,11 +111,12 @@ dependencies {
 
     implementation(Libs.AndroidX.MaterialDesign.core)
 
-//    implementation( Libs.AndroidX.Maps.core )
-//    implementation( Libs.AndroidX.Maps.play_services )
+    implementation( Libs.AndroidX.Maps.core )
+    implementation( Libs.AndroidX.Maps.play_services )
+    implementation( Libs.AndroidX.Maps.location )
 
-//    implementation( Libs.Accompanist.swipeRefresh )
-//    implementation( Libs.Accompanist.placeholder )
+    implementation( Libs.Accompanist.navAnimation )
+    implementation( Libs.Accompanist.placeholder )
 
     testImplementation(Libs.JUnit.core)
     androidTestImplementation(Libs.AndroidX.Compose.uiTest)
