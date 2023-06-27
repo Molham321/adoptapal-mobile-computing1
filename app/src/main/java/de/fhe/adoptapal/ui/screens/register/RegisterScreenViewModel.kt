@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class RegisterScreenViewModel(
-    private  val InsertUserAsyncUseCase: InsertUserAsync,
+    private  val insertUserAsyncUseCase: InsertUserAsync,
     private val navigationManager: NavigationManager,
 ) : ViewModel() {
 
@@ -23,10 +23,11 @@ class RegisterScreenViewModel(
             if (userName.isBlank() || userEmail.isBlank() || userPhoneNumber.isBlank() ) {
                 saveFeedbackFlow.emit(AsyncOperation.error("User name, email and phone are missing"))
             } else {
-                val newUser = User(userName, userEmail, userPhoneNumber)
+                val newUser = User(userName, userEmail, userPhoneNumber, null)
 
-                InsertUserAsyncUseCase(newUser).collect {
+                insertUserAsyncUseCase(newUser).collect {
                     saveFeedbackFlow.emit(it)
+                    navigateToLogin()
                 }
             }
         }

@@ -39,8 +39,7 @@ import org.koin.androidx.compose.getViewModel
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun RegisterScreen() {
-    val vm = getViewModel<RegisterScreenViewModel>()
+fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
 
     val saveState by remember(vm) { vm.saveFeedbackFlow }
         .collectAsState(AsyncOperation.undefined())
@@ -136,7 +135,6 @@ fun RegisterScreen() {
                 userConfirmPasswordTextFieldValue = TextFieldValue("")
                 // To hide keyboard
                 editingState = false
-                vm.navigateToLogin()
               },
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(

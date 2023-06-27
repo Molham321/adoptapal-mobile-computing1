@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -15,21 +17,24 @@ import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreen
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
 import de.fhe.adoptapal.ui.screens.map.MapScreen
+import de.fhe.adoptapal.ui.screens.profile.ProfileScreen
+import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreen
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
 import de.fhe.adoptapal.ui.screens.search.SearchScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreen
+import de.fhe.adoptapal.ui.screens.settings.SettingsScreenVieModel
 import org.koin.androidx.compose.getKoin
+import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 @Composable
 fun AppNavigationHost(
     navigationManager: NavigationManager,
+    navController: NavHostController,
     onNavigation: (screen: Screen) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val navController = rememberNavController()
-
     navigationManager.commands.collectAsState().value.also { command ->
         if (command.destination.isNotEmpty())
         // Special go back destination
@@ -58,7 +63,7 @@ fun AppNavigationHost(
         modifier = modifier
     ) {
         composable(Screen.Home.route) {
-            val vm by getKoin().inject<HomeScreenViewModel>()
+            val vm: HomeScreenViewModel = koinViewModel()
 
             Screen.Home.prepareAppBarActions(vm)
             onNavigation(Screen.Home)
@@ -69,7 +74,7 @@ fun AppNavigationHost(
             Screen.Detail.navigationCommand(0).arguments
         ) { entry ->
             val animalId = entry.arguments?.getLong("animalId")
-            val vm by getKoin().inject<DetailScreenViewModel> { parametersOf(animalId) }
+            val vm: DetailScreenViewModel = koinViewModel(parameters = { parametersOf(animalId) })
 
             Screen.Detail.prepareAppBarActions(LocalContext.current, vm)
             onNavigation(Screen.Detail)
@@ -80,28 +85,41 @@ fun AppNavigationHost(
             onNavigation(Screen.Map)
             MapScreen()
         }
+
         composable(Screen.Settings.route) {
+            val vm: SettingsScreenVieModel = koinViewModel()
+            Screen.Settings.prepareAppBarActions(vm)
             onNavigation(Screen.Settings)
-            SettingsScreen()
+            SettingsScreen(vm)
         }
+
+        composable(Screen.Profile.route) {
+            val vm: ProfileScreenViewModel = koinViewModel()
+            Screen.Profile.prepareAppBarActions(vm)
+            onNavigation(Screen.Profile)
+            ProfileScreen(vm)
+        }
+
         composable(Screen.Input.route) {
             onNavigation(Screen.Input)
             InputScreen()
         }
+
         composable(Screen.Search.route) {
             onNavigation(Screen.Search)
             SearchScreen()
         }
         composable(Screen.Login.route) {
-            val vm by getKoin().inject<LoginScreenViewModel>()
-
+            val vm: LoginScreenViewModel = koinViewModel()
             Screen.Login.prepareAppBarActions(vm)
             onNavigation(Screen.Login)
             LoginScreen(vm)
         }
         composable(Screen.Register.route) {
+            val vm: RegisterScreenViewModel = koinViewModel()
+            Screen.Register.prepareAppBarActions(vm)
             onNavigation(Screen.Register)
-            RegisterScreen()
+            RegisterScreen(vm)
         }
     }
 }
