@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class RegisterScreenViewModel(
-    private  val InsertUserAsyncUseCase: InsertUserAsync,
+    private  val insertUserAsyncUseCase: InsertUserAsync,
     private val navigationManager: NavigationManager,
 ) : ViewModel() {
 
@@ -25,8 +25,9 @@ class RegisterScreenViewModel(
             } else {
                 val newUser = User(userName, userEmail, userPhoneNumber, null)
 
-                InsertUserAsyncUseCase(newUser).collect {
+                insertUserAsyncUseCase(newUser).collect {
                     saveFeedbackFlow.emit(it)
+                    navigateToLogin()
                 }
             }
         }

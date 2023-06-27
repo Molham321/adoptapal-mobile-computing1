@@ -8,10 +8,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
@@ -24,18 +26,21 @@ import androidx.navigation.navArgument
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
+import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
+import de.fhe.adoptapal.ui.screens.settings.SettingsScreenVieModel
 
 val RootScreens = listOf(
-    Screen.Home,
     Screen.Map,
-    Screen.Settings
+    Screen.Home,
+    Screen.Profile
 )
 
 sealed class Screen(
     val title: String = "Title",
     val icon: ImageVector = Icons.Filled.Favorite,
-    val route: String = ""
+    val route: String = "",
+    val hasReturn: Boolean = true
 ) {
     var appBarActions: @Composable RowScope.() -> Unit = {}
         protected set
@@ -52,7 +57,8 @@ sealed class Screen(
     object Home : Screen(
         title = "Home",
         icon = Icons.Filled.Home,
-        route = "Home"
+        route = "Home",
+        hasReturn = false
     ) {
         override fun prepareAppBarActions(vararg values: Any) {
             if (values[0] !is HomeScreenViewModel)
@@ -103,14 +109,42 @@ sealed class Screen(
     object Map : Screen(
         title = "Map",
         icon = Icons.Filled.Place,
-        route = "Map"
+        route = "Map",
+        hasReturn = false
     )
 
     object Settings : Screen(
         title = "Settings",
         icon = Icons.Filled.Settings,
         route = "Settings"
-    )
+    ) {
+        override fun prepareAppBarActions(vararg values: Any) {
+            if (values[0] !is SettingsScreenVieModel)
+                error("First Parameter must be of type *SettingsScreenVieModel*")
+            val viewModel = values[0] as SettingsScreenVieModel
+
+            appBarActions = {}
+        }
+    }
+    object Profile : Screen(
+        title = "Profile",
+        icon = Icons.Filled.Person,
+        route = "Profile",
+        hasReturn = false
+    ) {
+        override fun prepareAppBarActions(vararg values: Any) {
+            if (values[0] !is ProfileScreenViewModel)
+                error("First Parameter must be of type *ProfileScreenViewModel*")
+            val viewModel = values[0] as ProfileScreenViewModel
+
+            appBarActions = {
+                IconButton(onClick = { viewModel.navigateToSettings() }
+                ) {
+                    Icon(Icons.Filled.Edit, contentDescription = null)
+                }
+            }
+        }
+    }
 
     object Input : Screen(
         title = "Input",
@@ -142,7 +176,15 @@ sealed class Screen(
         title = "Register",
         icon = Icons.Filled.Menu,
         route = "Register"
-    )
+    ) {
+        override fun prepareAppBarActions(vararg values: Any) {
+            if (values[0] !is RegisterScreenViewModel)
+                error("First Parameter must be of type *RegisterScreenViewModel*")
+            val viewModel = values[0] as RegisterScreenViewModel
+
+            appBarActions = {}
+        }
+    }
 
     object Undefined : Screen(
         title = "Undefined",
