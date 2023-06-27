@@ -4,11 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalScreen
 import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalScreenViewModel
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreen
@@ -25,7 +23,6 @@ import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
 import de.fhe.adoptapal.ui.screens.search.SearchScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreenVieModel
-import org.koin.androidx.compose.getKoin
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -103,20 +100,13 @@ fun AppNavigationHost(
             onNavigation(Screen.AddAnimal)
             AddAnimalScreen(vm)
 
+        }
+
         composable(Screen.Profile.route) {
             val vm: ProfileScreenViewModel = koinViewModel()
             Screen.Profile.prepareAppBarActions(vm)
             onNavigation(Screen.Profile)
             ProfileScreen(vm)
-        }
-
-
-
-
-
-        composable(Screen.Input.route) {
-            onNavigation(Screen.Input)
-            InputScreen()
         }
 
         composable(Screen.Search.route) {
