@@ -48,7 +48,7 @@ import org.koin.androidx.compose.getViewModel
 
 //@Preview
 @Composable
-fun AddAnimalScreen(vm: AddAnimalViewModel, modifier: Modifier = Modifier) {
+fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier) {
 //   val vm = getViewModel<AddAnimalViewModel>()
 //
 //     val saveState by remember(vm) { vm.saveFeedbackFlow }

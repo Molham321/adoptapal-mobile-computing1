@@ -26,7 +26,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class AddAnimalViewModel(
+class AddAnimalScreenViewModel(
     private val createAnimalAsync: CreateAnimalAsync,
     private val navigationManager: NavigationManager,
     private val getAllAnimalCategories: GetAllAnimalCategories,
