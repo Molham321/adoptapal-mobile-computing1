@@ -21,7 +21,6 @@ class DetailScreenViewModel(
         getAnimalFromDb(animalId)
     }
 
-
     private fun getAnimalFromDb(id: Long) {
         viewModelScope.launch {
             getAnimalAsync.invoke(id).collect {

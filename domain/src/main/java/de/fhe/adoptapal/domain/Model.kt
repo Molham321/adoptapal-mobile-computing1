@@ -60,8 +60,15 @@ data class User(
     constructor(
         name: String,
         email: String,
+        phoneNumber: String?,
+        address: Address?
+    ): this(0, LocalDateTime.now(), LocalDateTime.now(), name, email, address, phoneNumber,  true )
+    constructor(
+        name: String,
+        email: String,
         phoneNumber: String?
     ): this(0, LocalDateTime.now(), LocalDateTime.now(), name, email, null, phoneNumber,  true )
+
 }
 
 data class Address(
@@ -74,8 +81,13 @@ data class Address(
     var zipCode: String,
     var latitude: Double,
     var longitude: Double
-)
+) {
+    constructor(houseNumber: String, street: String, city: String, zipCode: String, location: Location) : this(0, LocalDateTime.now(), LocalDateTime.now(), houseNumber, street, city, zipCode, location.latitude, location.longitude)
+}
 
+/**
+ * Location class that also handles distance and radius calculations
+ */
 data class Location(
     var latitude: Double = 0.0,
     var longitude: Double = 0.0
@@ -151,17 +163,7 @@ data class Animal(
     val weight: Float,
     val isFavorite: Boolean
 ) {
-    constructor(
-        name: String,
-        birthday: LocalDate,
-        supplier: User,
-        animalCategory: AnimalCategory,
-        description: String,
-        color: Color,
-        imageFilePath: String?,
-        isMale: Boolean,
-        weight: Float
-    ): this(0, LocalDateTime.now(), LocalDateTime.now(), name, birthday, supplier, animalCategory, description, color, imageFilePath, isMale, weight, false)
+    constructor(name: String, birthday: LocalDate, supplier: User, animalCategory: AnimalCategory, description: String, color: Color, imageFilePath: String?, isMale: Boolean, weight: Float) : this(0, LocalDateTime.now(), LocalDateTime.now(), name, birthday, supplier, animalCategory, description, color, imageFilePath, isMale, weight, false)
 }
 
 data class Color(
@@ -169,14 +171,19 @@ data class Color(
     var createdTimestamp: LocalDateTime = LocalDateTime.now(),
     var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
     var name: String
-)
+) {
+    constructor(name : String) : this(0, LocalDateTime.now(), LocalDateTime.now(), name)
+}
 
 data class AnimalCategory(
     var id: Long = 0,
     var createdTimestamp: LocalDateTime = LocalDateTime.now(),
     var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
     var name: String
-)
+) {
+    constructor(name: String) : this(0, LocalDateTime.now(), LocalDateTime.now(), name)
+}
+
 
 
 data class Rating(
@@ -187,7 +194,9 @@ data class Rating(
     var supplier: User,
     var rating: RatingEnum,
     var comment: String
-)
+) {
+    constructor(seeker: User, supplier: User, rating: RatingEnum, comment: String) : this (0, LocalDateTime.now(), LocalDateTime.now(), seeker, supplier, rating, comment)
+}
 
 
 enum class RatingEnum {

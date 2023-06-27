@@ -27,7 +27,11 @@ interface Repository {
     fun getAllUsers(): Flow<List<User>>
     fun getUsersByRange(location: Location, range: Double): Flow<List<User>>
     suspend fun getUser(userId: Long): User?
+    suspend fun getUserByEmail(userEmail: String): User?
     suspend fun insertUser(user: User): Long
+    suspend fun updateUser(user:User) : Long
+
+    suspend fun deleteAllUsers()
 
     // Address
     suspend fun getAddress(addressId: Long): Address?

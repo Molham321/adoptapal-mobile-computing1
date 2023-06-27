@@ -20,17 +20,21 @@ import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
 import de.fhe.adoptapal.domain.GetColorAsync
 import de.fhe.adoptapal.domain.GetRatingAsync
 import de.fhe.adoptapal.domain.GetUserAsync
+import de.fhe.adoptapal.domain.GetUserByEmailAsync
 import de.fhe.adoptapal.domain.GetUsersByRangeAsync
 import de.fhe.adoptapal.domain.InsertAddressAsync
 import de.fhe.adoptapal.domain.InsertRatingAsync
 import de.fhe.adoptapal.domain.InsertUserAsync
 import de.fhe.adoptapal.domain.Repository
-import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalViewModel
+import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalScreenViewModel
+import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
+import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
+import de.fhe.adoptapal.ui.screens.settings.SettingsScreenVieModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -78,7 +82,9 @@ val useCaseModule = module {
     factory { GetAllUsers(get()) }
     factory { GetUsersByRangeAsync(get()) }
     factory { GetUserAsync(get()) }
+    factory { GetUserByEmailAsync(get()) }
     factory { InsertUserAsync(get()) }
+    factory { UpdateUserAsync(get()) }
 
     // Address
     factory { GetAddressAsync(get()) }
@@ -94,7 +100,9 @@ val useCaseModule = module {
 val viewModelModule = module {
     viewModel { HomeScreenViewModel(get(), get()) }
     viewModel { DetailScreenViewModel(get(), get()) }
-    viewModel { LoginScreenViewModel(get()) }
+    viewModel { LoginScreenViewModel(get(), get()) }
     viewModel { RegisterScreenViewModel(get(), get()) }
-    viewModel { AddAnimalViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { AddAnimalScreenViewModel(get(), get(), get(), get(), get(), get(), get()) }
+    viewModel { ProfileScreenViewModel(get()) }
+    viewModel { SettingsScreenVieModel(get(), get()) }
 }

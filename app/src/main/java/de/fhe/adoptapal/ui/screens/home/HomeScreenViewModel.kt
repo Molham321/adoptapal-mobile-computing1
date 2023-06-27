@@ -32,7 +32,6 @@ class HomeScreenViewModel(
                 }
             }
         }
-//        animalList = FakeDatabase.AnimalList
     }
 
     fun navigateToAddAnimal() {
