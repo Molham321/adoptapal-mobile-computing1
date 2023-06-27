@@ -93,6 +93,7 @@ object Libs {
             const val core = "com.google.maps.android:maps-compose:$maps_compose_verion"
             const val play_services =
                 "com.google.android.gms:play-services-maps:$play_services_version"
+            const val location = "com.google.android.gms:play-services-location:19.0.1"
         }
 
         object MaterialDesign {
@@ -174,6 +175,7 @@ object Libs {
         private const val version = "0.30.1"
         const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
         const val placeholder = "com.google.accompanist:accompanist-placeholder-material:$version"
+        const val navAnimation = "com.google.accompanist:accompanist-navigation-animation:$version"
     }
 
     object JUnit {
