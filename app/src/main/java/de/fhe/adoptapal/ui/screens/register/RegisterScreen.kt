@@ -37,6 +37,8 @@ import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
 import org.koin.androidx.compose.getViewModel
 
+import de.fhe.adoptapal.ui.screens.sharedComponents.InputField
+
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {

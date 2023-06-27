@@ -9,7 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import de.fhe.adoptapal.ui.screens.addAnimal.InputScreen
+import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalScreen
+import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalScreenViewModel
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreen
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.home.HomeScreen
@@ -93,12 +94,25 @@ fun AppNavigationHost(
             SettingsScreen(vm)
         }
 
+
+
+        composable(Screen.AddAnimal.route) {
+            val vm: AddAnimalScreenViewModel = koinViewModel()
+
+            Screen.AddAnimal.prepareAppBarActions(vm)
+            onNavigation(Screen.AddAnimal)
+            AddAnimalScreen(vm)
+
         composable(Screen.Profile.route) {
             val vm: ProfileScreenViewModel = koinViewModel()
             Screen.Profile.prepareAppBarActions(vm)
             onNavigation(Screen.Profile)
             ProfileScreen(vm)
         }
+
+
+
+
 
         composable(Screen.Input.route) {
             onNavigation(Screen.Input)

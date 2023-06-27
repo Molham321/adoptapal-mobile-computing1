@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalScreenViewModel
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
@@ -146,11 +147,20 @@ sealed class Screen(
         }
     }
 
-    object Input : Screen(
-        title = "Input",
+    object AddAnimal : Screen(
+        title = "AddAnimal",
         icon = Icons.Filled.Create,
-        route = "Input"
+        route = "AddAnimal"
     )
+    {
+        override fun prepareAppBarActions(vararg values: Any) {
+            if (values[0] !is AddAnimalScreenViewModel)
+                error("First Parameter must be of type *AddAnimalViewModel*")
+            val viewModel = values[0] as AddAnimalScreenViewModel
+
+            appBarActions = {}
+        }
+    }
 
     object Search : Screen(
         title = "Search",

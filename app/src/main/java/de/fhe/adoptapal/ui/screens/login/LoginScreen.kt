@@ -36,6 +36,8 @@ import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
 
+import de.fhe.adoptapal.ui.screens.sharedComponents.InputField
+
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
