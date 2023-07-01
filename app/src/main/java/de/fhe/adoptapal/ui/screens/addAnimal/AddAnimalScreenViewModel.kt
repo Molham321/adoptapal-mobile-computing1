@@ -1,8 +1,10 @@
 package de.fhe.adoptapal.ui.screens.addAnimal
 
+import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AnimalCategory
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
@@ -18,8 +20,12 @@ import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+
+// TODO: aktuell angemeldeten Nutzer mit dem neuen Tier speichern
+// TODO: eigene Bilder hochladen
 
 class AddAnimalScreenViewModel(
     private val createAnimalAsync: CreateAnimalAsync,
@@ -105,12 +111,32 @@ class AddAnimalScreenViewModel(
         return  colorArray
     }
 
+    fun getCategoryMap(list: List<AnimalCategory>): Map<Long, String> {
+        var categoryMap = mutableMapOf<Long, String>()
+
+        list.forEach {
+            categoryMap[it.id] = it.name
+        }
+
+        return categoryMap
+    }
+
+    fun getColorMap(list: List<Color>): Map<Long, String> {
+        var colorMap = mutableMapOf<Long, String>()
+
+        list.forEach {
+            colorMap[it.id] = it.name
+        }
+
+        return colorMap
+    }
+
 
     fun addAnimal(
         animalName: String,
         animalDescription: String,
-        animalCategory: String,
-        animalColor: String,
+        animalCategory: Long,
+        animalColor: Long,
         animalBirthdate: String,
         animalWeight: Float,
         animalGender: Boolean
@@ -132,25 +158,47 @@ class AddAnimalScreenViewModel(
 
 
                 val user = supplyingUser.value!!
+                val category = mutableStateOf<AnimalCategory?>(null)
+                val color = mutableStateOf<Color?>(null)
 
                 println("user: " + user)
 
+                runBlocking {
+                    getAnimalCategoryAsync(animalCategory).collect {
+                        dbOp.value = it
+                        if (it.status == AsyncOperationState.SUCCESS) {
+                            category.value = it.payload as AnimalCategory
+                        }
+                    }
+
+                    getAnimalColorAsync(animalColor).collect {
+                        dbOp.value = it
+                        if (it.status == AsyncOperationState.SUCCESS) {
+                            color.value = it.payload as Color
+                        }
+                    }
+                }
 
                 // println("selected date: " + birthdate)
 
-//                val newAnimal = Animal(
-//                    animalName,
-//                    birthdate,
-//                    user,
-//                    animalCategory,
-//                    animalDescription,
-//                    animalColor,
-//                    null,
-//                    animalGender,
-//                    animalWeight
-//                )
-//
-//                println("$animalName")
+                val newAnimal = Animal(
+                    animalName,
+                    birthdate,
+                    user,
+                    category.value!!,
+                    animalDescription,
+                    color.value!!,
+                    null,
+                    animalGender,
+                    animalWeight
+                )
+
+                println("$newAnimal")
+
+                createAnimalAsync(newAnimal).collect {
+                    saveFeedbackFlow.emit(it)
+                    navigateToUserList()
+                }
             }
         }
     }

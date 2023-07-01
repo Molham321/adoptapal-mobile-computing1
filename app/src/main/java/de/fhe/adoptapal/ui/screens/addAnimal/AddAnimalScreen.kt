@@ -63,15 +63,15 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
     var animalNameEditingState by remember { mutableStateOf(false) }
     var animalDescriptionTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var animalDescriptionEditingState by remember { mutableStateOf(false) }
-    var animalCategoryDropdownValue by remember { mutableStateOf("") }
+    var animalCategoryDropdownValue by remember { mutableStateOf<Long>(0) }
     var animalCategoryEditingState by remember { mutableStateOf(false) }
-    var animalColorDropdownValue by remember { mutableStateOf("") }
+    var animalColorDropdownValue by remember { mutableStateOf<Long>(0) }
     var animalColorEditingState by remember { mutableStateOf(false) }
     var animalBirthdateValue by remember { mutableStateOf("") }
     var animalBirthdateEditingState by remember { mutableStateOf(false) }
     var animalWeightTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var animalWeightEditingState by remember { mutableStateOf(false) }
-    var animalGenderValue by remember { mutableStateOf(false) }
+    var animalGenderValue by remember { mutableStateOf<Boolean>(false) }
     var animalGenderEditingState by remember { mutableStateOf(false) }
 
     val scaffoldState = LocalScaffoldState.current
@@ -127,7 +127,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
         Spacer(Modifier.height(15.dp))
 
         // DropdownSelect("Tierrasse", animalCategoryDropdownValue, arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel", "Fisch"))
-        DropdownSelect("Tierrasse", animalCategoryDropdownValue, animalCategoryEditingState, vm.getCategoryArray(animalCategoryList.value)) {
+        DropdownSelect("Tierrasse", animalCategoryDropdownValue, animalCategoryEditingState, vm.getCategoryArray(animalCategoryList.value), vm.getCategoryMap(animalCategoryList.value)) {
             animalCategoryDropdownValue = it
             animalCategoryEditingState = true
         }
@@ -135,7 +135,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
         Spacer(Modifier.height(15.dp))
 
         // DropdownSelect("Fellfarbe", animalColorDropdownValue, arrayOf("schwarz", "weiß", "blond", "orange", "braun", "gemustert", "kein Fell"))
-        DropdownSelect("Farbe des Tieres", animalColorDropdownValue, animalColorEditingState, vm.getColorArray(animalColorList.value)) {
+        DropdownSelect("Farbe des Tieres", animalColorDropdownValue, animalColorEditingState, vm.getColorArray(animalColorList.value), vm.getColorMap(animalColorList.value)) {
             animalColorDropdownValue = it
             animalColorEditingState = true
         }
@@ -166,8 +166,8 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
         if(
             animalNameTextFieldValue.text == "" ||
             animalDescriptionTextFieldValue.text == "" ||
-            animalCategoryDropdownValue == "" ||
-            animalColorDropdownValue == "" ||
+            animalCategoryDropdownValue <= 0 ||
+            animalColorDropdownValue <= 0 ||
             animalBirthdateValue == "" ||
             animalWeightTextFieldValue.text == ""
         ) {
@@ -200,11 +200,15 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                         animalWeightTextFieldValue.text.toFloat(),
                         animalGenderValue
                     )
+
+                    Toast.makeText(contextForToast, "Tier ${animalNameTextFieldValue.text} wurde gespeichert", Toast.LENGTH_LONG)
+                        .show()
+
                     // clear form
                     animalNameTextFieldValue = TextFieldValue("")
                     animalDescriptionTextFieldValue = TextFieldValue("")
-                    animalCategoryDropdownValue = ""
-                    animalColorDropdownValue = ""
+                    animalCategoryDropdownValue = 0
+                    animalColorDropdownValue = 0
                     animalBirthdateValue = ""
                     animalWeightTextFieldValue = TextFieldValue("")
                     animalGenderValue = false

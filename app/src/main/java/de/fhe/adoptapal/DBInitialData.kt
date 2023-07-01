@@ -40,28 +40,92 @@ class DBInitialData : KoinComponent {
 
             // create colors
             val color1 =
-                Color(1, LocalDateTime.of(2023, 5, 30, 22, 11), LocalDateTime.now(), "White")
+                Color(1, LocalDateTime.of(2023, 5, 30, 22, 11), LocalDateTime.now(), "Weiß")
             repo.insertColor(color1)
             repo.insertColor(
                 Color(
                     2,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
-                    "Red"
+                    "Schwarz"
+                )
+            )
+            repo.insertColor(
+                Color(
+                    3,
+                    LocalDateTime.of(2023, 5, 30, 22, 11),
+                    LocalDateTime.now(),
+                    "Rot"
+                )
+            )
+            repo.insertColor(
+                Color(
+                    4,
+                    LocalDateTime.of(2023, 5, 30, 22, 11),
+                    LocalDateTime.now(),
+                    "Grün"
+                )
+            )
+            repo.insertColor(
+                Color(
+                    5,
+                    LocalDateTime.of(2023, 5, 30, 22, 11),
+                    LocalDateTime.now(),
+                    "Orange"
+                )
+            )
+            repo.insertColor(
+                Color(
+                    6,
+                    LocalDateTime.of(2023, 5, 30, 22, 11),
+                    LocalDateTime.now(),
+                    "Gelb"
+                )
+            )
+            repo.insertColor(
+                Color(
+                    7,
+                    LocalDateTime.of(2023, 5, 30, 22, 11),
+                    LocalDateTime.now(),
+                    "Braun"
+                )
+            )
+            repo.insertColor(
+                Color(
+                    8,
+                    LocalDateTime.of(2023, 5, 30, 22, 11),
+                    LocalDateTime.now(),
+                    "Grau"
+                )
+            )
+            repo.insertColor(
+                Color(
+                    9,
+                    LocalDateTime.of(2023, 5, 30, 22, 11),
+                    LocalDateTime.now(),
+                    "Mehrfarbig"
+                )
+            )
+            repo.insertColor(
+                Color(
+                    10,
+                    LocalDateTime.of(2023, 5, 30, 22, 11),
+                    LocalDateTime.now(),
+                    "Andere"
                 )
             )
 
 
             // create animal categories
             val animalCategory1 =
-                AnimalCategory(1, LocalDateTime.of(2023, 5, 30, 22, 11), LocalDateTime.now(), "Cat")
+                AnimalCategory(1, LocalDateTime.of(2023, 5, 30, 22, 11), LocalDateTime.now(), "Katze")
             repo.insertAnimalCategory(animalCategory1)
             repo.insertAnimalCategory(
                 AnimalCategory(
                     2,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
-                    "Dog"
+                    "Hund"
                 )
             )
             repo.insertAnimalCategory(
@@ -69,7 +133,7 @@ class DBInitialData : KoinComponent {
                     3,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
-                    "Fish"
+                    "Fisch"
                 )
             )
             repo.insertAnimalCategory(
@@ -77,7 +141,7 @@ class DBInitialData : KoinComponent {
                     4,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
-                    "Reptile"
+                    "Reptil"
                 )
             )
             repo.insertAnimalCategory(
@@ -85,7 +149,23 @@ class DBInitialData : KoinComponent {
                     5,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
-                    "Other"
+                    "Nagetier"
+                )
+            )
+            repo.insertAnimalCategory(
+                AnimalCategory(
+                    6,
+                    LocalDateTime.of(2023, 5, 30, 22, 11),
+                    LocalDateTime.now(),
+                    "Vogel"
+                )
+            )
+            repo.insertAnimalCategory(
+                AnimalCategory(
+                    7,
+                    LocalDateTime.of(2023, 5, 30, 22, 11),
+                    LocalDateTime.now(),
+                    "Andere"
                 )
             )
 
