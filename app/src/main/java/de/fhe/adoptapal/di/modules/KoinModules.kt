@@ -1,6 +1,7 @@
 package de.fhe.adoptapal.di.modules
 
-import LocalStoreImpl
+import de.fhe.adoptapal.android_core.LocalStoreImpl
+import de.fhe.adoptapal.android_core.LoggerImpl
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
 import de.fhe.adoptapal.domain.CreateAnimalAsync
@@ -28,6 +29,7 @@ import de.fhe.adoptapal.domain.InsertAddressAsync
 import de.fhe.adoptapal.domain.InsertRatingAsync
 import de.fhe.adoptapal.domain.InsertUserAsync
 import de.fhe.adoptapal.domain.LocalStore
+import de.fhe.adoptapal.domain.Logger
 import de.fhe.adoptapal.domain.Repository
 import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalScreenViewModel
@@ -60,6 +62,10 @@ val databaseModule = module {
 val androidCoreModule = module {
     single {
         NavigationManager()
+    }
+
+    single<Logger> {
+        LoggerImpl()
     }
 
     single<LocalStore> {

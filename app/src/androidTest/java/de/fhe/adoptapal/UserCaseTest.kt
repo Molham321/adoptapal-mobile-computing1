@@ -1,6 +1,6 @@
 package de.fhe.adoptapal
 
-import LocalStoreImpl
+import de.fhe.adoptapal.android_core.LocalStoreImpl
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
@@ -36,7 +36,6 @@ import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
-import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel.Companion.user
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.*
