@@ -281,6 +281,12 @@ class GetAllRatingsBySupplierId(private val repository: Repository) {
 // ----------------
 
 
+/**
+ * get logged in user
+ *
+ * @return success - userId was found in Storage and user with the userId from the database is returned
+ * @return error - userId not found or no user with that userId is in the database
+ */
 class GetLoggedInUserFromDataStoreAndDatabase(private val localStore: LocalStore, private val repository: Repository) {
     operator fun invoke() : Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading logged in user from localStore..."))
@@ -300,7 +306,8 @@ class GetLoggedInUserFromDataStoreAndDatabase(private val localStore: LocalStore
 
 class SetLoggedInUserInDataStore(private val localStore: LocalStore) {
     operator fun invoke (userId: Long) : Flow<AsyncOperation> = flow {
-        emit(AsyncOperation.saving("Saving userId: $userId in localStore"))
+        emit(AsyncOperation.saving("Saving userId: $userId in local store"))
         localStore.save(LocalStoreKey.LOGGED_IN_USER_ID.name, userId.toString())
+        emit(AsyncOperation.success("Saved userId: $userId in local store"))
     }
 }

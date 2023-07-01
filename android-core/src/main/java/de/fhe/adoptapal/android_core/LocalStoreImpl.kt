@@ -1,6 +1,7 @@
 package de.fhe.adoptapal.android_core
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -16,12 +17,14 @@ class LocalStoreImpl(val context: Context) : LocalStore {
 
     override suspend fun save(key: String, value: String) {
         context.dataStore.edit { prefs ->
+            Log.i("LocalStore.save", "Key: $key, Value: $value")
             prefs[stringPreferencesKey(key)] = value
         }
     }
 
     override suspend fun load(key: String): String {
         return context.dataStore.data.map { prefs ->
+            Log.i("LocalStore.load", "Key: $key, Value: ${prefs[stringPreferencesKey(key)]}")
             prefs[stringPreferencesKey(key)]
         }.first() ?: ""
     }

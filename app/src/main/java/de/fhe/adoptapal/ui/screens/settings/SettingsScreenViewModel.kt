@@ -1,4 +1,4 @@
-package de.fhe.adoptapal.ui.screens.profile
+package de.fhe.adoptapal.ui.screens.settings
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
@@ -7,18 +7,19 @@ import androidx.lifecycle.viewModelScope
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
+import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
-import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class ProfileScreenViewModel(
+class SettingsScreenViewModel(
+    private val updateUserAsyncUserCase: UpdateUserAsync,
     private val navigationManager: NavigationManager,
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase
 ): ViewModel() {
 
+    private val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     var user = mutableStateOf<User?>(null)
     init {
@@ -26,23 +27,27 @@ class ProfileScreenViewModel(
     }
 
     private fun getUser() {
-        Log.i("Profile", "init")
+        Log.i("Settings", "init")
         viewModelScope.launch {
-            Log.i("Profile", "launching")
+            Log.i("Settings", "launching")
             getLoggedInUserFromDataStoreAndDatabase().collect{
-                Log.i("Profile", "Collecting")
+                Log.i("Settings", "Collecting")
                 if(it.status == AsyncOperationState.SUCCESS) {
-                    Log.i("Profile", "found user with id: ${(it.payload as User).id}")
+                    Log.i("Settings", "found user with id: ${(it.payload as User).id}")
                     user.value = it.payload as User
                 }
                 if(it.status == AsyncOperationState.ERROR) {
-                    Log.i("Profile", "Failed to load user")
+                    Log.i("Settings", "Failed to load user")
                 }
             }
         }
     }
 
-    fun navigateToSettings() {
-        navigationManager.navigate(Screen.Settings.navigationCommand())
+    fun updateUser(user: User) {
+        viewModelScope.launch {
+            updateUserAsyncUserCase(user).collect {
+                saveFeedbackFlow.emit(it)
+            }
+        }
     }
 }

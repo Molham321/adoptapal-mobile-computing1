@@ -40,7 +40,7 @@ import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
 import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
-import de.fhe.adoptapal.ui.screens.settings.SettingsScreenVieModel
+import de.fhe.adoptapal.ui.screens.settings.SettingsScreenViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -118,9 +118,9 @@ val useCaseModule = module {
 val viewModelModule = module {
     viewModel { HomeScreenViewModel(get(), get()) }
     viewModel { DetailScreenViewModel(get(), get()) }
-    viewModel { LoginScreenViewModel(get(), get()) }
+    viewModel { LoginScreenViewModel(get(), get(), get()) }
     viewModel { RegisterScreenViewModel(get(), get()) }
     viewModel { AddAnimalScreenViewModel(get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { ProfileScreenViewModel(get()) }
-    viewModel { SettingsScreenVieModel(get(), get()) }
+    viewModel { ProfileScreenViewModel(get(), get()) }
+    viewModel { SettingsScreenViewModel(get(), get(), get()) }
 }

@@ -196,13 +196,13 @@ class UseCaseTests: KoinTest {
     @Test
     fun testGetAndSetLoggerInUser() = runBlocking {
 
-        // prepate
+        // prepare
         val user = User("TestName", "Test@Mail.de", "1234", null)
         val userId = get<Repository>().insertUser(user)
 
         // test
         val setLoggedInUserInDataStore = get<SetLoggedInUserInDataStore>()
-        setLoggedInUserInDataStore(userId)
+        //setLoggedInUserInDataStore(userId)
 
         // check
         val getLoggedInUserFromDataStoreAndDatabase = get<GetLoggedInUserFromDataStoreAndDatabase>()

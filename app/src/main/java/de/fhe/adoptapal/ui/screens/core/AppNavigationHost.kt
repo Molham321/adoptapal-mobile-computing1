@@ -22,7 +22,7 @@ import de.fhe.adoptapal.ui.screens.register.RegisterScreen
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
 import de.fhe.adoptapal.ui.screens.search.SearchScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreen
-import de.fhe.adoptapal.ui.screens.settings.SettingsScreenVieModel
+import de.fhe.adoptapal.ui.screens.settings.SettingsScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -85,7 +85,7 @@ fun AppNavigationHost(
         }
 
         composable(Screen.Settings.route) {
-            val vm: SettingsScreenVieModel = koinViewModel()
+            val vm: SettingsScreenViewModel = koinViewModel()
             Screen.Settings.prepareAppBarActions(vm)
             onNavigation(Screen.Settings)
             SettingsScreen(vm)
