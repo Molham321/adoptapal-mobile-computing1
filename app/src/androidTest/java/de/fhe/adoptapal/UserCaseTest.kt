@@ -1,8 +1,10 @@
 package de.fhe.adoptapal
 
+import LocalStoreImpl
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
+import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.CreateAnimalAsync
 import de.fhe.adoptapal.domain.CreateAnimalCategoryAsync
@@ -20,6 +22,7 @@ import de.fhe.adoptapal.domain.GetAnimalAsync
 import de.fhe.adoptapal.domain.GetAnimalByRangeAsync
 import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
 import de.fhe.adoptapal.domain.GetColorAsync
+import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.GetRatingAsync
 import de.fhe.adoptapal.domain.GetUserAsync
 import de.fhe.adoptapal.domain.GetUserByEmailAsync
@@ -27,7 +30,9 @@ import de.fhe.adoptapal.domain.GetUsersByRangeAsync
 import de.fhe.adoptapal.domain.InsertAddressAsync
 import de.fhe.adoptapal.domain.InsertRatingAsync
 import de.fhe.adoptapal.domain.InsertUserAsync
+import de.fhe.adoptapal.domain.LocalStore
 import de.fhe.adoptapal.domain.Repository
+import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
@@ -71,6 +76,9 @@ class UseCaseTests: KoinTest {
             NavigationManager()
         }
 
+        single<LocalStore> {
+            LocalStoreImpl(get())
+        }
 
         // animal
         factory { GetAllAnimals(get()) }
@@ -107,6 +115,10 @@ class UseCaseTests: KoinTest {
         factory { InsertRatingAsync(get()) }
         factory { GetAllRatingsBySeekerId(get()) }
         factory { GetAllRatingsBySupplierId(get()) }
+
+        // LocalStore
+        factory { GetLoggedInUserFromDataStoreAndDatabase(get(), get()) }
+        factory { SetLoggedInUserInDataStore(get()) }
     }
 
     @Before
@@ -141,6 +153,7 @@ class UseCaseTests: KoinTest {
 
         val repo = get<Repository>()
 
+        repo.deleteAllUsers()
 
         val userEmail = "user@mailhot.net"
 
@@ -154,7 +167,7 @@ class UseCaseTests: KoinTest {
         getUserByEmailAsync.invoke(userEmail).collect {
             if(it.status == AsyncOperationState.SUCCESS) {
                 assertTrue("User with provided email should exist", (it.payload as User).email == userEmail)
-                assertTrue("User id is equal to existing user id", (it.payload as User).id == userId)
+                assertTrue("User id is equal to existing userId: $userId and payloadUserId: ${(it.payload as User).id}", (it.payload as User).id == userId)
                 user = it.payload as User
             }
         }
@@ -178,6 +191,29 @@ class UseCaseTests: KoinTest {
             }
         }
 
+
+    }
+
+    @Test
+    fun testGetAndSetLoggerInUser() = runBlocking {
+
+        // prepate
+        val user = User("TestName", "Test@Mail.de", "1234", null)
+        val userId = get<Repository>().insertUser(user)
+
+        // test
+        val setLoggedInUserInDataStore = get<SetLoggedInUserInDataStore>()
+        setLoggedInUserInDataStore(userId)
+
+        // check
+        val getLoggedInUserFromDataStoreAndDatabase = get<GetLoggedInUserFromDataStoreAndDatabase>()
+        getLoggedInUserFromDataStoreAndDatabase().collect{
+            if(it == AsyncOperation.success()) {
+                assertEquals(userId, (it.payload as User).id)
+                assertEquals(user.name, (it.payload as User).name)
+                assertEquals(user.email, (it.payload as User).email)
+            }
+        }
 
     }
 

@@ -18,7 +18,7 @@ import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
 @Composable
 fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
 
-    if(LoginScreenViewModel.loggedIn && LoginScreenViewModel.user.value != null)
+    if( LoginScreenViewModel.loggedIn && LoginScreenViewModel.user.value != null)
     {
         Column() {
             val user = LoginScreenViewModel.user.value

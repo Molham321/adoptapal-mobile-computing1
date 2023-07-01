@@ -274,3 +274,33 @@ class GetAllRatingsBySupplierId(private val repository: Repository) {
         }
     }
 }
+
+
+// ----------------
+// Datastore
+// ----------------
+
+
+class GetLoggedInUserFromDataStoreAndDatabase(private val localStore: LocalStore, private val repository: Repository) {
+    operator fun invoke() : Flow<AsyncOperation> = flow {
+        emit(AsyncOperation.loading("Start loading logged in user from localStore..."))
+
+        // get userId from datastore
+        val result = localStore.load(LocalStoreKey.LOGGED_IN_USER_ID.name)
+        if(!result.isBlank()) {
+            val user = repository.getUser(result.toLong())
+            if(user != null) {
+                emit(AsyncOperation.success("User found and loaded", user))
+                return@flow
+            }
+        }
+        emit(AsyncOperation.error("No logged in user found"))
+    }
+}
+
+class SetLoggedInUserInDataStore(private val localStore: LocalStore) {
+    operator fun invoke (userId: Long) : Flow<AsyncOperation> = flow {
+        emit(AsyncOperation.saving("Saving userId: $userId in localStore"))
+        localStore.save(LocalStoreKey.LOGGED_IN_USER_ID.name, userId.toString())
+    }
+}

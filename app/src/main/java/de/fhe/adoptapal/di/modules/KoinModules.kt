@@ -1,5 +1,6 @@
 package de.fhe.adoptapal.di.modules
 
+import LocalStoreImpl
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
 import de.fhe.adoptapal.domain.CreateAnimalAsync
@@ -18,6 +19,7 @@ import de.fhe.adoptapal.domain.GetAnimalAsync
 import de.fhe.adoptapal.domain.GetAnimalByRangeAsync
 import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
 import de.fhe.adoptapal.domain.GetColorAsync
+import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.GetRatingAsync
 import de.fhe.adoptapal.domain.GetUserAsync
 import de.fhe.adoptapal.domain.GetUserByEmailAsync
@@ -25,7 +27,9 @@ import de.fhe.adoptapal.domain.GetUsersByRangeAsync
 import de.fhe.adoptapal.domain.InsertAddressAsync
 import de.fhe.adoptapal.domain.InsertRatingAsync
 import de.fhe.adoptapal.domain.InsertUserAsync
+import de.fhe.adoptapal.domain.LocalStore
 import de.fhe.adoptapal.domain.Repository
+import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalScreenViewModel
 import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
@@ -56,6 +60,10 @@ val databaseModule = module {
 val androidCoreModule = module {
     single {
         NavigationManager()
+    }
+
+    single<LocalStore> {
+        LocalStoreImpl(get())
     }
 }
 
@@ -95,6 +103,10 @@ val useCaseModule = module {
     factory { InsertRatingAsync(get()) }
     factory { GetAllRatingsBySeekerId(get()) }
     factory { GetAllRatingsBySupplierId(get()) }
+
+    // LocalStore
+    factory { GetLoggedInUserFromDataStoreAndDatabase(get(), get()) }
+    factory { SetLoggedInUserInDataStore(get()) }
 }
 
 val viewModelModule = module {

@@ -198,7 +198,3 @@ data class Rating(
     constructor(seeker: User, supplier: User, rating: RatingEnum, comment: String) : this (0, LocalDateTime.now(), LocalDateTime.now(), seeker, supplier, rating, comment)
 }
 
-
-enum class RatingEnum {
-    ONE_STAR, TWO_STARS, THREE_STARS, FOUR_STARS, FIVE_STARS
-}

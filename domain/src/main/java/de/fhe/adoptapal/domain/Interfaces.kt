@@ -2,6 +2,14 @@ package de.fhe.adoptapal.domain
 
 import kotlinx.coroutines.flow.Flow
 
+
+
+interface LocalStore {
+    suspend fun save(key: String, value: String)
+    suspend fun load(key: String): String
+}
+
+
 interface Repository {
     // Animals
     fun getAllAnimals(): Flow<List<Animal>>

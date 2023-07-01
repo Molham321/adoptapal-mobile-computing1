@@ -39,6 +39,7 @@ dependencies {
     implementation(Libs.AndroidX.coreKtx)
 
 //    implementation( Libs.Timber.core )
+    implementation( Libs.DataStore.datastore_pref )
 
     testImplementation(Libs.JUnit.core)
     androidTestImplementation(Libs.JUnit.ktx)
