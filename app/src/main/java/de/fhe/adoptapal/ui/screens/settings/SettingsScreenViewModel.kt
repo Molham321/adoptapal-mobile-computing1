@@ -44,6 +44,7 @@ class SettingsScreenViewModel(
     }
 
     fun updateUser(user: User) {
+        Log.i("Settings", "update user with id: ${user.id}")
         viewModelScope.launch {
             updateUserAsyncUserCase(user).collect {
                 saveFeedbackFlow.emit(it)

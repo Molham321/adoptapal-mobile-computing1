@@ -12,6 +12,7 @@ import de.fhe.adoptapal.domain.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinComponent
@@ -33,6 +34,11 @@ class DBInitialData : KoinComponent {
         val dbScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
         dbScope.launch {
+
+            if(repo.getUser(1) != null) {
+                Log.i(logTag, "User found, so no more example data is created")
+                return@launch
+            }
 
             Log.i(logTag, "Koin DB-Test started")
 

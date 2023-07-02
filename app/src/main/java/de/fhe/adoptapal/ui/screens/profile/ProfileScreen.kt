@@ -24,6 +24,8 @@ import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
 @Composable
 fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
 
+    vm.reload()
+
     val user = remember{vm.user}
 
     if( user.value != null)

@@ -22,6 +22,7 @@ class ProfileScreenViewModel(
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     var user = mutableStateOf<User?>(null)
     init {
+        Log.i("Profile", "init class")
         this.getUser()
     }
 
@@ -40,6 +41,10 @@ class ProfileScreenViewModel(
                 }
             }
         }
+    }
+
+    fun reload() {
+        this.getUser()
     }
 
     fun navigateToSettings() {

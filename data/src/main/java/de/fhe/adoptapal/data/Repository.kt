@@ -1,5 +1,6 @@
 package de.fhe.adoptapal.data
 
+import android.util.Log
 import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AnimalCategory
@@ -162,8 +163,16 @@ class RepositoryImpl(
     }
 
     override suspend fun updateUser(user: User): Long {
-
+        Log.i("Repository", "update user")
         userModelDao.get(user.id)?.let { savedEntity ->
+
+            var addressId : Long? = null
+            // update users address if exists
+            if(user.address != null) {
+                Log.i("Repository", "update or create user address")
+                user.address?.id = addressModelDao.upsert(user.address!!.fromDomain())
+            }
+
             // Update User
             val userEntity = user.fromDomain()
             userEntity.lastChangeTimestamp = LocalDateTime.now()
