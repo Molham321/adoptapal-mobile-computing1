@@ -38,6 +38,7 @@ import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
 import org.koin.androidx.compose.getViewModel
 
 import de.fhe.adoptapal.ui.screens.sharedComponents.InputField
+import de.fhe.adoptapal.ui.screens.sharedComponents.PasswordInputField
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable

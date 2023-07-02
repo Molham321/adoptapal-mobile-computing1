@@ -7,9 +7,14 @@ import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.GetAnimalAsync
+import de.fhe.adoptapal.ui.screens.core.NavigationManager
+import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.Period
 
 class DetailScreenViewModel(
+    private val navigationManager: NavigationManager,
     private val animalId: Long,
     private val getAnimalAsync: GetAnimalAsync
 ) : ViewModel() {
@@ -30,5 +35,14 @@ class DetailScreenViewModel(
                 }
             }
         }
+    }
+    fun getAge(birthday: LocalDate): String {
+        val currentDate = LocalDate.now()
+        val age = Period.between(birthday, currentDate)
+        return "${age.years} years"
+    }
+
+    fun navigateToUser(userId: Long) {
+        navigationManager.navigate(Screen.UserDetail.navigationCommand(userId))
     }
 }

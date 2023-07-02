@@ -36,7 +36,7 @@ import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
 
-import de.fhe.adoptapal.ui.screens.sharedComponents.InputField
+import de.fhe.adoptapal.ui.screens.sharedComponents.PasswordInputField
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable

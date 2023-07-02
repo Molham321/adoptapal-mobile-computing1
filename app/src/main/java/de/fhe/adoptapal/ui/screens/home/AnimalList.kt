@@ -20,7 +20,11 @@ fun AnimalList(
             items = animals,
             key = { it.id }
         ) {
-            AnimalCard(it, modifier = modifier, onItemPressed)
+            AnimalCard(
+                it,
+                modifier = modifier,
+                onItemPressed
+            )
         }
     }
 }

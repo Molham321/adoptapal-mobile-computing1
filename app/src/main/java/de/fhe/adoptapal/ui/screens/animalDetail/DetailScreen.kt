@@ -13,7 +13,9 @@ fun DetailScreen(vm: DetailScreenViewModel, modifier: Modifier = Modifier) {
             Details(
                 animal = vm.animal.value!!,
                 modifier = modifier
-            )
+            ) {
+                vm.navigateToUser(it)
+            }
         }
     }
 }

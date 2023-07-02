@@ -38,13 +38,6 @@ fun InputField(
             imeAction = ImeAction.Done,
             keyboardType = KeyboardType.Text
         ),
-        // label = { Text(inputLabel) },
         placeholder = { Text(inputPlaceholder) },
     )
 }
-
-//@Preview
-//@Composable
-//fun InputFieldPreview() {
-//    InputField(inputPlaceholder = "Name")
-//}

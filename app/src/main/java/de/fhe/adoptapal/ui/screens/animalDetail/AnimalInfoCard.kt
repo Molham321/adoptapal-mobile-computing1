@@ -21,10 +21,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
+import de.fhe.adoptapal.ui.screens.sharedComponents.GenderTag
 
 
 @Composable
-fun AnimalInfoCard(name: String, gender: String, location: String) {
+fun AnimalInfoCard(name: String, gender: Boolean, location: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

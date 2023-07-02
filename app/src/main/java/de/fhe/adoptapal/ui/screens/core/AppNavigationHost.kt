@@ -23,6 +23,8 @@ import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
 import de.fhe.adoptapal.ui.screens.search.SearchScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreenVieModel
+import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreen
+import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -79,6 +81,19 @@ fun AppNavigationHost(
 
             DetailScreen(vm)
         }
+
+        composable(
+            Screen.UserDetail.route,
+            Screen.UserDetail.navigationCommand(0).arguments
+        ) { entry ->
+            val userId = entry.arguments?.getLong("userId")
+            val vm: UserDetailScreenViewModel = koinViewModel(parameters = { parametersOf(userId) })
+
+            Screen.UserDetail.prepareAppBarActions(LocalContext.current, vm)
+            onNavigation(Screen.UserDetail)
+
+            UserDetailScreen(vm)
+        }
         composable(Screen.Map.route) {
             onNavigation(Screen.Map)
             MapScreen()
@@ -90,8 +105,6 @@ fun AppNavigationHost(
             onNavigation(Screen.Settings)
             SettingsScreen(vm)
         }
-
-
 
         composable(Screen.AddAnimal.route) {
             val vm: AddAnimalScreenViewModel = koinViewModel()

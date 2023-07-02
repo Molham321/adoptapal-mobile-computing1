@@ -11,17 +11,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
 
-@Preview
 @Composable
-fun UserDetailScreen() {
+fun UserDetailScreen(vm: UserDetailScreenViewModel, modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color = colorResource(id = R.color.white))
             .padding(16.dp, 16.dp, 16.dp, 16.dp)
     ) {
         UserInfo()
-
-//        HomeScreen()
     }
 }

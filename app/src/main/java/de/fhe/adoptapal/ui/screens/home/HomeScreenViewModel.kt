@@ -11,12 +11,15 @@ import de.fhe.adoptapal.domain.GetAllAnimals
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.Period
 
 class HomeScreenViewModel(
     private val navigationManager: NavigationManager,
     private val getAllAnimals: GetAllAnimals
 ) : ViewModel() {
     var animalList = mutableStateOf(emptyList<Animal>())
+//    var animalAge = mutableStateOf(0)
     var dbOp = mutableStateOf(AsyncOperation.undefined())
 
     init {
@@ -32,6 +35,11 @@ class HomeScreenViewModel(
                 }
             }
         }
+    }
+    fun getAge(birthday: LocalDate): String {
+        val currentDate = LocalDate.now()
+        val age = Period.between(birthday, currentDate)
+        return "${age.years} years"
     }
 
     fun navigateToAddAnimal() {
@@ -49,4 +57,5 @@ class HomeScreenViewModel(
     fun navigateToAnimal(animalId: Long) {
         navigationManager.navigate(Screen.Detail.navigationCommand(animalId))
     }
+
 }

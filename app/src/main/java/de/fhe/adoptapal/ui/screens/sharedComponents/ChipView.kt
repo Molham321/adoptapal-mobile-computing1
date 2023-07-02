@@ -1,4 +1,4 @@
-package de.fhe.adoptapal.ui.screens.animalDetail
+package de.fhe.adoptapal.ui.screens.sharedComponents
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,17 +14,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun GenderTag(gender: String, color: Color = Color.Red) {
+fun ChipView(gender: Boolean, colorResource: Color) {
+    var genderValue: String
+
+    if (gender) {
+        genderValue = "Male"
+    } else {
+        genderValue = "Female"
+    }
     Box(
         modifier = Modifier
             .wrapContentWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(color.copy(.08f))
+            .background(colorResource.copy(.08f))
     ) {
+
         Text(
-            text = gender, modifier = Modifier.padding(12.dp, 6.dp, 12.dp, 6.dp),
+            text = genderValue, modifier = Modifier.padding(12.dp, 6.dp, 12.dp, 6.dp),
             style = MaterialTheme.typography.caption,
-            color = color
+            color = colorResource
         )
     }
 }

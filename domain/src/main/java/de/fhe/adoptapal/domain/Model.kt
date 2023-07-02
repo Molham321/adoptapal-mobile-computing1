@@ -154,6 +154,7 @@ data class Animal(
     var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
     val name: String,
     val birthday: LocalDate,
+//    var animalAge: Int = 0
     val supplier: User,
     var animalCategory: AnimalCategory,
     val description: String,
