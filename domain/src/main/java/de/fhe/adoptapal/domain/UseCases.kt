@@ -194,16 +194,24 @@ class GetUserByEmailAsync(private val repository: Repository) {
 class InsertUserAsync(private val repository: Repository) {
     operator fun invoke(newUser: User): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start creating user..."))
-        val userId = repository.insertUser(newUser)
-        emit(AsyncOperation.success("Created user with id $userId", userId))
+        try {
+            val userId = repository.insertUser(newUser)
+            emit(AsyncOperation.success("Created user with id $userId", userId))
+        } catch (ex : UserEmailUniqueException) {
+            emit(AsyncOperation.error("Failed to save user because email ${ex.email} already exists"))
+        }
     }
 }
 
 class UpdateUserAsync(private val repository: Repository) {
     operator fun invoke(user: User): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start updating user with id: ${user.id} ..."))
-        val userId = repository.updateUser(user)
-        emit(AsyncOperation.success("Updated user with id $userId", userId))
+        try {
+            val userId = repository.updateUser(user)
+            emit(AsyncOperation.success("Updated user with id $userId", userId))
+        } catch (ex : UserEmailUniqueException) {
+            emit(AsyncOperation.error("Failed to save user because email ${ex.email} already exists"))
+        }
     }
 }
 

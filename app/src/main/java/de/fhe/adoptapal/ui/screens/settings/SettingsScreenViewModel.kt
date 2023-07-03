@@ -2,6 +2,7 @@ package de.fhe.adoptapal.ui.screens.settings
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.input.ImeAction.Companion.Go
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.fhe.adoptapal.domain.AsyncOperation
@@ -19,7 +20,7 @@ class SettingsScreenViewModel(
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase
 ): ViewModel() {
 
-    private val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
+    val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     var user = mutableStateOf<User?>(null)
     init {
@@ -47,7 +48,15 @@ class SettingsScreenViewModel(
         Log.i("Settings", "update user with id: ${user.id}")
         viewModelScope.launch {
             updateUserAsyncUserCase(user).collect {
-                saveFeedbackFlow.emit(it)
+
+                if(it.status == AsyncOperationState.SUCCESS) {
+                    saveFeedbackFlow.emit(it)
+                    TODO("Go to different page?")
+                }
+
+                if(it.status == AsyncOperationState.ERROR) {
+                    saveFeedbackFlow.emit(it)
+                }
             }
         }
     }
