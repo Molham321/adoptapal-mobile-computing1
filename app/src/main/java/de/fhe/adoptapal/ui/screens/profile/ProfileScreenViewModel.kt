@@ -10,17 +10,16 @@ import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class ProfileScreenViewModel(
     private val navigationManager: NavigationManager,
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase
-): ViewModel() {
+) : ViewModel() {
 
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     var user = mutableStateOf<User?>(null)
+
     init {
         Log.i("Profile", "init class")
         this.getUser()
@@ -30,13 +29,13 @@ class ProfileScreenViewModel(
         Log.i("Profile", "init")
         viewModelScope.launch {
             Log.i("Profile", "launching")
-            getLoggedInUserFromDataStoreAndDatabase().collect{
+            getLoggedInUserFromDataStoreAndDatabase().collect {
                 Log.i("Profile", "Collecting")
-                if(it.status == AsyncOperationState.SUCCESS) {
+                if (it.status == AsyncOperationState.SUCCESS) {
                     Log.i("Profile", "found user with id: ${(it.payload as User).id}")
                     user.value = it.payload as User
                 }
-                if(it.status == AsyncOperationState.ERROR) {
+                if (it.status == AsyncOperationState.ERROR) {
                     Log.i("Profile", "Failed to load user")
                 }
             }

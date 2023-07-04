@@ -17,6 +17,8 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
     var filterText by remember { mutableStateOf("") }
     var selectedFilter by remember { mutableStateOf<String?>(null) }
 
+    vm.refreshUser()
+
     Column(modifier = modifier) {
 
         if (animalList.value.isNotEmpty()) {

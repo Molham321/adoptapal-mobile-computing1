@@ -1,6 +1,5 @@
 package de.fhe.adoptapal.ui.screens.addAnimal
 
-import android.widget.Toast
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,6 +13,7 @@ import de.fhe.adoptapal.domain.GetAllAnimalCategories
 import de.fhe.adoptapal.domain.GetAllColors
 import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
 import de.fhe.adoptapal.domain.GetColorAsync
+import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.GetUserAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.GoBackDestination
@@ -34,7 +34,8 @@ class AddAnimalScreenViewModel(
     private val getAllColors: GetAllColors,
     private val getUserAsync: GetUserAsync,
     private val getAnimalCategoryAsync: GetAnimalCategoryAsync,
-    private val getAnimalColorAsync: GetColorAsync
+    private val getAnimalColorAsync: GetColorAsync,
+    private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase
 ) : ViewModel() {
     var animalCategoryList = mutableStateOf(emptyList<AnimalCategory>())
     var animalColorList = mutableStateOf(emptyList<Color>())
@@ -108,7 +109,7 @@ class AddAnimalScreenViewModel(
             colorArray += it.name
         }
 
-        return  colorArray
+        return colorArray
     }
 
     fun getCategoryMap(list: List<AnimalCategory>): Map<Long, String> {
@@ -154,13 +155,13 @@ class AddAnimalScreenViewModel(
                 println(animalWeight)
                 println(animalGender)
 
-                val birthdate = LocalDate.parse(animalBirthdate, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+                val birthdate =
+                    LocalDate.parse(animalBirthdate, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
 
-
-                val user = supplyingUser.value!!
                 val category = mutableStateOf<AnimalCategory?>(null)
                 val color = mutableStateOf<Color?>(null)
 
+                val user = getLoggedInUser()
                 println("user: " + user)
 
                 runBlocking {
@@ -184,7 +185,7 @@ class AddAnimalScreenViewModel(
                 val newAnimal = Animal(
                     animalName,
                     birthdate,
-                    user,
+                    user!!,
                     category.value!!,
                     animalDescription,
                     color.value!!,
@@ -201,6 +202,25 @@ class AddAnimalScreenViewModel(
                 }
             }
         }
+    }
+
+    /**
+     * get User from local store
+     */
+    fun getLoggedInUser(): User? {
+        var user: User? = null
+        runBlocking {
+            getLoggedInUserFromDataStoreAndDatabase().collect {
+                if (it.status == AsyncOperationState.SUCCESS) {
+                    user = it.payload as User
+                }
+                if (it.status == AsyncOperationState.ERROR) {
+                    user = null
+                }
+            }
+        }
+
+        return user
     }
 
     fun navigateToUserList() {

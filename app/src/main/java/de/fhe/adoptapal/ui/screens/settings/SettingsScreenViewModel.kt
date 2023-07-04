@@ -2,7 +2,6 @@ package de.fhe.adoptapal.ui.screens.settings
 
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.text.input.ImeAction.Companion.Go
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.fhe.adoptapal.domain.AsyncOperation
@@ -18,11 +17,12 @@ class SettingsScreenViewModel(
     private val updateUserAsyncUserCase: UpdateUserAsync,
     private val navigationManager: NavigationManager,
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase
-): ViewModel() {
+) : ViewModel() {
 
     val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     var user = mutableStateOf<User?>(null)
+
     init {
         this.getUser()
     }
@@ -31,13 +31,13 @@ class SettingsScreenViewModel(
         Log.i("Settings", "init")
         viewModelScope.launch {
             Log.i("Settings", "launching")
-            getLoggedInUserFromDataStoreAndDatabase().collect{
+            getLoggedInUserFromDataStoreAndDatabase().collect {
                 Log.i("Settings", "Collecting")
-                if(it.status == AsyncOperationState.SUCCESS) {
+                if (it.status == AsyncOperationState.SUCCESS) {
                     Log.i("Settings", "found user with id: ${(it.payload as User).id}")
                     user.value = it.payload as User
                 }
-                if(it.status == AsyncOperationState.ERROR) {
+                if (it.status == AsyncOperationState.ERROR) {
                     Log.i("Settings", "Failed to load user")
                 }
             }
@@ -49,12 +49,12 @@ class SettingsScreenViewModel(
         viewModelScope.launch {
             updateUserAsyncUserCase(user).collect {
 
-                if(it.status == AsyncOperationState.SUCCESS) {
+                if (it.status == AsyncOperationState.SUCCESS) {
                     saveFeedbackFlow.emit(it)
                     // TODO("Go to different page?")
                 }
 
-                if(it.status == AsyncOperationState.ERROR) {
+                if (it.status == AsyncOperationState.ERROR) {
                     saveFeedbackFlow.emit(it)
                 }
             }

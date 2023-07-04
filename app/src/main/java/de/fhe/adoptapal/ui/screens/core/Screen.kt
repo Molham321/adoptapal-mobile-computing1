@@ -68,9 +68,11 @@ sealed class Screen(
             val viewModel = values[0] as HomeScreenViewModel
 
             appBarActions = {
-                IconButton(onClick = { viewModel.navigateToAddAnimal() }
-                ) {
-                    Icon(Icons.Filled.Add, contentDescription = null)
+                if (viewModel.user.value != null) {
+                    IconButton(onClick = { viewModel.navigateToAddAnimal() }
+                    ) {
+                        Icon(Icons.Filled.Add, contentDescription = null)
+                    }
                 }
                 IconButton(onClick = { viewModel.navigateToSearch() }
                 ) {
@@ -134,6 +136,7 @@ sealed class Screen(
             appBarActions = {}
         }
     }
+
     object Profile : Screen(
         title = "Profile",
         icon = Icons.Filled.Person,
@@ -158,8 +161,7 @@ sealed class Screen(
         title = "AddAnimal",
         icon = Icons.Filled.Create,
         route = "AddAnimal"
-    )
-    {
+    ) {
         override fun prepareAppBarActions(vararg values: Any) {
             if (values[0] !is AddAnimalScreenViewModel)
                 error("First Parameter must be of type *AddAnimalViewModel*")
