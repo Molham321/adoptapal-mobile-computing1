@@ -36,10 +36,11 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun DropdownSelect(
     dropdownCat: String = "Dropdown",
-    dropdownValue: String,
+    dropdownValue: Long,
     editing: Boolean = false,
     listItems: Array<String> = arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel"),
-    onValueChange: (String) -> Unit
+    dropdownItems: Map<Long, String> = mapOf<Long, String>(),
+    onValueChange: (Long) -> Unit
 ) {
     // val listItems = arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel")
     // val disabledItem = 1
@@ -62,7 +63,7 @@ fun DropdownSelect(
                 expanded = true
             }
         ) {
-            if(dropdownValue == "") {
+            if(selectedValue == "") {
                 Text(
                     // text = "Tierrasse   v",
                     text = dropdownCat + "   v",
@@ -71,34 +72,56 @@ fun DropdownSelect(
             } else {
                 Text(
                     // text = "Tierrasse   v",
-                    text = dropdownCat + ": " + dropdownValue,
+                    text = dropdownCat + ": " + dropdownItems[dropdownValue],
                     color = Color.Gray
                 )
             }
         }
 
-        // drop down menu
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = {
                 expanded = false
             }
         ) {
-            // adding items
-            listItems.forEachIndexed { itemIndex, itemValue ->
+            dropdownItems.forEach { entry ->
                 DropdownMenuItem(
                     onClick = {
-                        selectedValue = itemValue
-                        onValueChange(itemValue)
-//                        Toast.makeText(contextForToast, itemValue, Toast.LENGTH_SHORT)
-//                            .show()
+                        selectedValue = entry.value
+                        onValueChange(entry.key)
                         expanded = false
-                    },
-                    // enabled = (itemIndex != disabledItem)
+//                        println("ausgewählt: " + entry.value)
+//                        println("richtige ID: " + entry.key)
+//                        println("Tier ID: " + dropdownValue)
+                    }
                 ) {
-                    Text(text = itemValue)
+                    Text(text = entry.value)
                 }
             }
         }
+
+        // drop down menu
+//        DropdownMenu(
+//            expanded = expanded,
+//            onDismissRequest = {
+//                expanded = false
+//            }
+//        ) {
+//            // adding items
+//            listItems.forEachIndexed { itemIndex, itemValue ->
+//                DropdownMenuItem(
+//                    onClick = {
+//                        selectedValue = itemValue
+//                        onValueChange(itemValue)
+////                        Toast.makeText(contextForToast, itemValue, Toast.LENGTH_SHORT)
+////                            .show()
+//                        expanded = false
+//                    },
+//                    // enabled = (itemIndex != disabledItem)
+//                ) {
+//                    Text(text = itemValue)
+//                }
+//            }
+//        }
     }
 }

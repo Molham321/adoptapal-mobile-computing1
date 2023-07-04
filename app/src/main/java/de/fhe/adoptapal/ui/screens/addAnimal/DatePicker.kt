@@ -60,15 +60,23 @@ fun DatePicker(
     // initial values as current values (present year, month and day)
     val mDatePickerDialog = DatePickerDialog(
         mContext,
-        { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
+        { _: DatePicker, mYear: Int, mMonth: Int, mDay: Int ->
             // mDate.value = "$mDayOfMonth.${mMonth+1}.$mYear"
             val correctMonth = mMonth+1
             if(correctMonth < 10) {
-                // mDate.value = "$mYear-0$correctMonth-$mDay"
-                mDate.value = "$mDay.0$correctMonth.$mYear"
+                if(mDay < 10) {
+                    mDate.value = "0$mDay.0$correctMonth.$mYear"
+                } else {
+                    // mDate.value = "$mYear-0$correctMonth-$mDay"
+                    mDate.value = "$mDay.0$correctMonth.$mYear"
+                }
             } else {
-                // mDate.value = "$mYear-$correctMonth-$mDay"
-                mDate.value = "$mDay.$correctMonth.$mYear"
+                if(mDay < 10) {
+                    mDate.value = "0$mDay.$correctMonth.$mYear"
+                } else {
+                    // mDate.value = "$mYear-0$correctMonth-$mDay"
+                    mDate.value = "$mDay.$correctMonth.$mYear"
+                }
             }
             // mDate.value = "$mYear-${mMonth+1}-$mDay"
             onValueChange(mDate.value)
