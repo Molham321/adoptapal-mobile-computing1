@@ -1,13 +1,16 @@
 package de.fhe.adoptapal.ui.screens.addAnimal
 
 import android.app.DatePickerDialog
-import android.os.Bundle
 import android.widget.DatePicker
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,11 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import org.koin.androidx.compose.getViewModel
 import java.util.Calendar
 import java.util.Date
 
@@ -32,7 +31,7 @@ fun DatePicker(
     birthdateValue: String,
     editing: Boolean = false,
     onValueChange: (String) -> Unit
-){
+) {
     // Fetching the Local Context
     val mContext = LocalContext.current
 
@@ -62,16 +61,16 @@ fun DatePicker(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDay: Int ->
             // mDate.value = "$mDayOfMonth.${mMonth+1}.$mYear"
-            val correctMonth = mMonth+1
-            if(correctMonth < 10) {
-                if(mDay < 10) {
+            val correctMonth = mMonth + 1
+            if (correctMonth < 10) {
+                if (mDay < 10) {
                     mDate.value = "0$mDay.0$correctMonth.$mYear"
                 } else {
                     // mDate.value = "$mYear-0$correctMonth-$mDay"
                     mDate.value = "$mDay.0$correctMonth.$mYear"
                 }
             } else {
-                if(mDay < 10) {
+                if (mDay < 10) {
                     mDate.value = "0$mDay.$correctMonth.$mYear"
                 } else {
                     // mDate.value = "$mYear-0$correctMonth-$mDay"
@@ -83,7 +82,11 @@ fun DatePicker(
         }, mYear, mMonth, mDay
     )
 
-    Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
         // Creating a button that on
         // click displays/shows the DatePickerDialog
@@ -93,8 +96,9 @@ fun DatePicker(
                 .fillMaxWidth()
                 .border(1.dp, Color.Gray),
             onClick = {
-            mDatePickerDialog.show()
-        }, colors = ButtonDefaults.buttonColors(backgroundColor = Color.White) ) {
+                mDatePickerDialog.show()
+            }, colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
+        ) {
             if (birthdateValue == "") {
                 Text(text = "Geburtsdatum", color = Color.Gray)
             } else {

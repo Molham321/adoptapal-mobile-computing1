@@ -33,7 +33,6 @@ import java.io.IOException
 class RepositoryTest {
 
 
-
     private lateinit var userModelDao: UserModelDao
     private lateinit var addressModelDao: AddressModelDao
     private lateinit var ratingModelDao: RatingModelDao
@@ -44,8 +43,6 @@ class RepositoryTest {
 
     private lateinit var db: AppDatabase
     private lateinit var repository: Repository
-
-
 
 
     @Before
@@ -61,11 +58,19 @@ class RepositoryTest {
         animalCategoryModelDao = db.animalCategoryDao()
         colorModelDao = db.colorModelDao()
         requestModelDao = db.requestModelDao()
-        repository = RepositoryImpl(userModelDao, addressModelDao, ratingModelDao, animalModelDao, animalCategoryModelDao, colorModelDao, requestModelDao)
+        repository = RepositoryImpl(
+            userModelDao,
+            addressModelDao,
+            ratingModelDao,
+            animalModelDao,
+            animalCategoryModelDao,
+            colorModelDao,
+            requestModelDao
+        )
     }
 
     @After
-    @Throws( IOException::class )
+    @Throws(IOException::class)
     fun closeDb() {
         db.close()
     }
@@ -74,35 +79,35 @@ class RepositoryTest {
     @Test
     fun testGetAndDeleteUser() = runBlocking {
 
-        assertTrue( "DB should start empty", userModelDao.getAll().isEmpty() )
+        assertTrue("DB should start empty", userModelDao.getAll().isEmpty())
 
         val userId = userModelDao.upsert(User("Name", "name@email.com", null, null).fromDomain())
-        assertTrue( "DB should contain one entry", userModelDao.getAll().size == 1)
+        assertTrue("DB should contain one entry", userModelDao.getAll().size == 1)
 
-        val loadedEntity = userModelDao.get( userId  )
-        assertNotNull("Loaded user entry should not be null", loadedEntity )
+        val loadedEntity = userModelDao.get(userId)
+        assertNotNull("Loaded user entry should not be null", loadedEntity)
 
-        userModelDao.delete( loadedEntity!! )
-        assertNull( "DB should not contain deleted Entity", userModelDao.get( userId ) )
-        assertTrue( "DB should be empty after deletion", userModelDao.getAll().isEmpty())
+        userModelDao.delete(loadedEntity!!)
+        assertNull("DB should not contain deleted Entity", userModelDao.get(userId))
+        assertTrue("DB should be empty after deletion", userModelDao.getAll().isEmpty())
     }
 
 
     @Test
     fun testGetUserByEmail() = runBlocking {
 
-        assertTrue( "DB should start empty", userModelDao.getAll().isEmpty() )
+        assertTrue("DB should start empty", userModelDao.getAll().isEmpty())
 
         val userEmail = "user@mail.com"
         val userId = userModelDao.upsert(User("Name", userEmail, null, null).fromDomain())
-        assertTrue( "DB should contain one entry", userModelDao.getAll().size == 1)
+        assertTrue("DB should contain one entry", userModelDao.getAll().size == 1)
 
-        val loadedEntity = userModelDao.getUserByEmail( userEmail )
-        assertNotNull("Loaded user with email $userEmail should not be null", loadedEntity )
+        val loadedEntity = userModelDao.getUserByEmail(userEmail)
+        assertNotNull("Loaded user with email $userEmail should not be null", loadedEntity)
 
-        userModelDao.delete( loadedEntity!! )
-        assertNull( "DB should not contain deleted Entity", userModelDao.get( userId ) )
-        assertTrue( "DB should be empty after deletion", userModelDao.getAll().isEmpty())
+        userModelDao.delete(loadedEntity!!)
+        assertNull("DB should not contain deleted Entity", userModelDao.get(userId))
+        assertTrue("DB should be empty after deletion", userModelDao.getAll().isEmpty())
     }
 
 }

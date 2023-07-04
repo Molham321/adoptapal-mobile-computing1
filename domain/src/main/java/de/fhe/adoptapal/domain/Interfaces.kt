@@ -43,7 +43,7 @@ interface Repository {
     suspend fun getUser(userId: Long): User?
     suspend fun getUserByEmail(userEmail: String): User?
     suspend fun insertUser(user: User): Long
-    suspend fun updateUser(user:User) : Long
+    suspend fun updateUser(user: User): Long
 
     suspend fun deleteAllUsers()
 

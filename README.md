@@ -4,11 +4,15 @@ An Android App for Mobile Computing 1.
 
 ## Installationsanleitung
 
-Um die vollständige Funktionalität der App sicherzustellen müssen die nächsten Schritte durchgeführt werden
+Um die vollständige Funktionalität der App sicherzustellen müssen die nächsten Schritte durchgeführt
+werden
 
-In `localhost.properties` muss der GoogleMaps Api Key gesetzt werden, damit die Karte funktioniert, diesen kann man (hier)[https://developers.google.com/maps/documentation/android-sdk/start?hl=de] ersellen
+In `localhost.properties` muss der GoogleMaps Api Key gesetzt werden, damit die Karte funktioniert,
+diesen kann man (
+hier)[https://developers.google.com/maps/documentation/android-sdk/start?hl=de] ersellen
 Für die Umwandlung von Adressdaten in LatitudeLongitude kann der Google Maps Api verwendet werden.
-Alternativ kann ein kostenloser Api-Key auf (Positionstack)[# https://positionstack.com/] erstellt werden und in `localhost.properties` hinterlegt werde.
+Alternativ kann ein kostenloser Api-Key auf (Positionstack)[# https://positionstack.com/] erstellt
+werden und in `localhost.properties` hinterlegt werde.
 
 ```
 # https://positionstack.com/ API Key to Convert Address to LatLong Value

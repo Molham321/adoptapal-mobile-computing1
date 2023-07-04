@@ -21,6 +21,7 @@ interface UserModelDao {
 
     @Query("SELECT * FROM UserModel WHERE email = :email")
     suspend fun getUserByEmail(email: String): UserModel?
+
     @Upsert
     suspend fun upsert(entity: UserModel): Long
 

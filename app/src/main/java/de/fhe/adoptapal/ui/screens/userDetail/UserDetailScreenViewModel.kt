@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 class UserDetailScreenViewModel(
     private val userId: Long,
     private val getUserAsync: GetUserAsync
-): ViewModel()  {
+) : ViewModel() {
     var user = mutableStateOf<User?>(null)
     var dbOp = mutableStateOf(AsyncOperation.undefined())
 

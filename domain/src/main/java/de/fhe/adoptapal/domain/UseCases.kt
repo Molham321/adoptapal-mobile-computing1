@@ -178,9 +178,8 @@ class GetUserAsync(private val repository: Repository) {
 }
 
 
-
 class GetUserByEmailAsync(private val repository: Repository) {
-    operator  fun invoke(userEmail: String): Flow<AsyncOperation> = flow {
+    operator fun invoke(userEmail: String): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading user with email $userEmail"))
         val user = repository.getUserByEmail(userEmail)
         if (user != null) {
@@ -197,7 +196,7 @@ class InsertUserAsync(private val repository: Repository) {
         try {
             val userId = repository.insertUser(newUser)
             emit(AsyncOperation.success("Created user with id $userId", userId))
-        } catch (ex : UserEmailUniqueException) {
+        } catch (ex: UserEmailUniqueException) {
             emit(AsyncOperation.error("Failed to save user because email ${ex.email} already exists"))
         }
     }
@@ -209,7 +208,7 @@ class UpdateUserAsync(private val repository: Repository) {
         try {
             val userId = repository.updateUser(user)
             emit(AsyncOperation.success("Updated user with id $userId", userId))
-        } catch (ex : UserEmailUniqueException) {
+        } catch (ex: UserEmailUniqueException) {
             emit(AsyncOperation.error("Failed to save user because email ${ex.email} already exists"))
         }
     }
@@ -295,15 +294,18 @@ class GetAllRatingsBySupplierId(private val repository: Repository) {
  * @return success - userId was found in Storage and user with the userId from the database is returned
  * @return error - userId not found or no user with that userId is in the database
  */
-class GetLoggedInUserFromDataStoreAndDatabase(private val localStore: LocalStore, private val repository: Repository) {
-    operator fun invoke() : Flow<AsyncOperation> = flow {
+class GetLoggedInUserFromDataStoreAndDatabase(
+    private val localStore: LocalStore,
+    private val repository: Repository
+) {
+    operator fun invoke(): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading logged in user from localStore..."))
 
         // get userId from datastore
         val result = localStore.load(LocalStoreKey.LOGGED_IN_USER_ID.name)
-        if(!result.isBlank()) {
+        if (!result.isBlank()) {
             val user = repository.getUser(result.toLong())
-            if(user != null) {
+            if (user != null) {
                 emit(AsyncOperation.success("User found and loaded", user))
                 return@flow
             }
@@ -313,7 +315,7 @@ class GetLoggedInUserFromDataStoreAndDatabase(private val localStore: LocalStore
 }
 
 class SetLoggedInUserInDataStore(private val localStore: LocalStore) {
-    operator fun invoke (userId: Long) : Flow<AsyncOperation> = flow {
+    operator fun invoke(userId: Long): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.saving("Saving userId: $userId in local store"))
         localStore.save(LocalStoreKey.LOGGED_IN_USER_ID.name, userId.toString())
         emit(AsyncOperation.success("Saved userId: $userId in local store"))

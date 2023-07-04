@@ -12,7 +12,6 @@ import de.fhe.adoptapal.domain.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinComponent
@@ -35,7 +34,7 @@ class DBInitialData : KoinComponent {
 
         dbScope.launch {
 
-            if(repo.getUser(1) != null) {
+            if (repo.getUser(1) != null) {
                 Log.i(logTag, "User found, so no more example data is created")
                 return@launch
             }
@@ -124,7 +123,12 @@ class DBInitialData : KoinComponent {
 
             // create animal categories
             val animalCategory1 =
-                AnimalCategory(1, LocalDateTime.of(2023, 5, 30, 22, 11), LocalDateTime.now(), "Katze")
+                AnimalCategory(
+                    1,
+                    LocalDateTime.of(2023, 5, 30, 22, 11),
+                    LocalDateTime.now(),
+                    "Katze"
+                )
             repo.insertAnimalCategory(animalCategory1)
             repo.insertAnimalCategory(
                 AnimalCategory(
@@ -336,13 +340,6 @@ class DBInitialData : KoinComponent {
                     true
                 )
             )
-
-
-
-
-
-
-
 
 
             val rating = Rating(

@@ -108,7 +108,7 @@ fun Settings(
                 user.phoneNumber = phoneNumber
 
                 // create or update address if all address fields are set
-                if(street != "" && houseNumber != "" && city != "" && zip != "") {
+                if (street != "" && houseNumber != "" && city != "" && zip != "") {
                     user.address = Address(houseNumber, street, city, zip)
                 }
 

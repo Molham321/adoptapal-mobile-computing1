@@ -22,7 +22,7 @@ data class AddressModel(
     val longitude: Double
 )
 
-@Entity(indices = [Index(value = ["email"],unique = true)])
+@Entity(indices = [Index(value = ["email"], unique = true)])
 data class UserModel(
     @PrimaryKey(autoGenerate = true) var id: Long = 0,
     var createdTimestamp: LocalDateTime = LocalDateTime.now(),

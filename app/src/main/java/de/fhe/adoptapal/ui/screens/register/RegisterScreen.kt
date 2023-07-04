@@ -35,9 +35,6 @@ import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
-import org.koin.androidx.compose.getViewModel
-
-import de.fhe.adoptapal.ui.screens.sharedComponents.InputField
 import de.fhe.adoptapal.ui.screens.sharedComponents.PasswordInputField
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -88,7 +85,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
         InputField(
             text = userNameTextFieldValue,
             editing = true,
-            onTextChange = {newValue -> userNameTextFieldValue = newValue},
+            onTextChange = { newValue -> userNameTextFieldValue = newValue },
             inputPlaceholder = "User Name"
         )
         Text(
@@ -103,33 +100,37 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
         InputField(
             text = userEmailTextFieldValue,
             editing = true,
-            onTextChange = {newValue -> userEmailTextFieldValue = newValue},
+            onTextChange = { newValue -> userEmailTextFieldValue = newValue },
             inputPlaceholder = "User Email"
         )
         InputField(
             text = userPhoneNumberTextFieldValue,
             editing = true,
-            onTextChange = {newValue -> userPhoneNumberTextFieldValue = newValue},
+            onTextChange = { newValue -> userPhoneNumberTextFieldValue = newValue },
             inputPlaceholder = "User Phone Number"
         )
 
         PasswordInputField(
             text = userPasswordTextFieldValue,
             editing = true,
-            onTextChange = {newValue -> userPasswordTextFieldValue = newValue},
+            onTextChange = { newValue -> userPasswordTextFieldValue = newValue },
             inputPlaceholder = "User Passwort"
         )
         PasswordInputField(
             text = userConfirmPasswordTextFieldValue,
             editing = true,
-            onTextChange = {newValue -> userConfirmPasswordTextFieldValue = newValue},
+            onTextChange = { newValue -> userConfirmPasswordTextFieldValue = newValue },
             inputPlaceholder = "User Confirm Password"
         )
 
         Spacer(modifier = Modifier.height(20.dp))
         Button(
             onClick = {
-                vm.addUser(userNameTextFieldValue.text, userEmailTextFieldValue.text, userPhoneNumberTextFieldValue.text)
+                vm.addUser(
+                    userNameTextFieldValue.text,
+                    userEmailTextFieldValue.text,
+                    userPhoneNumberTextFieldValue.text
+                )
                 // Clear Form
                 userNameTextFieldValue = TextFieldValue("")
                 userEmailTextFieldValue = TextFieldValue("")
@@ -138,7 +139,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 userConfirmPasswordTextFieldValue = TextFieldValue("")
                 // To hide keyboard
                 editingState = false
-              },
+            },
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color.Green
@@ -151,7 +152,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             Text(text = "Registrieren")
         }
         Button(
-            onClick = {vm.navigateToLogin()},
+            onClick = { vm.navigateToLogin() },
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color.Transparent

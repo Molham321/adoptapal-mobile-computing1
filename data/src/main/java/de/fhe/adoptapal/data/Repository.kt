@@ -13,7 +13,6 @@ import de.fhe.adoptapal.domain.UserEmailUniqueException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import java.time.LocalDateTime
-import kotlin.jvm.Throws
 
 class RepositoryImpl(
     private val userModelDao: UserModelDao,
@@ -163,7 +162,7 @@ class RepositoryImpl(
     @Throws(UserEmailUniqueException::class)
     override suspend fun insertUser(user: User): Long {
         // check if email is unique
-        if(userModelDao.getUserByEmail(user.email) != null){
+        if (userModelDao.getUserByEmail(user.email) != null) {
             throw UserEmailUniqueException(user.email)
         }
         return userModelDao.upsert(user.fromDomain())
@@ -175,15 +174,15 @@ class RepositoryImpl(
 
         // check if email is unique
         val userByEmail = userModelDao.getUserByEmail(user.email)
-        if(userByEmail != null && user.id != userByEmail.id) {
+        if (userByEmail != null && user.id != userByEmail.id) {
             throw UserEmailUniqueException(user.email)
         }
 
         userModelDao.get(user.id)?.let { savedEntity ->
 
-            var addressId : Long? = null
+            var addressId: Long? = null
             // update users address if exists
-            if(user.address != null) {
+            if (user.address != null) {
                 Log.i("Repository", "update or create user address")
                 user.address?.id = addressModelDao.upsert(user.address!!.fromDomain())
             }

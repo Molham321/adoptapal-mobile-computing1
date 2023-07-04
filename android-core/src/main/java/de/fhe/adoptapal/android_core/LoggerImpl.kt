@@ -18,23 +18,24 @@ class LoggerImpl : Logger {
     }
 
     override fun error(component: String, message: String) {
-        Timber.tag(component).e( message )
+        Timber.tag(component).e(message)
     }
 
     override fun info(component: String, message: String) {
-        Timber.tag(component).i( message )
+        Timber.tag(component).i(message)
     }
 
     override fun error(message: String) {
-        this.error(callingCallName(), message )
+        this.error(callingCallName(), message)
     }
 
     override fun info(message: String) {
-        this.info(callingCallName(), message )
+        this.info(callingCallName(), message)
     }
 
     private fun callingCallName(): String {
-        val fullClassName = Thread.currentThread().stackTrace[CALLER_STACK_TRACE_POSITION]?.className
-        return fullClassName?.substring(fullClassName.lastIndexOf('.'))?:"UnknownCaller"
+        val fullClassName =
+            Thread.currentThread().stackTrace[CALLER_STACK_TRACE_POSITION]?.className
+        return fullClassName?.substring(fullClassName.lastIndexOf('.')) ?: "UnknownCaller"
     }
 }

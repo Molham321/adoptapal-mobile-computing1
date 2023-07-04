@@ -4,12 +4,9 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -20,13 +17,10 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.tasks.CancellationToken
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.google.android.gms.tasks.OnTokenCanceledListener
 import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 
@@ -42,10 +36,11 @@ private const val DEFAULT_LONG = 11.042582
 @Composable
 fun MapScreen() {
 
-    var userLocation = de.fhe.adoptapal.domain.Location(0.0,0.0)
+    var userLocation = de.fhe.adoptapal.domain.Location(0.0, 0.0)
 
     val fusedLocationClient = LocationServices.getFusedLocationProviderClient(
-        LocalContext.current)
+        LocalContext.current
+    )
 
     if (ActivityCompat.checkSelfPermission(
             LocalContext.current,
@@ -66,7 +61,7 @@ fun MapScreen() {
     }
 
     fusedLocationClient.lastLocation
-        .addOnSuccessListener { location : Location? ->
+        .addOnSuccessListener { location: Location? ->
 
             Log.i(LOGTAG, "Location $location")
             if (location != null) {
@@ -77,11 +72,14 @@ fun MapScreen() {
             // Got last known location. In some rare situations this can be null.
         }
 
-    fusedLocationClient.getCurrentLocation(LocationRequest.PRIORITY_HIGH_ACCURACY, object : CancellationToken() {
-        override fun onCanceledRequested(p0: OnTokenCanceledListener) = CancellationTokenSource().token
+    fusedLocationClient.getCurrentLocation(
+        LocationRequest.PRIORITY_HIGH_ACCURACY,
+        object : CancellationToken() {
+            override fun onCanceledRequested(p0: OnTokenCanceledListener) =
+                CancellationTokenSource().token
 
-        override fun isCancellationRequested() = false
-    })
+            override fun isCancellationRequested() = false
+        })
         .addOnSuccessListener { location: Location? ->
 
 

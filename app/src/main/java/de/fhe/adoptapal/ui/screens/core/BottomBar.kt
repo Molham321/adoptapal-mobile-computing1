@@ -1,12 +1,10 @@
 package de.fhe.adoptapal.ui.screens.core
 
-import android.util.Log
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 
 @Composable
 fun BottomBar(

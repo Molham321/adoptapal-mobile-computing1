@@ -20,21 +20,21 @@ fun AppBar(screen: Screen, navController: NavHostController? = null) {
             Text(text = screen.title)
         },
         navigationIcon = {
-       if(screen.hasReturn) {
-               IconButton(onClick = { navController?.popBackStack() }) {
-                   Icon(
-                       Icons.Filled.ArrowBack,
-                       screen.title,
-                       modifier = Modifier.padding(horizontal = 12.dp)
-                   )
-               }
-           } else {
-               Icon(
-                   screen.icon,
-                   screen.title,
-                   modifier = Modifier.padding(horizontal = 12.dp)
-               )
-           }
+            if (screen.hasReturn) {
+                IconButton(onClick = { navController?.popBackStack() }) {
+                    Icon(
+                        Icons.Filled.ArrowBack,
+                        screen.title,
+                        modifier = Modifier.padding(horizontal = 12.dp)
+                    )
+                }
+            } else {
+                Icon(
+                    screen.icon,
+                    screen.title,
+                    modifier = Modifier.padding(horizontal = 12.dp)
+                )
+            }
         },
         actions = screen.appBarActions
     )
@@ -63,6 +63,7 @@ fun MapAppBar() {
 fun SettingsAppBar() {
     AppBar(screen = Screen.Settings)
 }
+
 @Preview()
 @Composable
 fun ProfileAppBar() {

@@ -2,28 +2,17 @@ package de.fhe.adoptapal.ui.screens.addAnimal
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Divider
-import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Slider
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,18 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.R
-import de.fhe.adoptapal.domain.AsyncOperation
-import de.fhe.adoptapal.domain.AsyncOperationState
-import de.fhe.adoptapal.domain.GetAllAnimalCategories
 import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
-import org.koin.androidx.compose.getViewModel
 
 
 //@Preview
@@ -55,7 +38,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 //        .collectAsState(AsyncOperation.undefined())
 
     // val dp0p = remember{ vm.dbOp }
-    val animalCategoryList = remember{ vm.animalCategoryList }
+    val animalCategoryList = remember { vm.animalCategoryList }
     val animalColorList = remember { vm.animalColorList }
 
 
@@ -119,7 +102,11 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
         Spacer(Modifier.height(15.dp))
 
-        InputField(animalDescriptionTextFieldValue, animalDescriptionEditingState, "Beschreibung des Tieres") {
+        InputField(
+            animalDescriptionTextFieldValue,
+            animalDescriptionEditingState,
+            "Beschreibung des Tieres"
+        ) {
             animalDescriptionTextFieldValue = it
             animalDescriptionEditingState = true
         }
@@ -127,7 +114,13 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
         Spacer(Modifier.height(15.dp))
 
         // DropdownSelect("Tierrasse", animalCategoryDropdownValue, arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel", "Fisch"))
-        DropdownSelect("Tierrasse", animalCategoryDropdownValue, animalCategoryEditingState, vm.getCategoryArray(animalCategoryList.value), vm.getCategoryMap(animalCategoryList.value)) {
+        DropdownSelect(
+            "Tierrasse",
+            animalCategoryDropdownValue,
+            animalCategoryEditingState,
+            vm.getCategoryArray(animalCategoryList.value),
+            vm.getCategoryMap(animalCategoryList.value)
+        ) {
             animalCategoryDropdownValue = it
             animalCategoryEditingState = true
         }
@@ -135,7 +128,13 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
         Spacer(Modifier.height(15.dp))
 
         // DropdownSelect("Fellfarbe", animalColorDropdownValue, arrayOf("schwarz", "weiß", "blond", "orange", "braun", "gemustert", "kein Fell"))
-        DropdownSelect("Farbe des Tieres", animalColorDropdownValue, animalColorEditingState, vm.getColorArray(animalColorList.value), vm.getColorMap(animalColorList.value)) {
+        DropdownSelect(
+            "Farbe des Tieres",
+            animalColorDropdownValue,
+            animalColorEditingState,
+            vm.getColorArray(animalColorList.value),
+            vm.getColorMap(animalColorList.value)
+        ) {
             animalColorDropdownValue = it
             animalColorEditingState = true
         }
@@ -163,7 +162,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
         Spacer(Modifier.height(15.dp))
 
-        if(
+        if (
             animalNameTextFieldValue.text == "" ||
             animalDescriptionTextFieldValue.text == "" ||
             animalCategoryDropdownValue <= 0 ||
@@ -172,7 +171,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
             animalWeightTextFieldValue.text == ""
         ) {
             Button(
-                enabled = false ,
+                enabled = false,
                 modifier = Modifier
                     .padding(8.dp)
                     .fillMaxWidth(),
@@ -201,7 +200,11 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                         animalGenderValue
                     )
 
-                    Toast.makeText(contextForToast, "Tier ${animalNameTextFieldValue.text} wurde gespeichert", Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        contextForToast,
+                        "Tier ${animalNameTextFieldValue.text} wurde gespeichert",
+                        Toast.LENGTH_LONG
+                    )
                         .show()
 
                     // clear form

@@ -21,7 +21,7 @@ import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
 @Composable
 fun SettingsScreen(vm: SettingsScreenViewModel, modifier: Modifier = Modifier) {
 
-    val user = remember{vm.user}
+    val user = remember { vm.user }
     val saveState by remember(vm) { vm.saveFeedbackFlow }
         .collectAsState(AsyncOperation.undefined())
 
@@ -36,7 +36,7 @@ fun SettingsScreen(vm: SettingsScreenViewModel, modifier: Modifier = Modifier) {
         }
     }
 
-    if(user.value != null) {
+    if (user.value != null) {
         Column() {
             Settings(user.value!!) {
                 vm.updateUser(it)

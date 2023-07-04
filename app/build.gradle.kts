@@ -1,5 +1,5 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import com.android.build.api.variant.BuildConfigField
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
     id(Libs.Plugins.android_app)
@@ -16,7 +16,9 @@ androidComponents {
     onVariants {
         it.buildConfigFields.put(
             "LAT_LONG_API_KEY", BuildConfigField(
-                "String", "\"$latLongApiKey\"", "API Key for LatLong conversion from application.properties"
+                "String",
+                "\"$latLongApiKey\"",
+                "API Key for LatLong conversion from application.properties"
             )
         )
         it.buildConfigFields.put(
@@ -111,12 +113,12 @@ dependencies {
 
     implementation(Libs.AndroidX.MaterialDesign.core)
 
-    implementation( Libs.AndroidX.Maps.core )
-    implementation( Libs.AndroidX.Maps.play_services )
-    implementation( Libs.AndroidX.Maps.location )
+    implementation(Libs.AndroidX.Maps.core)
+    implementation(Libs.AndroidX.Maps.play_services)
+    implementation(Libs.AndroidX.Maps.location)
 
-    implementation( Libs.Accompanist.navAnimation )
-    implementation( Libs.Accompanist.placeholder )
+    implementation(Libs.Accompanist.navAnimation)
+    implementation(Libs.Accompanist.placeholder)
 
     testImplementation(Libs.JUnit.core)
     androidTestImplementation(Libs.AndroidX.Compose.uiTest)

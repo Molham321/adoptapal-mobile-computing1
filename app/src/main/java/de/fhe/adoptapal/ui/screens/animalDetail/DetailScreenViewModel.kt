@@ -36,6 +36,7 @@ class DetailScreenViewModel(
             }
         }
     }
+
     fun getAge(birthday: LocalDate): String {
         val currentDate = LocalDate.now()
         val age = Period.between(birthday, currentDate)

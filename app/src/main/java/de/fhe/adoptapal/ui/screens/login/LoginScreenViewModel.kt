@@ -12,10 +12,8 @@ import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class LoginScreenViewModel(
     private val getUserByEmailAsyncUseCase: GetUserByEmailAsync,
@@ -52,7 +50,7 @@ class LoginScreenViewModel(
         navigationManager.navigate(Screen.Register.navigationCommand())
     }
 
-     fun navigateToProfile() {
+    fun navigateToProfile() {
         navigationManager.navigate(Screen.Profile.navigationCommand())
     }
 }

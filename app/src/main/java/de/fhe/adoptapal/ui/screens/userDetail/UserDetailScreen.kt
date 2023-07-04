@@ -7,10 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
-import de.fhe.adoptapal.ui.screens.animalDetail.Details
 
 @Composable
 fun UserDetailScreen(vm: UserDetailScreenViewModel, modifier: Modifier = Modifier) {

@@ -1,7 +1,6 @@
 package de.fhe.adoptapal.ui.screens.animalDetail
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,7 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
-import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.User
 
 
@@ -46,7 +44,7 @@ fun OwnerCard(
             .fillMaxWidth()
             .padding(8.dp)
             .clip(RoundedCornerShape(16.dp))
-            .clickable(onClick = {onItemPressed(user.id)}),
+            .clickable(onClick = { onItemPressed(user.id) }),
         elevation = 0.dp,
         backgroundColor = Color(0xFFE0E0E0)
     ) {

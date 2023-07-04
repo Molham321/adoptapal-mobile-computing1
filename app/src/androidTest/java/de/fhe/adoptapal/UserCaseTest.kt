@@ -1,7 +1,7 @@
 package de.fhe.adoptapal
 
-import de.fhe.adoptapal.android_core.LocalStoreImpl
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import de.fhe.adoptapal.android_core.LocalStoreImpl
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
 import de.fhe.adoptapal.domain.AsyncOperation
@@ -54,7 +54,7 @@ import org.koin.test.get
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class UseCaseTests: KoinTest {
+class UseCaseTests : KoinTest {
 
     val koinTestModule = module {
 
@@ -141,8 +141,11 @@ class UseCaseTests: KoinTest {
         val getUserByEmailAsync = get<GetUserByEmailAsync>()
 
         getUserByEmailAsync.invoke(userEmail).collect {
-            if(it.status == AsyncOperationState.SUCCESS) {
-                assertTrue("User with provided email should exist", (it.payload as User).email == userEmail)
+            if (it.status == AsyncOperationState.SUCCESS) {
+                assertTrue(
+                    "User with provided email should exist",
+                    (it.payload as User).email == userEmail
+                )
             }
         }
     }
@@ -164,9 +167,15 @@ class UseCaseTests: KoinTest {
         // test if user is there
         val getUserByEmailAsync = get<GetUserByEmailAsync>()
         getUserByEmailAsync.invoke(userEmail).collect {
-            if(it.status == AsyncOperationState.SUCCESS) {
-                assertTrue("User with provided email should exist", (it.payload as User).email == userEmail)
-                assertTrue("User id is equal to existing userId: $userId and payloadUserId: ${(it.payload as User).id}", (it.payload as User).id == userId)
+            if (it.status == AsyncOperationState.SUCCESS) {
+                assertTrue(
+                    "User with provided email should exist",
+                    (it.payload as User).email == userEmail
+                )
+                assertTrue(
+                    "User id is equal to existing userId: $userId and payloadUserId: ${(it.payload as User).id}",
+                    (it.payload as User).id == userId
+                )
                 user = it.payload as User
             }
         }
@@ -176,16 +185,19 @@ class UseCaseTests: KoinTest {
         val newUserEmail = "new@user.mail"
 
         user.email = newUserEmail
-        updateUserAsync.invoke(user).collect{
-            if(it.status == AsyncOperationState.SUCCESS) {
+        updateUserAsync.invoke(user).collect {
+            if (it.status == AsyncOperationState.SUCCESS) {
                 assertTrue("User should have same id", (it.payload as Long) == user.id)
             }
         }
 
         // test getUser again with new email
         getUserByEmailAsync.invoke(newUserEmail).collect {
-            if(it.status == AsyncOperationState.SUCCESS) {
-                assertTrue("User with new email should exist", (it.payload as User).email == newUserEmail)
+            if (it.status == AsyncOperationState.SUCCESS) {
+                assertTrue(
+                    "User with new email should exist",
+                    (it.payload as User).email == newUserEmail
+                )
                 assertTrue("Id of user should be the same", (it.payload as User).id == userId)
             }
         }
@@ -206,8 +218,8 @@ class UseCaseTests: KoinTest {
 
         // check
         val getLoggedInUserFromDataStoreAndDatabase = get<GetLoggedInUserFromDataStoreAndDatabase>()
-        getLoggedInUserFromDataStoreAndDatabase().collect{
-            if(it == AsyncOperation.success()) {
+        getLoggedInUserFromDataStoreAndDatabase().collect {
+            if (it == AsyncOperation.success()) {
                 assertEquals(userId, (it.payload as User).id)
                 assertEquals(user.name, (it.payload as User).name)
                 assertEquals(user.email, (it.payload as User).email)
