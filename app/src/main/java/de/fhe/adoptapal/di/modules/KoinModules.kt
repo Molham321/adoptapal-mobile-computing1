@@ -1,5 +1,7 @@
 package de.fhe.adoptapal.di.modules
 
+import de.fhe.adoptapal.android_core.LocalStoreImpl
+import de.fhe.adoptapal.android_core.LoggerImpl
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
 import de.fhe.adoptapal.domain.CreateAnimalAsync
@@ -18,6 +20,7 @@ import de.fhe.adoptapal.domain.GetAnimalAsync
 import de.fhe.adoptapal.domain.GetAnimalByRangeAsync
 import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
 import de.fhe.adoptapal.domain.GetColorAsync
+import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.GetRatingAsync
 import de.fhe.adoptapal.domain.GetUserAsync
 import de.fhe.adoptapal.domain.GetUserByEmailAsync
@@ -25,7 +28,10 @@ import de.fhe.adoptapal.domain.GetUsersByRangeAsync
 import de.fhe.adoptapal.domain.InsertAddressAsync
 import de.fhe.adoptapal.domain.InsertRatingAsync
 import de.fhe.adoptapal.domain.InsertUserAsync
+import de.fhe.adoptapal.domain.LocalStore
+import de.fhe.adoptapal.domain.Logger
 import de.fhe.adoptapal.domain.Repository
+import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalScreenViewModel
 import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
@@ -34,7 +40,9 @@ import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
 import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
-import de.fhe.adoptapal.ui.screens.settings.SettingsScreenVieModel
+import de.fhe.adoptapal.ui.screens.settings.SettingsScreenViewModel
+import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreenViewModel
+
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -56,6 +64,14 @@ val databaseModule = module {
 val androidCoreModule = module {
     single {
         NavigationManager()
+    }
+
+    single<Logger> {
+        LoggerImpl()
+    }
+
+    single<LocalStore> {
+        LocalStoreImpl(get())
     }
 }
 
@@ -95,14 +111,22 @@ val useCaseModule = module {
     factory { InsertRatingAsync(get()) }
     factory { GetAllRatingsBySeekerId(get()) }
     factory { GetAllRatingsBySupplierId(get()) }
+
+    // LocalStore
+    factory { GetLoggedInUserFromDataStoreAndDatabase(get(), get()) }
+    factory { SetLoggedInUserInDataStore(get()) }
 }
 
 val viewModelModule = module {
     viewModel { HomeScreenViewModel(get(), get()) }
-    viewModel { DetailScreenViewModel(get(), get()) }
-    viewModel { LoginScreenViewModel(get(), get()) }
+
+    viewModel { DetailScreenViewModel(get(), get(), get()) }
+    viewModel { UserDetailScreenViewModel(get(), get()) }
+
+    viewModel { LoginScreenViewModel(get(), get(), get()) }
+
     viewModel { RegisterScreenViewModel(get(), get()) }
     viewModel { AddAnimalScreenViewModel(get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { ProfileScreenViewModel(get()) }
-    viewModel { SettingsScreenVieModel(get(), get()) }
+    viewModel { ProfileScreenViewModel(get(), get()) }
+    viewModel { SettingsScreenViewModel(get(), get(), get()) }
 }

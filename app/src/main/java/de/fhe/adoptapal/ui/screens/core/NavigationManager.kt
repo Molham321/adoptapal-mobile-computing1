@@ -1,5 +1,6 @@
 package de.fhe.adoptapal.ui.screens.core
 
+import android.util.Log
 import androidx.navigation.NamedNavArgument
 import kotlinx.coroutines.flow.MutableStateFlow
 

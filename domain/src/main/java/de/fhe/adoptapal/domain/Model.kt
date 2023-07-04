@@ -82,7 +82,7 @@ data class Address(
     var latitude: Double,
     var longitude: Double
 ) {
-    constructor(houseNumber: String, street: String, city: String, zipCode: String, location: Location) : this(0, LocalDateTime.now(), LocalDateTime.now(), houseNumber, street, city, zipCode, location.latitude, location.longitude)
+    constructor(houseNumber: String, street: String, city: String, zipCode: String) : this(0, LocalDateTime.now(), LocalDateTime.now(), houseNumber, street, city, zipCode, 0.0, 0.0)
 }
 
 /**
@@ -154,6 +154,7 @@ data class Animal(
     var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
     val name: String,
     val birthday: LocalDate,
+//    var animalAge: Int = 0
     val supplier: User,
     var animalCategory: AnimalCategory,
     val description: String,
@@ -198,7 +199,3 @@ data class Rating(
     constructor(seeker: User, supplier: User, rating: RatingEnum, comment: String) : this (0, LocalDateTime.now(), LocalDateTime.now(), seeker, supplier, rating, comment)
 }
 
-
-enum class RatingEnum {
-    ONE_STAR, TWO_STARS, THREE_STARS, FOUR_STARS, FIVE_STARS
-}

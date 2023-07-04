@@ -12,6 +12,7 @@ import de.fhe.adoptapal.domain.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.koin.core.component.KoinComponent
@@ -33,6 +34,11 @@ class DBInitialData : KoinComponent {
         val dbScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
         dbScope.launch {
+
+            if(repo.getUser(1) != null) {
+                Log.i(logTag, "User found, so no more example data is created")
+                return@launch
+            }
 
             Log.i(logTag, "Koin DB-Test started")
 
@@ -235,11 +241,108 @@ class DBInitialData : KoinComponent {
                     "Beschreibung des Tiers",
                     color1,
                     null,
-                    false,
+                    true,
                     10.5f,
                     true
                 )
             )
+
+            repo.insertAnimal(
+                Animal(
+                    2,
+                    LocalDateTime.of(2023, 5, 31, 12, 30),
+                    LocalDateTime.now(),
+                    "Buddy",
+                    LocalDate.of(2020, 3, 15),
+                    user2,
+                    animalCategory1,
+                    "Beschreibung des Tiers 2",
+                    color1,
+                    null,
+                    false,
+                    8.2f,
+                    true
+                )
+            )
+
+            repo.insertAnimal(
+                Animal(
+                    3,
+                    LocalDateTime.of(2023, 6, 1, 9, 45),
+                    LocalDateTime.now(),
+                    "Max",
+                    LocalDate.of(2017, 7, 10),
+                    user2,
+                    animalCategory1,
+                    "Beschreibung des Tiers 3",
+                    color1,
+                    null,
+                    false,
+                    12.7f,
+                    true
+                )
+            )
+
+            repo.insertAnimal(
+                Animal(
+                    4,
+                    LocalDateTime.of(2023, 6, 2, 18, 0),
+                    LocalDateTime.now(),
+                    "Luna",
+                    LocalDate.of(2022, 1, 5),
+                    user1,
+                    animalCategory1,
+                    "Beschreibung des Tiers 4",
+                    color1,
+                    null,
+                    true,
+                    6.9f,
+                    true
+                )
+            )
+
+            repo.insertAnimal(
+                Animal(
+                    5,
+                    LocalDateTime.of(2023, 6, 3, 15, 20),
+                    LocalDateTime.now(),
+                    "Charlie",
+                    LocalDate.of(2021, 9, 12),
+                    user2,
+                    animalCategory1,
+                    "Beschreibung des Tiers 5",
+                    color1,
+                    null,
+                    false,
+                    9.1f,
+                    true
+                )
+            )
+
+            repo.insertAnimal(
+                Animal(
+                    6,
+                    LocalDateTime.of(2023, 6, 4, 11, 10),
+                    LocalDateTime.now(),
+                    "Milo",
+                    LocalDate.of(2020, 5, 8),
+                    user1,
+                    animalCategory1,
+                    "Beschreibung des Tiers 6",
+                    color1,
+                    null,
+                    false,
+                    11.3f,
+                    true
+                )
+            )
+
+
+
+
+
+
+
 
 
             val rating = Rating(

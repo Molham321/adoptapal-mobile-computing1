@@ -10,18 +10,22 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
+import de.fhe.adoptapal.ui.screens.animalDetail.Details
 
-@Preview
 @Composable
-fun UserDetailScreen() {
+fun UserDetailScreen(vm: UserDetailScreenViewModel, modifier: Modifier = Modifier) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(color = colorResource(id = R.color.white))
             .padding(16.dp, 16.dp, 16.dp, 16.dp)
     ) {
-        UserInfo()
 
-//        HomeScreen()
+        if (vm.user.value != null) {
+            UserInfo(
+                user = vm.user.value!!,
+                modifier = modifier
+            )
+        }
     }
 }
