@@ -22,7 +22,7 @@ import de.fhe.adoptapal.ui.screens.register.RegisterScreen
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
 import de.fhe.adoptapal.ui.screens.search.SearchScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreen
-import de.fhe.adoptapal.ui.screens.settings.SettingsScreenVieModel
+import de.fhe.adoptapal.ui.screens.settings.SettingsScreenViewModel
 import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreen
 import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreenViewModel
 import org.koin.androidx.compose.koinViewModel

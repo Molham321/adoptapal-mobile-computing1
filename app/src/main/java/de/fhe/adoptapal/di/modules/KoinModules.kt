@@ -40,8 +40,7 @@ import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
 import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
-
-import de.fhe.adoptapal.ui.screens.settings.SettingsScreenVieModel
+import de.fhe.adoptapal.ui.screens.settings.SettingsScreenViewModel
 import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreenViewModel
 
 import org.koin.androidx.viewmodel.dsl.viewModel
