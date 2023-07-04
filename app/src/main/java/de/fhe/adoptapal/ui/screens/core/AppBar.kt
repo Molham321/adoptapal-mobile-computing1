@@ -81,3 +81,9 @@ fun RegisterAppBar() {
     AppBar(screen = Screen.Register)
 }
 
+@Preview()
+@Composable
+fun UserDetailAppBar() {
+    AppBar(screen = Screen.UserDetail)
+}
+

@@ -29,7 +29,8 @@ import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
 import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
-import de.fhe.adoptapal.ui.screens.settings.SettingsScreenViewModel
+import de.fhe.adoptapal.ui.screens.settings.SettingsScreenVieModel
+import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreenViewModel
 
 val RootScreens = listOf(
     Screen.Map,
@@ -79,6 +80,12 @@ sealed class Screen(
                     Icon(Icons.Filled.Lock, contentDescription = "Login Icon")
                 }
             }
+        }
+
+        override fun navigationCommand(vararg value: Any) = object : NavigationCommand {
+            override val destination = "Home"
+            override val arguments: List<NamedNavArgument>
+                get() = TODO("Not yet implemented")
         }
     }
 
@@ -193,6 +200,31 @@ sealed class Screen(
             val viewModel = values[0] as RegisterScreenViewModel
 
             appBarActions = {}
+        }
+    }
+
+    object UserDetail : Screen(
+        title = "User Detail",
+        icon = Icons.Filled.ArrowBack,
+        route = "UserDetail/{userId}"
+    ) {
+        override fun prepareAppBarActions(vararg values: Any) {
+            if (values[0] !is Context)
+                error("First Parameter must be of type *Context*")
+            if (values[1] !is UserDetailScreenViewModel)
+                error("Second Parameter must be of type *UserDetailScreenViewModel")
+
+            appBarActions = {}
+        }
+
+        override fun navigationCommand(vararg value: Any) = object : NavigationCommand {
+
+            override val arguments = listOf(
+                navArgument("userId") {
+                    type = NavType.LongType
+                }
+            )
+            override val destination = "UserDetail/${value[0]}"
         }
     }
 

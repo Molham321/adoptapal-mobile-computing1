@@ -24,14 +24,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.R
+import de.fhe.adoptapal.domain.User
 
-@Preview
 @Composable
 fun UserInfo(
-    modifier: Modifier = Modifier,
-    user: String = "Anbieter",
-    email: String = "mail@email.com",
-    telephone: String = "0361/123456789"
+    user: User,
+    modifier: Modifier = Modifier
 ) {
     LazyColumn(
         modifier = modifier
@@ -44,7 +42,7 @@ fun UserInfo(
                         .padding(16.dp)
                 ) {
                     Text(
-                        text = user.uppercase(),
+                        text = user.name.uppercase(),
                         modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
                         color = colorResource(id = R.color.black),
                         fontWeight = FontWeight.Bold,
@@ -71,19 +69,9 @@ fun UserInfo(
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
+
                 Text(
-                    text = "Über " + user + ":",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp, 0.dp, 16.dp, 0.dp),
-                    color = colorResource(id = R.color.black),
-                    style = MaterialTheme.typography.overline,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Start,
-                    fontSize = 16.sp
-                )
-                Text(
-                    text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+                    text = "about ${user.name}: Bio ist in DB nicht vorhanden",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -105,7 +93,7 @@ fun UserInfo(
                     fontSize = 16.sp
                 )
                 Text(
-                    text = email,
+                    text = user.email,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -116,23 +104,13 @@ fun UserInfo(
                 )
                 Spacer(modifier = modifier.height(24.dp))
                 Text(
-                    text = "Telefon:",
+                    text = "Telefon: ${user.phoneNumber}",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp, 0.dp, 16.dp, 0.dp),
                     color = colorResource(id = R.color.black),
                     style = MaterialTheme.typography.overline,
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Start,
-                    fontSize = 16.sp
-                )
-                Text(
-                    text = telephone,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp, 0.dp, 16.dp, 0.dp),
-                    color = colorResource(id = R.color.black),
-                    style = MaterialTheme.typography.overline,
                     textAlign = TextAlign.Start,
                     fontSize = 16.sp
                 )

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,6 +28,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
+import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalScreenViewModel
+import de.fhe.adoptapal.ui.screens.sharedComponents.GenderTag
+import org.koin.androidx.compose.koinViewModel
 
 //----------------------------------------------
 // ItemAnimalCard Component for HomeScreen
@@ -37,13 +41,16 @@ fun AnimalCard(
     modifier: Modifier = Modifier,
     onItemPressed: (itemId: Long) -> Unit = {}
 ) {
+    val vm: HomeScreenViewModel = koinViewModel()
+
     Card(
         modifier = modifier
             .fillMaxWidth()
             .padding(8.dp)
             .clip(RoundedCornerShape(16.dp))
             .clickable(onClick = { onItemPressed(animal.id) }),
-        elevation = 0.dp
+        elevation = 0.dp,
+        backgroundColor = Color(0xFFE0E0E0)
     ) {
         Row(
             modifier = modifier
@@ -75,11 +82,7 @@ fun AnimalCard(
 
                 Text(
                     text = buildString {
-                        append(animal.birthday)
-                        append(" | ")
-                        /*                        append(animal.description)
-                                                append(" | ")*/
-                        append(animal.animalCategory)
+                        append(vm.getAge(animal.birthday))
                     },
                     modifier = modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
                     color = Color.Gray,
@@ -105,14 +108,20 @@ fun AnimalCard(
                     }
                 }
             }
-            Row(
+            Column(
                 modifier = modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.End
             ) {
+                GenderTag(animal.isMale)
+
+                Spacer(modifier = Modifier.height(16.dp))
+
                 Text(
-                    text = animal.isMale.toString(),
-                    modifier = modifier.padding(8.dp, 12.dp, 12.dp, 0.dp),
-                    color = Color.Black,
+                    text = "12 mins ago",
+                    modifier = modifier.padding(8.dp, 0.dp, 12.dp, 12.dp),
+                    color = Color.Gray,
+                    style = MaterialTheme.typography.overline
                 )
             }
         }

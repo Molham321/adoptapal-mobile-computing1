@@ -59,14 +59,6 @@ fun FilterBar(
                     .clip(shape = MaterialTheme.shapes.medium)
                     .shadow(4.dp)
             ) {
-                DropdownMenuItem(
-                    onClick = {
-                        onFilterSelected(null.toString())
-                        expanded = false
-                    }
-                ) {
-                    Text(text = "All")
-                }
                 filters.forEach { filter ->
                     DropdownMenuItem(
                         onClick = {

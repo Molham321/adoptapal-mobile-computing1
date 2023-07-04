@@ -22,18 +22,26 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
+import de.fhe.adoptapal.ui.screens.sharedComponents.Title
+import org.koin.androidx.compose.koinViewModel
 
 
 // -----------------------------------------------------
 // Details
 // -----------------------------------------------------
 @Composable
-fun Details(animal: Animal, modifier: Modifier = Modifier) {
+fun Details(
+    animal: Animal,
+    modifier: Modifier = Modifier,
+    onItemPressed: (itemId: Long) -> Unit = {}
+) {
+
+    val vm: DetailScreenViewModel = koinViewModel()
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -53,11 +61,13 @@ fun Details(animal: Animal, modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            AnimalInfoCard(
-                animal.name,
-                animal.isMale.toString(),
-                animal.supplier.address.toString()
-            )
+            animal.supplier.address?.city?.toString()?.let {
+                AnimalInfoCard(
+                    animal.name,
+                    animal.isMale,
+                    it
+                )
+            }
         }
 
         // My story details
@@ -92,26 +102,9 @@ fun Details(animal: Animal, modifier: Modifier = Modifier) {
                 textAlign = TextAlign.Start
             )
 
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-                GenderTag(animal.isMale.toString(), Color.Red)
-                GenderTag(animal.birthday.toString(), Color.Blue)
-                GenderTag(animal.weight.toString(), Color.DarkGray)
-            }
-
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "Alter: ${animal.birthday}",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp, 0.dp, 16.dp, 0.dp),
-                color = colorResource(id = R.color.text),
-                style = MaterialTheme.typography.body2,
-                textAlign = TextAlign.Start
-            )
-
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                text = "Geschlecht: ${animal.isMale}",
+                text = "Birthday: ${animal.birthday}",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -133,7 +126,7 @@ fun Details(animal: Animal, modifier: Modifier = Modifier) {
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                InfoCard(title = "Age", value = animal.birthday.toString().plus(" yrs"))
+                InfoCard(title = "Age", value = vm.getAge(animal.birthday))
                 InfoCard(title = "Color", value = animal.color.name)
                 InfoCard(title = "Weight", value = animal.weight.toString().plus("Kg"))
             }
@@ -144,14 +137,14 @@ fun Details(animal: Animal, modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(24.dp))
             Title(title = "Owner info")
-            Spacer(modifier = Modifier.height(16.dp))
 
-            animal.supplier.phoneNumber?.let {
-                OwnerCard(
-                    animal.supplier.name,
-                    it, 11
-                )
-            }
+            OwnerCard(
+                animal.supplier,
+                animal.supplier.name,
+                animal.supplier.phoneNumber.toString(),
+                R.drawable.user,
+                onItemPressed
+            )
         }
 
         // CTA - Adopt me button
@@ -164,8 +157,8 @@ fun Details(animal: Animal, modifier: Modifier = Modifier) {
                     .height(52.dp)
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
                 colors = ButtonDefaults.textButtonColors(
-                    backgroundColor = Color.Blue,
-                    contentColor = Color.White
+                    backgroundColor = Color.LightGray,
+                    contentColor = Color.Black
                 )
             ) {
                 Text("Adopt me")
@@ -173,18 +166,4 @@ fun Details(animal: Animal, modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(24.dp))
         }
     }
-}
-
-@Composable
-fun Title(title: String) {
-    Text(
-        text = title,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp, 0.dp, 0.dp, 0.dp),
-        color = colorResource(id = R.color.text),
-        style = MaterialTheme.typography.subtitle1,
-        fontWeight = FontWeight.W600,
-        textAlign = TextAlign.Start
-    )
 }

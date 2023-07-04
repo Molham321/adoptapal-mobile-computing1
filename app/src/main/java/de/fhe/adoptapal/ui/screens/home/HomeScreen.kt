@@ -14,22 +14,25 @@ import de.fhe.adoptapal.ui.screens.util.FullscreenPlaceholderView
 @Composable
 fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
     val animalList = remember { vm.animalList }
+    var filterText by remember { mutableStateOf("") }
+    var selectedFilter by remember { mutableStateOf<String?>(null) }
 
     Column(modifier = modifier) {
 
         if (animalList.value.isNotEmpty()) {
 
-            SearchBar(onSearch = {})
+            SearchBar(onSearch = { text -> filterText = text })
 
-            val filters = listOf("Filter 1", "Filter 2", "Filter 3")
-            var selectedFilter by remember { mutableStateOf<String?>(null) }
+            val filters = listOf("All", "Male", "Female")
 
             FilterBar(filters = filters, selectedFilter = selectedFilter) { filter ->
                 selectedFilter = filter
             }
 
             AnimalList(
-                animalList.value,
+                animals = animalList.value,
+                filterText = filterText,
+                selectedFilter = selectedFilter,
                 modifier = modifier
             ) {
                 vm.navigateToAnimal(it)
