@@ -117,6 +117,12 @@ object Libs {
         const val core = "com.jakewharton.timber:timber:$version"
     }
 
+    object DataStore {
+        private const val version = "1.0.0"
+        const val datastore_pref = "androidx.datastore:datastore-preferences:$version"
+        const val datastore_typed = "androidx.datastore:datastore:$version"
+    }
+
     // https://github.com/Kotlin/dokka
     object Dokka {
         const val version = "1.8.10"

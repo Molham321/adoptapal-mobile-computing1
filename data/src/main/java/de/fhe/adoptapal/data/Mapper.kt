@@ -78,16 +78,20 @@ fun AddressModel.toDomain() = Address(
     longitude = longitude
 )
 
-fun Address.fromDomain() = AddressModel(
-    id = id,
-    createdTimestamp = createdTimestamp,
-    houseNumber = houseNumber,
-    street = street,
-    city = city,
-    zipCode = zipCode,
-    latitude = latitude,
-    longitude = longitude
-)
+fun Address.fromDomain() =
+
+        AddressModel(
+        id = id,
+        createdTimestamp = createdTimestamp,
+        houseNumber = houseNumber,
+        street = street,
+        city = city,
+        zipCode = zipCode,
+        latitude = latitude,
+        longitude = longitude
+    )
+
+
 
 fun UserModel.toDomain(address: Address?) = User(
     id = id,
