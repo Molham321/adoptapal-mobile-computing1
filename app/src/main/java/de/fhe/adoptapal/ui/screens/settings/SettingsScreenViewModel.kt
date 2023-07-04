@@ -51,7 +51,7 @@ class SettingsScreenViewModel(
 
                 if(it.status == AsyncOperationState.SUCCESS) {
                     saveFeedbackFlow.emit(it)
-                    TODO("Go to different page?")
+                    // TODO("Go to different page?")
                 }
 
                 if(it.status == AsyncOperationState.ERROR) {
