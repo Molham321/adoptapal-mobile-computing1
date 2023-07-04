@@ -1,6 +1,7 @@
 package de.fhe.adoptapal.data
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import de.fhe.adoptapal.domain.RatingEnum
 import java.time.LocalDate
@@ -21,7 +22,7 @@ data class AddressModel(
     val longitude: Double
 )
 
-@Entity
+@Entity(indices = [Index(value = ["email"],unique = true)])
 data class UserModel(
     @PrimaryKey(autoGenerate = true) var id: Long = 0,
     var createdTimestamp: LocalDateTime = LocalDateTime.now(),

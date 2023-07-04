@@ -100,7 +100,7 @@ fun AppNavigationHost(
         }
 
         composable(Screen.Settings.route) {
-            val vm: SettingsScreenVieModel = koinViewModel()
+            val vm: SettingsScreenViewModel = koinViewModel()
             Screen.Settings.prepareAppBarActions(vm)
             onNavigation(Screen.Settings)
             SettingsScreen(vm)

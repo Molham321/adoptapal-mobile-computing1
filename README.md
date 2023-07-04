@@ -19,4 +19,4 @@ MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY
 
 ## Additional information
 
-App need to be build (green hammer) before it can be installed and run on phone or emmulator
+App needs to be build (green hammer) before it can be installed and run on phone or emulator

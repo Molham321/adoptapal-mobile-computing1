@@ -127,9 +127,9 @@ sealed class Screen(
         route = "Settings"
     ) {
         override fun prepareAppBarActions(vararg values: Any) {
-            if (values[0] !is SettingsScreenVieModel)
+            if (values[0] !is SettingsScreenViewModel)
                 error("First Parameter must be of type *SettingsScreenVieModel*")
-            val viewModel = values[0] as SettingsScreenVieModel
+            val viewModel = values[0] as SettingsScreenViewModel
 
             appBarActions = {}
         }

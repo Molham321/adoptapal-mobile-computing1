@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.User
 
 @Composable
@@ -106,10 +107,11 @@ fun Settings(
                 user.email = email
                 user.phoneNumber = phoneNumber
 
-                user.address?.street = street
-                user.address?.houseNumber = houseNumber
-                user.address?.city = city
-                user.address?.zipCode = zip
+                // create or update address if all address fields are set
+                if(street != "" && houseNumber != "" && city != "" && zip != "") {
+                    user.address = Address(houseNumber, street, city, zip)
+                }
+
                 updateUser(user)
             },
             modifier = Modifier.align(Alignment.End)

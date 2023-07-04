@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "de.fhe.android_core"
+    namespace = "de.fhe.adoptapal.android_core"
     compileSdk = Config.compile_sdk_version
 
     defaultConfig {
@@ -38,7 +38,8 @@ dependencies {
     implementation(project(mapOf("path" to ":domain")))
     implementation(Libs.AndroidX.coreKtx)
 
-//    implementation( Libs.Timber.core )
+    implementation( Libs.Timber.core )
+    implementation( Libs.DataStore.datastore_pref )
 
     testImplementation(Libs.JUnit.core)
     androidTestImplementation(Libs.JUnit.ktx)

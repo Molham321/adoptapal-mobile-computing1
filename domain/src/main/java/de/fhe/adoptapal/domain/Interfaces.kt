@@ -2,6 +2,20 @@ package de.fhe.adoptapal.domain
 
 import kotlinx.coroutines.flow.Flow
 
+interface Logger {
+    fun error(message: String)
+    fun info(message: String)
+
+    fun error(component: String, message: String)
+    fun info(component: String, message: String)
+}
+
+interface LocalStore {
+    suspend fun save(key: String, value: String)
+    suspend fun load(key: String): String
+}
+
+
 interface Repository {
     // Animals
     fun getAllAnimals(): Flow<List<Animal>>
