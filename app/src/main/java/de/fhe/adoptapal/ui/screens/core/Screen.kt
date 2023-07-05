@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Place
@@ -20,9 +19,11 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import de.fhe.adoptapal.R
 import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalScreenViewModel
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
@@ -79,7 +80,10 @@ sealed class Screen(
                     Icon(Icons.Filled.Search, contentDescription = null)
                 }
                 IconButton(onClick = { viewModel.navigateToLogin() }) {
-                    Icon(Icons.Filled.Lock, contentDescription = "Login Icon")
+                    Icon(
+                        painter = painterResource(id = R.drawable.baseline_login),
+                        contentDescription = "Login Icon"
+                    )
                 }
             }
         }
