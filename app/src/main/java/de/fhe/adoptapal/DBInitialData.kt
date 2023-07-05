@@ -225,7 +225,7 @@ class DBInitialData : KoinComponent {
                 name = "Gabi Schnitzler",
                 email = "gabi.schnitzler@tierheim.de",
                 address = address2,
-                phoneNumber = null,
+                phoneNumber = "017801870420",
                 useCoarseLocation = false
             )
             repo.insertUser(user1)

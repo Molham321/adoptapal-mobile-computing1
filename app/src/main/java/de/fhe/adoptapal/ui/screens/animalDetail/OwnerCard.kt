@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -21,68 +22,129 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.R
-import de.fhe.adoptapal.domain.User
+import de.fhe.adoptapal.domain.Animal
+import de.fhe.adoptapal.ui.screens.sharedComponents.composeCall
+import de.fhe.adoptapal.ui.screens.sharedComponents.composeEmail
 
 
 @Composable
 fun OwnerCard(
-    user: User,
-    name: String,
-    bio: String,
+    animal: Animal,
     image: Int,
     onItemPressed: (itemId: Long) -> Unit = {}
 ) {
+    val context = LocalContext.current
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
             .clip(RoundedCornerShape(16.dp))
-            .clickable(onClick = { onItemPressed(user.id) }),
+            .clickable(onClick = { onItemPressed(animal.supplier.id) }),
         elevation = 0.dp,
         backgroundColor = Color(0xFFE0E0E0)
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .clip(RoundedCornerShape(16.dp))
-        ) {
-            // getting the image from the drawable
-            val personImage: Painter = painterResource(id = image)
+        Column {
 
-            Image(
+            Row(
                 modifier = Modifier
-                    .size(60.dp, 60.dp)
-                    .clip(RoundedCornerShape(16.dp)),
-                painter = personImage,
-                alignment = Alignment.CenterStart,
-                contentDescription = "",
-                contentScale = ContentScale.Crop
-            )
+                    .fillMaxWidth()
+                    .padding(16.dp)
+                    .clip(RoundedCornerShape(16.dp))
+            ) {
+                // getting the image from the drawable
+                val personImage: Painter = painterResource(id = image)
 
-            Spacer(modifier = Modifier.width(16.dp))
-
-            Column(modifier = Modifier) {
-                Text(
-                    text = name,
-                    fontWeight = FontWeight.W600,
-                    textAlign = TextAlign.Start
+                Image(
+                    modifier = Modifier
+                        .size(60.dp, 60.dp)
+                        .clip(RoundedCornerShape(16.dp)),
+                    painter = personImage,
+                    alignment = Alignment.CenterStart,
+                    contentDescription = "",
+                    contentScale = ContentScale.Crop
                 )
 
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = "bio: ${bio}",
-                    color = colorResource(id = R.color.text),
-                    style = MaterialTheme.typography.caption
-                )
+                Spacer(modifier = Modifier.width(16.dp))
+
+                Column(modifier = Modifier) {
+                    Text(
+                        text = animal.supplier.name,
+                        fontWeight = FontWeight.W600,
+                        textAlign = TextAlign.Start
+                    )
+                    if (animal.supplier.phoneNumber != null) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Telefon: ${animal.supplier.phoneNumber}",
+                            color = colorResource(id = R.color.text),
+                            style = MaterialTheme.typography.caption
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Email: ${animal.supplier.email}",
+                        color = colorResource(id = R.color.text),
+                        style = MaterialTheme.typography.caption
+                    )
+                }
             }
+
+            // create intent row
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+
+
+                if (animal.supplier.phoneNumber != null) {
+                    Button(
+                        onClick = {
+                            animal.supplier.phoneNumber?.let { composeCall(context, it) }
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(8.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    ) {
+                        Text(
+                            text = "Anrufen",
+                            fontSize = 16.sp,
+                        )
+                    }
+                }
+                Button(
+                    onClick = {
+                        composeEmail(
+                            context,
+                            animal.supplier.email,
+                            "Adoption von ${animal.name} ",
+                            "Guten Tag, \nich möchte ${animal.name} ein neues Zuhause bei mir bieten.\nViele Grüße\n"
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .padding(8.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                ) {
+                    Text(
+                        text = "Email",
+                        fontSize = 16.sp,
+                    )
+                }
+            }
+
         }
     }
 }
