@@ -6,7 +6,7 @@ image: jangrewe/gitlab-ci-android
 before_script:
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - chmod +x ./gradlew
-  - export ANDROID_HOME=/Users/avemarg/Library/Android/sdk
+  # todo - export ANDROID_HOME=/Users/avemarg/Library/Android/sdk
 
 # Cache instruction - will save intermediate results for later jobs
 # Might actually not speed up your pipeline runtime - just check it for yourself
