@@ -6,10 +6,7 @@ image: jangrewe/gitlab-ci-android
 stages:
   - prerequisites
   - build
-  - buildTest
   - deviceTests
-  - test
-  - docs
 
 # Define Gradle Home to use it for (optional) caching
 before_script:
@@ -65,14 +62,3 @@ run_device_tests:
   script:
     - cd apks
     - ls
-
-## Generate Docs via Dokka
-generateDocs:
-  stage: docs
-  tags:
-    - testlab
-  script:
-    - ./gradlew dokkaHtmlMultiModule
-  artifacts:
-    paths:
-      - build/dokkaMultiModuleOutput/**
