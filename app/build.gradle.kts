@@ -92,6 +92,17 @@ dependencies {
     implementation(Libs.Accompanist.placeholder)
 
     testImplementation(Libs.JUnit.core)
+
+    testImplementation("junit:junit:4.12")
+    // Mockito
+    testImplementation ("org.mockito:mockito-core:3.12.4")
+
+    // Truth
+    testImplementation ("com.google.truth:truth:1.1")
+
+    // Kotlinx Coroutines Test
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
+
     androidTestImplementation(Libs.AndroidX.Compose.uiTest)
     androidTestImplementation(Libs.AndroidX.Espresso.core)
     androidTestImplementation(Libs.JUnit.ktx)
