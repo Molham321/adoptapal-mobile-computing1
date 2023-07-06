@@ -2,19 +2,6 @@
 # See https://github.com/jangrewe/gitlab-ci-android
 image: jangrewe/gitlab-ci-android
 
-# Define Gradle Home to use it for (optional) caching
-before_script:
-  - export GRADLE_USER_HOME=$(pwd)/.gradle
-  - chmod +x ./gradlew
-  - export ANDROID_HOME=/Users/molha/AppData/Local/Android/sdk
-
-# Cache instruction - will save intermediate results for later jobs
-# Might actually not speed up your pipeline runtime - just check it for yourself
-cache:
-  key: ${CI_PROJECT_ID}
-  paths:
-    - .gradle/
-
 # Build Stages - release and deploy not used currently
 stages:
   - prerequisites
@@ -23,6 +10,19 @@ stages:
   - deviceTests
   - test
   - docs
+
+# Define Gradle Home to use it for (optional) caching
+before_script:
+  - export GRADLE_USER_HOME=$(pwd)/.gradle
+  - chmod +x ./gradlew
+
+# Cache instruction - will save intermediate results for later jobs
+# Might actually not speed up your pipeline runtime - just check it for yourself
+cache:
+  key: ${CI_PROJECT_ID}
+  paths:
+    - .gradle/
+
 
 prepare_build:
   stage: prerequisites
@@ -67,30 +67,12 @@ run_device_tests:
     - ls
 
 ## Generate Docs via Dokka
-#generateDocs:
-#  stage: docs
-#  tags:
-#    - testlab
-#  script:
-#    - ./gradlew dokkaHtmlMultiModule
-#  artifacts:
-#    paths:
-#      - build/dokkaMultiModuleOutput/**
-
-
-## Run detekt & klint checks
-#detekt:
-#  stage: build
-#  tags:
-#    - testlab
-#  script:
-#    - ./gradlew -Pci --console=plain detekt
-#  artifacts:
-#    paths:
-#      - android-core/build/reports/detekt/detekt.*
-#      - app/build/reports/detekt/detekt.*
-#      - data/build/reports/detekt/detekt.*
-#      - domain/build/reports/detekt/detekt.*
-##  except:
-##    changes:
-##      - "**/*.md"
+generateDocs:
+  stage: docs
+  tags:
+    - testlab
+  script:
+    - ./gradlew dokkaHtmlMultiModule
+  artifacts:
+    paths:
+      - build/dokkaMultiModuleOutput/**
