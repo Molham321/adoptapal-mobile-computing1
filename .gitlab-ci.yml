@@ -47,16 +47,16 @@ assembleDebug:
       - apks/app-debug.apk
 
 # Build a debug test apk
-#assembleDebugTest:
-#  stage: buildTest
-#  tags:
-#    - testlab
-#  script:
-#    - ./gradlew assembleDebugAndroidTest
-#    - mv app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk apks/app-debug-androidTest.apk
-#  artifacts:
-#    paths:
-#      - apks/app-debug-androidTest.apk
+assembleDebugTest:
+  stage: buildTest
+  tags:
+    - testlab
+  script:
+    - ./gradlew assembleDebugAndroidTest
+    - mv app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk apks/app-debug-androidTest.apk
+  artifacts:
+    paths:
+      - apks/app-debug-androidTest.apk
 
 run_device_tests:
   stage: deviceTests
