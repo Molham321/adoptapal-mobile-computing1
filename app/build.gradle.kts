@@ -1,33 +1,8 @@
-import com.android.build.api.variant.BuildConfigField
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
-
 plugins {
     id(Libs.Plugins.android_app)
     id(Libs.Plugins.kotlin_android)
 }
 
-// get API key
-val latLongApiKey: String = gradleLocalProperties(rootDir).getProperty("LAT_LONG_API")
-val mapsApiKey: String = gradleLocalProperties(rootDir).getProperty("MAPS_API_KEY")
-
-
-// Components to get data in android application
-androidComponents {
-    onVariants {
-        it.buildConfigFields.put(
-            "LAT_LONG_API_KEY", BuildConfigField(
-                "String",
-                "\"$latLongApiKey\"",
-                "API Key for LatLong conversion from application.properties"
-            )
-        )
-        it.buildConfigFields.put(
-            "MAPS_API_KEY", BuildConfigField(
-                "String", "\"$mapsApiKey\"", "Google Maps Api Key from application.properties"
-            )
-        )
-    }
-}
 
 android {
     namespace = "de.fhe.adoptapal"
@@ -42,7 +17,7 @@ android {
         versionName = Config.version_name
 
         // set api key to AndroidManifest from application.properties
-        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
+//        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -76,7 +51,6 @@ android {
     }
     buildFeatures {
         compose = true
-        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Libs.AndroidX.Compose.compiler_version
@@ -119,6 +93,7 @@ dependencies {
 
     implementation(Libs.Accompanist.navAnimation)
     implementation(Libs.Accompanist.placeholder)
+    implementation(Libs.Accompanist.permission)
 
     testImplementation(Libs.JUnit.core)
     androidTestImplementation(Libs.AndroidX.Compose.uiTest)

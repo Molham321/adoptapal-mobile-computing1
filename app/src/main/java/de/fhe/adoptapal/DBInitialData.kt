@@ -193,19 +193,33 @@ class DBInitialData : KoinComponent {
             )
 
             val address2 = Address(
-                id = 1,
+                id = 2,
                 createdTimestamp = LocalDateTime.of(2023, 5, 30, 22, 11),
                 lastChangeTimestamp = LocalDateTime.now(),
                 houseNumber = "10",
                 street = "Erfurter Straße",
                 city = "Weimar",
                 zipCode = "99423",
-                latitude = 50.980106,
-                longitude = 11.322003
+                latitude = 54.313549,
+                longitude = 9.967596
+            )
+
+            val address3 = Address(
+                id = 3,
+                createdTimestamp = LocalDateTime.of(2023, 5, 30, 22, 11),
+                lastChangeTimestamp = LocalDateTime.now(),
+                houseNumber = "1",
+                street = "Anger",
+                city = "Erfurt",
+                zipCode = "99085",
+                latitude = 50.977366,
+                longitude = 11.035729
             )
 
             repo.insertAddress(address1)
             repo.insertAddress(address2)
+            repo.insertAddress(address3)
+
 
             // create user
             val user1 = User(
@@ -228,8 +242,19 @@ class DBInitialData : KoinComponent {
                 phoneNumber = "017801870420",
                 useCoarseLocation = false
             )
+            val user3 = User(
+                id = 3,
+                createdTimestamp = LocalDateTime.of(2023, 5, 30, 22, 11),
+                lastChangeTimestamp = LocalDateTime.now(),
+                name = "Richard Klöse",
+                email = "richard.kloese@katze.de",
+                address = address3,
+                phoneNumber = "0178058270420",
+                useCoarseLocation = false
+            )
             repo.insertUser(user1)
             repo.insertUser(user2)
+            repo.insertUser(user3)
 
 
             // create animal

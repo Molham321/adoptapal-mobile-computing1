@@ -38,6 +38,7 @@ import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
+import de.fhe.adoptapal.ui.screens.map.MapScreenViewModel
 import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreenViewModel
@@ -123,6 +124,7 @@ val viewModelModule = module {
     viewModel { UserDetailScreenViewModel(get(), get()) }
 
     viewModel { LoginScreenViewModel(get(), get(), get()) }
+    viewModel { MapScreenViewModel(get(), get(), get()) }
 
     viewModel { RegisterScreenViewModel(get(), get()) }
     viewModel { AddAnimalScreenViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }

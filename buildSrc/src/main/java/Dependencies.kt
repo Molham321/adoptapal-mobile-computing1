@@ -182,6 +182,7 @@ object Libs {
         const val swipeRefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
         const val placeholder = "com.google.accompanist:accompanist-placeholder-material:$version"
         const val navAnimation = "com.google.accompanist:accompanist-navigation-animation:$version"
+        const val permission = "com.google.accompanist:accompanist-permissions:$version"
     }
 
     object JUnit {
