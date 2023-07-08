@@ -15,6 +15,10 @@ interface LocalStore {
     suspend fun load(key: String): String
 }
 
+interface NetworkController {
+    fun getLatLongFromAddress(address: Address): Flow<Address>
+}
+
 
 interface Repository {
     // Animals

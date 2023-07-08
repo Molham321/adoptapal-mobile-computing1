@@ -3,6 +3,7 @@ package de.fhe.adoptapal
 import android.app.Application
 import de.fhe.adoptapal.di.modules.androidCoreModule
 import de.fhe.adoptapal.di.modules.databaseModule
+import de.fhe.adoptapal.di.modules.networkModule
 import de.fhe.adoptapal.di.modules.useCaseModule
 import de.fhe.adoptapal.di.modules.viewModelModule
 import org.koin.android.ext.koin.androidContext
@@ -22,6 +23,7 @@ class Bootstrap : Application() {
             modules(androidCoreModule)
             modules(viewModelModule)
             modules(useCaseModule)
+            modules(networkModule)
         }
 
         // test Database

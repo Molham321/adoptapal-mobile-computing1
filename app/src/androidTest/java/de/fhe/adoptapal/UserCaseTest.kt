@@ -35,6 +35,7 @@ import de.fhe.adoptapal.domain.Repository
 import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.domain.User
+import de.fhe.adoptapal.network.retrofit.RetrofitNetworkController
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -68,6 +69,10 @@ class UseCaseTests : KoinTest {
                 AppDatabase.getColorModelDao(get()),
                 AppDatabase.getRequestModelDao(get())
             )
+        }
+
+        single {
+            RetrofitNetworkController()
         }
 
 

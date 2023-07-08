@@ -23,14 +23,14 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-//
-//        // Specify Network Implementation
-//        // Possible Values: DEFAULT (Mock), RETROFIT, KTOR
-//        buildConfigField(
-//            type = "de.fhe.ai.pmc.acat.network.core.NetworkImplType",
-//            name = "NET_IMPL_TYPE",
-//            value = "de.fhe.ai.pmc.acat.network.core.DEFAULT.INSTANCE"
-//        )
+
+        // Specify Network Implementation
+        // Possible Values: DEFAULT (Mock), RETROFIT, KTOR
+        buildConfigField(
+            type = "de.fhe.adoptapal.network.core.NetworkImplType",
+            name = "NET_IMPL_TYPE",
+            value = "de.fhe.adoptapal.network.core.RETROFIT.INSTANCE"
+        )
     }
 
     buildTypes {
@@ -51,6 +51,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Libs.AndroidX.Compose.compiler_version
@@ -65,7 +66,7 @@ dependencies {
     implementation(project(mapOf("path" to ":domain")))
     implementation(project(mapOf("path" to ":android-core")))
     implementation(project(mapOf("path" to ":data")))
-//    implementation(project(mapOf("path" to ":network")))
+    implementation(project(mapOf("path" to ":network")))
 
     implementation(Libs.Coroutines.core)
     implementation(Libs.Coroutines.android)
