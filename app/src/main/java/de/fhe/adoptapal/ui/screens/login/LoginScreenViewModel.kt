@@ -23,7 +23,7 @@ class LoginScreenViewModel(
 
     var dbOp = mutableStateOf(AsyncOperation.undefined())
 
-    val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
+    var saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
 
     fun login(userEmail: String, userPassword: String) {
         viewModelScope.launch {

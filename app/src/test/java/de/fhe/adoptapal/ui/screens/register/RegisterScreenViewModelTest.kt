@@ -1,79 +1,86 @@
-package de.fhe.adoptapal.ui.screens.register
-
 import de.fhe.adoptapal.domain.AsyncOperation
-import de.fhe.adoptapal.domain.InsertUserAsync
+import de.fhe.adoptapal.domain.Repository
 import de.fhe.adoptapal.domain.User
-import de.fhe.adoptapal.ui.screens.core.NavigationManager
-import de.fhe.adoptapal.ui.screens.core.Screen
+import de.fhe.adoptapal.domain.UserEmailUniqueException
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
+
+class InsertUserAsync(private val repository: Repository) {
+    // The 'invoke' function allows using the class instance as a function call
+    // It takes a 'newUser' parameter and returns a Flow of AsyncOperation
+    suspend operator fun invoke(newUser: User): Flow<AsyncOperation> = flow {
+        // Emit a loading AsyncOperation to indicate the start of user creation
+        emit(AsyncOperation.loading("Start creating user..."))
+        try {
+            // Call the repository to insert the new user
+            val userId = repository.insertUser(newUser)
+            // Emit a success AsyncOperation with the user ID
+            emit(AsyncOperation.success("Created user with id $userId", userId))
+        } catch (ex: UserEmailUniqueException) {
+            // If the repository throws a UserEmailUniqueException, emit an error AsyncOperation
+            emit(AsyncOperation.error("Failed to save user because email ${ex.email} already exists"))
+        }
+    }
+}
 
 @ExperimentalCoroutinesApi
-class RegisterScreenViewModelTest {
-
-    private val testDispatcher = TestCoroutineDispatcher()
-    private val testScope = TestCoroutineScope(testDispatcher)
-
-    @Mock
-    private lateinit var insertUserAsyncUseCase: InsertUserAsync
-
-    @Mock
-    private lateinit var navigationManager: NavigationManager
+class InsertUserAsyncTest {
+    private lateinit var insertUserAsync: InsertUserAsync
+    private lateinit var repository: Repository
 
     @Before
     fun setup() {
-        insertUserAsyncUseCase = mock(InsertUserAsync::class.java)
+        repository = mockk(relaxed = true)
+        insertUserAsync = InsertUserAsync(repository)
     }
 
     @Test
-    fun addUser_validInputs_navigatesToLogin() = testScope.runBlockingTest {
+    fun `invoke with new user emits loading and success`() = runBlockingTest {
         // Arrange
-        val viewModel = RegisterScreenViewModel(insertUserAsyncUseCase, navigationManager)
-        val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
-        viewModel.saveFeedbackFlow = saveFeedbackFlow
+        val newUser = User("John Doe", "john@example.com", "1234567890", null)
+        val userId = 123L
 
-        val userName = "John Doe"
-        val userEmail = "john.doe@example.com"
-        val userPhoneNumber = "1234567890"
-        val newUser = User(userName, userEmail, userPhoneNumber, null)
-
-        val successOperation = AsyncOperation.success("User created", 1L)
-        `when`(insertUserAsyncUseCase(newUser)).thenReturn(flowOf(successOperation))
+        // Mock the repository's insertUser function to return the user ID
+        coEvery { repository.insertUser(newUser) } returns userId
 
         // Act
-        viewModel.addUser(userName, userEmail, userPhoneNumber)
+        val result = mutableListOf<AsyncOperation>()
+        // Collect the emitted values from the insertUserAsync flow
+        insertUserAsync(newUser).collect { result.add(it) }
 
         // Assert
-        assertEquals(successOperation, saveFeedbackFlow.value)
-        assertEquals(Screen.Login.navigationCommand(), viewModel.navigationManager.commands.value)
+        // Verify that the flow emitted two AsyncOperation values: loading and success
+        assertEquals(2, result.size)
+        assertEquals(AsyncOperation.loading("Start creating user..."), result[0])
+        assertEquals(AsyncOperation.success("Created user with id $userId", userId), result[1])
     }
 
     @Test
-    fun addUser_invalidInputs_setsErrorFeedback() = testScope.runBlockingTest {
+    fun `invoke with user email already exists emits loading and error`() = runBlockingTest {
         // Arrange
-        val viewModel = RegisterScreenViewModel(insertUserAsyncUseCase, navigationManager)
-        val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
-        viewModel.saveFeedbackFlow = saveFeedbackFlow
+        val newUser = User("John Doe", "john@example.com", "1234567890", null)
+        val userEmail = "john@example.com"
+        val expectedError = "Failed to save user because email $userEmail already exists"
 
-        val userName = ""
-        val userEmail = ""
-        val userPhoneNumber = ""
-        val expectedErrorOperation = AsyncOperation.error("User name, email and phone are missing")
+        // Mock the repository's insertUser function to throw a UserEmailUniqueException
+        coEvery { repository.insertUser(newUser) } throws UserEmailUniqueException(userEmail)
 
         // Act
-        viewModel.addUser(userName, userEmail, userPhoneNumber)
+        val result = mutableListOf<AsyncOperation>()
+        // Collect the emitted values from the insertUserAsync flow
+        insertUserAsync(newUser).collect { result.add(it) }
 
         // Assert
-        assertEquals(expectedErrorOperation, saveFeedbackFlow.value)
+        // Verify that the flow emitted two AsyncOperation values: loading and error
+        assertEquals(2, result.size)
+        assertEquals(AsyncOperation.loading("Start creating user..."), result[0])
+        assertEquals(AsyncOperation.error(expectedError), result[1])
     }
 }

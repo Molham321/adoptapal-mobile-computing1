@@ -93,15 +93,12 @@ dependencies {
 
     testImplementation(Libs.JUnit.core)
 
+    // Unit Test
+    testImplementation ("androidx.arch.core:core-testing:2.1.0")
+    testImplementation ("io.mockk:mockk:1.12.0")
     testImplementation("junit:junit:4.12")
-    // Mockito
-    testImplementation ("org.mockito:mockito-core:3.12.4")
-
-    // Truth
-    testImplementation ("com.google.truth:truth:1.1")
-
-    // Kotlinx Coroutines Test
-    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.1")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0")
+    testImplementation("junit:junit:4.12")
 
     androidTestImplementation(Libs.AndroidX.Compose.uiTest)
     androidTestImplementation(Libs.AndroidX.Espresso.core)
