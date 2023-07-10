@@ -64,5 +64,4 @@ class RetrofitNetworkController() : NetworkController {
             .create(Api::class.java)
     }
 
-
 }

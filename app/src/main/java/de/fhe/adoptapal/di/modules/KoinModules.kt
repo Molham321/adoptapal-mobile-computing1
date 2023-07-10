@@ -130,7 +130,7 @@ val useCaseModule = module {
 }
 
 val viewModelModule = module {
-    viewModel { HomeScreenViewModel(get(), get(), get()) }
+    viewModel { HomeScreenViewModel(get(), get(), get(), get()) }
 
     viewModel { DetailScreenViewModel(get(), get(), get()) }
     viewModel { UserDetailScreenViewModel(get(), get()) }

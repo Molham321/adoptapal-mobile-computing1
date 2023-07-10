@@ -10,18 +10,21 @@ import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.GetAllAnimals
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
+import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 import java.time.Period
 
 class HomeScreenViewModel(
     private val navigationManager: NavigationManager,
     private val getAllAnimals: GetAllAnimals,
-    private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase
-) : ViewModel() {
+    private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase,
+    private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore
+    ) : ViewModel() {
     var animalList = mutableStateOf(emptyList<Animal>())
 
     //    var animalAge = mutableStateOf(0)
@@ -89,7 +92,10 @@ class HomeScreenViewModel(
     }
 
     fun logout(){
-        // TODO remove datastore value
+        viewModelScope.launch {
+            setLoggedInUserInDataStore(0)
+            user.value = null
+        }
     }
 
 }
