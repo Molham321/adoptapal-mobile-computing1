@@ -321,3 +321,25 @@ class SetLoggedInUserInDataStore(private val localStore: LocalStore) {
         emit(AsyncOperation.success("Saved userId: $userId in local store"))
     }
 }
+
+
+// ----------------
+// Network
+// ----------------
+
+class GetLatLongForAddress(private val networkController: NetworkController) {
+    operator fun invoke(address: Address): Flow<AsyncOperation> = flow {
+        emit(AsyncOperation.saving("Start getting LatLong data for address"))
+        var updatedAddress: Address? = null
+        networkController.getLatLongFromAddress(address).collect {
+            updatedAddress = it
+        }
+        emit(
+            AsyncOperation.success(
+                "Successfully requested latLong for address",
+                updatedAddress as Any
+            )
+        )
+    }
+}
+

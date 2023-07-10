@@ -1,5 +1,6 @@
 package de.fhe.adoptapal.di.modules
 
+import de.fhe.adoptapal.BuildConfig
 import de.fhe.adoptapal.android_core.LocalStoreImpl
 import de.fhe.adoptapal.android_core.LoggerImpl
 import de.fhe.adoptapal.data.AppDatabase
@@ -20,6 +21,7 @@ import de.fhe.adoptapal.domain.GetAnimalAsync
 import de.fhe.adoptapal.domain.GetAnimalByRangeAsync
 import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
 import de.fhe.adoptapal.domain.GetColorAsync
+import de.fhe.adoptapal.domain.GetLatLongForAddress
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.GetRatingAsync
 import de.fhe.adoptapal.domain.GetUserAsync
@@ -38,6 +40,7 @@ import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
+import de.fhe.adoptapal.ui.screens.map.MapScreenViewModel
 import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreenViewModel
@@ -71,6 +74,13 @@ val androidCoreModule = module {
 
     single<LocalStore> {
         LocalStoreImpl(get())
+    }
+}
+
+
+val networkModule = module {
+    single {
+        BuildConfig.NET_IMPL_TYPE.implementation
     }
 }
 
@@ -114,6 +124,9 @@ val useCaseModule = module {
     // LocalStore
     factory { GetLoggedInUserFromDataStoreAndDatabase(get(), get()) }
     factory { SetLoggedInUserInDataStore(get()) }
+
+    // Network
+    factory { GetLatLongForAddress(get()) }
 }
 
 val viewModelModule = module {
@@ -123,9 +136,10 @@ val viewModelModule = module {
     viewModel { UserDetailScreenViewModel(get(), get()) }
 
     viewModel { LoginScreenViewModel(get(), get(), get()) }
+    viewModel { MapScreenViewModel(get(), get(), get()) }
 
     viewModel { RegisterScreenViewModel(get(), get()) }
     viewModel { AddAnimalScreenViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { ProfileScreenViewModel(get(), get()) }
-    viewModel { SettingsScreenViewModel(get(), get(), get()) }
+    viewModel { SettingsScreenViewModel(get(), get(), get(), get()) }
 }

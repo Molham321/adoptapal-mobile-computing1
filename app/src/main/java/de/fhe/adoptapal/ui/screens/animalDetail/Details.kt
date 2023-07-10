@@ -10,14 +10,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
@@ -74,7 +71,7 @@ fun Details(
         item {
 
             Spacer(modifier = Modifier.height(24.dp))
-            Title(title = "My Story")
+            Title(title = "Über mich...")
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = "ABOUT ${animal.name} \n" +
@@ -104,7 +101,7 @@ fun Details(
 
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "Birthday: ${animal.birthday}",
+                text = "Geburtstag: ${animal.birthday}",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -117,7 +114,7 @@ fun Details(
         // Quick info
         item {
             Spacer(modifier = Modifier.height(24.dp))
-            Title(title = "Animal info")
+            Title(title = "Metriken")
             Spacer(modifier = Modifier.height(16.dp))
 
             Row(
@@ -126,9 +123,9 @@ fun Details(
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                InfoCard(title = "Age", value = vm.getAge(animal.birthday))
-                InfoCard(title = "Color", value = animal.color.name)
-                InfoCard(title = "Weight", value = animal.weight.toString().plus("Kg"))
+                InfoCard(title = "Alter", value = vm.getAge(animal.birthday))
+                InfoCard(title = "Farbe", value = animal.color.name)
+                InfoCard(title = "Gewicht", value = animal.weight.toString().plus("Kg"))
             }
         }
 
@@ -136,34 +133,32 @@ fun Details(
         item {
 
             Spacer(modifier = Modifier.height(24.dp))
-            Title(title = "Owner info")
+            Title(title = "Anbieter")
 
             OwnerCard(
-                animal.supplier,
-                animal.supplier.name,
-                animal.supplier.phoneNumber.toString(),
+                animal,
                 R.drawable.user,
                 onItemPressed
             )
         }
 
-        // CTA - Adopt me button
-        item {
-            Spacer(modifier = Modifier.height(36.dp))
-            Button(
-                onClick = { /* Do something! */ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(52.dp)
-                    .padding(16.dp, 0.dp, 16.dp, 0.dp),
-                colors = ButtonDefaults.textButtonColors(
-                    backgroundColor = Color.LightGray,
-                    contentColor = Color.Black
-                )
-            ) {
-                Text("Adopt me")
-            }
-            Spacer(modifier = Modifier.height(24.dp))
-        }
+//        // CTA - Adopt me button
+//        item {
+//            Spacer(modifier = Modifier.height(36.dp))
+//            Button(
+//                onClick = { /* Do something! */ },
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(52.dp)
+//                    .padding(16.dp, 0.dp, 16.dp, 0.dp),
+//                colors = ButtonDefaults.textButtonColors(
+//                    backgroundColor = Color.LightGray,
+//                    contentColor = Color.Black
+//                )
+//            ) {
+//                Text("Adopt me")
+//            }
+//            Spacer(modifier = Modifier.height(24.dp))
+//        }
     }
 }

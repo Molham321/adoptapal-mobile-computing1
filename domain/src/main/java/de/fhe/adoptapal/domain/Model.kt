@@ -83,6 +83,22 @@ data class Address(
     var latitude: Double,
     var longitude: Double
 ) {
+    fun simpleEquals(address: Address?): Boolean {
+        if (address == null) {
+            return false
+        }
+
+        if (this.houseNumber == address.houseNumber &&
+            this.street == address.street &&
+            this.city == address.city &&
+            this.zipCode == address.zipCode
+        ) {
+            return true
+        }
+
+        return false
+    }
+
     constructor(houseNumber: String, street: String, city: String, zipCode: String) : this(
         0,
         LocalDateTime.now(),
