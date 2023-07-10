@@ -13,7 +13,7 @@ import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
-import de.fhe.adoptapal.ui.screens.home.LOGTAG
+import de.fhe.adoptapal.ui.screens.map.LOGTAG
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 

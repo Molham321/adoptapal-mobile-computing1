@@ -88,4 +88,8 @@ class HomeScreenViewModel(
         navigationManager.navigate(Screen.Detail.navigationCommand(animalId))
     }
 
+    fun logout(){
+        // TODO remove datastore value
+    }
+
 }

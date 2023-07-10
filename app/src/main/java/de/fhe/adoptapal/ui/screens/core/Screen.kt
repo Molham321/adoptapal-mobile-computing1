@@ -79,11 +79,20 @@ sealed class Screen(
                 ) {
                     Icon(Icons.Filled.Search, contentDescription = null)
                 }
-                IconButton(onClick = { viewModel.navigateToLogin() }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_login),
-                        contentDescription = "Login Icon"
-                    )
+                if (viewModel.user.value == null) {
+                    IconButton(onClick = { viewModel.navigateToLogin() }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_login),
+                            contentDescription = "Login Icon"
+                        )
+                    }
+                } else {
+                    IconButton(onClick = { viewModel.logout() }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_logout_24),
+                            contentDescription = "Login Icon"
+                        )
+                    }
                 }
             }
         }
