@@ -58,21 +58,21 @@ assembleDebugTest:
     paths:
       - apks/app-debug-androidTest.apk
 
-#run_device_tests:
-#  stage: deviceTests
-#  tags:
-#    - testlab
-#  script:
-#    - cd apks
-#    - ls
+run_device_tests:
+  stage: deviceTests
+  tags:
+    - testlab
+  script:
+    - cd apks
+    - ls
 
-## Generate Docs via Dokka
-#generateDocs:
-#  stage: docs
-#  tags:
-#    - testlab
-#  script:
-#    - ./gradlew dokkaHtmlMultiModule
-#  artifacts:
-#    paths:
-#      - build/dokkaMultiModuleOutput/**
+# Generate Docs via Dokka
+generateDocs:
+  stage: docs
+  tags:
+    - testlab
+  script:
+    - ./gradlew dokkaHtmlMultiModule
+  artifacts:
+    paths:
+      - build/dokkaMultiModuleOutput/**
