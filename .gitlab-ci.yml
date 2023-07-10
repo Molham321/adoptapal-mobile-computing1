@@ -67,12 +67,12 @@ run_device_tests:
     - ls
 
 # Generate Docs via Dokka
-generateDocs:
-  stage: docs
-  tags:
-    - testlab
-  script:
-    - ./gradlew dokkaHtmlMultiModule
-  artifacts:
-    paths:
-      - build/dokkaMultiModuleOutput/**
+#generateDocs:
+#  stage: docs
+#  tags:
+#    - testlab
+#  script:
+#    - ./gradlew dokkaHtmlMultiModule
+#  artifacts:
+#    paths:
+#      - build/dokkaMultiModuleOutput/**
