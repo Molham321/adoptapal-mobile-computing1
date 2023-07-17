@@ -61,7 +61,11 @@ class HomeScreenViewModel(
     fun getAge(birthday: LocalDate): String {
         val currentDate = LocalDate.now()
         val age = Period.between(birthday, currentDate)
-        return "${age.years} years"
+        return if (age.years < 1) {
+            "${age.months} months"
+        } else {
+            "${age.years} years"
+        }
     }
 
     fun navigateToAddAnimal() {

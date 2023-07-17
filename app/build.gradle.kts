@@ -92,18 +92,24 @@ dependencies {
     implementation(Libs.Accompanist.placeholder)
 
     testImplementation(Libs.JUnit.core)
-
-    // Unit Test
-    testImplementation ("androidx.arch.core:core-testing:2.1.0")
-    testImplementation ("io.mockk:mockk:1.12.0")
-    testImplementation("junit:junit:4.12")
-    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0")
-    testImplementation("junit:junit:4.12")
-
     androidTestImplementation(Libs.AndroidX.Compose.uiTest)
     androidTestImplementation(Libs.AndroidX.Espresso.core)
     androidTestImplementation(Libs.JUnit.ktx)
     androidTestImplementation(Libs.Koin.test)
+
+    // Unit Test
+    testImplementation("junit:junit:4.12")
+    testImplementation("com.google.truth:truth:1.0.1")
+    androidTestImplementation("com.google.truth:truth:1.0.1")
+    androidTestImplementation("androidx.test.ext.junit:1.1.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+
+
+    testImplementation ("androidx.arch.core:core-testing:2.1.0")
+    testImplementation ("io.mockk:mockk:1.12.0")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation ("androidx.test:core:1.5.0")
 
     debugImplementation(Libs.AndroidX.Compose.tooling)
 }
