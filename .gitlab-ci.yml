@@ -2,19 +2,16 @@
 # See https://github.com/jangrewe/gitlab-ci-android
 image: jangrewe/gitlab-ci-android
 
-# Build Stages - release and deploy not used currently
-stages:
-  - prerequisites
-  - build
-  - buildTest
-  - deviceTests
-  - test
-  - docs
+variables:
+  APP_ID: "de.fhe.adoptapal.testlabdemo01"
+
 
 # Define Gradle Home to use it for (optional) caching
 before_script:
+  - export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - chmod +x ./gradlew
+  - export ANDROID_HOME=/Users/avemarg/Library/Android/sdk
 
 # Cache instruction - will save intermediate results for later jobs
 # Might actually not speed up your pipeline runtime - just check it for yourself
@@ -23,6 +20,13 @@ cache:
   paths:
     - .gradle/
 
+# Build Stages - release and deploy not used currently
+stages:
+  - prerequisites
+  - build
+  - buildTest
+  - deviceTestA
+  - deviceTestB
 
 prepare_build:
   stage: prerequisites
@@ -58,21 +62,36 @@ assembleDebugTest:
     paths:
       - apks/app-debug-androidTest.apk
 
-run_device_tests:
-  stage: deviceTests
+test-by-devices-model:
+  stage: deviceTestA
+  script:
+    - $MARATHON_DIR/run_marathon.sh device
+  after_script:
+    - $MARATHON_DIR/cleanup.sh device
   tags:
     - testlab
-  script:
-    - cd apks
-    - ls
+  allow_failure: true
+  artifacts:
+    when: always
+    reports:
+      junit: $DEVICE_VERSION_RESULT
+    expire_in: "1 day"
+    paths:
+      - $DEVICE_VERSION_RESULT_DIR
 
-# Generate Docs via Dokka
-#generateDocs:
-#  stage: docs
-#  tags:
-#    - testlab
-#  script:
-#    - ./gradlew dokkaHtmlMultiModule
-#  artifacts:
-#    paths:
-#      - build/dokkaMultiModuleOutput/**
+test-by-os_version:
+  stage: deviceTestB
+  script:
+    - $MARATHON_DIR/run_marathon.sh os-version
+  after_script:
+    - $MARATHON_DIR/cleanup.sh os-version
+  tags:
+    - testlab
+  allow_failure: true
+  artifacts:
+    when: always
+    reports:
+      junit: $OS_VERSION_RESULT
+    expire_in: "1 day"
+    paths:
+      - $OS_VERSION_RESULT_DIR
