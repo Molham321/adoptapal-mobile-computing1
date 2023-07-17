@@ -3,7 +3,7 @@
 image: jangrewe/gitlab-ci-android
 
 variables:
-  APP_ID: "de.fhe.adoptapal.testlabdemo01"
+  APP_ID: "de.fhe.ai.pmc.testlabdemo01"
 
 
 # Define Gradle Home to use it for (optional) caching
