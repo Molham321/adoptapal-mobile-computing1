@@ -21,22 +21,22 @@ class ProfileScreenViewModel(
     var user = mutableStateOf<User?>(null)
 
     init {
-//        Log.i("Profile", "init class")
+        Log.i("Profile", "init class")
         this.getUser()
     }
 
     fun getUser() {
-//        Log.i("Profile", "init")
+        Log.i("Profile", "init")
         viewModelScope.launch {
-//            Log.i("Profile", "launching")
+            Log.i("Profile", "launching")
             getLoggedInUserFromDataStoreAndDatabase().collect {
-//                Log.i("Profile", "Collecting")
+                Log.i("Profile", "Collecting")
                 if (it.status == AsyncOperationState.SUCCESS) {
-//                    Log.i("Profile", "found user with id: ${(it.payload as User).id}")
+                    Log.i("Profile", "found user with id: ${(it.payload as User).id}")
                     user.value = it.payload as User
                 }
                 if (it.status == AsyncOperationState.ERROR) {
-//                    Log.i("Profile", "Failed to load user")
+                   Log.i("Profile", "Failed to load user")
                 }
             }
         }

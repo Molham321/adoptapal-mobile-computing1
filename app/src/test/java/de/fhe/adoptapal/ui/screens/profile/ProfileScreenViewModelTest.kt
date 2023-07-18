@@ -1,11 +1,14 @@
 package de.fhe.adoptapal.ui.screens.profile
 
+import android.util.Log
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -26,6 +29,8 @@ class ProfileScreenViewModelTest {
 
     @Before
     fun setup() {
+        mockkStatic(Log::class)
+        every { Log.i(any(), any()) } returns 0
         Dispatchers.setMain(TestCoroutineDispatcher())
         viewModel = ProfileScreenViewModel(navigationManager, getLoggedInUserFromDataStoreAndDatabase)
     }
