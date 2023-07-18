@@ -25,7 +25,7 @@ class ProfileScreenViewModel(
         this.getUser()
     }
 
-    private fun getUser() {
+    fun getUser() {
         Log.i("Profile", "init")
         viewModelScope.launch {
             Log.i("Profile", "launching")
@@ -36,7 +36,7 @@ class ProfileScreenViewModel(
                     user.value = it.payload as User
                 }
                 if (it.status == AsyncOperationState.ERROR) {
-                    Log.i("Profile", "Failed to load user")
+                   Log.i("Profile", "Failed to load user")
                 }
             }
         }

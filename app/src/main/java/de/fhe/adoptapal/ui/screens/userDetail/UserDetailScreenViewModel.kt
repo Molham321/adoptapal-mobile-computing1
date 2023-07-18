@@ -20,7 +20,7 @@ class UserDetailScreenViewModel(
         getUserFromDb(userId)
     }
 
-    private fun getUserFromDb(id: Long) {
+    fun getUserFromDb(id: Long) {
         viewModelScope.launch {
             getUserAsync.invoke(id).collect {
                 dbOp.value = it

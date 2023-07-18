@@ -15,10 +15,10 @@ import kotlinx.coroutines.launch
 
 class RegisterScreenViewModel(
     private val insertUserAsyncUseCase: InsertUserAsync,
-    private val navigationManager: NavigationManager,
+    val navigationManager: NavigationManager,
 ) : ViewModel() {
 
-    val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
+    var saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
 
     fun addUser(userName: String, userEmail: String, userPhoneNumber: String) {
         viewModelScope.launch {

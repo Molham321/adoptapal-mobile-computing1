@@ -1,8 +1,6 @@
 package de.fhe.adoptapal.ui.screens.home
 
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
@@ -21,7 +19,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
@@ -32,7 +29,8 @@ import androidx.compose.ui.unit.dp
 fun SearchBar(
     onSearch: (String) -> Unit,
     modifier: Modifier = Modifier,
-    hint: String = "Search..."
+    hint: String = "Search...",
+    onClear: () -> Unit
 ) {
     var searchText by remember { mutableStateOf("") }
 
@@ -41,6 +39,7 @@ fun SearchBar(
             value = searchText,
             onValueChange = { text ->
                 searchText = text
+                onSearch(text)
             },
             modifier = Modifier.weight(1f),
             leadingIcon = {
@@ -52,7 +51,10 @@ fun SearchBar(
             },
             trailingIcon = {
                 if (searchText.isNotEmpty()) {
-                    ClearButton(onClear = { searchText = "" })
+                    ClearButton(onClear = {
+                        searchText = ""
+                        onClear()
+                    })
                 }
             },
             placeholder = {
@@ -72,19 +74,16 @@ fun SearchBar(
                 }
             )
         )
-
-        Spacer(modifier = Modifier.width(8.dp))
-
-        SubmitButton(
-            onClick = { onSearch(searchText) },
-            modifier = Modifier.align(CenterVertically)
-        )
     }
 }
 
 @Composable
-private fun ClearButton(onClear: () -> Unit) {
-    IconButton(onClick = onClear) {
+private fun ClearButton(onClear: () -> Unit, modifier: Modifier = Modifier) {
+    IconButton( onClick = {
+        onClear()
+      },
+        modifier = modifier
+    ) {
         Icon(
             imageVector = Icons.Default.Clear,
             contentDescription = "Clear Icon",
@@ -93,27 +92,14 @@ private fun ClearButton(onClear: () -> Unit) {
     }
 }
 
+@Preview
 @Composable
-private fun SubmitButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Button(
-        onClick = onClick,
-        modifier = modifier,
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = MaterialTheme.colors.primary,
-            contentColor = Color.White
-        ),
-        elevation = ButtonDefaults.elevation(0.dp),
-        shape = MaterialTheme.shapes.medium
-    ) {
-        Text(text = "Submit")
-    }
+fun SearchBarPreview() {
+    SearchBar(onSearch = {}, hint = "Search...", onClear = {})
 }
 
 @Preview
 @Composable
-fun PreviewSearchBar() {
-    SearchBar(onSearch = {})
+private fun ClearButtonPreview() {
+    ClearButton(onClear = {})
 }

@@ -13,7 +13,6 @@ import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
-import de.fhe.adoptapal.ui.screens.map.LOGTAG
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -32,7 +31,7 @@ class SettingsScreenViewModel(
         this.getUser()
     }
 
-    private fun getUser() {
+    fun getUser() {
         Log.i("Settings", "init")
         viewModelScope.launch {
             Log.i("Settings", "launching")
@@ -50,45 +49,25 @@ class SettingsScreenViewModel(
     }
 
     fun updateUser(updateUser: User) {
-        Log.i("Settings", "update user with id: ${updateUser.id}")
         viewModelScope.launch {
-
-//            // get latLong for address if the address is new or has changed
-//            // do if updateUser has address and user has not -> then there is a new address
-//            //or
-//            // do if updateUser and user have addresses AND they are different
-//            val addressIsNew = (updateUser.address != null && user.value != null && user.value!!.address == null)
-//            val addressIsDifferent = (updateUser.address != null && user.value != null && user.value!!.address != null &&
-//                    !updateUser.address!!.simpleEquals(user.value!!.address))
-//           if(addressIsNew || addressIsDifferent){
-
-            // always get latLong on update
-            if ( true ) {
-
+            // always get latLong on update if the address is not null
+            if (updateUser.address != null) {
                 getLatLongForAddress.invoke(updateUser.address!!).collect {
-                    Log.i(LOGTAG, "start reqeust")
                     if (it.status == AsyncOperationState.SUCCESS) {
-
                         updateUser.address = it.payload as Address
-                        Log.i(
-                            LOGTAG,
-                            "Lat: ${updateUser.address!!.latitude} Long:${updateUser.address!!.longitude}"
-                        )
-
                     }
                 }
+            }
 
-                // update user
-                updateUserAsyncUserCase(updateUser).collect {
+            // update user
+            updateUserAsyncUserCase(updateUser).collect {
+                if (it.status == AsyncOperationState.SUCCESS) {
+                    saveFeedbackFlow.emit(it)
+                    navigationManager.navigate(GoBackDestination)
+                }
 
-                    if (it.status == AsyncOperationState.SUCCESS) {
-                        saveFeedbackFlow.emit(it)
-                        navigationManager.navigate(GoBackDestination)
-                    }
-
-                    if (it.status == AsyncOperationState.ERROR) {
-                        saveFeedbackFlow.emit(it)
-                    }
+                if (it.status == AsyncOperationState.ERROR) {
+                    saveFeedbackFlow.emit(it)
                 }
             }
         }

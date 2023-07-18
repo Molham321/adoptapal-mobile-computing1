@@ -26,7 +26,7 @@ class DetailScreenViewModel(
         getAnimalFromDb(animalId)
     }
 
-    private fun getAnimalFromDb(id: Long) {
+    fun getAnimalFromDb(id: Long) {
         viewModelScope.launch {
             getAnimalAsync.invoke(id).collect {
                 dbOp.value = it
@@ -40,7 +40,16 @@ class DetailScreenViewModel(
     fun getAge(birthday: LocalDate): String {
         val currentDate = LocalDate.now()
         val age = Period.between(birthday, currentDate)
-        return "${age.years} years"
+
+        return if (age.years < 1) {
+            if (age.months < 1) {
+                "${age.days} days"
+            } else {
+                "${age.months} months"
+            }
+        } else {
+            "${age.years} years"
+        }
     }
 
     fun navigateToUser(userId: Long) {

@@ -1,6 +1,5 @@
 package de.fhe.adoptapal.ui.screens.home
 
-//import de.fhe.adoptapal.model.Animal
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -36,7 +35,7 @@ class HomeScreenViewModel(
         this.getAnimalsFromDb()
     }
 
-    private fun getAnimalsFromDb() {
+    fun getAnimalsFromDb() {
         viewModelScope.launch {
             getAllAnimals().collect {
                 dbOp.value = it
@@ -47,18 +46,11 @@ class HomeScreenViewModel(
         }
     }
 
-    private fun getLoggedInUser() {
-        Log.i("Profile", "init")
+    fun getLoggedInUser() {
         viewModelScope.launch {
-            Log.i("Profile", "launching")
             getLoggedInUserFromDataStoreAndDatabase().collect {
-                Log.i("Profile", "Collecting")
                 if (it.status == AsyncOperationState.SUCCESS) {
-                    Log.i("Profile", "found user with id: ${(it.payload as User).id}")
                     user.value = it.payload as User
-                }
-                if (it.status == AsyncOperationState.ERROR) {
-                    Log.i("Profile", "Failed to load user")
                 }
             }
         }
@@ -72,7 +64,16 @@ class HomeScreenViewModel(
     fun getAge(birthday: LocalDate): String {
         val currentDate = LocalDate.now()
         val age = Period.between(birthday, currentDate)
-        return "${age.years} years"
+
+        return if (age.years < 1) {
+            if (age.months < 1) {
+                "${age.days} days"
+            } else {
+                "${age.months} months"
+            }
+        } else {
+            "${age.years} years"
+        }
     }
 
     fun navigateToAddAnimal() {
