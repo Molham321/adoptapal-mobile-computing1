@@ -28,24 +28,24 @@ class SettingsScreenViewModel(
     }
 
     private fun getUser() {
-        Log.i("Settings", "init")
+//        Log.i("Settings", "init")
         viewModelScope.launch {
-            Log.i("Settings", "launching")
+//            Log.i("Settings", "launching")
             getLoggedInUserFromDataStoreAndDatabase().collect {
-                Log.i("Settings", "Collecting")
+//                Log.i("Settings", "Collecting")
                 if (it.status == AsyncOperationState.SUCCESS) {
-                    Log.i("Settings", "found user with id: ${(it.payload as User).id}")
+//                    Log.i("Settings", "found user with id: ${(it.payload as User).id}")
                     user.value = it.payload as User
                 }
                 if (it.status == AsyncOperationState.ERROR) {
-                    Log.i("Settings", "Failed to load user")
+//                    Log.i("Settings", "Failed to load user")
                 }
             }
         }
     }
 
     fun updateUser(user: User) {
-        Log.i("Settings", "update user with id: ${user.id}")
+//        Log.i("Settings", "update user with id: ${user.id}")
         viewModelScope.launch {
             updateUserAsyncUserCase(user).collect {
 
