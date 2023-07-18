@@ -1,6 +1,7 @@
 package de.fhe.adoptapal.ui.screens.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
@@ -19,11 +20,20 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
 
     vm.refreshUser()
 
+    fun clearFilter() {
+        filterText = ""
+        selectedFilter = null
+    }
+
     Column(modifier = modifier) {
 
         if (animalList.value.isNotEmpty()) {
 
-            SearchBar(onSearch = { text -> filterText = text })
+            SearchBar(
+                onSearch = { text -> filterText = text },
+                onClear = { clearFilter() },
+                modifier = Modifier.fillMaxWidth()
+            )
 
             val filters = listOf("All", "Male", "Female")
 
