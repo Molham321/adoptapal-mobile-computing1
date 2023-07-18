@@ -64,8 +64,13 @@ class HomeScreenViewModel(
     fun getAge(birthday: LocalDate): String {
         val currentDate = LocalDate.now()
         val age = Period.between(birthday, currentDate)
+
         return if (age.years < 1) {
-            "${age.months} months"
+            if (age.months < 1) {
+                "${age.days} days"
+            } else {
+                "${age.months} months"
+            }
         } else {
             "${age.years} years"
         }
