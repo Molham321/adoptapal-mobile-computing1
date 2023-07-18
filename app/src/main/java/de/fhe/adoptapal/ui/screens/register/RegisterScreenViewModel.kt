@@ -7,6 +7,7 @@ import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.InsertUserAsync
 import de.fhe.adoptapal.domain.User
+import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +31,7 @@ class RegisterScreenViewModel(
                 insertUserAsyncUseCase(newUser).collect {
                     if (it.status == AsyncOperationState.SUCCESS) {
                         saveFeedbackFlow.emit(it)
-                        navigateToLogin()
+                        navigationManager.navigate(GoBackDestination)
                     }
                     if (it.status == AsyncOperationState.ERROR) {
                         Log.i("RegisterScreenVW", it.message)

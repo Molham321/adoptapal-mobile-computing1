@@ -1,8 +1,8 @@
-
 plugins {
     id(Libs.Plugins.android_app)
     id(Libs.Plugins.kotlin_android)
 }
+
 
 android {
     namespace = "de.fhe.adoptapal"
@@ -16,18 +16,21 @@ android {
         versionCode = Config.version_code
         versionName = Config.version_name
 
+        // set api key to AndroidManifest from application.properties
+//        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
-//
-//        // Specify Network Implementation
-//        // Possible Values: DEFAULT (Mock), RETROFIT, KTOR
-//        buildConfigField(
-//            type = "de.fhe.ai.pmc.acat.network.core.NetworkImplType",
-//            name = "NET_IMPL_TYPE",
-//            value = "de.fhe.ai.pmc.acat.network.core.DEFAULT.INSTANCE"
-//        )
+
+        // Specify Network Implementation
+        // Possible Values: DEFAULT (Mock), RETROFIT, KTOR
+        buildConfigField(
+            type = "de.fhe.adoptapal.network.core.NetworkImplType",
+            name = "NET_IMPL_TYPE",
+            value = "de.fhe.adoptapal.network.core.RETROFIT.INSTANCE"
+        )
     }
 
     buildTypes {
@@ -48,6 +51,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = Libs.AndroidX.Compose.compiler_version
@@ -62,7 +66,7 @@ dependencies {
     implementation(project(mapOf("path" to ":domain")))
     implementation(project(mapOf("path" to ":android-core")))
     implementation(project(mapOf("path" to ":data")))
-//    implementation(project(mapOf("path" to ":network")))
+    implementation(project(mapOf("path" to ":network")))
 
     implementation(Libs.Coroutines.core)
     implementation(Libs.Coroutines.android)
@@ -90,6 +94,7 @@ dependencies {
 
     implementation(Libs.Accompanist.navAnimation)
     implementation(Libs.Accompanist.placeholder)
+    implementation(Libs.Accompanist.permission)
 
     testImplementation(Libs.JUnit.core)
     androidTestImplementation(Libs.AndroidX.Compose.uiTest)

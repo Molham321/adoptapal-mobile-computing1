@@ -24,3 +24,10 @@ MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY
 ## Additional information
 
 App needs to be build (green hammer) before it can be installed and run on phone or emulator
+
+
+## App features
+
+- Address to LatLong conversion with positionstack-Api
+- MapsScreen with clickable markers for each user to navigate to user screen
+- login simulation with
