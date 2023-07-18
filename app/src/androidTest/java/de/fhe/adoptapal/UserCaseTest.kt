@@ -24,6 +24,7 @@ import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
 import de.fhe.adoptapal.domain.GetColorAsync
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.GetRatingAsync
+import de.fhe.adoptapal.domain.GetUserAnimalsAsync
 import de.fhe.adoptapal.domain.GetUserAsync
 import de.fhe.adoptapal.domain.GetUserByEmailAsync
 import de.fhe.adoptapal.domain.GetUsersByRangeAsync
@@ -89,6 +90,7 @@ class UseCaseTests : KoinTest {
         factory { GetAnimalByRangeAsync(get()) }
         factory { CreateAnimalAsync(get()) }
         factory { GetAnimalAsync(get()) }
+        factory { GetUserAnimalsAsync(get()) }
         factory { GetAllFavoriteAnimalsAsync(get()) }
         factory { DeleteAnimalAsync(get()) }
 

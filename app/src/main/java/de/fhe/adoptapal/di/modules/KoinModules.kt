@@ -24,6 +24,7 @@ import de.fhe.adoptapal.domain.GetColorAsync
 import de.fhe.adoptapal.domain.GetLatLongForAddress
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.GetRatingAsync
+import de.fhe.adoptapal.domain.GetUserAnimalsAsync
 import de.fhe.adoptapal.domain.GetUserAsync
 import de.fhe.adoptapal.domain.GetUserByEmailAsync
 import de.fhe.adoptapal.domain.GetUsersByRangeAsync
@@ -90,6 +91,7 @@ val useCaseModule = module {
     factory { GetAnimalByRangeAsync(get()) }
     factory { CreateAnimalAsync(get()) }
     factory { GetAnimalAsync(get()) }
+    factory { GetUserAnimalsAsync(get()) }
     factory { GetAllFavoriteAnimalsAsync(get()) }
     factory { DeleteAnimalAsync(get()) }
 
@@ -133,7 +135,7 @@ val viewModelModule = module {
     viewModel { HomeScreenViewModel(get(), get(), get(), get()) }
 
     viewModel { DetailScreenViewModel(get(), get(), get()) }
-    viewModel { UserDetailScreenViewModel(get(), get()) }
+    viewModel { UserDetailScreenViewModel(get(), get(), get(), get()) }
 
     viewModel { LoginScreenViewModel(get(), get(), get()) }
     viewModel { MapScreenViewModel(get(), get(), get()) }
