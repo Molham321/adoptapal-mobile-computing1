@@ -1,5 +1,6 @@
 package de.fhe.adoptapal.ui.screens.settings
 
+import android.util.Log
 import org.junit.Assert.*
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -7,15 +8,20 @@ import de.fhe.adoptapal.domain.*
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -30,11 +36,14 @@ class SettingsScreenViewModelTest {
     private var updateUserAsyncUseCase: UpdateUserAsync = mockk(relaxed = true)
     private var navigationManager: NavigationManager = mockk(relaxed = true)
     private var getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase = mockk(relaxed = true)
+    private val getLatLongForAddress: GetLatLongForAddress = mockk(relaxed = true)
 
     @Before
     fun setup() {
         Dispatchers.setMain(TestCoroutineDispatcher())
-        viewModel = SettingsScreenViewModel(updateUserAsyncUseCase, navigationManager, getLoggedInUserFromDataStoreAndDatabase)
+        mockkStatic(Log::class)
+        every { Log.i(any(), any()) } returns 0
+        viewModel = SettingsScreenViewModel(updateUserAsyncUseCase, navigationManager, getLoggedInUserFromDataStoreAndDatabase, getLatLongForAddress)
     }
 
     @Test
@@ -48,10 +57,12 @@ class SettingsScreenViewModelTest {
 
         coEvery { updateUserAsyncUseCase(user) } returns flowOf(successOperation)
 
+
         // Act
         viewModel.updateUser(user)
 
         // Assert
+        advanceUntilIdle() // Wait for all coroutines to complete
         assertEquals(successOperation, viewModel.saveFeedbackFlow.value)
     }
 
