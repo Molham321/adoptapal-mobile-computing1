@@ -24,9 +24,8 @@ class HomeScreenViewModel(
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase,
     private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore
     ) : ViewModel() {
-    var animalList = mutableStateOf(emptyList<Animal>())
 
-    //    var animalAge = mutableStateOf(0)
+    var animalList = mutableStateOf(emptyList<Animal>())
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     var user = mutableStateOf<User?>(null)
 
@@ -75,6 +74,16 @@ class HomeScreenViewModel(
             "${age.years} years"
         }
     }
+
+    fun getFilteredAnimals(filterText: String, selectedFilter: String?): List<Animal> {
+        return animalList.value.filter { animal ->
+            animal.name.contains(filterText, ignoreCase = true) &&
+                    (selectedFilter == null || selectedFilter == "All" ||
+                            (selectedFilter == "Male" && animal.isMale) ||
+                            (selectedFilter == "Female" && !animal.isMale))
+        }
+    }
+
 
     fun navigateToAddAnimal() {
         navigationManager.navigate(Screen.AddAnimal.navigationCommand())

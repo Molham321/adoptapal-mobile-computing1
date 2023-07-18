@@ -27,24 +27,24 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
 
     Column(modifier = modifier) {
 
+        SearchBar(
+            onSearch = { text -> filterText = text },
+            onClear = { clearFilter() },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        val filters = listOf("All", "Male", "Female")
+
+        FilterBar(filters = filters, selectedFilter = selectedFilter) { filter ->
+            selectedFilter = filter
+        }
+
         if (animalList.value.isNotEmpty()) {
 
-            SearchBar(
-                onSearch = { text -> filterText = text },
-                onClear = { clearFilter() },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            val filters = listOf("All", "Male", "Female")
-
-            FilterBar(filters = filters, selectedFilter = selectedFilter) { filter ->
-                selectedFilter = filter
-            }
+            val filteredAnimals = vm.getFilteredAnimals(filterText, selectedFilter)
 
             AnimalList(
-                animals = animalList.value,
-                filterText = filterText,
-                selectedFilter = selectedFilter,
+                animals = filteredAnimals,
                 modifier = modifier
             ) {
                 vm.navigateToAnimal(it)
