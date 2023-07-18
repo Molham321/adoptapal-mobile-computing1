@@ -13,6 +13,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.ui.screens.sharedComponents.AnimalList
+import de.fhe.adoptapal.ui.screens.sharedComponents.UserInfo
 import de.fhe.adoptapal.ui.screens.util.FullscreenPlaceholderView
 
 @Composable

@@ -1,4 +1,4 @@
-package de.fhe.adoptapal.ui.screens.userDetail
+package de.fhe.adoptapal.ui.screens.sharedComponents
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,8 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.User
-import de.fhe.adoptapal.ui.screens.sharedComponents.composeCall
-import de.fhe.adoptapal.ui.screens.sharedComponents.composeEmail
+import de.fhe.adoptapal.ui.screens.userDetail.RatingBar
 
 @Composable
 fun UserInfo(
