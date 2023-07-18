@@ -141,24 +141,5 @@ fun Details(
                 onItemPressed
             )
         }
-
-//        // CTA - Adopt me button
-//        item {
-//            Spacer(modifier = Modifier.height(36.dp))
-//            Button(
-//                onClick = { /* Do something! */ },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(52.dp)
-//                    .padding(16.dp, 0.dp, 16.dp, 0.dp),
-//                colors = ButtonDefaults.textButtonColors(
-//                    backgroundColor = Color.LightGray,
-//                    contentColor = Color.Black
-//                )
-//            ) {
-//                Text("Adopt me")
-//            }
-//            Spacer(modifier = Modifier.height(24.dp))
-//        }
     }
 }
