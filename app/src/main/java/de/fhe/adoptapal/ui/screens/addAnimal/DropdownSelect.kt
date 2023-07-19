@@ -3,6 +3,7 @@ package de.fhe.adoptapal.ui.screens.addAnimal
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -19,6 +20,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import de.fhe.adoptapal.ui.theme.LightModeSecondary
+import de.fhe.adoptapal.ui.theme.LightModeText
 
 @Composable
 fun DropdownSelect(
@@ -44,8 +47,7 @@ fun DropdownSelect(
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth()
-                .border(1.dp, Color.Gray),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                .height(50.dp),
             onClick = {
                 expanded = true
             }
@@ -53,19 +55,23 @@ fun DropdownSelect(
             if (selectedValue == "") {
                 Text(
                     // text = "Tierrasse   v",
-                    text = dropdownCat + "   v",
-                    color = Color.Gray
+                    // text = dropdownCat + "   v",
+                    text = dropdownCat,
+                    color = Color.White
                 )
             } else {
                 Text(
                     // text = "Tierrasse   v",
                     text = dropdownCat + ": " + dropdownItems[dropdownValue],
-                    color = Color.Gray
+                    color = Color.White
                 )
             }
         }
 
         DropdownMenu(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth(),
             expanded = expanded,
             onDismissRequest = {
                 expanded = false
@@ -82,7 +88,7 @@ fun DropdownSelect(
 //                        println("Tier ID: " + dropdownValue)
                     }
                 ) {
-                    Text(text = entry.value)
+                    Text(text = entry.value, color = LightModeText)
                 }
             }
         }

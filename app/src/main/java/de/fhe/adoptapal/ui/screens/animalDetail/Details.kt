@@ -1,5 +1,6 @@
 package de.fhe.adoptapal.ui.screens.animalDetail
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,14 +10,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -24,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.ui.screens.sharedComponents.Title
+import de.fhe.adoptapal.ui.theme.LightModeBackground
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -36,13 +55,16 @@ fun Details(
     modifier: Modifier = Modifier,
     onItemPressed: (itemId: Long) -> Unit = {}
 ) {
+    var animalIsFavorite = remember { mutableStateOf(false) }
 
     val vm: DetailScreenViewModel = koinViewModel()
+
+    val contextForToast = LocalContext.current.applicationContext
 
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = colorResource(id = R.color.background))
+            // .background(color = colorResource(id = R.color.background))
     ) {
 
         item {
@@ -56,6 +78,34 @@ fun Details(
                 contentDescription = "",
                 contentScale = ContentScale.Crop
             )
+
+            Surface(
+                shape = CircleShape,
+                modifier = Modifier
+                    .padding(6.dp)
+                    .size(52.dp),
+                color = Color(0x37000000)
+            ) {
+                IconToggleButton(
+                    checked = animal.isFavorite,
+                    onCheckedChange = {
+                        animalIsFavorite.value = it
+                        vm.saveAnimalAsFavorite(animal)
+                    }
+                ) {
+                    Icon(
+                        modifier = Modifier.size(36.dp, 36.dp),
+                        painter = if (animal.isFavorite) {
+                            painterResource(id = R.drawable.baseline_bookmark_24)
+                        } else {
+                            painterResource(id = R.drawable.baseline_bookmark_border_24)
+                        },
+                        contentDescription = null
+                    )
+                }
+            }
+
+
             Spacer(modifier = Modifier.height(16.dp))
 
             animal.supplier.address?.city?.toString()?.let {
@@ -74,9 +124,9 @@ fun Details(
             Title(title = "Über mich...")
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "ABOUT ${animal.name} \n" +
-                        "${animal.description}",
-
+                // text = "ABOUT ${animal.name} \n" +
+                //         "${animal.description}",
+                text = "${animal.description}",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -90,7 +140,8 @@ fun Details(
 
             Spacer(modifier = Modifier.height(24.dp))
             Text(
-                text = "Rasse: ${"Hunde Breed"/*animal.breed*/}",
+                // text = "Rasse: ${"Hunde Breed"/*animal.breed*/}",
+                text = "Tierart: ${animal.animalCategory.name}",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),

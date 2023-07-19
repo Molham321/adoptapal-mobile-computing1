@@ -1,6 +1,7 @@
 package de.fhe.adoptapal.ui.screens.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,8 +23,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.fhe.adoptapal.ui.theme.LightModeSecondary
+import de.fhe.adoptapal.ui.theme.LightModeText
 
 
 @Composable
@@ -52,12 +56,15 @@ fun FilterBar(
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
+//                modifier = Modifier
+//                    .widthIn(max = 240.dp)
+//                    .background(MaterialTheme.colors.surface)
+//                    .padding(8.dp)
+//                    .clip(shape = MaterialTheme.shapes.medium)
+//                    .shadow(4.dp)
                 modifier = Modifier
-                    .widthIn(max = 240.dp)
-                    .background(MaterialTheme.colors.surface)
                     .padding(8.dp)
-                    .clip(shape = MaterialTheme.shapes.medium)
-                    .shadow(4.dp)
+                    .fillMaxWidth()
             ) {
                 filters.forEach { filter ->
                     DropdownMenuItem(
@@ -66,7 +73,7 @@ fun FilterBar(
                             expanded = false
                         }
                     ) {
-                        Text(text = filter)
+                        Text(text = filter, color = LightModeText)
                     }
                 }
             }

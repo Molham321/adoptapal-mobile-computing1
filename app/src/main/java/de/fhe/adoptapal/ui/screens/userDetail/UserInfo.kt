@@ -77,7 +77,7 @@ fun UserInfo(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "about ${user.name}: Bio ist in DB nicht vorhanden",
+                    text = "über ${user.name}: Bio ist in DB nicht vorhanden",
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp, 0.dp, 16.dp, 0.dp),

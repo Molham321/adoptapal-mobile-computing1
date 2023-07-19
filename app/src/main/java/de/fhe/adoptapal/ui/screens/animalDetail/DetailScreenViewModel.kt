@@ -7,6 +7,7 @@ import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.GetAnimalAsync
+import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.launch
@@ -43,13 +44,17 @@ class DetailScreenViewModel(
 
         return if (age.years < 1) {
             if (age.months < 1) {
-                "${age.days} days"
+                "${age.days} Tage"
             } else {
-                "${age.months} months"
+                "${age.months} Monate"
             }
         } else {
-            "${age.years} years"
+            "${age.years} Jahre"
         }
+    }
+
+    fun saveAnimalAsFavorite(animal: Animal) {
+        println("Tier ${animal.name} mit id ${animal.id} gemerkt: ${animal.isFavorite}")
     }
 
     fun navigateToUser(userId: Long) {

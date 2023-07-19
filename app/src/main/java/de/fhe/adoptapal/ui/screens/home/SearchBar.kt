@@ -24,12 +24,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.fhe.adoptapal.ui.theme.BackgroundWhite
+import de.fhe.adoptapal.ui.theme.LightModeBackground
 
 @Composable
 fun SearchBar(
     onSearch: (String) -> Unit,
     modifier: Modifier = Modifier,
-    hint: String = "Search...",
+    hint: String = "Suchen...",
     onClear: () -> Unit
 ) {
     var searchText by remember { mutableStateOf("") }
@@ -61,7 +63,7 @@ fun SearchBar(
                 Text(text = hint)
             },
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.White,
+                backgroundColor = BackgroundWhite,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             ),
@@ -95,7 +97,7 @@ private fun ClearButton(onClear: () -> Unit, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun SearchBarPreview() {
-    SearchBar(onSearch = {}, hint = "Search...", onClear = {})
+    SearchBar(onSearch = {}, hint = "Suchen...", onClear = {})
 }
 
 @Preview

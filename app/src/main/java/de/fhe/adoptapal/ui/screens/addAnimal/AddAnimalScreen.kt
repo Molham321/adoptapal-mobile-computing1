@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
+import de.fhe.adoptapal.ui.theme.LightModeSecondary
 
 
 //@Preview
@@ -235,7 +236,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
             modifier = Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green),
+            colors = ButtonDefaults.buttonColors(backgroundColor = LightModeSecondary),
             onClick = {
                 vm.navigateToUserList()
             }

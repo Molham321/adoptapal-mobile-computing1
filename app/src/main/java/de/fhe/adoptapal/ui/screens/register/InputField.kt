@@ -31,14 +31,14 @@ fun InputField(
         onValueChange = { newValue -> onTextChange(newValue) },
         modifier = Modifier
             .padding(8.dp),
-        shape = RoundedCornerShape(20.dp),
+        // shape = RoundedCornerShape(20.dp),
         keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
         keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = ImeAction.Done,
             keyboardType = KeyboardType.Text
         ),
-        // label = { Text(inputLabel) },
-        placeholder = { Text(inputPlaceholder) },
+        label = { Text(inputPlaceholder) },
+        // placeholder = { Text(inputPlaceholder) },
     )
 }
 

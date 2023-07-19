@@ -33,6 +33,8 @@ import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.ui.screens.sharedComponents.composeCall
 import de.fhe.adoptapal.ui.screens.sharedComponents.composeEmail
+import de.fhe.adoptapal.ui.theme.LightModeSecondaryOpacity
+import de.fhe.adoptapal.ui.theme.LightModeText
 
 
 @Composable
@@ -50,7 +52,8 @@ fun OwnerCard(
             .clip(RoundedCornerShape(16.dp))
             .clickable(onClick = { onItemPressed(animal.supplier.id) }),
         elevation = 0.dp,
-        backgroundColor = Color(0xFFE0E0E0)
+        backgroundColor = LightModeSecondaryOpacity
+        // backgroundColor = Color(0xFFE0E0E0)
     ) {
         Column {
 
@@ -79,7 +82,8 @@ fun OwnerCard(
                     Text(
                         text = animal.supplier.name,
                         fontWeight = FontWeight.W600,
-                        textAlign = TextAlign.Start
+                        textAlign = TextAlign.Start,
+                        color = LightModeText
                     )
                     if (animal.supplier.phoneNumber != null) {
                         Spacer(modifier = Modifier.height(8.dp))

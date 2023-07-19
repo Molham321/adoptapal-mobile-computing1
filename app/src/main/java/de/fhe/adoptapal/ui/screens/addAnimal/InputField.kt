@@ -2,6 +2,7 @@ package de.fhe.adoptapal.ui.screens.addAnimal
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
@@ -32,6 +33,7 @@ fun InputField(
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth(),
+            // shape = RoundedCornerShape(20.dp),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Done,

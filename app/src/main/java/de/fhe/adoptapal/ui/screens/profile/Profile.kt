@@ -28,7 +28,7 @@ fun Profile(user: User) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Profile",
+            text = "Profil",
             style = MaterialTheme.typography.h4,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -36,25 +36,25 @@ fun Profile(user: User) {
         ProfileItem(label = "Email", value = user.email)
 
         val phoneNumber = user.phoneNumber ?: "N/A"
-        ProfileItem(label = "Phone Number", value = phoneNumber)
+        ProfileItem(label = "Telefon", value = phoneNumber)
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Address",
+            text = "Adresse",
             style = MaterialTheme.typography.h4,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
         val street = user.address?.street ?: "N/A"
-        ProfileItem(label = "Street", value = street)
+        ProfileItem(label = "Straße", value = street)
 
         val houseNumber = user.address?.houseNumber ?: "N/A"
-        ProfileItem(label = "House Number", value = houseNumber)
+        ProfileItem(label = "Hausnummer", value = houseNumber)
 
         val city = user.address?.city ?: "N/A"
-        ProfileItem(label = "City", value = city)
+        ProfileItem(label = "Stadt", value = city)
 
         val zipCode = user.address?.zipCode ?: "N/A"
-        ProfileItem(label = "ZIP", value = zipCode)
+        ProfileItem(label = "PLZ", value = zipCode)
     }
 }
 

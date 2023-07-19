@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -94,15 +95,15 @@ fun DatePicker(
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth()
-                .border(1.dp, Color.Gray),
+                .height(50.dp),
             onClick = {
                 mDatePickerDialog.show()
-            }, colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
+            }
         ) {
             if (birthdateValue == "") {
-                Text(text = "Geburtsdatum", color = Color.Gray)
+                Text(text = "Geburtsdatum", color = Color.White)
             } else {
-                Text(text = "Geburtsdatum: " + birthdateValue, color = Color.Gray)
+                Text(text = "Geburtsdatum: " + birthdateValue, color = Color.White)
             }
         }
 

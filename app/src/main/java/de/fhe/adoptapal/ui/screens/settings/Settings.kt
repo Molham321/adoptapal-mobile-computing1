@@ -41,7 +41,7 @@ fun Settings(
             .fillMaxWidth()
     ) {
         Text(
-            text = "Profile",
+            text = "Profil",
             style = MaterialTheme.typography.h4,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -63,41 +63,41 @@ fun Settings(
             TextField(
                 value = it,
                 onValueChange = { phoneNumber = it },
-                label = { Text("Phone Number") },
+                label = { Text("Telefon") },
                 modifier = Modifier.fillMaxWidth()
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Address",
+            text = "Adresse",
             style = MaterialTheme.typography.h6,
             modifier = Modifier.padding(bottom = 8.dp)
         )
         TextField(
             value = street,
             onValueChange = { street = it },
-            label = { Text("Street") },
+            label = { Text("Straße") },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         TextField(
             value = houseNumber,
             onValueChange = { houseNumber = it },
-            label = { Text("House Number") },
+            label = { Text("Hausnummer") },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         TextField(
             value = city,
             onValueChange = { city = it },
-            label = { Text("City") },
+            label = { Text("Stadt") },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(8.dp))
         TextField(
             value = zip,
             onValueChange = { zip = it },
-            label = { Text("ZIP") },
+            label = { Text("PLZ") },
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -116,7 +116,7 @@ fun Settings(
             },
             modifier = Modifier.align(Alignment.End)
         ) {
-            Text("Save")
+            Text("Speichern")
         }
     }
 }

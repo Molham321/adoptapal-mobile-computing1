@@ -15,7 +15,6 @@ fun UserDetailScreen(vm: UserDetailScreenViewModel, modifier: Modifier = Modifie
     Column(
         modifier = modifier
             .fillMaxSize()
-            .background(color = colorResource(id = R.color.white))
             .padding(16.dp, 16.dp, 16.dp, 16.dp)
     ) {
 

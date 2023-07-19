@@ -29,6 +29,9 @@ import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.ui.screens.sharedComponents.GenderTag
+import de.fhe.adoptapal.ui.theme.LightModeSecondary
+import de.fhe.adoptapal.ui.theme.LightModeSecondaryOpacity
+import de.fhe.adoptapal.ui.theme.LightModeText
 import org.koin.androidx.compose.koinViewModel
 
 //----------------------------------------------
@@ -49,7 +52,7 @@ fun AnimalCard(
             .clip(RoundedCornerShape(16.dp))
             .clickable(onClick = { onItemPressed(animal.id) }),
         elevation = 0.dp,
-        backgroundColor = Color(0xFFE0E0E0)
+        backgroundColor = LightModeSecondaryOpacity,
     ) {
         Row(
             modifier = modifier
@@ -74,7 +77,7 @@ fun AnimalCard(
                 Text(
                     text = animal.name,
                     modifier = modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
-                    color = Color.Black,
+                    color = LightModeText,
                     fontWeight = FontWeight.Bold,
                 )
                 Spacer(modifier = modifier.height(8.dp))
@@ -95,7 +98,7 @@ fun AnimalCard(
                         painter = location,
                         contentDescription = null,
                         modifier = modifier.size(16.dp, 16.dp),
-                        tint = Color.Black
+                        tint = LightModeText
                     )
 
                     animal.supplier.address?.city?.let {
@@ -117,7 +120,7 @@ fun AnimalCard(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "12 mins ago",
+                    text = "vor 12 Minuten",
                     modifier = modifier.padding(8.dp, 0.dp, 12.dp, 12.dp),
                     color = Color.Gray,
                     style = MaterialTheme.typography.overline

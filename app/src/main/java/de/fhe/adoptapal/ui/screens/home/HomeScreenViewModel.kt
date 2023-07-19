@@ -67,12 +67,12 @@ class HomeScreenViewModel(
 
         return if (age.years < 1) {
             if (age.months < 1) {
-                "${age.days} days"
+                "${age.days} Tage"
             } else {
-                "${age.months} months"
+                "${age.months} Monate"
             }
         } else {
-            "${age.years} years"
+            "${age.years} Jahre"
         }
     }
 

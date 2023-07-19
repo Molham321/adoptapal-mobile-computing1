@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
@@ -66,10 +68,10 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = colorResource(id = R.color.white)),
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Spacer(modifier = Modifier.height(100.dp))
+        Spacer(modifier = Modifier.height(30.dp))
         Text(
             text = "Willkommen bei AdoptAPal!",
 
@@ -86,7 +88,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             text = userNameTextFieldValue,
             editing = true,
             onTextChange = { newValue -> userNameTextFieldValue = newValue },
-            inputPlaceholder = "User Name"
+            inputPlaceholder = "Nutzername"
         )
         Text(
             text = "*ihr Name oder der Name ihrer Einrichtung",
@@ -101,26 +103,26 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             text = userEmailTextFieldValue,
             editing = true,
             onTextChange = { newValue -> userEmailTextFieldValue = newValue },
-            inputPlaceholder = "User Email"
+            inputPlaceholder = "Email-Adresse"
         )
         InputField(
             text = userPhoneNumberTextFieldValue,
             editing = true,
             onTextChange = { newValue -> userPhoneNumberTextFieldValue = newValue },
-            inputPlaceholder = "User Phone Number"
+            inputPlaceholder = "Telefonnummer"
         )
 
         PasswordInputField(
             text = userPasswordTextFieldValue,
             editing = true,
             onTextChange = { newValue -> userPasswordTextFieldValue = newValue },
-            inputPlaceholder = "User Passwort"
+            inputPlaceholder = "Passwort"
         )
         PasswordInputField(
             text = userConfirmPasswordTextFieldValue,
             editing = true,
             onTextChange = { newValue -> userConfirmPasswordTextFieldValue = newValue },
-            inputPlaceholder = "User Confirm Password"
+            inputPlaceholder = "Passwort wiederholen"
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -141,9 +143,6 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 editingState = false
             },
             shape = RoundedCornerShape(20.dp),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.Green
-            ),
             modifier = Modifier
                 .width(250.dp)
                 .padding(16.dp, 8.dp, 16.dp, 8.dp),

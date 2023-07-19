@@ -62,8 +62,8 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .background(color = colorResource(id = R.color.white)),
+            .fillMaxSize(),
+            // .background(color = colorResource(id = R.color.white)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = modifier.height(160.dp))
@@ -83,13 +83,13 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
             text = userEmailTextFieldValue,
             editing = true,
             onTextChange = { newValue -> userEmailTextFieldValue = newValue },
-            inputPlaceholder = "User Email"
+            inputPlaceholder = "Email-Adresse"
         )
         PasswordInputField(
             text = userPasswordTextFieldValue,
             editing = true,
             onTextChange = { newValue -> userPasswordTextFieldValue = newValue },
-            inputPlaceholder = "User Passwort"
+            inputPlaceholder = "Passwort"
         )
         Spacer(modifier = modifier.height(20.dp))
         Button(
@@ -103,9 +103,6 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
 
             },
             shape = RoundedCornerShape(20.dp),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.Green
-            ),
             modifier = Modifier
                 .width(250.dp)
                 .padding(16.dp, 8.dp, 16.dp, 8.dp),
