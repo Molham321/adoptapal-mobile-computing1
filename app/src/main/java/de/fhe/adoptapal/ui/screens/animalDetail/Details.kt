@@ -58,13 +58,12 @@ fun Details(
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            animal.supplier.address?.city?.toString()?.let {
-                AnimalInfoCard(
-                    animal.name,
-                    animal.isMale,
-                    it
-                )
-            }
+            AnimalInfoCard(
+                animal.name,
+                animal.isMale,
+                animal.supplier.address
+            )
+
         }
 
         // My story details
