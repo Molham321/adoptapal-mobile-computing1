@@ -116,7 +116,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
         // DropdownSelect("Tierrasse", animalCategoryDropdownValue, arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel", "Fisch"))
         DropdownSelect(
-            "Tierrasse",
+            "Tierart",
             animalCategoryDropdownValue,
             animalCategoryEditingState,
             vm.getCategoryArray(animalCategoryList.value),

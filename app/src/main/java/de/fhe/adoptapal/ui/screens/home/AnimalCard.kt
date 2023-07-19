@@ -60,7 +60,17 @@ fun AnimalCard(
                 .padding(16.dp)
         ) {
 
-            val image: Painter = painterResource(id = R.drawable.hund /*animal.image*/)
+            var image: Painter
+            when(animal.animalCategory.name) {
+                "Katze" -> {image = painterResource(id = R.drawable.andresllanezas_katze)}
+                "Hund" -> {image = painterResource(id = R.drawable.andresllanezas_hund)}
+                "Fisch" -> {image = painterResource(id = R.drawable.andresllanezas_fisch)}
+                "Reptil" -> {image = painterResource(id = R.drawable.andresllanezas_reptil)}
+                "Nagetier" -> {image = painterResource(id = R.drawable.andresllanezas_nagetier)}
+                "Vogel" -> {image = painterResource(id = R.drawable.andresllanezas_vogel)}
+                else -> {image = painterResource(id = R.drawable.andresllanezas_andere)}
+            }
+            // val image: Painter = painterResource(id = R.drawable.hund)
             Image(
                 modifier = modifier
                     .size(80.dp, 80.dp)

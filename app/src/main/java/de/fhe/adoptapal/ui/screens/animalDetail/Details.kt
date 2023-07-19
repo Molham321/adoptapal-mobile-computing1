@@ -68,12 +68,22 @@ fun Details(
     ) {
 
         item {
-            val dogImage: Painter = painterResource(R.drawable.hund /*animal.imageFilePath*/)
+            var image: Painter
+            when(animal.animalCategory.name) {
+                "Katze" -> {image = painterResource(id = R.drawable.andresllanezas_katze)}
+                "Hund" -> {image = painterResource(id = R.drawable.andresllanezas_hund)}
+                "Fisch" -> {image = painterResource(id = R.drawable.andresllanezas_fisch)}
+                "Reptil" -> {image = painterResource(id = R.drawable.andresllanezas_reptil)}
+                "Nagetier" -> {image = painterResource(id = R.drawable.andresllanezas_nagetier)}
+                "Vogel" -> {image = painterResource(id = R.drawable.andresllanezas_vogel)}
+                else -> {image = painterResource(id = R.drawable.andresllanezas_andere)}
+            }
+            // val image: Painter = painterResource(R.drawable.hund /*animal.imageFilePath*/)
             Image(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(346.dp),
-                painter = dogImage,
+                painter = image,
                 alignment = Alignment.CenterStart,
                 contentDescription = "",
                 contentScale = ContentScale.Crop
