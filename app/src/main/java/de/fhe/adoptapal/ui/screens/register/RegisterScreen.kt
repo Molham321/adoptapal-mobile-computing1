@@ -95,7 +95,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 userNameTextFieldValue = newValue
                 userNameError = ""
                            },
-            inputPlaceholder = "User Name"
+            inputPlaceholder = "Name"
         )
 
         if (userNameError.isNotBlank()) {
@@ -115,6 +115,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             color = colorResource(id = R.color.black),
             textAlign = TextAlign.Center
         )
+
         InputField(
             text = userEmailTextFieldValue,
             editing = true,
@@ -122,7 +123,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 userEmailTextFieldValue = newValue
                 userEmailError = ""
                            },
-            inputPlaceholder = "User Email"
+            inputPlaceholder = "E-Mail-Adresse"
         )
         if (userNameError.isNotBlank()) {
             Text(
@@ -139,7 +140,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 userPhoneNumberTextFieldValue = newValue
                 userPhoneNumberError = ""
                            },
-            inputPlaceholder = "User Phone Number"
+            inputPlaceholder = "Telefonnummer"
         )
 
         if (userPhoneNumberError.isNotBlank()) {
@@ -157,7 +158,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 userPasswordTextFieldValue = newValue
                 userPasswordError = ""
                            },
-            inputPlaceholder = "User Passwort"
+            inputPlaceholder = "neues Passwort"
         )
 
         if (userPasswordError.isNotBlank()) {
@@ -175,7 +176,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 userConfirmPasswordTextFieldValue = newValue
                 userConfirmPasswordError = ""
                            },
-            inputPlaceholder = "User Confirm Password"
+            inputPlaceholder = "Passwort wiederholung"
         )
 
         if (userConfirmPasswordError.isNotBlank()) {
@@ -216,19 +217,19 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                     editingState = false
                 } else {
                     if (!isNameValid) {
-                        userNameError = "Invalid Name"
+                        userNameError = "Ungültiger Name"
                     }
                     if (!isEmailValid) {
-                        userEmailError = "Invalid email address"
+                        userEmailError = "Ungültige E-Mail-Adresse"
                     }
                     if (!isPhoneNumberValid) {
-                        userPhoneNumberError = "Invalid Phone Number"
+                        userPhoneNumberError = "Ungültige Telefonnummer"
                     }
                     if (!isPasswordValid) {
-                        userPasswordError = "Password must be at least 3 characters long"
+                        userPasswordError = "Das Passwort muss mindestens 3 Zeichen lang sein"
                     }
                     if (!isConfirmPasswordValid) {
-                        userConfirmPasswordError = "Password and Confirm Password must be same"
+                        userConfirmPasswordError = "Passwort und Passwort wiederholung müssen identisch sein"
                     }
                 }
 
@@ -258,7 +259,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 .padding(16.dp, 8.dp, 16.dp, 8.dp),
 
             ) {
-            Text(text = "Bereits Mitglied? zum Login", textDecoration = TextDecoration.Underline)
+            Text(text = "Bereits Mitglied? zum Anmeldung", textDecoration = TextDecoration.Underline)
         }
     }
 }

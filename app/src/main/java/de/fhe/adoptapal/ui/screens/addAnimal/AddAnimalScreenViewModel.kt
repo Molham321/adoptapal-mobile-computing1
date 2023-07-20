@@ -21,8 +21,11 @@ import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Date
+import java.util.Locale
 
 // TODO: aktuell angemeldeten Nutzer mit dem neuen Tier speichern
 // TODO: eigene Bilder hochladen
@@ -225,5 +228,28 @@ class AddAnimalScreenViewModel(
 
     fun navigateToUserList() {
         navigationManager.navigate(GoBackDestination)
+    }
+
+    fun validateBirthdate(animalBirthdateValue: String): Boolean {
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+
+        try {
+            val birthdate = dateFormat.parse(animalBirthdateValue)
+            val currentDate = Date()
+
+            if (birthdate.after(currentDate)) {
+                return false
+            }
+
+        } catch (e: Exception) {
+            return false
+        }
+
+        return true
+    }
+
+    fun validateWeight(text: String): Boolean {
+        val regex = Regex("""^\d+(\.\d+)?$""")
+        return regex.matches(text)
     }
 }

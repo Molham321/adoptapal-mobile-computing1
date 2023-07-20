@@ -130,14 +130,14 @@ sealed class Screen(
     }
 
     object Map : Screen(
-        title = "Map",
+        title = "Karte",
         icon = Icons.Filled.Place,
         route = "Map",
         hasReturn = false
     )
 
     object Settings : Screen(
-        title = "Settings",
+        title = "Einstellungen",
         icon = Icons.Filled.Settings,
         route = "Settings"
     ) {
@@ -151,7 +151,7 @@ sealed class Screen(
     }
 
     object Profile : Screen(
-        title = "Profile",
+        title = "Profil",
         icon = Icons.Filled.Person,
         route = "Profile",
         hasReturn = false
@@ -191,7 +191,7 @@ sealed class Screen(
     )
 
     object Login : Screen(
-        title = "Login",
+        title = "Anmeldung",
         icon = Icons.Filled.Menu,
         route = "Login"
     ) {
@@ -205,7 +205,7 @@ sealed class Screen(
     }
 
     object Register : Screen(
-        title = "Register",
+        title = "Registrieren",
         icon = Icons.Filled.Menu,
         route = "Register"
     ) {

@@ -87,11 +87,11 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
             editing = true,
             onTextChange = { newValue ->
                 userEmailTextFieldValue = newValue
-                userEmailError = "" // Reset the error when the input changes
+                userEmailError = ""
                 },
-            inputPlaceholder = "User Email"
+            inputPlaceholder = "E-Mail-Adresse"
         )
-        // Display email error message, if any
+
         if (userEmailError.isNotBlank()) {
             Text(
                 text = userEmailError,
@@ -105,11 +105,11 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
             editing = true,
             onTextChange = { newValue ->
                 userPasswordTextFieldValue = newValue
-                userPasswordError = "" // Reset the error when the input changes
+                userPasswordError = ""
                            },
-            inputPlaceholder = "User Passwort"
+            inputPlaceholder = "Passwort"
         )
-        // Display password error message, if any
+
         if (userPasswordError.isNotBlank()) {
             Text(
                 text = userPasswordError,
@@ -129,12 +129,11 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
                     userPasswordTextFieldValue = TextFieldValue("")
                     editingState = false
                 } else {
-                    // Set error messages if the input is invalid
                     if (!isEmailValid) {
-                        userEmailError = "Invalid email address"
+                        userEmailError = "Ungültige E-Mail-Adresse"
                     }
                     if (!isPasswordValid) {
-                        userPasswordError = "Password must be at least 6 characters long"
+                        userPasswordError = "Das von dir eingegebene Passwort ist falsch"
                     }
                 }
 
@@ -148,7 +147,7 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
                 .padding(16.dp, 8.dp, 16.dp, 8.dp),
 
             ) {
-            Text(text = "Login")
+            Text(text = "Anmeldung")
         }
         Button(
             onClick = { vm.navigateToRegister() },
