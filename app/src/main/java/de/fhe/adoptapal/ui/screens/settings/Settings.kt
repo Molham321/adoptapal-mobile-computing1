@@ -56,7 +56,7 @@ fun Settings(
             .fillMaxWidth()
     ) {
         Text(
-            text = "Profile",
+            text = "Profil",
             style = MaterialTheme.typography.h4,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -87,7 +87,7 @@ fun Settings(
                 email = it
                 emailError = ""
             },
-            label = { Text("Email") },
+            label = { Text("E-Mail-Adresse") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -107,7 +107,7 @@ fun Settings(
                     phoneNumber = it
                     phoneNumberError = ""
                 },
-                label = { Text("Phone Number") },
+                label = { Text("Telefonnummer") },
                 modifier = Modifier.fillMaxWidth()
             )
         }
@@ -123,7 +123,7 @@ fun Settings(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Address",
+            text = "Adresse",
             style = MaterialTheme.typography.h6,
             modifier = Modifier.padding(bottom = 8.dp)
         )
@@ -134,7 +134,7 @@ fun Settings(
                 street = it
                 streetError = ""
             },
-            label = { Text("Street") },
+            label = { Text("Straße") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -153,7 +153,7 @@ fun Settings(
                 houseNumber = it
                 houseNumberError = ""
             },
-            label = { Text("House Number") },
+            label = { Text("Hausnummer") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -171,7 +171,7 @@ fun Settings(
                 city = it
                 cityError = ""
             },
-            label = { Text("City") },
+            label = { Text("Stadt") },
             modifier = Modifier.fillMaxWidth()
         )
 
