@@ -28,6 +28,7 @@ val LightModeSecondary = Color(0xFF176B87)
 val LightModeSecondaryOpacity = Color(0x40176B87)
 val LightModeText = Color(0xFF001C30)
 
+val BackgroundGreyOpacity = Color(0x26393E46)
 val BackgroundWhite = Color(0xFFEEEEEE)
 
 val DarkModeBackground = Color(0xFF222831)

@@ -28,8 +28,8 @@ fun Profile(user: User) {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Profil",
-            style = MaterialTheme.typography.h4,
+            text = "Meine Daten",
+            style = MaterialTheme.typography.h5,
             modifier = Modifier.padding(bottom = 16.dp)
         )
         ProfileItem(label = "Name", value = user.name)
@@ -37,10 +37,10 @@ fun Profile(user: User) {
 
         val phoneNumber = user.phoneNumber ?: "N/A"
         ProfileItem(label = "Telefon", value = phoneNumber)
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         Text(
             text = "Adresse",
-            style = MaterialTheme.typography.h4,
+            style = MaterialTheme.typography.h6,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -64,19 +64,19 @@ fun ProfileItem(label: String, value: String) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .padding(vertical = 4.dp)
-            .border(
-                width = 1.dp,
-                color = Color.Gray,
-                shape = RoundedCornerShape(4.dp)
-            )
-            .padding(8.dp)
+//            .border(
+//                width = 1.dp,
+//                color = Color.Gray,
+//                shape = RoundedCornerShape(4.dp)
+//            )
+            .padding(4.dp)
     ) {
         Text(
             text = "$label:",
             style = MaterialTheme.typography.body1,
             color = Color.Black,
             modifier = Modifier
-                .width(120.dp)
+                .width(150.dp)
                 .padding(end = 8.dp)
         )
         Text(

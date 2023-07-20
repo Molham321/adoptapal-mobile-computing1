@@ -1,6 +1,7 @@
 package de.fhe.adoptapal.ui.screens.addAnimal
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -39,7 +40,23 @@ fun InputField(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Decimal
             ),
-            label = { Text(labelValue + " in kg") },
+            label = { Text("* " + labelValue + " in kg") },
+            placeholder = { Text("") },
+        )
+    } else if (labelValue == "Beschreibung des Tieres") {
+        OutlinedTextField(
+            value = text,
+            onValueChange = { newValue -> onTextChange(newValue) },
+            modifier = Modifier
+                .height(200.dp)
+                .padding(8.dp)
+                .fillMaxWidth(),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            keyboardOptions = KeyboardOptions.Default.copy(
+                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Text
+            ),
+            label = { Text("* " + labelValue) },
             placeholder = { Text("") },
         )
     } else {
@@ -54,7 +71,7 @@ fun InputField(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Text
             ),
-            label = { Text(labelValue) },
+            label = { Text("* " + labelValue) },
             placeholder = { Text("") },
         )
     }

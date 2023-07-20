@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.ui.screens.sharedComponents.GenderTag
+import de.fhe.adoptapal.ui.theme.BackgroundGreyOpacity
 import de.fhe.adoptapal.ui.theme.LightModeSecondary
 import de.fhe.adoptapal.ui.theme.LightModeSecondaryOpacity
 import de.fhe.adoptapal.ui.theme.LightModeText
@@ -52,7 +53,7 @@ fun AnimalCard(
             .clip(RoundedCornerShape(16.dp))
             .clickable(onClick = { onItemPressed(animal.id) }),
         elevation = 0.dp,
-        backgroundColor = LightModeSecondaryOpacity,
+        backgroundColor = BackgroundGreyOpacity,
     ) {
         Row(
             modifier = modifier

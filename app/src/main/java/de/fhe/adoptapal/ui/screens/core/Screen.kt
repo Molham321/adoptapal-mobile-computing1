@@ -105,7 +105,7 @@ sealed class Screen(
     }
 
     object Detail : Screen(
-        title = "Detail",
+        title = "Details",
         icon = Icons.Filled.ArrowBack,
         route = "Detail/{animalId}"
     ) {
@@ -130,14 +130,14 @@ sealed class Screen(
     }
 
     object Map : Screen(
-        title = "Map",
+        title = "Karte",
         icon = Icons.Filled.Place,
         route = "Map",
         hasReturn = false
     )
 
     object Settings : Screen(
-        title = "Settings",
+        title = "Einstellungen",
         icon = Icons.Filled.Settings,
         route = "Settings"
     ) {
@@ -151,7 +151,7 @@ sealed class Screen(
     }
 
     object Profile : Screen(
-        title = "Profile",
+        title = "Profil",
         icon = Icons.Filled.Person,
         route = "Profile",
         hasReturn = false
@@ -171,7 +171,7 @@ sealed class Screen(
     }
 
     object AddAnimal : Screen(
-        title = "AddAnimal",
+        title = "Tier hinzufügen",
         icon = Icons.Filled.Create,
         route = "AddAnimal"
     ) {
@@ -185,7 +185,7 @@ sealed class Screen(
     }
 
     object Search : Screen(
-        title = "Search",
+        title = "Filter",
         icon = Icons.Filled.Search,
         route = "Search"
     )
@@ -205,7 +205,7 @@ sealed class Screen(
     }
 
     object Register : Screen(
-        title = "Register",
+        title = "Registrierung",
         icon = Icons.Filled.Menu,
         route = "Register"
     ) {
@@ -219,7 +219,7 @@ sealed class Screen(
     }
 
     object UserDetail : Screen(
-        title = "User Detail",
+        title = "Nutzer Details",
         icon = Icons.Filled.ArrowBack,
         route = "UserDetail/{userId}"
     ) {

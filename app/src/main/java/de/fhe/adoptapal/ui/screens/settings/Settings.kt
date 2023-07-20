@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
@@ -19,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.User
+import de.fhe.adoptapal.ui.theme.LightModeSecondary
 
 @Composable
 fun Settings(
@@ -37,12 +41,13 @@ fun Settings(
 
     Column(
         modifier = Modifier
+            .verticalScroll(rememberScrollState())
             .padding(16.dp)
             .fillMaxWidth()
     ) {
         Text(
             text = "Profil",
-            style = MaterialTheme.typography.h4,
+            style = MaterialTheme.typography.h6,
             modifier = Modifier.padding(bottom = 16.dp)
         )
         TextField(
@@ -114,9 +119,10 @@ fun Settings(
 
                 updateUser(user)
             },
-            modifier = Modifier.align(Alignment.End)
+            modifier = Modifier.align(Alignment.End),
+            colors = ButtonDefaults.buttonColors(backgroundColor = LightModeSecondary)
         ) {
-            Text("Speichern")
+            Text(text = "Speichern")
         }
     }
 }

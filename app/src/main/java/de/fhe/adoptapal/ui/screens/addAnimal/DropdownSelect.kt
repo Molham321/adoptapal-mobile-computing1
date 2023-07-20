@@ -56,7 +56,7 @@ fun DropdownSelect(
                 Text(
                     // text = "Tierrasse   v",
                     // text = dropdownCat + "   v",
-                    text = dropdownCat,
+                    text = ("* " + dropdownCat),
                     color = Color.White
                 )
             } else {

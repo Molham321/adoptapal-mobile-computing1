@@ -42,6 +42,7 @@ import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.ui.screens.sharedComponents.Title
+import de.fhe.adoptapal.ui.theme.BackgroundGreyOpacity
 import de.fhe.adoptapal.ui.theme.LightModeBackground
 import org.koin.androidx.compose.koinViewModel
 
@@ -94,7 +95,7 @@ fun Details(
                 modifier = Modifier
                     .padding(6.dp)
                     .size(52.dp),
-                color = Color(0x37000000)
+                color = BackgroundGreyOpacity
             ) {
                 IconToggleButton(
                     checked = animal.isFavorite,

@@ -33,6 +33,7 @@ import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.ui.screens.sharedComponents.composeCall
 import de.fhe.adoptapal.ui.screens.sharedComponents.composeEmail
+import de.fhe.adoptapal.ui.theme.BackgroundGreyOpacity
 import de.fhe.adoptapal.ui.theme.LightModeSecondaryOpacity
 import de.fhe.adoptapal.ui.theme.LightModeText
 
@@ -52,7 +53,7 @@ fun OwnerCard(
             .clip(RoundedCornerShape(16.dp))
             .clickable(onClick = { onItemPressed(animal.supplier.id) }),
         elevation = 0.dp,
-        backgroundColor = LightModeSecondaryOpacity
+        backgroundColor = BackgroundGreyOpacity
         // backgroundColor = Color(0xFFE0E0E0)
     ) {
         Column {

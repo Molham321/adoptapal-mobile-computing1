@@ -101,7 +101,7 @@ fun DatePicker(
             }
         ) {
             if (birthdateValue == "") {
-                Text(text = "Geburtsdatum", color = Color.White)
+                Text(text = "* Geburtsdatum", color = Color.White)
             } else {
                 Text(text = "Geburtsdatum: " + birthdateValue, color = Color.White)
             }
