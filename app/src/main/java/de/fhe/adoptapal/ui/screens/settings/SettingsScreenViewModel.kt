@@ -64,6 +64,8 @@ class SettingsScreenViewModel(
                 if (it.status == AsyncOperationState.SUCCESS) {
                     saveFeedbackFlow.emit(it)
                     navigationManager.navigate(GoBackDestination)
+                }else {
+                    Log.i("Error!", "das hat nicht funktioniert!")
                 }
 
                 if (it.status == AsyncOperationState.ERROR) {
@@ -71,5 +73,40 @@ class SettingsScreenViewModel(
                 }
             }
         }
+    }
+
+    fun validateName(name: String): Boolean {
+        val namePattern = "^[a-zA-ZäöüÄÖÜß\\s-]+$"
+        return name.matches(namePattern.toRegex())
+    }
+
+    fun validateEmail(email: String): Boolean {
+        val emailPattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\$"
+        return email.matches(emailPattern.toRegex())
+    }
+
+    fun validatePhoneNumber(phoneNumber: String): Boolean {
+        val phonePattern = "^(\\+49|0)(\\d{3,4})[ -]?(\\d{3,})([ -]?\\d{1,5})?\$"
+        return phoneNumber.matches(phonePattern.toRegex())
+    }
+
+    fun validateStreet(street: String): Boolean {
+        val streetPattern = "^[a-zA-Z0-9äöüÄÖÜß\\s\\-.,]+$"
+        return street.matches(streetPattern.toRegex())
+    }
+
+    fun validateCity(city: String): Boolean {
+        val cityPattern = "^[a-zA-ZäöüÄÖÜß\\s]+$"
+        return city.matches(cityPattern.toRegex())
+    }
+
+    fun validateHouseNumber(houseNumber: String): Boolean {
+        val houseNumberPattern = "^[a-zA-Z0-9\\-]+$"
+        return houseNumber.matches(houseNumberPattern.toRegex())
+    }
+
+    fun validateZip(zip: String): Boolean {
+        val zipPattern = "^[0-9]{5}\$"
+        return zip.matches(zipPattern.toRegex())
     }
 }

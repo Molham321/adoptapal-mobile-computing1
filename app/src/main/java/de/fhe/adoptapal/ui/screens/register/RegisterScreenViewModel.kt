@@ -43,7 +43,8 @@ class RegisterScreenViewModel(
     }
 
     fun validateName(name: String): Boolean {
-        return name.length >= 3
+        val namePattern = "^[a-zA-ZäöüÄÖÜß\\s-]+$"
+        return name.matches(namePattern.toRegex())
     }
 
     fun validateEmail(email: String): Boolean {
