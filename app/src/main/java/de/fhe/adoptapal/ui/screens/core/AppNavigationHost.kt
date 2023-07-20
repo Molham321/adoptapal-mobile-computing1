@@ -55,15 +55,16 @@ fun AppNavigationHost(
             }
             // Any other destination - just navigate there
             else
-                navController.navigate(command.destination) {
-                    navController.clearBackStack(command.destination)
+                navController.navigate(command.destination)
+                {
                     navController.graph.startDestinationRoute?.let { route ->
                         popUpTo(route) {
+                            navController.popBackStack()
                             saveState = true
                         }
                     }
-                    launchSingleTop = true
-                    restoreState = true
+                    launchSingleTop = false
+                    restoreState = false
                 }
     }
 
