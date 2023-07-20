@@ -77,13 +77,14 @@ class HomeScreenViewModel(
 
     fun getFilteredAnimals(filterText: String, selectedFilter: String?): List<Animal> {
         return animalList.value.filter { animal ->
-            animal.name.contains(filterText, ignoreCase = true) ||
-                    animal.color.name.contains(filterText, ignoreCase = true) ||
+            (animal.name.contains(filterText, ignoreCase = true) ||
                     animal.description.contains(filterText, ignoreCase = true) ||
                     animal.weight.toString().contains(filterText, ignoreCase = true) ||
                     animal.animalCategory.name.contains(filterText, ignoreCase = true) ||
-                    animal.supplier.address!!.city!!.contains(filterText, ignoreCase = true) &&
-                    (selectedFilter == null || selectedFilter == "All" ||
+                    animal.supplier.address?.city?.contains(filterText, ignoreCase = true) == true
+                    )  &&
+                    (selectedFilter == null ||
+                            selectedFilter == "All" ||
                             (selectedFilter == "Male" && animal.isMale) ||
                             (selectedFilter == "Female" && !animal.isMale))
         }
