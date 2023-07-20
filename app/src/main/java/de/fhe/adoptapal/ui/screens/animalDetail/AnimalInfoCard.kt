@@ -63,15 +63,6 @@ fun AnimalInfoCard(name: String, gender: Boolean, location: Address?) {
                     )
                 }
             }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "12 mins ago",
-                modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
-                color = colorResource(id = R.color.text),
-                style = MaterialTheme.typography.overline
-            )
         }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
             GenderTag(gender)

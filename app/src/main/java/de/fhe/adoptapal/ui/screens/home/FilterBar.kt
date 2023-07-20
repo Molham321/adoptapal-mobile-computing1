@@ -42,7 +42,7 @@ fun FilterBar(
                     .fillMaxWidth()
                     .padding(vertical = 8.dp, horizontal = 16.dp)
             ) {
-                Text(text = selectedFilter ?: "All")
+                Text(text = selectedFilter ?: "Alle")
                 Icon(
                     imageVector = Icons.Default.ArrowDropDown,
                     contentDescription = "Dropdown Icon"

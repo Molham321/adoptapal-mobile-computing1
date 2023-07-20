@@ -34,7 +34,7 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth()
         )
 
-        val filters = listOf("All", "Male", "Female")
+        val filters = listOf("Alle", "Männlich", "Weiblich")
 
         FilterBar(filters = filters, selectedFilter = selectedFilter) { filter ->
             selectedFilter = filter

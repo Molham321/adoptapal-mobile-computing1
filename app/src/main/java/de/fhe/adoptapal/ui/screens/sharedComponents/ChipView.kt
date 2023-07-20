@@ -18,9 +18,9 @@ fun ChipView(gender: Boolean, colorResource: Color) {
     var genderValue: String
 
     if (gender) {
-        genderValue = "Male"
+        genderValue = "Männlich"
     } else {
-        genderValue = "Female"
+        genderValue = "Weiblich"
     }
     Box(
         modifier = Modifier

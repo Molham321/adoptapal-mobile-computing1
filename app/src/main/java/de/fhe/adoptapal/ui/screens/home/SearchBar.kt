@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 fun SearchBar(
     onSearch: (String) -> Unit,
     modifier: Modifier = Modifier,
-    hint: String = "Search...",
+    hint: String = "Suchen...",
     onClear: () -> Unit
 ) {
     var searchText by remember { mutableStateOf("") }
@@ -95,7 +95,7 @@ private fun ClearButton(onClear: () -> Unit, modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun SearchBarPreview() {
-    SearchBar(onSearch = {}, hint = "Search...", onClear = {})
+    SearchBar(onSearch = {}, hint = "Suchen...", onClear = {})
 }
 
 @Preview

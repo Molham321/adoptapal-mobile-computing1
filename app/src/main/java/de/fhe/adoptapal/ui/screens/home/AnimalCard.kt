@@ -113,15 +113,6 @@ fun AnimalCard(
                 horizontalAlignment = Alignment.End
             ) {
                 GenderTag(animal.isMale)
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Text(
-                    text = "12 mins ago",
-                    modifier = modifier.padding(8.dp, 0.dp, 12.dp, 12.dp),
-                    color = Color.Gray,
-                    style = MaterialTheme.typography.overline
-                )
             }
         }
     }

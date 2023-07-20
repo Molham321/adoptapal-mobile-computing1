@@ -66,12 +66,12 @@ class HomeScreenViewModel(
 
         return if (age.years < 1) {
             if (age.months < 1) {
-                "${age.days} days"
+                "${age.days} Tage"
             } else {
-                "${age.months} months"
+                "${age.months} Monate"
             }
         } else {
-            "${age.years} years"
+            "${age.years} Jahre"
         }
     }
 
@@ -84,9 +84,9 @@ class HomeScreenViewModel(
                     animal.supplier.address?.city?.contains(filterText, ignoreCase = true) == true
                     )  &&
                     (selectedFilter == null ||
-                            selectedFilter == "All" ||
-                            (selectedFilter == "Male" && animal.isMale) ||
-                            (selectedFilter == "Female" && !animal.isMale))
+                            selectedFilter == "Alle" ||
+                            (selectedFilter == "Männlich" && animal.isMale) ||
+                            (selectedFilter == "Weiblich" && !animal.isMale))
         }
     }
 
