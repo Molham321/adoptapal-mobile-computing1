@@ -42,6 +42,28 @@ class RegisterScreenViewModel(
         }
     }
 
+    fun validateName(name: String): Boolean {
+        return name.length >= 3
+    }
+
+    fun validateEmail(email: String): Boolean {
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        return email.matches(emailPattern.toRegex())
+    }
+
+    fun validatePhoneNumber(phoneNumber: String): Boolean {
+        val phonePattern = "^(\\+49|0)(\\d{3,4})[ -]?(\\d{3,})([ -]?\\d{1,5})?\$"
+        return phoneNumber.matches(phonePattern.toRegex())
+    }
+
+    fun validatePassword(password: String): Boolean {
+        return password.length >= 3
+    }
+
+    fun validateConfirmPassword(password: String, confirmPassword: String ): Boolean {
+        return password == confirmPassword
+    }
+
     fun navigateToLogin() {
         navigationManager.navigate(Screen.Login.navigationCommand())
     }

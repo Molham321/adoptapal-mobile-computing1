@@ -46,6 +46,16 @@ class LoginScreenViewModel(
         }
     }
 
+    // Validation functions
+    fun validateEmail(email: String): Boolean {
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        return email.matches(emailPattern.toRegex())
+    }
+
+    fun validatePassword(password: String): Boolean {
+        return password.length >= 3
+    }
+
     fun navigateToRegister() {
         navigationManager.navigate(Screen.Register.navigationCommand())
     }

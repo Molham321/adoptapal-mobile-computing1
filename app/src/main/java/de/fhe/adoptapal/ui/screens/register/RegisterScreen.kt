@@ -50,6 +50,12 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
     var userPasswordTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var userConfirmPasswordTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
 
+    var userNameError by remember { mutableStateOf(("")) }
+    var userEmailError by remember { mutableStateOf("") }
+    var userPhoneNumberError by remember { (mutableStateOf("")) }
+    var userPasswordError by remember { mutableStateOf("") }
+    var userConfirmPasswordError by remember { (mutableStateOf("")) }
+
     var editingState by remember { mutableStateOf(false) }
 
     val scaffoldState = LocalScaffoldState.current
@@ -85,9 +91,21 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
         InputField(
             text = userNameTextFieldValue,
             editing = true,
-            onTextChange = { newValue -> userNameTextFieldValue = newValue },
+            onTextChange = { newValue ->
+                userNameTextFieldValue = newValue
+                userNameError = ""
+                           },
             inputPlaceholder = "User Name"
         )
+
+        if (userNameError.isNotBlank()) {
+            Text(
+                text = userNameError,
+                color = Color.Red,
+                style = MaterialTheme.typography.caption
+            )
+        }
+
         Text(
             text = "*ihr Name oder der Name ihrer Einrichtung",
             modifier = Modifier
@@ -100,46 +118,123 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
         InputField(
             text = userEmailTextFieldValue,
             editing = true,
-            onTextChange = { newValue -> userEmailTextFieldValue = newValue },
+            onTextChange = { newValue ->
+                userEmailTextFieldValue = newValue
+                userEmailError = ""
+                           },
             inputPlaceholder = "User Email"
         )
+        if (userNameError.isNotBlank()) {
+            Text(
+                text = userNameError,
+                color = Color.Red,
+                style = MaterialTheme.typography.caption
+            )
+        }
+
         InputField(
             text = userPhoneNumberTextFieldValue,
             editing = true,
-            onTextChange = { newValue -> userPhoneNumberTextFieldValue = newValue },
+            onTextChange = { newValue ->
+                userPhoneNumberTextFieldValue = newValue
+                userPhoneNumberError = ""
+                           },
             inputPlaceholder = "User Phone Number"
         )
+
+        if (userPhoneNumberError.isNotBlank()) {
+            Text(
+                text = userPhoneNumberError,
+                color = Color.Red,
+                style = MaterialTheme.typography.caption
+            )
+        }
 
         PasswordInputField(
             text = userPasswordTextFieldValue,
             editing = true,
-            onTextChange = { newValue -> userPasswordTextFieldValue = newValue },
+            onTextChange = { newValue ->
+                userPasswordTextFieldValue = newValue
+                userPasswordError = ""
+                           },
             inputPlaceholder = "User Passwort"
         )
+
+        if (userPasswordError.isNotBlank()) {
+            Text(
+                text = userPasswordError,
+                color = Color.Red,
+                style = MaterialTheme.typography.caption
+            )
+        }
+
         PasswordInputField(
             text = userConfirmPasswordTextFieldValue,
             editing = true,
-            onTextChange = { newValue -> userConfirmPasswordTextFieldValue = newValue },
+            onTextChange = { newValue ->
+                userConfirmPasswordTextFieldValue = newValue
+                userConfirmPasswordError = ""
+                           },
             inputPlaceholder = "User Confirm Password"
         )
+
+        if (userConfirmPasswordError.isNotBlank()) {
+            Text(
+                text = userConfirmPasswordError,
+                color = Color.Red,
+                style = MaterialTheme.typography.caption
+            )
+        }
 
         Spacer(modifier = Modifier.height(20.dp))
         Button(
             onClick = {
-                vm.addUser(
-                    userNameTextFieldValue.text,
-                    userEmailTextFieldValue.text,
-                    userPhoneNumberTextFieldValue.text
-                )
-                // Clear Form
-                userNameTextFieldValue = TextFieldValue("")
-                userEmailTextFieldValue = TextFieldValue("")
-                userPhoneNumberTextFieldValue = TextFieldValue("")
-                userPasswordTextFieldValue = TextFieldValue("")
-                userConfirmPasswordTextFieldValue = TextFieldValue("")
-                // To hide keyboard
-                editingState = false
+
+                val isNameValid = vm.validateName(userNameTextFieldValue.text)
+                val isEmailValid = vm.validateEmail(userEmailTextFieldValue.text)
+                val isPhoneNumberValid = vm.validatePhoneNumber(userPhoneNumberTextFieldValue.text)
+                val isPasswordValid = vm.validatePassword(userPasswordTextFieldValue.text)
+                val isConfirmPasswordValid = vm.validateConfirmPassword(userPasswordTextFieldValue.text, userConfirmPasswordTextFieldValue.text)
+
+                if(isNameValid &&
+                        isEmailValid &&
+                        isPhoneNumberValid &&
+                        isPasswordValid &&
+                        isConfirmPasswordValid) {
+                    vm.addUser(
+                        userNameTextFieldValue.text,
+                        userEmailTextFieldValue.text,
+                        userPhoneNumberTextFieldValue.text
+                    )
+                    // Clear Form
+                    userNameTextFieldValue = TextFieldValue("")
+                    userEmailTextFieldValue = TextFieldValue("")
+                    userPhoneNumberTextFieldValue = TextFieldValue("")
+                    userPasswordTextFieldValue = TextFieldValue("")
+                    userConfirmPasswordTextFieldValue = TextFieldValue("")
+                    // To hide keyboard
+                    editingState = false
+                } else {
+                    if (!isNameValid) {
+                        userNameError = "Invalid Name"
+                    }
+                    if (!isEmailValid) {
+                        userEmailError = "Invalid email address"
+                    }
+                    if (!isPhoneNumberValid) {
+                        userPhoneNumberError = "Invalid Phone Number"
+                    }
+                    if (!isPasswordValid) {
+                        userPasswordError = "Password must be at least 3 characters long"
+                    }
+                    if (!isConfirmPasswordValid) {
+                        userConfirmPasswordError = "Password and Confirm Password must be same"
+                    }
+                }
+
+
             },
+
             shape = RoundedCornerShape(20.dp),
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color.Green

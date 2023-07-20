@@ -47,6 +47,9 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
     var userEmailTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var userPasswordTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
 
+    var userEmailError by remember { mutableStateOf("") }
+    var userPasswordError by remember { mutableStateOf("") }
+
     var editingState by remember { mutableStateOf(false) }
 
     val scaffoldState = LocalScaffoldState.current
@@ -82,24 +85,58 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
         InputField(
             text = userEmailTextFieldValue,
             editing = true,
-            onTextChange = { newValue -> userEmailTextFieldValue = newValue },
+            onTextChange = { newValue ->
+                userEmailTextFieldValue = newValue
+                userEmailError = "" // Reset the error when the input changes
+                },
             inputPlaceholder = "User Email"
         )
+        // Display email error message, if any
+        if (userEmailError.isNotBlank()) {
+            Text(
+                text = userEmailError,
+                color = Color.Red,
+                style = MaterialTheme.typography.caption
+            )
+        }
+
         PasswordInputField(
             text = userPasswordTextFieldValue,
             editing = true,
-            onTextChange = { newValue -> userPasswordTextFieldValue = newValue },
+            onTextChange = { newValue ->
+                userPasswordTextFieldValue = newValue
+                userPasswordError = "" // Reset the error when the input changes
+                           },
             inputPlaceholder = "User Passwort"
         )
+        // Display password error message, if any
+        if (userPasswordError.isNotBlank()) {
+            Text(
+                text = userPasswordError,
+                color = Color.Red,
+                style = MaterialTheme.typography.caption
+            )
+        }
         Spacer(modifier = modifier.height(20.dp))
         Button(
             onClick = {
-                vm.login(userEmailTextFieldValue.text, userPasswordTextFieldValue.text)
+                val isEmailValid = vm.validateEmail(userEmailTextFieldValue.text)
+                val isPasswordValid = vm.validatePassword(userPasswordTextFieldValue.text)
 
-                userEmailTextFieldValue = TextFieldValue("")
-                userPasswordTextFieldValue = TextFieldValue("")
-                // To hide keyboard
-                editingState = false
+                if (isEmailValid && isPasswordValid) {
+                    vm.login(userEmailTextFieldValue.text, userPasswordTextFieldValue.text)
+                    userEmailTextFieldValue = TextFieldValue("")
+                    userPasswordTextFieldValue = TextFieldValue("")
+                    editingState = false
+                } else {
+                    // Set error messages if the input is invalid
+                    if (!isEmailValid) {
+                        userEmailError = "Invalid email address"
+                    }
+                    if (!isPasswordValid) {
+                        userPasswordError = "Password must be at least 6 characters long"
+                    }
+                }
 
             },
             shape = RoundedCornerShape(20.dp),
