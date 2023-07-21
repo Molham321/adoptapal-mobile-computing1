@@ -71,13 +71,6 @@ fun Filter(onSubmit: (Animal) -> Unit) {
                 style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = "Name:")
-            OutlinedTextField(
-                value = name.text,
-                onValueChange = { name = name.copy(it) },
-                modifier = Modifier.fillMaxWidth()
-            )
             Text(text = "Age:")
             OutlinedTextField(
                 value = age.toString(),
@@ -126,25 +119,6 @@ fun Filter(onSubmit: (Animal) -> Unit) {
                 onValueChange = { city = it },
                 modifier = Modifier.fillMaxWidth()
             )
-            Row(modifier = Modifier.fillMaxWidth()) {
-                OutlinedTextField(
-                    value = street,
-                    onValueChange = { street = it },
-                    modifier = Modifier.weight(2f)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                OutlinedTextField(
-                    value = houseNumber,
-                    onValueChange = { houseNumber = it },
-                    modifier = Modifier.weight(1f)
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                OutlinedTextField(
-                    value = zip,
-                    onValueChange = { zip = it },
-                    modifier = Modifier.weight(1f)
-                )
-            }
             Text(text = "Breed:")
             OutlinedTextField(
                 value = breed.text,
