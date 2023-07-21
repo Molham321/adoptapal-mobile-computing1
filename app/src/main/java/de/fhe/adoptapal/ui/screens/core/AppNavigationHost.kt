@@ -1,5 +1,6 @@
 package de.fhe.adoptapal.ui.screens.core
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -37,12 +38,10 @@ fun AppNavigationHost(
     modifier: Modifier = Modifier
 ) {
     navigationManager.commands.collectAsState().value.also { command ->
-        if (command.destination.isNotEmpty())
-        // Special go back destination
-            if (command.destination == "go_back")
+        if (command.destination.isNotEmpty()) {
+            if (command.destination == "go_back") {
                 navController.popBackStack()
-            // Destination is a Root Screen, we clean up the back stack
-            else if (RootScreens.any { it.route == command.destination }) {
+            } else if (RootScreens.any { it.route == command.destination }) {
                 navController.navigate(command.destination) {
                     navController.graph.startDestinationRoute?.let { route ->
                         popUpTo(route) {
@@ -50,12 +49,11 @@ fun AppNavigationHost(
                         }
                     }
                     launchSingleTop = true
-                    restoreState = true
                 }
-            }
-            // Any other destination - just navigate there
-            else
+            } else {
                 navController.navigate(command.destination)
+            }
+        }
     }
 
     NavHost(
