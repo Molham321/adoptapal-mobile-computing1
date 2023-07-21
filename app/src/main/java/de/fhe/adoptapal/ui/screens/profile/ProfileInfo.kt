@@ -1,4 +1,4 @@
-package de.fhe.adoptapal.ui.screens.sharedComponents
+package de.fhe.adoptapal.ui.screens.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,10 +28,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.User
+import de.fhe.adoptapal.ui.screens.sharedComponents.composeCall
+import de.fhe.adoptapal.ui.screens.sharedComponents.composeEmail
 import de.fhe.adoptapal.ui.screens.userDetail.RatingBar
 
 @Composable
-fun UserInfo(
+fun ProfileInfo(
     user: User,
     modifier: Modifier = Modifier
 ) {
@@ -55,14 +57,6 @@ fun UserInfo(
                         fontSize = 30.sp
                     )
                     Spacer(Modifier.weight(1f))
-                    Row(modifier = Modifier, horizontalArrangement = Arrangement.End) {
-                        Icon(
-                            modifier = Modifier.size(32.dp, 32.dp),
-                            imageVector = Icons.Outlined.LocationOn,
-                            contentDescription = null,
-                            tint = Color.Black
-                        )
-                    }
 
                 }
                 Row(
@@ -119,52 +113,6 @@ fun UserInfo(
                     textAlign = TextAlign.Start,
                     fontSize = 16.sp
                 )
-
-                // create intent row
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-
-
-                    if (user.phoneNumber != null) {
-                        Button(
-                            onClick = {
-                                user.phoneNumber?.let { composeCall(context, it) }
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(1f)
-                                .padding(8.dp)
-                                .clip(RoundedCornerShape(8.dp))
-                        ) {
-                            Text(
-                                text = "Anrufen",
-                                fontSize = 16.sp,
-                            )
-                        }
-                    }
-                    Button(
-                        onClick = {
-                            composeEmail(
-                                context,
-                                user.email,
-                                "Adoption von...",
-                                "Guten Tag, \nich möchte einem Ihrer Tiere ein neues Zuhause bei mir bieten.\nViele Grüße\n"
-                            )
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .padding(8.dp)
-                            .clip(RoundedCornerShape(8.dp))
-                    ) {
-                        Text(
-                            text = "Email",
-                            fontSize = 16.sp,
-                        )
-                    }
-                }
             }
         }
     }
