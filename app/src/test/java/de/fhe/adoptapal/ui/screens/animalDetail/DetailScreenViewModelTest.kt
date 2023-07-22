@@ -59,7 +59,7 @@ class DetailScreenViewModelTest {
         // Arrange
         val birthday = LocalDate.of(2019, Month.JANUARY, 1)
         val currentDate = LocalDate.of(2023, Month.JULY, 18)
-        val expectedAge = "4 years"
+        val expectedAge = "4 Jahre"
 
         // Act
         val age = viewModel.getAge(birthday)

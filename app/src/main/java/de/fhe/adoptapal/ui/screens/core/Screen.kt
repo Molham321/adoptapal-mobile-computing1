@@ -75,7 +75,7 @@ sealed class Screen(
                         Icon(Icons.Filled.Add, contentDescription = null)
                     }
                 }
-                IconButton(onClick = { viewModel.navigateToSearch() }
+                IconButton(onClick = { viewModel.openFilterDialog() }
                 ) {
                     Icon(Icons.Filled.Search, contentDescription = null)
                 }
@@ -188,7 +188,14 @@ sealed class Screen(
         title = "Search",
         icon = Icons.Filled.Search,
         route = "Search"
-    )
+    ) {
+        override fun prepareAppBarActions(vararg values: Any) {
+            if (values[0] !is HomeScreenViewModel)
+                error("First Parameter must be of type *HomeScreenViewModel*")
+
+            appBarActions = {}
+        }
+    }
 
     object Login : Screen(
         title = "Anmeldung",

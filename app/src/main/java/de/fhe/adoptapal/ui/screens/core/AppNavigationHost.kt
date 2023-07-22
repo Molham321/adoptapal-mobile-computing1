@@ -1,6 +1,5 @@
 package de.fhe.adoptapal.ui.screens.core
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -22,7 +21,7 @@ import de.fhe.adoptapal.ui.screens.profile.ProfileScreen
 import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreen
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
-import de.fhe.adoptapal.ui.screens.search.SearchScreen
+import de.fhe.adoptapal.ui.screens.home.SearchScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreenViewModel
 import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreen
@@ -124,8 +123,14 @@ fun AppNavigationHost(
         }
 
         composable(Screen.Search.route) {
+            val vm: HomeScreenViewModel = koinViewModel()
+            Screen.Search.prepareAppBarActions(vm)
             onNavigation(Screen.Search)
-            SearchScreen()
+            SearchScreen(vm = vm, onFiltersApplied = { var showFilterDialog = false }) {
+                // Reset the filters and show all animals
+                vm.resetFiltersAndShowAllAnimals()
+                vm.showFilterDialog = false // Close the dialog after resetting filters
+            }
         }
         composable(Screen.Login.route) {
             val vm: LoginScreenViewModel = koinViewModel()

@@ -2,6 +2,8 @@ package de.fhe.adoptapal.ui.screens.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
@@ -19,6 +21,8 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
     var filterText by remember { mutableStateOf("") }
     var selectedFilter by remember { mutableStateOf<String?>(null) }
 
+    val filters = listOf("Alle", "Männlich", "Weiblich")
+
     vm.refreshUser()
 
     fun clearFilter() {
@@ -28,13 +32,34 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
 
     Column(modifier = modifier) {
 
+        // The AlertDialog for filter options
+        if (vm.showFilterDialog) {
+            AlertDialog(
+                onDismissRequest = { vm.showFilterDialog = false },
+                title = { Text(text = "Filter Options") },
+                text = {
+                    // Call the SearchScreen composable to display the filter options
+                    SearchScreen(
+                        vm = vm,
+                        onFiltersApplied = { filteredAnimals ->
+                            vm.updateFilteredAnimalList(filteredAnimals)
+                            vm.showFilterDialog = false
+                        }
+                    ) {
+                        // Reset the filters and show all animals
+                        vm.resetFiltersAndShowAllAnimals()
+                        vm.showFilterDialog = false // Close the dialog after resetting filters
+                    }
+                },
+                confirmButton = {}
+            )
+        }
+
         SearchBar(
             onSearch = { text -> filterText = text },
             onClear = { clearFilter() },
             modifier = Modifier.fillMaxWidth()
         )
-
-        val filters = listOf("Alle", "Männlich", "Weiblich")
 
         FilterBar(filters = filters, selectedFilter = selectedFilter) { filter ->
             selectedFilter = filter
@@ -42,7 +67,11 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
 
         if (animalList.value.isNotEmpty()) {
 
-            val filteredAnimals = vm.getFilteredAnimals(filterText, selectedFilter)
+            var filteredAnimals = vm.getFilteredAnimals(vm.filteredAnimals.value, filterText, selectedFilter)
+
+            if (filteredAnimals.isEmpty()) {
+                filteredAnimals = vm.animalList.value
+            }
 
             AnimalList(
                 animals = filteredAnimals,
@@ -51,7 +80,8 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
                 vm.navigateToAnimal(it)
             }
         } else {
-            FullscreenPlaceholderView("No Animals", Icons.Filled.Info)
+            FullscreenPlaceholderView("Keine Tiere", Icons.Filled.Info)
         }
     }
 }
+

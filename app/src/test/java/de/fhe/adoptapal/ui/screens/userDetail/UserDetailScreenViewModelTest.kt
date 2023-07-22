@@ -3,6 +3,7 @@ package de.fhe.adoptapal.ui.screens.userDetail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import de.fhe.adoptapal.domain.*
 import de.fhe.adoptapal.domain.User
+import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -20,13 +21,15 @@ class UserDetailScreenViewModelTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var viewModel: UserDetailScreenViewModel
+    private val navigationManager: NavigationManager = mockk(relaxed = true)
     private val userId: Long = 123L
     private var getUserAsyncUseCase: GetUserAsync = mockk(relaxed = true)
+    private  val getUserAnimalsAsync: GetUserAnimalsAsync = mockk(relaxed = true)
 
     @Before
     fun setup() {
         Dispatchers.setMain(TestCoroutineDispatcher())
-        viewModel = UserDetailScreenViewModel(userId, getUserAsyncUseCase)
+        viewModel = UserDetailScreenViewModel(navigationManager, userId, getUserAsyncUseCase, getUserAnimalsAsync)
     }
 
     @Test
