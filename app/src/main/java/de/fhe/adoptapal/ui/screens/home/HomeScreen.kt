@@ -19,24 +19,19 @@ import de.fhe.adoptapal.ui.screens.util.FullscreenPlaceholderView
 fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
     val animalList = remember { vm.animalList }
     var filterText by remember { mutableStateOf("") }
-    var selectedFilter by remember { mutableStateOf<String?>(null) }
-
-    val filters = listOf("Alle", "Männlich", "Weiblich")
 
     vm.refreshUser()
 
     fun clearFilter() {
         filterText = ""
-        selectedFilter = null
     }
 
     Column(modifier = modifier) {
 
-        // The AlertDialog for filter options
         if (vm.showFilterDialog) {
             AlertDialog(
                 onDismissRequest = { vm.showFilterDialog = false },
-                title = { Text(text = "Filter Options") },
+                title = { Text(text = "Filteroptionen") },
                 text = {
                     // Call the SearchScreen composable to display the filter options
                     SearchScreen(
@@ -61,13 +56,9 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth()
         )
 
-        FilterBar(filters = filters, selectedFilter = selectedFilter) { filter ->
-            selectedFilter = filter
-        }
-
         if (animalList.value.isNotEmpty()) {
 
-            var filteredAnimals = vm.getFilteredAnimals(vm.filteredAnimals.value, filterText, selectedFilter)
+            var filteredAnimals = vm.getFilteredAnimals(vm.filteredAnimals.value, filterText)
 
             if (filteredAnimals.isEmpty()) {
                 filteredAnimals = vm.animalList.value

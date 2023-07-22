@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
@@ -39,7 +40,9 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
         }
 
         if (animalList.value.isNotEmpty()) {
-
+            
+            Text(text = "Gemerkte Tiere")
+            
             AnimalList(
                 animals = animalList.value,
                 modifier = modifier

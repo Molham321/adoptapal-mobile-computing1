@@ -94,8 +94,7 @@ class HomeScreenViewModel(
 
     fun getFilteredAnimals(
         animalList: List<Animal>,
-        filterText: String,
-        selectedFilter: String?
+        filterText: String
     ): List<Animal> {
         return animalList.filter { animal ->
             // Filter based on the search text (filterText)
@@ -105,13 +104,7 @@ class HomeScreenViewModel(
                     animal.animalCategory.name.contains(filterText, ignoreCase = true) ||
                     animal.supplier.address?.city?.contains(filterText, ignoreCase = true) == true
 
-            // Filter based on the selected gender filter (selectedFilter)
-            val genderFilterMatch = selectedFilter == null ||
-                    selectedFilter == "Alle" ||
-                    (selectedFilter == "Männlich" && animal.isMale) ||
-                    (selectedFilter == "Weiblich" && !animal.isMale)
-
-            searchTextMatch && genderFilterMatch
+            searchTextMatch
         }
     }
 

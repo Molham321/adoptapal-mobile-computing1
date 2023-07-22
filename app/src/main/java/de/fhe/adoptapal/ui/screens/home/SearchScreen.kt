@@ -70,7 +70,7 @@ fun SearchScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Filter Animals",
+                text = "Tiere filtern",
                 style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             )
@@ -130,7 +130,7 @@ private fun AgeFilter(
     onAgeFromChange: (Int) -> Unit,
     onAgeToChange: (Int) -> Unit
 ) {
-    Text(text = "Age:")
+    Text(text = "Alter:")
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
@@ -141,7 +141,7 @@ private fun AgeFilter(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.weight(1f)
         )
-        Text(text = "to")
+        Text(text = "bis")
         OutlinedTextField(
             value = ageTo.toString(),
             onValueChange = { onAgeToChange(it.toIntOrNull() ?: 0) },
@@ -153,7 +153,7 @@ private fun AgeFilter(
 
 @Composable
 private fun GenderFilter(selectedGender: String, genderOptions: List<String>, onGenderSelected: (String) -> Unit) {
-    Text(text = "Gender:")
+    Text(text = "Geschlecht:")
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
@@ -174,7 +174,7 @@ private fun GenderFilter(selectedGender: String, genderOptions: List<String>, on
 private fun ColorFilter(color: String, colors: List<String>, onColorSelected: (String) -> Unit, onClearColor: () -> Unit) {
     var expanded by remember { mutableStateOf(false) }
 
-    Text(text = "Color:")
+    Text(text = "Farbe:")
     Box(modifier = Modifier.fillMaxWidth()) {
         OutlinedButton(
             onClick = { expanded = !expanded },
@@ -182,7 +182,7 @@ private fun ColorFilter(color: String, colors: List<String>, onColorSelected: (S
             colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Gray)
         ) {
             Text(
-                text = if (color.isNotBlank()) "Clear" else "Select",
+                text = if (color.isNotBlank()) "Wählen" else "Wählen",
                 style = TextStyle(fontSize = 14.sp)
             )
         }
@@ -203,7 +203,7 @@ private fun ColorFilter(color: String, colors: List<String>, onColorSelected: (S
     }
     // Anzeigen der ausgewählten Farbe
     if (color.isNotBlank()) {
-        Text(text = "Selected Color: $color")
+        Text(text = "Ausgewählte Farbe: $color")
     }
 }
 
@@ -215,7 +215,7 @@ private fun WeightFilter(
     onWeightFromChange: (Int) -> Unit,
     onWeightToChange: (Int) -> Unit
 ) {
-    Text(text = "Weight:")
+    Text(text = "Gewicht:")
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
@@ -226,7 +226,7 @@ private fun WeightFilter(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             modifier = Modifier.weight(1f)
         )
-        Text(text = "to")
+        Text(text = "bis")
         OutlinedTextField(
             value = weightTo.toString(),
             onValueChange = { onWeightToChange(it.toIntOrNull() ?: 0) },
@@ -238,7 +238,7 @@ private fun WeightFilter(
 
 @Composable
 private fun CityFilter(city: String, onCityChange: (String) -> Unit) {
-    Text(text = "Location:")
+    Text(text = "Standort:")
     OutlinedTextField(
         value = city,
         onValueChange = { onCityChange(it) },
@@ -248,7 +248,7 @@ private fun CityFilter(city: String, onCityChange: (String) -> Unit) {
 
 @Composable
 private fun BreedFilter(breed: TextFieldValue, onBreedChange: (TextFieldValue) -> Unit) {
-    Text(text = "Breed:")
+    Text(text = "Züchten:")
     OutlinedTextField(
         value = breed,
         onValueChange = { onBreedChange(it) },
@@ -276,14 +276,14 @@ private fun FilterButtons(onApplyClicked: () -> Unit, onResetClicked: () -> Unit
             onClick = { onApplyClicked() },
             colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary)
         ) {
-            Text(text = "Apply", style = MaterialTheme.typography.button, color = MaterialTheme.colors.onSecondary)
+            Text(text = "Anwenden", style = MaterialTheme.typography.button, color = MaterialTheme.colors.onSecondary)
         }
         Button(
             onClick = { onResetClicked() },
             colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary)
         ) {
             Icon(Icons.Default.Clear, contentDescription = "Clear All", modifier = Modifier.padding(end = 4.dp))
-            Text(text = "Reset", style = MaterialTheme.typography.button, color = MaterialTheme.colors.onSecondary)
+            Text(text = "Zurücksetzen", style = MaterialTheme.typography.button, color = MaterialTheme.colors.onSecondary)
         }
     }
 }

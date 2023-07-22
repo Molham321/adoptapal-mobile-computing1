@@ -125,9 +125,9 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                            },
             inputPlaceholder = "E-Mail-Adresse"
         )
-        if (userNameError.isNotBlank()) {
+        if (userEmailError.isNotBlank()) {
             Text(
-                text = userNameError,
+                text = userEmailError,
                 color = Color.Red,
                 style = MaterialTheme.typography.caption
             )
