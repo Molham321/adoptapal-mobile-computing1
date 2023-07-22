@@ -35,6 +35,14 @@ class RepositoryImpl(
         }
     }
 
+    override fun getUserAnimals(usderId: Long): Flow<List<Animal>> {
+        return animalModelDao.getUserAnimalsAsFlow(usderId).map { animalEntityList ->
+            animalEntityList.map { animalEntity ->
+                getAnimalWithContent(animalEntity)
+            }
+        }
+    }
+
     override fun getAllFavoriteAnimals(): Flow<List<Animal>> {
         return animalModelDao.getAllFavoriteAnimalsAsFlow().map { animalEntityList ->
             animalEntityList.map { animalEntity ->

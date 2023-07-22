@@ -21,11 +21,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
+import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.ui.screens.sharedComponents.GenderTag
 
 
 @Composable
-fun AnimalInfoCard(name: String, gender: Boolean, location: String) {
+fun AnimalInfoCard(name: String, gender: Boolean, location: Address?) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -53,18 +54,20 @@ fun AnimalInfoCard(name: String, gender: Boolean, location: String) {
                     tint = Color.Red
                 )
 
-                Text(
-                    text = location,
-                    modifier = Modifier.padding(8.dp, 12.dp, 12.dp, 0.dp),
-                    color = colorResource(id = R.color.text),
-                    style = MaterialTheme.typography.caption
-                )
+                if (location != null) {
+                    Text(
+                        text = location.city,
+                        modifier = Modifier.padding(8.dp, 12.dp, 12.dp, 0.dp),
+                        color = colorResource(id = R.color.text),
+                        style = MaterialTheme.typography.caption
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "vor 12 Minuten",
+                text = "vor 12 Minuten", // TODO delete or fix
                 modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
                 color = colorResource(id = R.color.text),
                 style = MaterialTheme.typography.overline

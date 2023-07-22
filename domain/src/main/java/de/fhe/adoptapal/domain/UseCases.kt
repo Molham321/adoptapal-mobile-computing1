@@ -47,6 +47,16 @@ class GetAnimalAsync(private val repository: Repository) {
     }
 }
 
+class GetUserAnimalsAsync(private val repository: Repository) {
+    operator fun invoke(userId: Long): Flow<AsyncOperation> = flow {
+        emit(AsyncOperation.loading("Start loading user animals..."))
+        repository.getUserAnimals(userId).collect() {
+            emit(AsyncOperation.success("Users loaded", it))
+            emit(AsyncOperation.undefined())
+        }
+    }
+}
+
 class GetAllFavoriteAnimalsAsync(private val repository: Repository) {
     operator fun invoke(): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading favorite animals..."))

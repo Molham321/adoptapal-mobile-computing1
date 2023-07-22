@@ -2,6 +2,7 @@ package de.fhe.adoptapal.ui.screens.profile
 
 import android.util.Log
 import de.fhe.adoptapal.domain.AsyncOperation
+import de.fhe.adoptapal.domain.GetAllFavoriteAnimalsAsync
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
@@ -26,13 +27,14 @@ class ProfileScreenViewModelTest {
     private lateinit var viewModel: ProfileScreenViewModel
     private val navigationManager: NavigationManager = mockk(relaxed = true)
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase = mockk(relaxed = true)
+    private val getAllFavoriteAnimalsAsync: GetAllFavoriteAnimalsAsync = mockk(relaxed = true)
 
     @Before
     fun setup() {
         mockkStatic(Log::class)
         every { Log.i(any(), any()) } returns 0
         Dispatchers.setMain(TestCoroutineDispatcher())
-        viewModel = ProfileScreenViewModel(navigationManager, getLoggedInUserFromDataStoreAndDatabase)
+        viewModel = ProfileScreenViewModel(navigationManager, getLoggedInUserFromDataStoreAndDatabase, getAllFavoriteAnimalsAsync)
     }
 
     @Test

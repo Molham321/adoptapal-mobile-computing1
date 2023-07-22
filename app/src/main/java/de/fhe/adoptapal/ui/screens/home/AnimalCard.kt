@@ -142,7 +142,7 @@ fun AnimalCard(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "vor 12 Minuten",
+                    text = "vor 12 Minuten", // TODO fix or delete - wie AnimalInfoCard
                     modifier = modifier.padding(8.dp, 0.dp, 12.dp, 12.dp),
                     color = Color.Gray,
                     style = MaterialTheme.typography.overline

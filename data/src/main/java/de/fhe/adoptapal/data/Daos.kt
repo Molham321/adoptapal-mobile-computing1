@@ -104,6 +104,9 @@ interface AnimalModelDao {
     @Query("SELECT * FROM AnimalModel")
     fun getAllAsFlow(): Flow<List<AnimalModel>>
 
+    @Query("SELECT * FROM AnimalModel WHERE supplierId = :id")
+    fun getUserAnimalsAsFlow(id: Long): Flow<List<AnimalModel>>
+
     @Query("SELECT * FROM AnimalModel WHERE isFavorite = 1")
     fun getAllFavoriteAnimalsAsFlow(): Flow<List<AnimalModel>>
 

@@ -41,16 +41,9 @@ import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
 import de.fhe.adoptapal.ui.theme.LightModeSecondary
 import de.fhe.adoptapal.ui.screens.util.FileSystemHandler
 
-
-//@Preview
 @Composable
 fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier) {
-//   val vm = getViewModel<AddAnimalViewModel>()
-//
-//     val saveState by remember(vm) { vm.saveFeedbackFlow }
-//        .collectAsState(AsyncOperation.undefined())
 
-    // val dp0p = remember{ vm.dbOp }
     val animalCategoryList = remember { vm.animalCategoryList }
     val animalColorList = remember { vm.animalColorList }
 
@@ -77,14 +70,9 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
     val scaffoldState = LocalScaffoldState.current
     val contextForToast = LocalContext.current.applicationContext
 
-//    LaunchedEffect(saveState) {
-//        if (saveState.status != AsyncOperationState.UNDEFINED) {
-//            scaffoldState.snackbarHostState.showSnackbar(
-//                message = "${saveState.message}...",
-//                duration = SnackbarDuration.Short
-//            )
-//        }
-//    }
+    var birthdateError by remember { mutableStateOf("") }
+    var weightError by remember { mutableStateOf("") }
+
 
     Column(
         modifier = Modifier
@@ -115,11 +103,6 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
 
         Spacer(Modifier.height(20.dp))
-
-//        animalCategoryList.value.forEach {
-//            Text(text = it.name)
-//        }
-//        Text(text = vm.getColorArray(animalColorList.value).joinToString())
 
         InputField(animalNameTextFieldValue, animalNameEditingState, "Name des Tieres") {
             animalNameTextFieldValue = it
@@ -169,14 +152,38 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
         DatePicker(animalBirthdateValue, animalBirthdateEditingState) {
             animalBirthdateValue = it
+            birthdateError = ""
             animalBirthdateEditingState = true
+        }
+
+        if (birthdateError.isNotBlank()) {
+            Text(
+                text = birthdateError,
+                color = Color.Red,
+                style = MaterialTheme.typography.caption,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(16.dp, 0.dp, 16.dp, 0.dp),
+            )
         }
 
         Spacer(Modifier.height(15.dp))
 
         InputField(animalWeightTextFieldValue, animalWeightEditingState, "Gewicht") {
             animalWeightTextFieldValue = it
+            weightError = ""
             animalWeightEditingState = true
+        }
+
+        if (weightError.isNotBlank()) {
+            Text(
+                text = weightError,
+                color = Color.Red,
+                style = MaterialTheme.typography.caption,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(16.dp, 0.dp, 16.dp, 0.dp),
+            )
         }
 
         Spacer(Modifier.height(15.dp))
@@ -275,29 +282,51 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                         imageUri
                     )
 
-                    Toast.makeText(
-                        contextForToast,
-                        "Tier ${animalNameTextFieldValue.text} wurde gespeichert",
-                        Toast.LENGTH_LONG
-                    )
-                        .show()
+                    val isBirthdateValid = vm.validateBirthdate(animalBirthdateValue)
+                    val isWeightValid = vm.validateWeight(animalWeightTextFieldValue.text)
 
-                    // clear form
-                    animalNameTextFieldValue = TextFieldValue("")
-                    animalDescriptionTextFieldValue = TextFieldValue("")
-                    animalCategoryDropdownValue = 0
-                    animalColorDropdownValue = 0
-                    animalBirthdateValue = ""
-                    animalWeightTextFieldValue = TextFieldValue("")
-                    animalGenderValue = false
+                    if(isBirthdateValid && isWeightValid ) {
+                        vm.addAnimal(
+                            animalNameTextFieldValue.text,
+                            animalDescriptionTextFieldValue.text,
+                            animalCategoryDropdownValue,
+                            animalColorDropdownValue,
+                            animalBirthdateValue,
+                            animalWeightTextFieldValue.text.toFloat(),
+                            animalGenderValue
+                        )
 
-                    animalNameEditingState = false // To hide keyboard
-                    animalDescriptionEditingState = false
-                    animalCategoryEditingState = false
-                    animalColorEditingState = false
-                    animalBirthdateEditingState = false
-                    animalWeightEditingState = false
-                    animalGenderEditingState = false
+                        Toast.makeText(
+                            contextForToast,
+                            "Tier ${animalNameTextFieldValue.text} wurde gespeichert",
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+
+                        // clear form
+                        animalNameTextFieldValue = TextFieldValue("")
+                        animalDescriptionTextFieldValue = TextFieldValue("")
+                        animalCategoryDropdownValue = 0
+                        animalColorDropdownValue = 0
+                        animalBirthdateValue = ""
+                        animalWeightTextFieldValue = TextFieldValue("")
+                        animalGenderValue = false
+
+                        animalNameEditingState = false // To hide keyboard
+                        animalDescriptionEditingState = false
+                        animalCategoryEditingState = false
+                        animalColorEditingState = false
+                        animalBirthdateEditingState = false
+                        animalWeightEditingState = false
+                        animalGenderEditingState = false
+                    } else {
+                        if (!isBirthdateValid) {
+                            birthdateError = "ungültige Geburtsdatum"
+                        }
+                        if (!isWeightValid) {
+                            weightError = "ungültige eingabe"
+                        }
+                    }
                 }
             ) {
                 Text(text = "Tier speichern")

@@ -21,7 +21,7 @@ import de.fhe.adoptapal.ui.screens.profile.ProfileScreen
 import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreen
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
-import de.fhe.adoptapal.ui.screens.search.SearchScreen
+import de.fhe.adoptapal.ui.screens.home.SearchScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreenViewModel
 import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreen
@@ -37,12 +37,10 @@ fun AppNavigationHost(
     modifier: Modifier = Modifier
 ) {
     navigationManager.commands.collectAsState().value.also { command ->
-        if (command.destination.isNotEmpty())
-        // Special go back destination
-            if (command.destination == "go_back")
+        if (command.destination.isNotEmpty()) {
+            if (command.destination == "go_back") {
                 navController.popBackStack()
-            // Destination is a Root Screen, we clean up the back stack
-            else if (RootScreens.any { it.route == command.destination }) {
+            } else if (RootScreens.any { it.route == command.destination }) {
                 navController.navigate(command.destination) {
                     navController.graph.startDestinationRoute?.let { route ->
                         popUpTo(route) {
@@ -50,20 +48,11 @@ fun AppNavigationHost(
                         }
                     }
                     launchSingleTop = true
-                    restoreState = true
                 }
+            } else {
+                navController.navigate(command.destination)
             }
-            // Any other destination - just navigate there
-            else
-                navController.navigate(command.destination) {
-                    navController.graph.startDestinationRoute?.let { route ->
-                        popUpTo(route) {
-                            saveState = true
-                        }
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                }
+        }
     }
 
     NavHost(
@@ -134,8 +123,14 @@ fun AppNavigationHost(
         }
 
         composable(Screen.Search.route) {
+            val vm: HomeScreenViewModel = koinViewModel()
+            Screen.Search.prepareAppBarActions(vm)
             onNavigation(Screen.Search)
-            SearchScreen()
+            SearchScreen(vm = vm, onFiltersApplied = { var showFilterDialog = false }) {
+                // Reset the filters and show all animals
+                vm.resetFiltersAndShowAllAnimals()
+                vm.showFilterDialog = false // Close the dialog after resetting filters
+            }
         }
         composable(Screen.Login.route) {
             val vm: LoginScreenViewModel = koinViewModel()

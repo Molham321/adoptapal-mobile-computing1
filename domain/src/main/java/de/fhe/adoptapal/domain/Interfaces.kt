@@ -23,6 +23,8 @@ interface NetworkController {
 interface Repository {
     // Animals
     fun getAllAnimals(): Flow<List<Animal>>
+
+    fun getUserAnimals(usderId: Long): Flow<List<Animal>>
     fun getAllFavoriteAnimals(): Flow<List<Animal>>
     fun getAnimalsByRange(location: Location, range: Double): Flow<List<Animal>>
     suspend fun getAnimal(animalId: Long): Animal?
