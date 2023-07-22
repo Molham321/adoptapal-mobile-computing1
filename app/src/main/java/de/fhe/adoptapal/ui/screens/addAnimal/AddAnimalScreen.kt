@@ -99,37 +99,6 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                 selectedImageUri = uri
             })
 
-        Row(
-            modifier = Modifier.fillMaxWidth()
-                .height(100.dp)
-        ) {
-            Column(modifier = Modifier.fillMaxWidth()) {
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                Button(onClick = {
-                    singlePhotoPickerLauncher.launch(
-                        PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                    )
-                }) {
-                    Text(text = "Pick one image")
-                }
-            }
-
-
-            AsyncImage(
-                model = selectedImageUri,
-                contentDescription = null,
-                modifier = Modifier
-                    .height(50.dp)
-                    .width(70.dp),
-                contentScale = ContentScale.Crop
-            )
-        }
-        }
-
 
         Text(
             text = "Ein neues Tier hochladen",
@@ -218,6 +187,40 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
         Spacer(Modifier.height(15.dp))
 
+
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .height(100.dp)
+        ) {
+            Column(modifier = Modifier.fillMaxWidth()) {
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    Button(onClick = {
+                        singlePhotoPickerLauncher.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                        )
+                    }) {
+                        Text(text = "Bild auswählen")
+                    }
+                }
+
+
+                AsyncImage(
+                    model = selectedImageUri,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .height(50.dp)
+                        .width(70.dp),
+                    contentScale = ContentScale.Crop
+                )
+            }
+        }
+
+
+
         if (
             animalNameTextFieldValue.text == "" ||
             animalDescriptionTextFieldValue.text == "" ||
@@ -248,10 +251,11 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 //                    .show()
 
                     // save image if one was selected
-                    var imageUri : String? = null
-                    if(selectedImageUri != null) {
+                    var imageUri: String? = null
+                    if (selectedImageUri != null) {
                         val file = FileSystemHandler.createImageFile(context)
-                        val imageStream = context.contentResolver.openInputStream(selectedImageUri!!)
+                        val imageStream =
+                            context.contentResolver.openInputStream(selectedImageUri!!)
                         val imageBmp = BitmapFactory.decodeStream(imageStream)
 
                         FileSystemHandler.saveFile(file!!, imageBmp)
@@ -311,8 +315,10 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
             }
         ) {
             Text(text = "zurück")
+
         }
     }
 }
+
 
 
