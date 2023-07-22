@@ -27,6 +27,7 @@ interface Repository {
     fun getAnimalsByRange(location: Location, range: Double): Flow<List<Animal>>
     suspend fun getAnimal(animalId: Long): Animal?
     suspend fun insertAnimal(animal: Animal): Long
+    suspend fun updateAnimal(animalToUpdate: Animal) : Long
     suspend fun deleteAnimal(animal: Animal)
 
 

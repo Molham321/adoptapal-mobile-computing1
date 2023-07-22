@@ -179,17 +179,16 @@ data class Animal(
     var id: Long = 0,
     var createdTimestamp: LocalDateTime = LocalDateTime.now(),
     var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
-    val name: String,
-    val birthday: LocalDate,
-//    var animalAge: Int = 0
-    val supplier: User,
+    var name: String,
+    var birthday: LocalDate,
+    var supplier: User,
     var animalCategory: AnimalCategory,
-    val description: String,
+    var description: String,
     var color: Color,
-    val imageFilePath: String?,
-    val isMale: Boolean,
-    val weight: Float,
-    val isFavorite: Boolean
+    var imageFilePath: String?,
+    var isMale: Boolean,
+    var weight: Float,
+    var isFavorite: Boolean
 ) {
     constructor(
         name: String,

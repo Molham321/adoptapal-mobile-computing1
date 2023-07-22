@@ -83,6 +83,12 @@ class RepositoryImpl(
         return animalModelDao.upsert(animal.fromDomain());
     }
 
+    override suspend fun updateAnimal(animal: Animal): Long {
+        val updateAnimal = animal.fromDomain()
+        updateAnimal.lastChangeTimestamp = LocalDateTime.now()
+        return animalModelDao.upsert(updateAnimal)
+    }
+
     override suspend fun deleteAnimal(animal: Animal) {
         animalModelDao.delete(animal.fromDomain())
     }

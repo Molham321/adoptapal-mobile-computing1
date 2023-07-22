@@ -34,6 +34,7 @@ import de.fhe.adoptapal.domain.LocalStore
 import de.fhe.adoptapal.domain.Logger
 import de.fhe.adoptapal.domain.Repository
 import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
+import de.fhe.adoptapal.domain.UpdateAnimalAsync
 import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalScreenViewModel
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
@@ -90,6 +91,7 @@ val useCaseModule = module {
     factory { GetAnimalByRangeAsync(get()) }
     factory { CreateAnimalAsync(get()) }
     factory { GetAnimalAsync(get()) }
+    factory { UpdateAnimalAsync(get()) }
     factory { GetAllFavoriteAnimalsAsync(get()) }
     factory { DeleteAnimalAsync(get()) }
 

@@ -2,8 +2,11 @@ package de.fhe.adoptapal
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import de.fhe.adoptapal.android_core.LocalStoreImpl
+import de.fhe.adoptapal.data.AnimalModel
+import de.fhe.adoptapal.data.AnimalModelDao
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
+import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.CreateAnimalAsync
@@ -33,6 +36,7 @@ import de.fhe.adoptapal.domain.InsertUserAsync
 import de.fhe.adoptapal.domain.LocalStore
 import de.fhe.adoptapal.domain.Repository
 import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
+import de.fhe.adoptapal.domain.UpdateAnimalAsync
 import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.network.retrofit.RetrofitNetworkController
@@ -48,6 +52,9 @@ import org.koin.core.context.unloadKoinModules
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.get
+import java.time.LocalDate
+import java.time.LocalDateTime
+import kotlin.test.assertFails
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -88,6 +95,7 @@ class UseCaseTests : KoinTest {
         factory { GetAllAnimals(get()) }
         factory { GetAnimalByRangeAsync(get()) }
         factory { CreateAnimalAsync(get()) }
+        factory { UpdateAnimalAsync(get()) }
         factory { GetAnimalAsync(get()) }
         factory { GetAllFavoriteAnimalsAsync(get()) }
         factory { DeleteAnimalAsync(get()) }
@@ -233,5 +241,50 @@ class UseCaseTests : KoinTest {
 
     }
 
+    @Test
+    fun testUpdateAnimal() = runBlocking { // TODO: move to a different place
+        // prepare
+        val animal = AnimalModel(
+            id = 0,
+            createdTimestamp = LocalDateTime.now(),
+            lastChangeTimestamp = LocalDateTime.now(),
+            isDeleted = false,
+            name = "Hans Hase",
+            birthday = LocalDate.now(),
+            supplierId = 1,
+            animalCategoryId = 1,
+            description = "Meine schöner Hans Hase",
+            colorId = 1,
+            imageFilePath = null,
+            isMale = false,
+            weight = 1.0f,
+            isFavorite = false
+        )
+        val animalDao = get<AnimalModelDao>()
+        val repository = get<Repository>()
+
+        // set data
+        val animalId = animalDao.upsert(animal)
+        val animalToUpdate = repository.getAnimal(animalId)
+
+        // change data
+        if (animalToUpdate != null) {
+            animalToUpdate.isFavorite = true
+            animalToUpdate.name = "Neuer Name"
+            repository.updateAnimal(animalToUpdate)
+        } else {
+            fail()
+        }
+
+        val updatedAnimal = repository.getAnimal(animalId)
+
+        if (updatedAnimal != null) {
+            assertEquals(updatedAnimal.id, animalId)
+            assertEquals(updatedAnimal.isFavorite, true)
+            assertEquals(updatedAnimal.name, "Neuer Name")
+        } else {
+            fail()
+        }
+    }
 
 }
