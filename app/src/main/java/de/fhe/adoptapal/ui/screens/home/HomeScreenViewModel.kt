@@ -157,13 +157,6 @@ class HomeScreenViewModel(
         initialArt = TextFieldValue()
     }
 
-    fun logout() {
-        viewModelScope.launch {
-            setLoggedInUserInDataStore(0)
-            user.value = null
-        }
-    }
-
     fun openFilterDialog() {
         showFilterDialog = true
     }

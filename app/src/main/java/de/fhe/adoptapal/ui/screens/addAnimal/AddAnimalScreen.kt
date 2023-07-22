@@ -271,16 +271,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                         imageUri = file.absolutePath
                     }
 
-                    vm.addAnimal(
-                        animalNameTextFieldValue.text,
-                        animalDescriptionTextFieldValue.text,
-                        animalCategoryDropdownValue,
-                        animalColorDropdownValue,
-                        animalBirthdateValue,
-                        animalWeightTextFieldValue.text.toFloat(),
-                        animalGenderValue,
-                        imageUri
-                    )
+
 
                     val isBirthdateValid = vm.validateBirthdate(animalBirthdateValue)
                     val isWeightValid = vm.validateWeight(animalWeightTextFieldValue.text)
@@ -293,7 +284,8 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                             animalColorDropdownValue,
                             animalBirthdateValue,
                             animalWeightTextFieldValue.text.toFloat(),
-                            animalGenderValue
+                            animalGenderValue,
+                            imageUri
                         )
 
                         Toast.makeText(

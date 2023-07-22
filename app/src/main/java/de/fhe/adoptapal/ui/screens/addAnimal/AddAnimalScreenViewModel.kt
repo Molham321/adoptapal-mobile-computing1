@@ -178,7 +178,6 @@ class AddAnimalScreenViewModel(
                 println("user: $user")
 
                 runBlocking {
-                    saveImageInInternalStorage()
                     getAnimalCategoryAsync(animalCategory).collect {
                         dbOp.value = it
                         if (it.status == AsyncOperationState.SUCCESS) {
