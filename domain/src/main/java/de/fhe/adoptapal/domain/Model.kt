@@ -186,7 +186,7 @@ data class Animal(
     var animalCategory: AnimalCategory,
     val description: String,
     var color: Color,
-    val imageFilePath: String?,
+    var imageFilePath: String?,
     val isMale: Boolean,
     val weight: Float,
     val isFavorite: Boolean

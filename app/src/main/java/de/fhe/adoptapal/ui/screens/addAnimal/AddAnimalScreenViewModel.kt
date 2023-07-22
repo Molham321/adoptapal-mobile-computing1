@@ -1,6 +1,12 @@
 package de.fhe.adoptapal.ui.screens.addAnimal
 
+import android.content.Context
+import android.net.Uri
+import android.util.Log
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.fhe.adoptapal.domain.Animal
@@ -18,6 +24,8 @@ import de.fhe.adoptapal.domain.GetUserAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
+import de.fhe.adoptapal.ui.screens.map.LOGTAG
+import de.fhe.adoptapal.ui.screens.util.FileSystemHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -41,6 +49,7 @@ class AddAnimalScreenViewModel(
     var animalColorList = mutableStateOf(emptyList<Color>())
     var supplyingUser = mutableStateOf<User?>(null)
 
+
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
 
@@ -50,7 +59,7 @@ class AddAnimalScreenViewModel(
     init {
         this.getAnimalCategoriesFromDb()
         this.getColorsFromDb()
-        this.getSupplyingUser(2)
+        this.getSupplyingUser(2) // TODO muss die ID hardcoded sein?
 //        animalCategoryList.value.forEach {
 //            animalCategoryArray += it.name
 //        }
@@ -140,7 +149,8 @@ class AddAnimalScreenViewModel(
         animalColor: Long,
         animalBirthdate: String,
         animalWeight: Float,
-        animalGender: Boolean
+        animalGender: Boolean,
+        imageUri: String?
     ) {
         viewModelScope.launch {
 
@@ -162,9 +172,10 @@ class AddAnimalScreenViewModel(
                 val color = mutableStateOf<Color?>(null)
 
                 val user = getLoggedInUser()
-                println("user: " + user)
+                println("user: $user")
 
                 runBlocking {
+                    saveImageInInternalStorage()
                     getAnimalCategoryAsync(animalCategory).collect {
                         dbOp.value = it
                         if (it.status == AsyncOperationState.SUCCESS) {
@@ -182,7 +193,7 @@ class AddAnimalScreenViewModel(
 
                 // println("selected date: " + birthdate)
 
-                val newAnimal = Animal(
+                var newAnimal = Animal(
                     animalName,
                     birthdate,
                     user!!,
@@ -193,6 +204,8 @@ class AddAnimalScreenViewModel(
                     animalGender,
                     animalWeight
                 )
+
+                newAnimal.imageFilePath = imageUri
 
                 println("$newAnimal")
 
@@ -225,5 +238,10 @@ class AddAnimalScreenViewModel(
 
     fun navigateToUserList() {
         navigationManager.navigate(GoBackDestination)
+    }
+
+    private fun saveImageInInternalStorage() {
+
+
     }
 }

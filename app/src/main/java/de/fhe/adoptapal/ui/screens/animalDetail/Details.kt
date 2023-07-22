@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
@@ -39,6 +40,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.ui.screens.sharedComponents.Title
@@ -69,54 +71,69 @@ fun Details(
     ) {
 
         item {
-            var image: Painter
-            when(animal.animalCategory.name) {
-                "Katze" -> {image = painterResource(id = R.drawable.andresllanezas_katze)}
-                "Hund" -> {image = painterResource(id = R.drawable.andresllanezas_hund)}
-                "Fisch" -> {image = painterResource(id = R.drawable.andresllanezas_fisch)}
-                "Reptil" -> {image = painterResource(id = R.drawable.andresllanezas_reptil)}
-                "Nagetier" -> {image = painterResource(id = R.drawable.andresllanezas_nagetier)}
-                "Vogel" -> {image = painterResource(id = R.drawable.andresllanezas_vogel)}
-                else -> {image = painterResource(id = R.drawable.andresllanezas_andere)}
-            }
-            // val image: Painter = painterResource(R.drawable.hund /*animal.imageFilePath*/)
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(346.dp),
-                painter = image,
-                alignment = Alignment.CenterStart,
-                contentDescription = "",
-                contentScale = ContentScale.Crop
-            )
 
-            Surface(
-                shape = CircleShape,
-                modifier = Modifier
-                    .padding(6.dp)
-                    .size(52.dp),
-                color = BackgroundGreyOpacity
-            ) {
-                IconToggleButton(
-                    checked = animal.isFavorite,
-                    onCheckedChange = {
-                        animalIsFavorite.value = it
-                        vm.saveAnimalAsFavorite(animal)
-                    }
-                ) {
-                    Icon(
-                        modifier = Modifier.size(36.dp, 36.dp),
-                        painter = if (animal.isFavorite) {
-                            painterResource(id = R.drawable.baseline_bookmark_24)
-                        } else {
-                            painterResource(id = R.drawable.baseline_bookmark_border_24)
-                        },
-                        contentDescription = null
-                    )
+            
+            if(animal.imageFilePath == null) {
+
+                var image: Painter
+                when(animal.animalCategory.name) {
+                    "Katze" -> {image = painterResource(id = R.drawable.andresllanezas_katze)}
+                    "Hund" -> {image = painterResource(id = R.drawable.andresllanezas_hund)}
+                    "Fisch" -> {image = painterResource(id = R.drawable.andresllanezas_fisch)}
+                    "Reptil" -> {image = painterResource(id = R.drawable.andresllanezas_reptil)}
+                    "Nagetier" -> {image = painterResource(id = R.drawable.andresllanezas_nagetier)}
+                    "Vogel" -> {image = painterResource(id = R.drawable.andresllanezas_vogel)}
+                    else -> {image = painterResource(id = R.drawable.andresllanezas_andere)}
                 }
+                // val image: Painter = painterResource(R.drawable.hund /*animal.imageFilePath*/)
+                Image(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(346.dp),
+                    painter = image,
+                    alignment = Alignment.CenterStart,
+                    contentDescription = "",
+                    contentScale = ContentScale.Crop
+                )
+
+                Surface(
+                    shape = CircleShape,
+                    modifier = Modifier
+                        .padding(6.dp)
+                        .size(52.dp),
+                    color = BackgroundGreyOpacity
+                ) {
+                    IconToggleButton(
+                        checked = animal.isFavorite,
+                        onCheckedChange = {
+                            animalIsFavorite.value = it
+                            vm.saveAnimalAsFavorite(animal)
+                        }
+                    ) {
+                        Icon(
+                            modifier = Modifier.size(36.dp, 36.dp),
+                            painter = if (animal.isFavorite) {
+                                painterResource(id = R.drawable.baseline_bookmark_24)
+                            } else {
+                                painterResource(id = R.drawable.baseline_bookmark_border_24)
+                            },
+                            contentDescription = null
+                        )
+                    }
+                }
+
+
+
+            } else {
+                AsyncImage(
+                    model = animal.imageFilePath,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(346.dp),
+                    contentScale = ContentScale.Crop
+                )
             }
-
-
             Spacer(modifier = Modifier.height(16.dp))
 
             animal.supplier.address?.city?.toString()?.let {

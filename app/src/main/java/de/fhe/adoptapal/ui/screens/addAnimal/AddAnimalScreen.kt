@@ -1,11 +1,20 @@
 package de.fhe.adoptapal.ui.screens.addAnimal
 
+import android.graphics.BitmapFactory
+import android.net.Uri
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
@@ -19,15 +28,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
 import de.fhe.adoptapal.ui.theme.LightModeSecondary
+import de.fhe.adoptapal.ui.screens.util.FileSystemHandler
 
 
 //@Preview
@@ -41,6 +53,8 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
     // val dp0p = remember{ vm.dbOp }
     val animalCategoryList = remember { vm.animalCategoryList }
     val animalColorList = remember { vm.animalColorList }
+
+    val context = LocalContext.current
 
 
     var animalNameTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
@@ -57,6 +71,8 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
     var animalWeightEditingState by remember { mutableStateOf(false) }
     var animalGenderValue by remember { mutableStateOf<Boolean>(false) }
     var animalGenderEditingState by remember { mutableStateOf(false) }
+    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+
 
     val scaffoldState = LocalScaffoldState.current
     val contextForToast = LocalContext.current.applicationContext
@@ -77,6 +93,14 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
     ) {
         Spacer(Modifier.height(20.dp))
 
+        val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickVisualMedia(),
+            onResult = { uri ->
+                Log.i("ImageUpload", uri.toString())
+                selectedImageUri = uri
+            })
+
+
         Text(
             text = "Ein neues Tier hochladen",
 
@@ -88,6 +112,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
             style = MaterialTheme.typography.h1,
             textAlign = TextAlign.Center
         )
+
 
         Spacer(Modifier.height(20.dp))
 
@@ -163,6 +188,40 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
         Spacer(Modifier.height(15.dp))
 
+
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .height(100.dp)
+        ) {
+            Column(modifier = Modifier.fillMaxWidth()) {
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    Button(onClick = {
+                        singlePhotoPickerLauncher.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                        )
+                    }) {
+                        Text(text = "Bild auswählen")
+                    }
+                }
+
+
+                AsyncImage(
+                    model = selectedImageUri,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .height(50.dp)
+                        .width(70.dp),
+                    contentScale = ContentScale.Crop
+                )
+            }
+        }
+
+
+
         if (
             animalNameTextFieldValue.text == "" ||
             animalDescriptionTextFieldValue.text == "" ||
@@ -191,6 +250,20 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                     // println(message = "$animalNameTextFieldValue")
 //                Toast.makeText(contextForToast, "${animalBirthdateValue} ${animalDescriptionTextFieldValue.text}", Toast.LENGTH_SHORT)
 //                    .show()
+
+                    // save image if one was selected
+                    var imageUri: String? = null
+                    if (selectedImageUri != null) {
+                        val file = FileSystemHandler.createImageFile(context)
+                        val imageStream =
+                            context.contentResolver.openInputStream(selectedImageUri!!)
+                        val imageBmp = BitmapFactory.decodeStream(imageStream)
+
+                        FileSystemHandler.saveFile(file!!, imageBmp)
+
+                        imageUri = file.absolutePath
+                    }
+
                     vm.addAnimal(
                         animalNameTextFieldValue.text,
                         animalDescriptionTextFieldValue.text,
@@ -198,7 +271,8 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                         animalColorDropdownValue,
                         animalBirthdateValue,
                         animalWeightTextFieldValue.text.toFloat(),
-                        animalGenderValue
+                        animalGenderValue,
+                        imageUri
                     )
 
                     Toast.makeText(
@@ -242,6 +316,10 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
             }
         ) {
             Text(text = "zurück")
+
         }
     }
 }
+
+
+

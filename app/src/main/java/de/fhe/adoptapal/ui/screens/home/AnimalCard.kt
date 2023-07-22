@@ -26,6 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.ui.screens.sharedComponents.GenderTag
@@ -60,28 +61,38 @@ fun AnimalCard(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
+            if(animal.imageFilePath == null) {
+                var image: Painter
+                when(animal.animalCategory.name) {
+                    "Katze" -> {image = painterResource(id = R.drawable.andresllanezas_katze)}
+                    "Hund" -> {image = painterResource(id = R.drawable.andresllanezas_hund)}
+                    "Fisch" -> {image = painterResource(id = R.drawable.andresllanezas_fisch)}
+                    "Reptil" -> {image = painterResource(id = R.drawable.andresllanezas_reptil)}
+                    "Nagetier" -> {image = painterResource(id = R.drawable.andresllanezas_nagetier)}
+                    "Vogel" -> {image = painterResource(id = R.drawable.andresllanezas_vogel)}
+                    else -> {image = painterResource(id = R.drawable.andresllanezas_andere)}
+                }
+                // val image: Painter = painterResource(id = R.drawable.hund)
+                Image(
+                    modifier = modifier
+                        .size(80.dp, 80.dp)
+                        .clip(RoundedCornerShape(16.dp)),
+                    painter = image,
+                    alignment = Alignment.CenterStart,
+                    contentDescription = "",
+                    contentScale = ContentScale.Crop
+                )
 
-            var image: Painter
-            when(animal.animalCategory.name) {
-                "Katze" -> {image = painterResource(id = R.drawable.andresllanezas_katze)}
-                "Hund" -> {image = painterResource(id = R.drawable.andresllanezas_hund)}
-                "Fisch" -> {image = painterResource(id = R.drawable.andresllanezas_fisch)}
-                "Reptil" -> {image = painterResource(id = R.drawable.andresllanezas_reptil)}
-                "Nagetier" -> {image = painterResource(id = R.drawable.andresllanezas_nagetier)}
-                "Vogel" -> {image = painterResource(id = R.drawable.andresllanezas_vogel)}
-                else -> {image = painterResource(id = R.drawable.andresllanezas_andere)}
+            } else {
+                AsyncImage(
+                    model = animal.imageFilePath,
+                    contentDescription = null,
+                    modifier = modifier
+                        .size(80.dp, 80.dp)
+                        .clip(RoundedCornerShape(16.dp)),
+                    contentScale = ContentScale.Crop
+                )
             }
-            // val image: Painter = painterResource(id = R.drawable.hund)
-            Image(
-                modifier = modifier
-                    .size(80.dp, 80.dp)
-                    .clip(RoundedCornerShape(16.dp)),
-                painter = image,
-                alignment = Alignment.CenterStart,
-                contentDescription = "",
-                contentScale = ContentScale.Crop
-            )
-
             Spacer(modifier = modifier.width(16.dp))
 
             Column(modifier = modifier.align(Alignment.CenterVertically)) {
