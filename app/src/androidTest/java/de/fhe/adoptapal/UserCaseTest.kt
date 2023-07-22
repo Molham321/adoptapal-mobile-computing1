@@ -7,8 +7,10 @@ import de.fhe.adoptapal.data.AnimalModelDao
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
 import de.fhe.adoptapal.domain.Animal
+import de.fhe.adoptapal.domain.AnimalCategory
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
+import de.fhe.adoptapal.domain.Color
 import de.fhe.adoptapal.domain.CreateAnimalAsync
 import de.fhe.adoptapal.domain.CreateAnimalCategoryAsync
 import de.fhe.adoptapal.domain.CreateColorAsync
@@ -222,7 +224,7 @@ class UseCaseTests : KoinTest {
     fun testGetAndSetLoggerInUser() = runBlocking {
 
         // prepare
-        val user = User("TestName", "Test@Mail.de", "1234", null)
+        val user = User("TestName1", "Test@Mail.de", "1234", null)
         val userId = get<Repository>().insertUser(user)
 
         // test
@@ -244,47 +246,41 @@ class UseCaseTests : KoinTest {
     @Test
     fun testUpdateAnimal() = runBlocking { // TODO: move to a different place
         // prepare
-        val animal = AnimalModel(
-            id = 0,
-            createdTimestamp = LocalDateTime.now(),
-            lastChangeTimestamp = LocalDateTime.now(),
-            isDeleted = false,
+        val repository = get<Repository>()
+        val user = repository.getUser(1)!!
+        val animalCategory1 = repository.getAnimalCategory(1)!!
+        val colorRed = repository.getColor(1)!!
+
+        val animal = Animal(
             name = "Hans Hase",
             birthday = LocalDate.now(),
-            supplierId = 1,
-            animalCategoryId = 1,
-            description = "Meine schöner Hans Hase",
-            colorId = 1,
+            supplier = user,
+            animalCategory = animalCategory1,
+            description = "Mein neuer Hans ;)",
+            color = colorRed,
             imageFilePath = null,
             isMale = false,
-            weight = 1.0f,
-            isFavorite = false
+            weight = 0.0f
         )
-        val animalDao = get<AnimalModelDao>()
-        val repository = get<Repository>()
 
-        // set data
-        val animalId = animalDao.upsert(animal)
-        val animalToUpdate = repository.getAnimal(animalId)
+        // save animal
+        val animalId = repository.insertAnimal(animal)
 
-        // change data
-        if (animalToUpdate != null) {
-            animalToUpdate.isFavorite = true
-            animalToUpdate.name = "Neuer Name"
-            repository.updateAnimal(animalToUpdate)
-        } else {
-            fail()
+        // update animal
+        val animalToUpdate = repository.getAnimal(animalId)!!
+        animalToUpdate.name = "Neuer Name"
+        animalToUpdate.isFavorite = true
+
+        val updateAnimalUseCase = get<UpdateAnimalAsync>()
+
+        updateAnimalUseCase.invoke(animalToUpdate).collect{
+            if (it == AsyncOperation.success()) {
+                assertEquals(animalId, (it.payload as Animal).id)
+                assertEquals(animal.name, (it.payload as Animal).name)
+                assertEquals(true, (it.payload as Animal).isFavorite)
+            }
         }
 
-        val updatedAnimal = repository.getAnimal(animalId)
-
-        if (updatedAnimal != null) {
-            assertEquals(updatedAnimal.id, animalId)
-            assertEquals(updatedAnimal.isFavorite, true)
-            assertEquals(updatedAnimal.name, "Neuer Name")
-        } else {
-            fail()
-        }
     }
 
 }
