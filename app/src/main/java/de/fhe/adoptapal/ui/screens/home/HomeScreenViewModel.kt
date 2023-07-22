@@ -1,6 +1,5 @@
 package de.fhe.adoptapal.ui.screens.home
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,7 +13,6 @@ import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 import java.time.Period
 
@@ -23,7 +21,7 @@ class HomeScreenViewModel(
     private val getAllAnimals: GetAllAnimals,
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase,
     private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore
-    ) : ViewModel() {
+) : ViewModel() {
     var animalList = mutableStateOf(emptyList<Animal>())
 
     //    var animalAge = mutableStateOf(0)
@@ -92,7 +90,7 @@ class HomeScreenViewModel(
         navigationManager.navigate(Screen.Detail.navigationCommand(animalId))
     }
 
-    fun logout(){
+    fun logout() {
         viewModelScope.launch {
             setLoggedInUserInDataStore(0)
             user.value = null

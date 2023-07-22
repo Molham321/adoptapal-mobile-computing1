@@ -26,6 +26,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.ui.screens.sharedComponents.GenderTag
@@ -57,17 +58,27 @@ fun AnimalCard(
                 .padding(16.dp)
         ) {
 
-            val image: Painter = painterResource(id = R.drawable.hund /*animal.image*/)
-            Image(
-                modifier = modifier
-                    .size(80.dp, 80.dp)
-                    .clip(RoundedCornerShape(16.dp)),
-                painter = image,
-                alignment = Alignment.CenterStart,
-                contentDescription = "",
-                contentScale = ContentScale.Crop
-            )
-
+            if(animal.imageFilePath == null) {
+                val image: Painter = painterResource(id = R.drawable.hund /*animal.image*/)
+                Image(
+                    modifier = modifier
+                        .size(80.dp, 80.dp)
+                        .clip(RoundedCornerShape(16.dp)),
+                    painter = image,
+                    alignment = Alignment.CenterStart,
+                    contentDescription = "",
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                AsyncImage(
+                    model = animal.imageFilePath,
+                    contentDescription = null,
+                    modifier = modifier
+                        .size(80.dp, 80.dp)
+                        .clip(RoundedCornerShape(16.dp)),
+                    contentScale = ContentScale.Crop
+                )
+            }
             Spacer(modifier = modifier.width(16.dp))
 
             Column(modifier = modifier.align(Alignment.CenterVertically)) {

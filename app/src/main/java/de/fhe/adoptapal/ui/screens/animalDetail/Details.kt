@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -21,6 +22,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.ui.screens.sharedComponents.Title
@@ -46,16 +48,30 @@ fun Details(
     ) {
 
         item {
-            val dogImage: Painter = painterResource(R.drawable.hund /*animal.imageFilePath*/)
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(346.dp),
-                painter = dogImage,
-                alignment = Alignment.CenterStart,
-                contentDescription = "",
-                contentScale = ContentScale.Crop
-            )
+
+            if(animal.imageFilePath == null) {
+
+                val dogImage: Painter = painterResource(R.drawable.hund /*animal.imageFilePath*/)
+
+                Image(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(346.dp),
+                    painter = dogImage,
+                    alignment = Alignment.CenterStart,
+                    contentDescription = "",
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                AsyncImage(
+                    model = animal.imageFilePath,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(346.dp),
+                    contentScale = ContentScale.Crop
+                )
+            }
             Spacer(modifier = Modifier.height(16.dp))
 
             animal.supplier.address?.city?.toString()?.let {
