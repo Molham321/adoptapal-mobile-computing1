@@ -37,7 +37,6 @@ fun ProfileInfo(
     user: User,
     modifier: Modifier = Modifier
 ) {
-    val context = LocalContext.current
     LazyColumn(
         modifier = modifier
     ) {
