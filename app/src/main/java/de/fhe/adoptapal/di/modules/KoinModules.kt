@@ -35,6 +35,7 @@ import de.fhe.adoptapal.domain.LocalStore
 import de.fhe.adoptapal.domain.Logger
 import de.fhe.adoptapal.domain.Repository
 import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
+import de.fhe.adoptapal.domain.UpdateAnimalAsync
 import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.ui.screens.addAnimal.AddAnimalScreenViewModel
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
@@ -92,6 +93,7 @@ val useCaseModule = module {
     factory { CreateAnimalAsync(get()) }
     factory { GetAnimalAsync(get()) }
     factory { GetUserAnimalsAsync(get()) }
+    factory { UpdateAnimalAsync(get()) }
     factory { GetAllFavoriteAnimalsAsync(get()) }
     factory { DeleteAnimalAsync(get()) }
 
@@ -132,9 +134,9 @@ val useCaseModule = module {
 }
 
 val viewModelModule = module {
-    viewModel { HomeScreenViewModel(get(), get(), get(), get()) }
+    viewModel { HomeScreenViewModel(get(), get(), get(), get(), get()) }
 
-    viewModel { DetailScreenViewModel(get(), get(), get()) }
+    viewModel { DetailScreenViewModel(get(), get(), get(), get()) }
     viewModel { UserDetailScreenViewModel(get(), get(), get(), get()) }
 
     viewModel { LoginScreenViewModel(get(), get(), get()) }

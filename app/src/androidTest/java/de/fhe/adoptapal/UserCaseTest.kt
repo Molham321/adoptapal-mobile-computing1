@@ -2,10 +2,15 @@ package de.fhe.adoptapal
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import de.fhe.adoptapal.android_core.LocalStoreImpl
+import de.fhe.adoptapal.data.AnimalModel
+import de.fhe.adoptapal.data.AnimalModelDao
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
+import de.fhe.adoptapal.domain.Animal
+import de.fhe.adoptapal.domain.AnimalCategory
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
+import de.fhe.adoptapal.domain.Color
 import de.fhe.adoptapal.domain.CreateAnimalAsync
 import de.fhe.adoptapal.domain.CreateAnimalCategoryAsync
 import de.fhe.adoptapal.domain.CreateColorAsync
@@ -34,6 +39,7 @@ import de.fhe.adoptapal.domain.InsertUserAsync
 import de.fhe.adoptapal.domain.LocalStore
 import de.fhe.adoptapal.domain.Repository
 import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
+import de.fhe.adoptapal.domain.UpdateAnimalAsync
 import de.fhe.adoptapal.domain.UpdateUserAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.network.retrofit.RetrofitNetworkController
@@ -49,6 +55,9 @@ import org.koin.core.context.unloadKoinModules
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.get
+import java.time.LocalDate
+import java.time.LocalDateTime
+import kotlin.test.assertFails
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -89,6 +98,7 @@ class UseCaseTests : KoinTest {
         factory { GetAllAnimals(get()) }
         factory { GetAnimalByRangeAsync(get()) }
         factory { CreateAnimalAsync(get()) }
+        factory { UpdateAnimalAsync(get()) }
         factory { GetAnimalAsync(get()) }
         factory { GetUserAnimalsAsync(get()) }
         factory { GetAllFavoriteAnimalsAsync(get()) }
@@ -216,7 +226,7 @@ class UseCaseTests : KoinTest {
     fun testGetAndSetLoggerInUser() = runBlocking {
 
         // prepare
-        val user = User("TestName", "Test@Mail.de", "1234", null)
+        val user = User("TestName1", "Test@Mail.de", "1234", null)
         val userId = get<Repository>().insertUser(user)
 
         // test
@@ -235,5 +245,44 @@ class UseCaseTests : KoinTest {
 
     }
 
+    @Test
+    fun testUpdateAnimal() = runBlocking { // TODO: move to a different place
+        // prepare
+        val repository = get<Repository>()
+        val user = repository.getUser(1)!!
+        val animalCategory1 = repository.getAnimalCategory(1)!!
+        val colorRed = repository.getColor(1)!!
+
+        val animal = Animal(
+            name = "Hans Hase",
+            birthday = LocalDate.now(),
+            supplier = user,
+            animalCategory = animalCategory1,
+            description = "Mein neuer Hans ;)",
+            color = colorRed,
+            imageFilePath = null,
+            isMale = false,
+            weight = 0.0f
+        )
+
+        // save animal
+        val animalId = repository.insertAnimal(animal)
+
+        // update animal
+        val animalToUpdate = repository.getAnimal(animalId)!!
+        animalToUpdate.name = "Neuer Name"
+        animalToUpdate.isFavorite = true
+
+        val updateAnimalUseCase = get<UpdateAnimalAsync>()
+
+        updateAnimalUseCase.invoke(animalToUpdate).collect{
+            if (it == AsyncOperation.success()) {
+                assertEquals(animalId, (it.payload as Animal).id)
+                assertEquals(animal.name, (it.payload as Animal).name)
+                assertEquals(true, (it.payload as Animal).isFavorite)
+            }
+        }
+
+    }
 
 }

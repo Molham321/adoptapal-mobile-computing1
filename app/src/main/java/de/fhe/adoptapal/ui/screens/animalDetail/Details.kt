@@ -58,7 +58,7 @@ fun Details(
     modifier: Modifier = Modifier,
     onItemPressed: (itemId: Long) -> Unit = {}
 ) {
-    var animalIsFavorite = remember { mutableStateOf(false) }
+    var animalIsFavorite = remember { mutableStateOf(animal.isFavorite) }
 
     val vm: DetailScreenViewModel = koinViewModel()
 
@@ -104,15 +104,16 @@ fun Details(
                     color = BackgroundGreyOpacity
                 ) {
                     IconToggleButton(
-                        checked = animal.isFavorite,
+                        checked = animalIsFavorite.value,
                         onCheckedChange = {
                             animalIsFavorite.value = it
+                            animal.isFavorite = it
                             vm.saveAnimalAsFavorite(animal)
                         }
                     ) {
                         Icon(
                             modifier = Modifier.size(36.dp, 36.dp),
-                            painter = if (animal.isFavorite) {
+                            painter = if (animalIsFavorite.value) {
                                 painterResource(id = R.drawable.baseline_bookmark_24)
                             } else {
                                 painterResource(id = R.drawable.baseline_bookmark_border_24)

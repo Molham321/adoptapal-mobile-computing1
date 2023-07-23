@@ -9,7 +9,9 @@ import androidx.lifecycle.viewModelScope
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
+import de.fhe.adoptapal.domain.Color
 import de.fhe.adoptapal.domain.GetAllAnimals
+import de.fhe.adoptapal.domain.GetAllColors
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import de.fhe.adoptapal.domain.User
@@ -23,7 +25,8 @@ class HomeScreenViewModel(
     private val navigationManager: NavigationManager,
     private val getAllAnimals: GetAllAnimals,
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase,
-    private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore
+    private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore,
+    private val getAllColors: GetAllColors
 ) : ViewModel() {
     var animalList = mutableStateOf(emptyList<Animal>())
 
@@ -44,10 +47,12 @@ class HomeScreenViewModel(
     var initialCity by mutableStateOf("")
     var initialBreed by mutableStateOf(TextFieldValue())
     var initialArt by mutableStateOf(TextFieldValue())
+    var animalColorList = mutableStateOf(emptyList<Color>())
 
     init {
         this.getLoggedInUser()
         this.getAnimalsFromDb()
+        this.getColorsFromDb()
     }
 
     fun getAnimalsFromDb() {
@@ -89,6 +94,17 @@ class HomeScreenViewModel(
                     animal.supplier.address?.city?.contains(filterText, ignoreCase = true) == true
 
             searchTextMatch
+        }
+    }
+
+    private fun getColorsFromDb() {
+        viewModelScope.launch {
+            getAllColors().collect {
+                dbOp.value = it
+                if (it.status == AsyncOperationState.SUCCESS) {
+                    animalColorList.value = it.payload as List<Color>
+                }
+            }
         }
     }
 
