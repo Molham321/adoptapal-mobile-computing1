@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -37,7 +38,7 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
 
     Column {
         Text(
-            text = vm.user.value?.name?.uppercase() ?: "Keine User!",
+            text = vm.user.value?.name?.uppercase() ?: "Nicht angemeldet",
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
@@ -66,7 +67,7 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
 
                         Spacer(modifier = modifier.height(24.dp))
                         Text(
-                            text = "Email: ${vm.user.value!!.email}",
+                            text = "${stringResource(id = R.string.email)}: ${vm.user.value!!.email}",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(16.dp, 0.dp, 16.dp, 0.dp),

@@ -89,7 +89,7 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
                 userEmailTextFieldValue = newValue
                 userEmailError = ""
                 },
-            inputPlaceholder = "E-Mail-Adresse"
+            inputPlaceholder = "Email"
         )
 
         if (userEmailError.isNotBlank()) {
@@ -130,7 +130,7 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
                     editingState = false
                 } else {
                     if (!isEmailValid) {
-                        userEmailError = "Ungültige E-Mail-Adresse"
+                        userEmailError = "Ungültige Email"
                     }
                     if (!isPasswordValid) {
                         userPasswordError = "Das von dir eingegebene Passwort ist falsch"

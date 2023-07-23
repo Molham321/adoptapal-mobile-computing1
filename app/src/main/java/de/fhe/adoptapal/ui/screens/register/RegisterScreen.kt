@@ -1,6 +1,7 @@
 package de.fhe.adoptapal.ui.screens.register
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,7 +28,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -42,6 +45,8 @@ import de.fhe.adoptapal.ui.screens.sharedComponents.PasswordInputField
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
+
+    val applicationContext = LocalContext.current.applicationContext
 
     val saveState by remember(vm) { vm.saveFeedbackFlow }
         .collectAsState(AsyncOperation.undefined())
@@ -125,7 +130,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 userEmailTextFieldValue = newValue
                 userEmailError = ""
                            },
-            inputPlaceholder = "E-Mail-Adresse"
+            inputPlaceholder = stringResource(id = R.string.email)
         )
         if (userEmailError.isNotBlank()) {
             Text(
@@ -209,6 +214,13 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                         userEmailTextFieldValue.text,
                         userPhoneNumberTextFieldValue.text
                     )
+
+                     Toast.makeText(
+                        applicationContext,
+                        "Bitte logge dich ein",
+                        Toast.LENGTH_LONG
+                    ).show()
+
                     // Clear Form
                     userNameTextFieldValue = TextFieldValue("")
                     userEmailTextFieldValue = TextFieldValue("")
@@ -222,7 +234,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                         userNameError = "Ungültiger Name"
                     }
                     if (!isEmailValid) {
-                        userEmailError = "Ungültige E-Mail-Adresse"
+                        userEmailError = "Ungültige Email"
                     }
                     if (!isPhoneNumberValid) {
                         userPhoneNumberError = "Ungültige Telefonnummer"
