@@ -1,21 +1,28 @@
 package de.fhe.adoptapal.ui.screens.home
 
-import de.fhe.adoptapal.domain.*
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import de.fhe.adoptapal.domain.Animal
+import de.fhe.adoptapal.domain.AnimalCategory
+import de.fhe.adoptapal.domain.AsyncOperation
+import de.fhe.adoptapal.domain.Color
+import de.fhe.adoptapal.domain.GetAllAnimals
+import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
+import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
+import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Test
 import org.junit.Rule
-import io.mockk.coEvery
-import io.mockk.mockk
+import org.junit.Test
 import java.time.LocalDate
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 
 
 @ExperimentalCoroutinesApi
@@ -26,7 +33,8 @@ class HomeScreenViewModelTest {
     private lateinit var viewModel: HomeScreenViewModel
     private val navigationManager: NavigationManager = mockk(relaxed = true)
     private val getAllAnimals: GetAllAnimals = mockk(relaxed = true)
-    private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase = mockk(relaxed = true)
+    private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase =
+        mockk(relaxed = true)
     private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore = mockk(relaxed = true)
 
     @Before

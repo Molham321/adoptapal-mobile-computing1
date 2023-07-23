@@ -1,12 +1,6 @@
 package de.fhe.adoptapal.ui.screens.addAnimal
 
-import android.content.Context
-import android.net.Uri
-import android.util.Log
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.fhe.adoptapal.domain.Animal
@@ -24,8 +18,6 @@ import de.fhe.adoptapal.domain.GetUserAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
-import de.fhe.adoptapal.ui.screens.map.LOGTAG
-import de.fhe.adoptapal.ui.screens.util.FileSystemHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

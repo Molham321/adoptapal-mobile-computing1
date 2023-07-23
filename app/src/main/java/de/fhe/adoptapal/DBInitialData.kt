@@ -132,7 +132,6 @@ class DBInitialData : KoinComponent {
             )
 
 
-
             // create animal categories
             val animalCategory1 =
                 AnimalCategory(
@@ -142,42 +141,42 @@ class DBInitialData : KoinComponent {
                     "Katze"
                 )
 
-            val animalCategory2 =                 AnimalCategory(
+            val animalCategory2 = AnimalCategory(
                 2,
                 LocalDateTime.of(2023, 5, 30, 22, 11),
                 LocalDateTime.now(),
                 "Hund"
             )
 
-            val animalCategory3 =                 AnimalCategory(
+            val animalCategory3 = AnimalCategory(
                 3,
                 LocalDateTime.of(2023, 5, 30, 22, 11),
                 LocalDateTime.now(),
                 "Fisch"
             )
 
-            val animalCategory4  =                 AnimalCategory(
+            val animalCategory4 = AnimalCategory(
                 4,
                 LocalDateTime.of(2023, 5, 30, 22, 11),
                 LocalDateTime.now(),
                 "Reptil"
             )
 
-            val animalCategory5 =                 AnimalCategory(
+            val animalCategory5 = AnimalCategory(
                 5,
                 LocalDateTime.of(2023, 5, 30, 22, 11),
                 LocalDateTime.now(),
                 "Nagetier"
             )
 
-            val animalCategory6 =                 AnimalCategory(
+            val animalCategory6 = AnimalCategory(
                 6,
                 LocalDateTime.of(2023, 5, 30, 22, 11),
                 LocalDateTime.now(),
                 "Vogel"
             )
 
-            val animalCategory7 =                 AnimalCategory(
+            val animalCategory7 = AnimalCategory(
                 7,
                 LocalDateTime.of(2023, 5, 30, 22, 11),
                 LocalDateTime.now(),

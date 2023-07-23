@@ -64,7 +64,7 @@ class SettingsScreenViewModel(
                 if (it.status == AsyncOperationState.SUCCESS) {
                     saveFeedbackFlow.emit(it)
                     navigationManager.navigate(GoBackDestination)
-                }else {
+                } else {
                     Log.i("Error!", "das hat nicht funktioniert!")
                 }
 

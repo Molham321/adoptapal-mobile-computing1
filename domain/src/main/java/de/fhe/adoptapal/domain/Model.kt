@@ -217,7 +217,7 @@ data class Animal(
         false
     )
 
-    fun getCreateTimeDifference() : String {
+    fun getCreateTimeDifference(): String {
         val currentDate = LocalDate.now()
         val age = Period.between(createdTimestamp.toLocalDate(), currentDate)
 
@@ -231,7 +231,7 @@ data class Animal(
         return calculateDateDifference(age)
     }
 
-    private fun calculateDateDifference(age: Period) : String {
+    private fun calculateDateDifference(age: Period): String {
 
         return if (age.years < 1) {
             if (age.months < 1) {

@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,7 +33,8 @@ fun ImageUpload() {
         contract = ActivityResultContracts.PickVisualMedia(),
         onResult = { uri ->
             Log.i("ImageUpload", uri.toString())
-            selectedImageUri = uri })
+            selectedImageUri = uri
+        })
 
     Column(
         modifier = Modifier.fillMaxWidth()

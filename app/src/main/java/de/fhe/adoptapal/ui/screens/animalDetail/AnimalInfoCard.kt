@@ -26,7 +26,12 @@ import de.fhe.adoptapal.ui.screens.sharedComponents.GenderTag
 
 
 @Composable
-fun AnimalInfoCard(name: String, gender: Boolean, location: Address?, createDateTimeDifference: String) {
+fun AnimalInfoCard(
+    name: String,
+    gender: Boolean,
+    location: Address?,
+    createDateTimeDifference: String
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -67,7 +72,7 @@ fun AnimalInfoCard(name: String, gender: Boolean, location: Address?, createDate
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "vor $createDateTimeDifference" ,
+                text = "vor $createDateTimeDifference",
                 modifier = Modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
                 color = colorResource(id = R.color.text),
                 style = MaterialTheme.typography.overline

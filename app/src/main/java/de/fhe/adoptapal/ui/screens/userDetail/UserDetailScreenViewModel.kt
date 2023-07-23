@@ -17,7 +17,7 @@ class UserDetailScreenViewModel(
     private val navigationManager: NavigationManager,
     private val userId: Long,
     private val getUserAsync: GetUserAsync,
-    private  val getUserAnimalsAsync: GetUserAnimalsAsync
+    private val getUserAnimalsAsync: GetUserAnimalsAsync
 ) : ViewModel() {
     var user = mutableStateOf<User?>(null)
     var dbOp = mutableStateOf(AsyncOperation.undefined())

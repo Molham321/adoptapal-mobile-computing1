@@ -6,7 +6,6 @@ import de.fhe.adoptapal.domain.GetUserByEmailAsync
 import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
-import de.fhe.adoptapal.ui.screens.core.Screen
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -15,9 +14,8 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
-
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
@@ -31,54 +29,68 @@ class LoginScreenViewModelTest {
     @Before
     fun setup() {
         Dispatchers.setMain(TestCoroutineDispatcher())
-        viewModel = LoginScreenViewModel(getUserByEmailAsyncUseCase, setLoggedInUserInDataStore, navigationManager)
-    }
-
-    @Test
-    fun `login should set dbOp to success and navigate to profile when user credentials are correct`() = runBlockingTest {
-        // Arrange
-        val userEmail = "test@example.com"
-        val userPassword = "password"
-        val user = User("John Doe", "john@example.com", null)
-        coEvery { getUserByEmailAsyncUseCase.invoke(userEmail) } returns flowOf(
-            AsyncOperation.success(
-                payload = user
-            )
+        viewModel = LoginScreenViewModel(
+            getUserByEmailAsyncUseCase,
+            setLoggedInUserInDataStore,
+            navigationManager
         )
-
-        // Act
-        viewModel.login(userEmail, userPassword)
-
-        // Assert
-        assertEquals(AsyncOperationState.SUCCESS, viewModel.dbOp.value.status)
     }
 
     @Test
-    fun `login should set saveFeedbackFlow to error when either email or password is blank`() = runBlockingTest {
-        // Arrange
-        val userEmail = ""
-        val userPassword = "password"
+    fun `login should set dbOp to success and navigate to profile when user credentials are correct`() =
+        runBlockingTest {
+            // Arrange
+            val userEmail = "test@example.com"
+            val userPassword = "password"
+            val user = User("John Doe", "john@example.com", null)
+            coEvery { getUserByEmailAsyncUseCase.invoke(userEmail) } returns flowOf(
+                AsyncOperation.success(
+                    payload = user
+                )
+            )
 
-        // Act
-        viewModel.login(userEmail, userPassword)
+            // Act
+            viewModel.login(userEmail, userPassword)
 
-        // Assert
-        assertEquals(AsyncOperationState.ERROR, viewModel.saveFeedbackFlow.value.status)
-        assertEquals("please enter Email and Password", viewModel.saveFeedbackFlow.value.message)
-    }
+            // Assert
+            assertEquals(AsyncOperationState.SUCCESS, viewModel.dbOp.value.status)
+        }
 
     @Test
-    fun `login should set saveFeedbackFlow to error when user credentials are incorrect`() = runBlockingTest {
-        // Arrange
-        val userEmail = "test@example.com"
-        val userPassword = "password"
-        coEvery { getUserByEmailAsyncUseCase.invoke(userEmail) } returns flowOf(AsyncOperation.error("User not found"))
+    fun `login should set saveFeedbackFlow to error when either email or password is blank`() =
+        runBlockingTest {
+            // Arrange
+            val userEmail = ""
+            val userPassword = "password"
 
-        // Act
-        viewModel.login(userEmail, userPassword)
+            // Act
+            viewModel.login(userEmail, userPassword)
 
-        // Assert
-        assertEquals(AsyncOperationState.ERROR, viewModel.saveFeedbackFlow.value.status)
-        assertEquals("Email or Password not correct", viewModel.saveFeedbackFlow.value.message)
-    }
+            // Assert
+            assertEquals(AsyncOperationState.ERROR, viewModel.saveFeedbackFlow.value.status)
+            assertEquals(
+                "please enter Email and Password",
+                viewModel.saveFeedbackFlow.value.message
+            )
+        }
+
+    @Test
+    fun `login should set saveFeedbackFlow to error when user credentials are incorrect`() =
+        runBlockingTest {
+            // Arrange
+            val userEmail = "test@example.com"
+            val userPassword = "password"
+            coEvery { getUserByEmailAsyncUseCase.invoke(userEmail) } returns flowOf(
+                AsyncOperation.error(
+                    "User not found"
+                )
+            )
+
+            // Act
+            viewModel.login(userEmail, userPassword)
+
+            // Assert
+            assertEquals(AsyncOperationState.ERROR, viewModel.saveFeedbackFlow.value.status)
+            assertEquals("Email or Password not correct", viewModel.saveFeedbackFlow.value.message)
+        }
 }

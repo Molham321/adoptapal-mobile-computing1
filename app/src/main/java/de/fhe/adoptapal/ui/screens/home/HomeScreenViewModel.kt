@@ -19,7 +19,6 @@ import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.Period
 
 class HomeScreenViewModel(
     private val navigationManager: NavigationManager,

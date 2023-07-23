@@ -38,8 +38,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
-import de.fhe.adoptapal.ui.theme.LightModeSecondary
 import de.fhe.adoptapal.ui.screens.util.FileSystemHandler
+import de.fhe.adoptapal.ui.theme.LightModeSecondary
 
 @Composable
 fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier) {
@@ -197,7 +197,8 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
 
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .height(100.dp)
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -272,11 +273,10 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                     }
 
 
-
                     val isBirthdateValid = vm.validateBirthdate(animalBirthdateValue)
                     val isWeightValid = vm.validateWeight(animalWeightTextFieldValue.text)
 
-                    if(isBirthdateValid && isWeightValid ) {
+                    if (isBirthdateValid && isWeightValid) {
                         vm.addAnimal(
                             animalNameTextFieldValue.text,
                             animalDescriptionTextFieldValue.text,

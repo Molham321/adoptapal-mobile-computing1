@@ -1,9 +1,14 @@
 package de.fhe.adoptapal.ui.screens.animalDetail
 
-import de.fhe.adoptapal.domain.*
+import de.fhe.adoptapal.domain.Animal
+import de.fhe.adoptapal.domain.AnimalCategory
+import de.fhe.adoptapal.domain.AsyncOperation
+import de.fhe.adoptapal.domain.Color
+import de.fhe.adoptapal.domain.GetAnimalAsync
+import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
-import de.fhe.adoptapal.ui.screens.core.Screen
-import io.mockk.*
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
@@ -14,7 +19,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDate
-import java.time.Month
 
 @ExperimentalCoroutinesApi
 class DetailScreenViewModelTest {

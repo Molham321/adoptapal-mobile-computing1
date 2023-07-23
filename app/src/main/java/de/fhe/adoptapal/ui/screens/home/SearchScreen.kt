@@ -1,10 +1,27 @@
 package de.fhe.adoptapal.ui.screens.home
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.RadioButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.runtime.Composable
@@ -15,7 +32,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import de.fhe.adoptapal.domain.Color as AnimalColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -23,6 +39,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.domain.Animal
+import de.fhe.adoptapal.domain.Color as AnimalColor
 
 @Composable
 fun SearchScreen(
@@ -39,7 +56,12 @@ fun SearchScreen(
     val genderOptions = listOf("Männlich", "Weiblich", "Alle")
 
     // Find the index of the selected gender in the list
-    var selectedGenderIndex = genderOptions.indexOfFirst { it.equals(vm.initialSelectedGender?.toString(), ignoreCase = true) }
+    var selectedGenderIndex = genderOptions.indexOfFirst {
+        it.equals(
+            vm.initialSelectedGender?.toString(),
+            ignoreCase = true
+        )
+    }
 
     // If the isMale property is null (representing "Alle"), set the index to 2 (for "Alle" option)
     if (selectedGenderIndex == -1) {
@@ -67,16 +89,31 @@ fun SearchScreen(
             )
 
             // Age filter
-            AgeFilter(vm.initialAgeFrom, vm.initialAgeTo, onAgeFromChange = { vm.initialAgeFrom = it }, onAgeToChange = { vm.initialAgeTo = it })
+            AgeFilter(
+                vm.initialAgeFrom,
+                vm.initialAgeTo,
+                onAgeFromChange = { vm.initialAgeFrom = it },
+                onAgeToChange = { vm.initialAgeTo = it })
 
             // Gender filter
-            GenderFilter(vm.initialSelectedGender, genderOptions, onGenderSelected = { vm.initialSelectedGender = it })
+            GenderFilter(
+                vm.initialSelectedGender,
+                genderOptions,
+                onGenderSelected = { vm.initialSelectedGender = it })
 
             // Color filter
-            ColorFilter(vm.initialColor, colors, onColorSelected = { vm.initialColor = it }, onClearColor = { vm.initialColor = "" })
+            ColorFilter(
+                vm.initialColor,
+                colors,
+                onColorSelected = { vm.initialColor = it },
+                onClearColor = { vm.initialColor = "" })
 
             // Weight filter
-            WeightFilter(vm.initialWeightFrom, vm.initialWeightTo, onWeightFromChange = { vm.initialWeightFrom = it }, onWeightToChange = { vm.initialWeightTo = it })
+            WeightFilter(
+                vm.initialWeightFrom,
+                vm.initialWeightTo,
+                onWeightFromChange = { vm.initialWeightFrom = it },
+                onWeightToChange = { vm.initialWeightTo = it })
 
             // City filter
             CityFilter(vm.initialCity, onCityChange = { vm.initialCity = it })
@@ -145,7 +182,11 @@ private fun AgeFilter(
 }
 
 @Composable
-private fun GenderFilter(selectedGender: String, genderOptions: List<String>, onGenderSelected: (String) -> Unit) {
+private fun GenderFilter(
+    selectedGender: String,
+    genderOptions: List<String>,
+    onGenderSelected: (String) -> Unit
+) {
     Text(text = "Geschlecht:")
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -164,7 +205,12 @@ private fun GenderFilter(selectedGender: String, genderOptions: List<String>, on
 }
 
 @Composable
-private fun ColorFilter(color: String, colors: List<AnimalColor>, onColorSelected: (String) -> Unit, onClearColor: () -> Unit) {
+private fun ColorFilter(
+    color: String,
+    colors: List<AnimalColor>,
+    onColorSelected: (String) -> Unit,
+    onClearColor: () -> Unit
+) {
     var expanded by remember { mutableStateOf(false) }
 
     Text(text = "Farbe:")
@@ -269,14 +315,26 @@ private fun FilterButtons(onApplyClicked: () -> Unit, onResetClicked: () -> Unit
             onClick = { onApplyClicked() },
             colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary)
         ) {
-            Text(text = "Anwenden", style = MaterialTheme.typography.button, color = MaterialTheme.colors.onSecondary)
+            Text(
+                text = "Anwenden",
+                style = MaterialTheme.typography.button,
+                color = MaterialTheme.colors.onSecondary
+            )
         }
         Button(
             onClick = { onResetClicked() },
             colors = ButtonDefaults.buttonColors(backgroundColor = MaterialTheme.colors.secondary)
         ) {
-            Icon(Icons.Default.Clear, contentDescription = "Clear All", modifier = Modifier.padding(end = 4.dp))
-            Text(text = "Zurücksetzen", style = MaterialTheme.typography.button, color = MaterialTheme.colors.onSecondary)
+            Icon(
+                Icons.Default.Clear,
+                contentDescription = "Clear All",
+                modifier = Modifier.padding(end = 4.dp)
+            )
+            Text(
+                text = "Zurücksetzen",
+                style = MaterialTheme.typography.button,
+                color = MaterialTheme.colors.onSecondary
+            )
         }
     }
 }

@@ -25,7 +25,6 @@ MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY
 
 App needs to be build (green hammer) before it can be installed and run on phone or emulator
 
-
 ## App features
 
 - Address to LatLong conversion with positionstack-Api

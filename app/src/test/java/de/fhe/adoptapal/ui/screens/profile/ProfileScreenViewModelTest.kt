@@ -16,9 +16,8 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
-
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
@@ -26,7 +25,8 @@ class ProfileScreenViewModelTest {
 
     private lateinit var viewModel: ProfileScreenViewModel
     private val navigationManager: NavigationManager = mockk(relaxed = true)
-    private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase = mockk(relaxed = true)
+    private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase =
+        mockk(relaxed = true)
     private val getAllFavoriteAnimalsAsync: GetAllFavoriteAnimalsAsync = mockk(relaxed = true)
 
     @Before
@@ -34,7 +34,11 @@ class ProfileScreenViewModelTest {
         mockkStatic(Log::class)
         every { Log.i(any(), any()) } returns 0
         Dispatchers.setMain(TestCoroutineDispatcher())
-        viewModel = ProfileScreenViewModel(navigationManager, getLoggedInUserFromDataStoreAndDatabase, getAllFavoriteAnimalsAsync)
+        viewModel = ProfileScreenViewModel(
+            navigationManager,
+            getLoggedInUserFromDataStoreAndDatabase,
+            getAllFavoriteAnimalsAsync
+        )
     }
 
     @Test

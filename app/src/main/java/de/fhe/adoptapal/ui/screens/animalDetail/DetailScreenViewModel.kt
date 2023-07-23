@@ -7,13 +7,10 @@ import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.GetAnimalAsync
-import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.UpdateAnimalAsync
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.Period
 
 class DetailScreenViewModel(
     private val navigationManager: NavigationManager,
@@ -42,7 +39,7 @@ class DetailScreenViewModel(
 
     fun saveAnimalAsFavorite(animal: Animal) {
         viewModelScope.launch {
-            updateAnimalAsync(animal).collect{
+            updateAnimalAsync(animal).collect {
 
             }
         }

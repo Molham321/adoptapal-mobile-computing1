@@ -1,7 +1,9 @@
 package de.fhe.adoptapal.ui.screens.userDetail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import de.fhe.adoptapal.domain.*
+import de.fhe.adoptapal.domain.AsyncOperation
+import de.fhe.adoptapal.domain.GetUserAnimalsAsync
+import de.fhe.adoptapal.domain.GetUserAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import io.mockk.coEvery
@@ -9,7 +11,9 @@ import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.setMain
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -24,12 +28,17 @@ class UserDetailScreenViewModelTest {
     private val navigationManager: NavigationManager = mockk(relaxed = true)
     private val userId: Long = 123L
     private var getUserAsyncUseCase: GetUserAsync = mockk(relaxed = true)
-    private  val getUserAnimalsAsync: GetUserAnimalsAsync = mockk(relaxed = true)
+    private val getUserAnimalsAsync: GetUserAnimalsAsync = mockk(relaxed = true)
 
     @Before
     fun setup() {
         Dispatchers.setMain(TestCoroutineDispatcher())
-        viewModel = UserDetailScreenViewModel(navigationManager, userId, getUserAsyncUseCase, getUserAnimalsAsync)
+        viewModel = UserDetailScreenViewModel(
+            navigationManager,
+            userId,
+            getUserAsyncUseCase,
+            getUserAnimalsAsync
+        )
     }
 
     @Test

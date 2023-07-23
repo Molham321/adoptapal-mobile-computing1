@@ -14,14 +14,14 @@ import java.util.Date
  * Class used to save profile pictures of FamilyMembers to file system
  */
 class FileSystemHandler {
-    companion object{
+    companion object {
         private const val PREFIX_PROFILE_IMAGE_FILE: String = "FC_ProfileImage_"
         private const val EXTENSION_PROFILE_IMAGE_FILE: String = ".jpg"
 
         /**
          * saves a bitmap to a given file
          */
-        fun saveFile(file: File, bmp: Bitmap): Boolean{
+        fun saveFile(file: File, bmp: Bitmap): Boolean {
             // save image to internal file storage
             return try {
                 FileOutputStream(file).use { out ->
@@ -52,14 +52,13 @@ class FileSystemHandler {
          * @param filePath expects format 'file:///folder/file'
          */
         fun deleteFile(filePath: String): Boolean {
-            return try{
+            return try {
                 val fileNameSting = filePath.takeLast(filePath.length - 7)
                 val file = File(fileNameSting)
                 file.delete()
                 Log.i("FM", "image: $fileNameSting deleted")
                 true
-            }
-            catch (e: Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
                 false
             }

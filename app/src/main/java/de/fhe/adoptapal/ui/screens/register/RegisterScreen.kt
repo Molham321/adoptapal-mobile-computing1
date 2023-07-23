@@ -2,7 +2,6 @@ package de.fhe.adoptapal.ui.screens.register
 
 import android.annotation.SuppressLint
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -101,7 +100,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             onTextChange = { newValue ->
                 userNameTextFieldValue = newValue
                 userNameError = ""
-                           },
+            },
             inputPlaceholder = "Name"
         )
 
@@ -129,7 +128,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             onTextChange = { newValue ->
                 userEmailTextFieldValue = newValue
                 userEmailError = ""
-                           },
+            },
             inputPlaceholder = stringResource(id = R.string.email)
         )
         if (userEmailError.isNotBlank()) {
@@ -146,7 +145,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             onTextChange = { newValue ->
                 userPhoneNumberTextFieldValue = newValue
                 userPhoneNumberError = ""
-                           },
+            },
             inputPlaceholder = "Telefonnummer"
         )
 
@@ -164,7 +163,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             onTextChange = { newValue ->
                 userPasswordTextFieldValue = newValue
                 userPasswordError = ""
-                           },
+            },
             inputPlaceholder = "Passwort"
         )
 
@@ -182,7 +181,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             onTextChange = { newValue ->
                 userConfirmPasswordTextFieldValue = newValue
                 userConfirmPasswordError = ""
-                           },
+            },
             inputPlaceholder = "Passwort wiederholen"
         )
 
@@ -202,20 +201,24 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 val isEmailValid = vm.validateEmail(userEmailTextFieldValue.text)
                 val isPhoneNumberValid = vm.validatePhoneNumber(userPhoneNumberTextFieldValue.text)
                 val isPasswordValid = vm.validatePassword(userPasswordTextFieldValue.text)
-                val isConfirmPasswordValid = vm.validateConfirmPassword(userPasswordTextFieldValue.text, userConfirmPasswordTextFieldValue.text)
+                val isConfirmPasswordValid = vm.validateConfirmPassword(
+                    userPasswordTextFieldValue.text,
+                    userConfirmPasswordTextFieldValue.text
+                )
 
-                if(isNameValid &&
-                        isEmailValid &&
-                        isPhoneNumberValid &&
-                        isPasswordValid &&
-                        isConfirmPasswordValid) {
+                if (isNameValid &&
+                    isEmailValid &&
+                    isPhoneNumberValid &&
+                    isPasswordValid &&
+                    isConfirmPasswordValid
+                ) {
                     vm.addUser(
                         userNameTextFieldValue.text,
                         userEmailTextFieldValue.text,
                         userPhoneNumberTextFieldValue.text
                     )
 
-                     Toast.makeText(
+                    Toast.makeText(
                         applicationContext,
                         "Bitte logge dich ein",
                         Toast.LENGTH_LONG
@@ -237,13 +240,15 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                         userEmailError = "Ungültige Email"
                     }
                     if (!isPhoneNumberValid) {
-                        userPhoneNumberError = "Ungültige Telefonnummer"
+                        userPhoneNumberError =
+                            "Ungültige Telefonnummer +49/0 und mindestens 7 Zeichen"
                     }
                     if (!isPasswordValid) {
                         userPasswordError = "Das Passwort muss mindestens 3 Zeichen lang sein"
                     }
                     if (!isConfirmPasswordValid) {
-                        userConfirmPasswordError = "Passwort und Passwort wiederholung müssen identisch sein"
+                        userConfirmPasswordError =
+                            "Passwort und Passwort wiederholung müssen identisch sein"
                     }
                 }
 
@@ -270,7 +275,10 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 .padding(16.dp, 8.dp, 16.dp, 8.dp),
 
             ) {
-            Text(text = "Bereits Mitglied? zum Anmeldung", textDecoration = TextDecoration.Underline)
+            Text(
+                text = "Bereits Mitglied? zum Anmeldung",
+                textDecoration = TextDecoration.Underline
+            )
         }
     }
 }

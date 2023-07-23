@@ -42,7 +42,7 @@ class ProfileScreenViewModel(
                     user.value = it.payload as User
                 }
                 if (it.status == AsyncOperationState.ERROR) {
-                   Log.i("Profile", "Failed to load user")
+                    Log.i("Profile", "Failed to load user")
                 }
             }
         }

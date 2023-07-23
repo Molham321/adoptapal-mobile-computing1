@@ -3,11 +3,8 @@ package de.fhe.adoptapal.ui.screens.home
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -23,9 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.ui.theme.BackgroundWhite
-import de.fhe.adoptapal.ui.theme.LightModeBackground
 
 @Composable
 fun SearchBar(
@@ -81,9 +76,10 @@ fun SearchBar(
 
 @Composable
 private fun ClearButton(onClear: () -> Unit, modifier: Modifier = Modifier) {
-    IconButton( onClick = {
-        onClear()
-      },
+    IconButton(
+        onClick = {
+            onClear()
+        },
         modifier = modifier
     ) {
         Icon(

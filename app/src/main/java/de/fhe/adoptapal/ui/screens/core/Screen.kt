@@ -163,7 +163,7 @@ sealed class Screen(
             val viewModel = values[0] as ProfileScreenViewModel
 
             appBarActions = {
-                if(viewModel.user.value != null) {
+                if (viewModel.user.value != null) {
                     IconButton(onClick = { viewModel.navigateToSettings() }
                     ) {
                         Icon(Icons.Filled.Edit, contentDescription = null)

@@ -1,7 +1,6 @@
 package de.fhe.adoptapal.ui.screens.login
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,7 +34,6 @@ import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
-
 import de.fhe.adoptapal.ui.screens.sharedComponents.PasswordInputField
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -66,7 +64,7 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize(),
-            // .background(color = colorResource(id = R.color.white)),
+        // .background(color = colorResource(id = R.color.white)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = modifier.height(160.dp))
@@ -88,7 +86,7 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
             onTextChange = { newValue ->
                 userEmailTextFieldValue = newValue
                 userEmailError = ""
-                },
+            },
             inputPlaceholder = "Email"
         )
 
@@ -106,7 +104,7 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
             onTextChange = { newValue ->
                 userPasswordTextFieldValue = newValue
                 userPasswordError = ""
-                           },
+            },
             inputPlaceholder = "Passwort"
         )
 

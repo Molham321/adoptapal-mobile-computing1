@@ -13,6 +13,7 @@ import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreen
 import de.fhe.adoptapal.ui.screens.animalDetail.DetailScreenViewModel
 import de.fhe.adoptapal.ui.screens.home.HomeScreen
 import de.fhe.adoptapal.ui.screens.home.HomeScreenViewModel
+import de.fhe.adoptapal.ui.screens.home.SearchScreen
 import de.fhe.adoptapal.ui.screens.login.LoginScreen
 import de.fhe.adoptapal.ui.screens.login.LoginScreenViewModel
 import de.fhe.adoptapal.ui.screens.map.MapScreen
@@ -21,7 +22,6 @@ import de.fhe.adoptapal.ui.screens.profile.ProfileScreen
 import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreen
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
-import de.fhe.adoptapal.ui.screens.home.SearchScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreenViewModel
 import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreen

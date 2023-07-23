@@ -23,8 +23,8 @@ class RegisterScreenViewModel(
     fun addUser(userName: String, userEmail: String, userPhoneNumber: String) {
         viewModelScope.launch {
 
-            if (userName.isBlank() || userEmail.isBlank() || userPhoneNumber.isBlank()) {
-                saveFeedbackFlow.emit(AsyncOperation.error("User name, email and phone are missing"))
+            if (userName.isBlank() || userEmail.isBlank()) {
+                saveFeedbackFlow.emit(AsyncOperation.error("Name oder Email fehlt"))
             } else {
                 val newUser = User(userName, userEmail, userPhoneNumber, null)
                 saveFeedbackFlow.emit(AsyncOperation.saving("Saving user now!"))
@@ -54,14 +54,14 @@ class RegisterScreenViewModel(
 
     fun validatePhoneNumber(phoneNumber: String): Boolean {
         val phonePattern = "^(\\+49|0)(\\d{3,4})[ -]?(\\d{3,})([ -]?\\d{1,5})?\$"
-        return phoneNumber.matches(phonePattern.toRegex())
+        return phoneNumber.matches(phonePattern.toRegex()) || phoneNumber == ""
     }
 
     fun validatePassword(password: String): Boolean {
         return password.length >= 3
     }
 
-    fun validateConfirmPassword(password: String, confirmPassword: String ): Boolean {
+    fun validateConfirmPassword(password: String, confirmPassword: String): Boolean {
         return password == confirmPassword
     }
 

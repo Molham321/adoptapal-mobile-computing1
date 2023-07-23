@@ -36,7 +36,7 @@ class CreateAnimalAsync(private val repository: Repository) {
 }
 
 class UpdateAnimalAsync(private val repository: Repository) {
-    operator fun invoke(updateAnimal: Animal) : Flow<AsyncOperation> = flow {
+    operator fun invoke(updateAnimal: Animal): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start updating animal with id ${updateAnimal.id} ..."))
         val updateAnimalId = repository.updateAnimal(updateAnimal)
         emit(AsyncOperation.success("Animal with id $updateAnimalId updatecd", updateAnimalId))

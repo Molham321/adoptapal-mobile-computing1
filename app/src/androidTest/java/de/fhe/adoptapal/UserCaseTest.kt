@@ -2,15 +2,11 @@ package de.fhe.adoptapal
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import de.fhe.adoptapal.android_core.LocalStoreImpl
-import de.fhe.adoptapal.data.AnimalModel
-import de.fhe.adoptapal.data.AnimalModelDao
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
 import de.fhe.adoptapal.domain.Animal
-import de.fhe.adoptapal.domain.AnimalCategory
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
-import de.fhe.adoptapal.domain.Color
 import de.fhe.adoptapal.domain.CreateAnimalAsync
 import de.fhe.adoptapal.domain.CreateAnimalCategoryAsync
 import de.fhe.adoptapal.domain.CreateColorAsync
@@ -56,8 +52,6 @@ import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.get
 import java.time.LocalDate
-import java.time.LocalDateTime
-import kotlin.test.assertFails
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -275,7 +269,7 @@ class UseCaseTests : KoinTest {
 
         val updateAnimalUseCase = get<UpdateAnimalAsync>()
 
-        updateAnimalUseCase.invoke(animalToUpdate).collect{
+        updateAnimalUseCase.invoke(animalToUpdate).collect {
             if (it == AsyncOperation.success()) {
                 assertEquals(animalId, (it.payload as Animal).id)
                 assertEquals(animal.name, (it.payload as Animal).name)

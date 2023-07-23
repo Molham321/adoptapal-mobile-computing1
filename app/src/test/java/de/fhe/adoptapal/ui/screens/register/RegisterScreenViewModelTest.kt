@@ -7,14 +7,14 @@ import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
-import org.junit.Assert.assertEquals
-import org.junit.Before
-import org.junit.Test
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
+import org.junit.Assert.assertEquals
+import org.junit.Before
+import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class RegisterScreenViewModelTest {

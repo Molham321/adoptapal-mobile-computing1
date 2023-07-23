@@ -1,7 +1,5 @@
 package de.fhe.adoptapal.ui.screens.userDetail
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,22 +7,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.outlined.LocationOn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -34,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.ui.screens.home.AnimalCard
-import de.fhe.adoptapal.ui.screens.sharedComponents.AnimalList
 import de.fhe.adoptapal.ui.screens.sharedComponents.composeCall
 import de.fhe.adoptapal.ui.screens.sharedComponents.composeEmail
 import de.fhe.adoptapal.ui.screens.util.FullscreenPlaceholderView
@@ -44,7 +37,7 @@ fun UserDetailScreen(vm: UserDetailScreenViewModel, modifier: Modifier = Modifie
     val animalList = remember { vm.animalList }
     val context = LocalContext.current
 
-    Column{
+    Column {
         Text(
             text = vm.user.value?.name?.uppercase() ?: "Keine User!",
             modifier = Modifier
@@ -107,7 +100,12 @@ fun UserDetailScreen(vm: UserDetailScreenViewModel, modifier: Modifier = Modifie
                             if (vm.user.value!!.phoneNumber != null) {
                                 Button(
                                     onClick = {
-                                        vm.user.value!!.phoneNumber?.let { composeCall(context, it) }
+                                        vm.user.value!!.phoneNumber?.let {
+                                            composeCall(
+                                                context,
+                                                it
+                                            )
+                                        }
                                     },
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -146,13 +144,15 @@ fun UserDetailScreen(vm: UserDetailScreenViewModel, modifier: Modifier = Modifie
                 }
 
                 if (animalList.value.isNotEmpty()) {
-                    item{
-                        Text(text = "Hochgeladene Tiere",
+                    item {
+                        Text(
+                            text = "Hochgeladene Tiere",
                             modifier = Modifier.padding(16.dp, 0.dp, 12.dp, 0.dp),
                             color = colorResource(id = R.color.black),
                             fontWeight = FontWeight.Bold,
                             style = MaterialTheme.typography.h5,
-                            fontSize = 20.sp)
+                            fontSize = 20.sp
+                        )
                     }
                     items(
                         items = animalList.value,

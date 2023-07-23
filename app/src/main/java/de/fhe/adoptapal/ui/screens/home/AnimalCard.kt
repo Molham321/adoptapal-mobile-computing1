@@ -31,8 +31,6 @@ import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.ui.screens.sharedComponents.GenderTag
 import de.fhe.adoptapal.ui.theme.BackgroundGreyOpacity
-import de.fhe.adoptapal.ui.theme.LightModeSecondary
-import de.fhe.adoptapal.ui.theme.LightModeSecondaryOpacity
 import de.fhe.adoptapal.ui.theme.LightModeText
 import org.koin.androidx.compose.koinViewModel
 
@@ -61,16 +59,36 @@ fun AnimalCard(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            if(animal.imageFilePath == null) {
+            if (animal.imageFilePath == null) {
                 var image: Painter
-                when(animal.animalCategory.name) {
-                    "Katze" -> {image = painterResource(id = R.drawable.andresllanezas_katze)}
-                    "Hund" -> {image = painterResource(id = R.drawable.andresllanezas_hund)}
-                    "Fisch" -> {image = painterResource(id = R.drawable.andresllanezas_fisch)}
-                    "Reptil" -> {image = painterResource(id = R.drawable.andresllanezas_reptil)}
-                    "Nagetier" -> {image = painterResource(id = R.drawable.andresllanezas_nagetier)}
-                    "Vogel" -> {image = painterResource(id = R.drawable.andresllanezas_vogel)}
-                    else -> {image = painterResource(id = R.drawable.andresllanezas_andere)}
+                when (animal.animalCategory.name) {
+                    "Katze" -> {
+                        image = painterResource(id = R.drawable.andresllanezas_katze)
+                    }
+
+                    "Hund" -> {
+                        image = painterResource(id = R.drawable.andresllanezas_hund)
+                    }
+
+                    "Fisch" -> {
+                        image = painterResource(id = R.drawable.andresllanezas_fisch)
+                    }
+
+                    "Reptil" -> {
+                        image = painterResource(id = R.drawable.andresllanezas_reptil)
+                    }
+
+                    "Nagetier" -> {
+                        image = painterResource(id = R.drawable.andresllanezas_nagetier)
+                    }
+
+                    "Vogel" -> {
+                        image = painterResource(id = R.drawable.andresllanezas_vogel)
+                    }
+
+                    else -> {
+                        image = painterResource(id = R.drawable.andresllanezas_andere)
+                    }
                 }
                 // val image: Painter = painterResource(id = R.drawable.hund)
                 Image(
@@ -105,7 +123,7 @@ fun AnimalCard(
                 Spacer(modifier = modifier.height(8.dp))
 
                 Text(
-                    text =  animal.getAge(),
+                    text = animal.getAge(),
                     modifier = modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
                     color = Color.Gray,
                 )
