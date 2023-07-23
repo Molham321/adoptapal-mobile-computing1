@@ -103,9 +103,20 @@ class DBInitialData : KoinComponent {
                     "Grau"
                 )
             )
+
             repo.insertColor(
                 Color(
                     9,
+                    LocalDateTime.of(2023, 5, 30, 22, 11),
+                    LocalDateTime.now(),
+                    "Blau"
+                )
+            )
+
+
+            repo.insertColor(
+                Color(
+                    10,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
                     "Mehrfarbig"
@@ -113,12 +124,13 @@ class DBInitialData : KoinComponent {
             )
             repo.insertColor(
                 Color(
-                    10,
+                    11,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
                     "Andere"
                 )
             )
+
 
 
             // create animal categories

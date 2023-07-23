@@ -15,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import de.fhe.adoptapal.domain.Color as AnimalColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -42,7 +43,7 @@ fun SearchScreen(
     var breed by remember { mutableStateOf(TextFieldValue()) }
     var art by remember { mutableStateOf(TextFieldValue()) }
 
-    val colors = listOf("Red", "Green", "Blue", "Yellow", "Orange")
+    val colors = vm.animalColorList.value
 
     // Define a list of gender options
     val genderOptions = listOf("Männlich", "Weiblich", "Alle")
@@ -93,7 +94,7 @@ fun SearchScreen(
             // Breed filter
             BreedFilter(vm.initialBreed, onBreedChange = { vm.initialBreed = it })
 
-            // Art filter
+            // Art filte
             ArtFilter(vm.initialArt, onArtChange = { vm.initialArt = it })
 
             // Apply and Reset buttons
@@ -119,6 +120,8 @@ fun SearchScreen(
                     onResetFilters()
                 }
             )
+
+            Spacer(modifier = Modifier.height(120.dp))
         }
     }
 }
@@ -171,7 +174,7 @@ private fun GenderFilter(selectedGender: String, genderOptions: List<String>, on
 }
 
 @Composable
-private fun ColorFilter(color: String, colors: List<String>, onColorSelected: (String) -> Unit, onClearColor: () -> Unit) {
+private fun ColorFilter(color: String, colors: List<AnimalColor>, onColorSelected: (String) -> Unit, onClearColor: () -> Unit) {
     var expanded by remember { mutableStateOf(false) }
 
     Text(text = "Farbe:")
@@ -193,10 +196,10 @@ private fun ColorFilter(color: String, colors: List<String>, onColorSelected: (S
         ) {
             colors.forEach { colorOption ->
                 DropdownMenuItem(onClick = {
-                    onColorSelected(colorOption)
+                    onColorSelected(colorOption.name)
                     expanded = false // Collapse the dropdown menu after selection
                 }) {
-                    Text(text = colorOption)
+                    Text(text = colorOption.name)
                 }
             }
         }

@@ -31,7 +31,7 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
         if (vm.showFilterDialog) {
             AlertDialog(
                 onDismissRequest = { vm.showFilterDialog = false },
-                title = { Text(text = "Filteroptionen") },
+//                title = { Text(text = "Filteroptionen") },
                 text = {
                     // Call the SearchScreen composable to display the filter options
                     SearchScreen(
