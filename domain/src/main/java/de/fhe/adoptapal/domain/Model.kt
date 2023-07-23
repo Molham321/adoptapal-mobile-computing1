@@ -2,6 +2,7 @@ package de.fhe.adoptapal.domain
 
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.Period
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.pow
@@ -215,6 +216,34 @@ data class Animal(
         weight,
         false
     )
+
+    fun getCreateTimeDifference() : String {
+        val currentDate = LocalDate.now()
+        val age = Period.between(createdTimestamp.toLocalDate(), currentDate)
+
+        return calculateDateDifference(age)
+    }
+
+    fun getAge(): String {
+        val currentDate = LocalDate.now()
+        val age = Period.between(birthday, currentDate)
+
+        return calculateDateDifference(age)
+    }
+
+    private fun calculateDateDifference(age: Period) : String {
+
+        return if (age.years < 1) {
+            if (age.months < 1) {
+                "${age.days} Tage"
+            } else {
+                "${age.months} Monate"
+            }
+        } else {
+            "${age.years} Jahre"
+        }
+    }
+
 }
 
 data class Color(

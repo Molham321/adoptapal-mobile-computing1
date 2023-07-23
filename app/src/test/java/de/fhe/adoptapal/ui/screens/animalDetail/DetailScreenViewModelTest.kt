@@ -54,17 +54,4 @@ class DetailScreenViewModelTest {
         assertEquals(successOperation, viewModel.dbOp.value)
     }
 
-    @Test
-    fun `getAge should calculate the correct age string`() {
-        // Arrange
-        val birthday = LocalDate.of(2019, Month.JANUARY, 1)
-        val currentDate = LocalDate.of(2023, Month.JULY, 18)
-        val expectedAge = "4 Jahre"
-
-        // Act
-        val age = viewModel.getAge(birthday)
-
-        // Assert
-        assertEquals(expectedAge, age)
-    }
 }

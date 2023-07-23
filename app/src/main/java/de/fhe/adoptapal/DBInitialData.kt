@@ -129,55 +129,55 @@ class DBInitialData : KoinComponent {
                     LocalDateTime.now(),
                     "Katze"
                 )
+
+            val animalCategory2 =                 AnimalCategory(
+                2,
+                LocalDateTime.of(2023, 5, 30, 22, 11),
+                LocalDateTime.now(),
+                "Hund"
+            )
+
+            val animalCategory3 =                 AnimalCategory(
+                3,
+                LocalDateTime.of(2023, 5, 30, 22, 11),
+                LocalDateTime.now(),
+                "Fisch"
+            )
+
+            val animalCategory4  =                 AnimalCategory(
+                4,
+                LocalDateTime.of(2023, 5, 30, 22, 11),
+                LocalDateTime.now(),
+                "Reptil"
+            )
+
+            val animalCategory5 =                 AnimalCategory(
+                5,
+                LocalDateTime.of(2023, 5, 30, 22, 11),
+                LocalDateTime.now(),
+                "Nagetier"
+            )
+
+            val animalCategory6 =                 AnimalCategory(
+                6,
+                LocalDateTime.of(2023, 5, 30, 22, 11),
+                LocalDateTime.now(),
+                "Vogel"
+            )
+
+            val animalCategory7 =                 AnimalCategory(
+                7,
+                LocalDateTime.of(2023, 5, 30, 22, 11),
+                LocalDateTime.now(),
+                "Andere"
+            )
             repo.insertAnimalCategory(animalCategory1)
-            repo.insertAnimalCategory(
-                AnimalCategory(
-                    2,
-                    LocalDateTime.of(2023, 5, 30, 22, 11),
-                    LocalDateTime.now(),
-                    "Hund"
-                )
-            )
-            repo.insertAnimalCategory(
-                AnimalCategory(
-                    3,
-                    LocalDateTime.of(2023, 5, 30, 22, 11),
-                    LocalDateTime.now(),
-                    "Fisch"
-                )
-            )
-            repo.insertAnimalCategory(
-                AnimalCategory(
-                    4,
-                    LocalDateTime.of(2023, 5, 30, 22, 11),
-                    LocalDateTime.now(),
-                    "Reptil"
-                )
-            )
-            repo.insertAnimalCategory(
-                AnimalCategory(
-                    5,
-                    LocalDateTime.of(2023, 5, 30, 22, 11),
-                    LocalDateTime.now(),
-                    "Nagetier"
-                )
-            )
-            repo.insertAnimalCategory(
-                AnimalCategory(
-                    6,
-                    LocalDateTime.of(2023, 5, 30, 22, 11),
-                    LocalDateTime.now(),
-                    "Vogel"
-                )
-            )
-            repo.insertAnimalCategory(
-                AnimalCategory(
-                    7,
-                    LocalDateTime.of(2023, 5, 30, 22, 11),
-                    LocalDateTime.now(),
-                    "Andere"
-                )
-            )
+            repo.insertAnimalCategory(animalCategory2)
+            repo.insertAnimalCategory(animalCategory3)
+            repo.insertAnimalCategory(animalCategory4)
+            repo.insertAnimalCategory(animalCategory5)
+            repo.insertAnimalCategory(animalCategory6)
+            repo.insertAnimalCategory(animalCategory7)
 
             // create address
             val address1 = Address(
@@ -284,13 +284,13 @@ class DBInitialData : KoinComponent {
                     "Buddy",
                     LocalDate.of(2020, 3, 15),
                     user2,
-                    animalCategory1,
+                    animalCategory2,
                     "Beschreibung des Tiers 2",
                     color1,
                     null,
                     false,
                     8.2f,
-                    true
+                    false
                 )
             )
 
@@ -302,13 +302,13 @@ class DBInitialData : KoinComponent {
                     "Max",
                     LocalDate.of(2017, 7, 10),
                     user2,
-                    animalCategory1,
+                    animalCategory3,
                     "Beschreibung des Tiers 3",
                     color1,
                     null,
                     false,
                     12.7f,
-                    true
+                    false
                 )
             )
 
@@ -320,13 +320,13 @@ class DBInitialData : KoinComponent {
                     "Luna",
                     LocalDate.of(2022, 1, 5),
                     user1,
-                    animalCategory1,
+                    animalCategory4,
                     "Beschreibung des Tiers 4",
                     color1,
                     null,
                     true,
                     6.9f,
-                    true
+                    false
                 )
             )
 
@@ -338,7 +338,7 @@ class DBInitialData : KoinComponent {
                     "Charlie",
                     LocalDate.of(2021, 9, 12),
                     user2,
-                    animalCategory1,
+                    animalCategory5,
                     "Beschreibung des Tiers 5",
                     color1,
                     null,
@@ -356,11 +356,11 @@ class DBInitialData : KoinComponent {
                     "Milo",
                     LocalDate.of(2020, 5, 8),
                     user1,
-                    animalCategory1,
+                    animalCategory6,
                     "Beschreibung des Tiers 6",
                     color1,
                     null,
-                    false,
+                    true,
                     11.3f,
                     true
                 )

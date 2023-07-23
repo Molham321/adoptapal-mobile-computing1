@@ -105,9 +105,7 @@ fun AnimalCard(
                 Spacer(modifier = modifier.height(8.dp))
 
                 Text(
-                    text = buildString {
-                        append(vm.getAge(animal.birthday))
-                    },
+                    text =  animal.getAge(),
                     modifier = modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
                     color = Color.Gray,
                 )
@@ -142,7 +140,7 @@ fun AnimalCard(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "vor 12 Minuten", // TODO fix or delete - wie AnimalInfoCard
+                    text = "vor ${animal.getCreateTimeDifference()}",
                     modifier = modifier.padding(8.dp, 0.dp, 12.dp, 12.dp),
                     color = Color.Gray,
                     style = MaterialTheme.typography.overline

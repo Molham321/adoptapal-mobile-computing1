@@ -95,19 +95,6 @@ class HomeScreenViewModelTest {
     }
 
     @Test
-    fun `getAge should calculate the correct age string`() {
-        // Arrange
-        val birthday = LocalDate.of(1990, 5, 1)
-        val expectedAgeString = "33 Jahre"
-
-        // Act
-        val ageString = viewModel.getAge(birthday)
-
-        // Assert
-        assertEquals(expectedAgeString, ageString)
-    }
-
-    @Test
     fun `logout should clear user`() = runBlockingTest {
         // Arrange
         val user = User("John Doe", "john@example.com", null)

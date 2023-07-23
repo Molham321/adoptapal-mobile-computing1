@@ -139,7 +139,8 @@ fun Details(
             AnimalInfoCard(
                 animal.name,
                 animal.isMale,
-                animal.supplier.address
+                animal.supplier.address,
+                animal.getCreateTimeDifference()
             )
 
         }
@@ -201,7 +202,7 @@ fun Details(
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                InfoCard(title = "Alter", value = vm.getAge(animal.birthday))
+                InfoCard(title = "Alter", value = animal.getAge())
                 InfoCard(title = "Farbe", value = animal.color.name)
                 InfoCard(title = "Gewicht", value = animal.weight.toString().plus("Kg"))
             }
