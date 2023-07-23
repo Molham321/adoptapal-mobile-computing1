@@ -35,8 +35,6 @@ import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
-// TODO: aktuell angemeldeten Nutzer mit dem neuen Tier speichern
-// TODO: eigene Bilder hochladen
 
 class AddAnimalScreenViewModel(
     private val createAnimalAsync: CreateAnimalAsync,
@@ -50,8 +48,6 @@ class AddAnimalScreenViewModel(
 ) : ViewModel() {
     var animalCategoryList = mutableStateOf(emptyList<AnimalCategory>())
     var animalColorList = mutableStateOf(emptyList<Color>())
-    var supplyingUser = mutableStateOf<User?>(null)
-
 
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
@@ -62,11 +58,6 @@ class AddAnimalScreenViewModel(
     init {
         this.getAnimalCategoriesFromDb()
         this.getColorsFromDb()
-        this.getSupplyingUser(2) // TODO muss die ID hardcoded sein?
-//        animalCategoryList.value.forEach {
-//            animalCategoryArray += it.name
-//        }
-//        animalCategories = mutableStateOf(animalCategoryArray)
     }
 
     private fun getAnimalCategoriesFromDb() {
@@ -93,16 +84,6 @@ class AddAnimalScreenViewModel(
         }
     }
 
-    private fun getSupplyingUser(id: Long) {
-        viewModelScope.launch {
-            getUserAsync(id).collect {
-                dbOp.value = it
-                if (it.status == AsyncOperationState.SUCCESS) {
-                    supplyingUser.value = it.payload as User
-                }
-            }
-        }
-    }
 
     fun getCategoryArray(list: List<AnimalCategory>): Array<String> {
         var categoryArray = arrayOf<String>()
