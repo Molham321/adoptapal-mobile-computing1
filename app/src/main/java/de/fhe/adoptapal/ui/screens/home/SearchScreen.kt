@@ -33,23 +33,13 @@ fun SearchScreen(
 ) {
     val scrollState = rememberScrollState()
 
-    var ageFrom by remember { mutableStateOf(0) }
-    var ageTo by remember { mutableStateOf(0) }
-    var isMale by remember { mutableStateOf(false) }
-    var color by remember { mutableStateOf("") }
-    var weightFrom by remember { mutableStateOf(0) }
-    var weightTo by remember { mutableStateOf(0) }
-    var city by remember { mutableStateOf("") }
-    var breed by remember { mutableStateOf(TextFieldValue()) }
-    var art by remember { mutableStateOf(TextFieldValue()) }
-
     val colors = vm.animalColorList.value
 
     // Define a list of gender options
     val genderOptions = listOf("Männlich", "Weiblich", "Alle")
 
     // Find the index of the selected gender in the list
-    var selectedGenderIndex = genderOptions.indexOfFirst { it.equals(isMale?.toString(), ignoreCase = true) }
+    var selectedGenderIndex = genderOptions.indexOfFirst { it.equals(vm.initialSelectedGender?.toString(), ignoreCase = true) }
 
     // If the isMale property is null (representing "Alle"), set the index to 2 (for "Alle" option)
     if (selectedGenderIndex == -1) {

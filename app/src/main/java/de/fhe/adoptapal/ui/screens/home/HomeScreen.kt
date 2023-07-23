@@ -61,7 +61,7 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
             var filteredAnimals = vm.getFilteredAnimals(vm.filteredAnimals.value, filterText)
 
             if (filteredAnimals.isEmpty()) {
-                filteredAnimals = vm.animalList.value
+                filteredAnimals = vm.getFilteredAnimals(vm.animalList.value, filterText)
             }
 
             AnimalList(
