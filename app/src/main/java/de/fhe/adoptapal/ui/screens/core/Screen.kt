@@ -156,15 +156,18 @@ sealed class Screen(
         route = "Profile",
         hasReturn = false
     ) {
+
         override fun prepareAppBarActions(vararg values: Any) {
             if (values[0] !is ProfileScreenViewModel)
                 error("First Parameter must be of type *ProfileScreenViewModel*")
             val viewModel = values[0] as ProfileScreenViewModel
 
             appBarActions = {
-                IconButton(onClick = { viewModel.navigateToSettings() }
-                ) {
-                    Icon(Icons.Filled.Edit, contentDescription = null)
+                if(viewModel.user.value != null) {
+                    IconButton(onClick = { viewModel.navigateToSettings() }
+                    ) {
+                        Icon(Icons.Filled.Edit, contentDescription = null)
+                    }
                 }
             }
         }

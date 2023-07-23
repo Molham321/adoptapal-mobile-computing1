@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -125,7 +126,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 userEmailTextFieldValue = newValue
                 userEmailError = ""
                            },
-            inputPlaceholder = "E-Mail-Adresse"
+            inputPlaceholder = stringResource(id = R.string.email)
         )
         if (userEmailError.isNotBlank()) {
             Text(
@@ -222,7 +223,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                         userNameError = "Ungültiger Name"
                     }
                     if (!isEmailValid) {
-                        userEmailError = "Ungültige E-Mail-Adresse"
+                        userEmailError = "Ungültige Email"
                     }
                     if (!isPhoneNumberValid) {
                         userPhoneNumberError = "Ungültige Telefonnummer"

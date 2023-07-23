@@ -25,6 +25,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -144,7 +145,7 @@ fun OwnerCard(
                         .clip(RoundedCornerShape(8.dp))
                 ) {
                     Text(
-                        text = "Email",
+                        text = stringResource(id = R.string.email),
                         fontSize = 16.sp,
                     )
                 }
