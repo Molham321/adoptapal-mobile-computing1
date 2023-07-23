@@ -8,6 +8,7 @@ import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.GetAnimalAsync
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
+import de.fhe.adoptapal.domain.UpdateAnimalAsync
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.launch
@@ -17,7 +18,8 @@ import java.time.Period
 class DetailScreenViewModel(
     private val navigationManager: NavigationManager,
     private val animalId: Long,
-    private val getAnimalAsync: GetAnimalAsync
+    private val getAnimalAsync: GetAnimalAsync,
+    private val updateAnimalAsync: UpdateAnimalAsync
 ) : ViewModel() {
 
     var animal = mutableStateOf<Animal?>(null)
@@ -39,6 +41,11 @@ class DetailScreenViewModel(
     }
 
     fun saveAnimalAsFavorite(animal: Animal) {
+        viewModelScope.launch {
+            updateAnimalAsync(animal).collect{
+
+            }
+        }
         println("Tier ${animal.name} mit id ${animal.id} gemerkt: ${animal.isFavorite}")
     }
 
