@@ -28,7 +28,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import de.fhe.adoptapal.R
+import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal
+import de.fhe.adoptapal.domain.Location
 import de.fhe.adoptapal.ui.screens.sharedComponents.GenderTag
 import de.fhe.adoptapal.ui.theme.BackgroundGreyOpacity
 import de.fhe.adoptapal.ui.theme.LightModeText
@@ -41,6 +43,7 @@ import org.koin.androidx.compose.koinViewModel
 fun AnimalCard(
     animal: Animal,
     modifier: Modifier = Modifier,
+    userAddress: Address?,
     onItemPressed: (itemId: Long) -> Unit = {}
 ) {
     val vm: HomeScreenViewModel = koinViewModel()
@@ -59,6 +62,8 @@ fun AnimalCard(
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
+
+            // ANIMAL IMAGE
             if (animal.imageFilePath == null) {
                 var image: Painter
                 when (animal.animalCategory.name) {
@@ -90,7 +95,8 @@ fun AnimalCard(
                         image = painterResource(id = R.drawable.andresllanezas_andere)
                     }
                 }
-                // val image: Painter = painterResource(id = R.drawable.hund)
+
+                // Image from inital data or default images
                 Image(
                     modifier = modifier
                         .size(80.dp, 80.dp)
@@ -102,6 +108,8 @@ fun AnimalCard(
                 )
 
             } else {
+
+                // Image from DB
                 AsyncImage(
                     model = animal.imageFilePath,
                     contentDescription = null,
@@ -122,16 +130,17 @@ fun AnimalCard(
                 )
                 Spacer(modifier = modifier.height(8.dp))
 
+                // AGE
                 Text(
                     text = animal.getAge(),
                     modifier = modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
                     color = Color.Gray,
                 )
 
+                // LOCATION
                 Row(verticalAlignment = Alignment.Bottom) {
-
+                    // Location Icon
                     val location: Painter = painterResource(id = R.drawable.location)
-
                     Icon(
                         painter = location,
                         contentDescription = null,
@@ -139,15 +148,35 @@ fun AnimalCard(
                         tint = LightModeText
                     )
 
-                    animal.supplier.address?.city?.let {
+                    // City
+                    animal.supplier.address?.let {supplierAddress ->
+                        var animalLocation = supplierAddress.city
+                        var distance = ""
+
+                        // user is in a different city than supplier
+                        if(userAddress != null) {
+                            if (userAddress.city != supplierAddress.city) {
+                                distance = Location(userAddress.latitude, userAddress.longitude)
+                                    .calculateDistanceTo(
+                                        supplierAddress.latitude,
+                                        supplierAddress.longitude
+                                    )
+                                    .toInt()
+                                    .toString()
+                                animalLocation = "${supplierAddress.city} (${distance}km)"
+                            }
+                        }
+
                         Text(
-                            text = it,
+                            text = animalLocation,
                             modifier = modifier.padding(8.dp, 12.dp, 12.dp, 0.dp),
                             color = Color.Gray,
                         )
                     }
                 }
             }
+
+            // GENDER
             Column(
                 modifier = modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.Top,

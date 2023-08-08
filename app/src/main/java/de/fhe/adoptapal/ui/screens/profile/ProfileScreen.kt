@@ -111,6 +111,7 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                     AnimalCard(
                         it,
                         modifier = modifier,
+                        user.value?.address
                     ) {
                         vm.navigateToAnimal(it)
                     }

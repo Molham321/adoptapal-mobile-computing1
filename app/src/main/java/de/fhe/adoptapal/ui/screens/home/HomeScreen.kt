@@ -65,7 +65,8 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
 
             AnimalList(
                 animals = filteredAnimals,
-                modifier = modifier
+                modifier = modifier,
+                userAddress = vm.user.value?.address
             ) {
                 vm.navigateToAnimal(it)
             }

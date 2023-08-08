@@ -211,8 +211,8 @@ class DBInitialData : KoinComponent {
                 street = "Erfurter Straße",
                 city = "Weimar",
                 zipCode = "99423",
-                latitude = 54.313549,
-                longitude = 9.967596
+                latitude = 50.980106,
+                longitude = 11.322003
             )
 
             val address3 = Address(
