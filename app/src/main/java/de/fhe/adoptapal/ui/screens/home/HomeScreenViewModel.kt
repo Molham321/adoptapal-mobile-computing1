@@ -106,13 +106,6 @@ class HomeScreenViewModel(
         this.getLoggedInUser()
     }
 
-
-    fun getFilteredAnimals(
-        animalList: List<Animal>
-    ): List<Animal> {
-        return animalList
-    }
-
     fun updateAnimalList(
         ageFrom: Int?,
         ageTo: Int?,
@@ -178,26 +171,6 @@ class HomeScreenViewModel(
 
     fun openFilterDialog() {
         showFilterDialog = true
-    }
-
-    fun getColorArray(list: List<Color>): Array<String> {
-        var colorArray = arrayOf<String>()
-
-        list.forEach {
-            colorArray += it.name
-        }
-
-        return colorArray
-    }
-
-    fun getColorMap(list: List<Color>): Map<Long, String> {
-        var colorMap = mutableMapOf<Long, String>()
-
-        list.forEach {
-            colorMap[it.id] = it.name
-        }
-
-        return colorMap
     }
 
     fun navigateToAddAnimal() {
