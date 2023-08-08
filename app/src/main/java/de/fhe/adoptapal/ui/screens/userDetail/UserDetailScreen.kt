@@ -161,6 +161,7 @@ fun UserDetailScreen(vm: UserDetailScreenViewModel, modifier: Modifier = Modifie
                         AnimalCard(
                             it,
                             modifier = modifier,
+                            userAddress = vm.user.value?.address
                         ) {
                             vm.navigateToAnimal(it)
                         }

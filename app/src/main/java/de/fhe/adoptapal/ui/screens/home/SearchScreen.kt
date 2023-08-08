@@ -21,6 +21,8 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -86,6 +89,12 @@ fun SearchScreen(
             genderOptions,
             onGenderSelected = { vm.initialSelectedGender = it })
 
+            // City filter
+            CityFilter(vm.initialCity, onCityChange = { vm.initialCity = it })
+            // CityDistance filter
+            DistanceToCityFilter(vm.initialDistance,
+                onDistanceSelected = { vm.initialDistance = it},
+                onClearDistance = { vm.initialDistance = 0})
         // Color filter
         ColorFilter(
             vm.initialColor,
@@ -107,35 +116,34 @@ fun SearchScreen(
             onWeightFromChange = { vm.initialWeightFrom = it },
             onWeightToChange = { vm.initialWeightTo = it })
 
-        // City filter
-        CityFilter(vm.initialCity, onCityChange = { vm.initialCity = it })
+            // Apply and Reset buttons
+            FilterButtons(
+                onApplyClicked = {
+                    val filteredAnimals = vm.updateAnimalList(
+                        ageFrom = vm.initialAgeFrom.takeIf { it > 0 },
+                        ageTo = vm.initialAgeTo,
+                        isMale = when (vm.initialSelectedGender) {
+                            "Männlich" -> true
+                            "Weiblich" -> false
+                            else -> null // If "Alle" is selected, set to null to display all genders
+                        },
+                        color = vm.initialColor.takeIf { it.isNotBlank() },
+                        weightFrom = vm.initialWeightFrom,
+                        weightTo = vm.initialWeightTo,
+                        city = vm.initialCity.takeIf { it.isNotBlank() },
+                        distance = vm.initialDistance,
+                        art = vm.initialArt.takeIf { it.isNotBlank() },
+                        name = vm.initialName.takeIf { it.isNotBlank() },
+                        description = vm.initialDescription.takeIf { it.isNotBlank() }
 
-        // Apply and Reset buttons
-        FilterButtons(
-            onApplyClicked = {
-                val filteredAnimals = vm.updateAnimalList(
-                    name = vm.initialName.takeIf { it.isNotBlank() },
-                    description = vm.initialDescription.takeIf { it.isNotBlank() },
-                    ageFrom = vm.initialAgeFrom.takeIf { it > 0 },
-                    ageTo = vm.initialAgeTo,
-                    isMale = when (vm.initialSelectedGender) {
-                        "Männlich" -> true
-                        "Weiblich" -> false
-                        else -> null // If "Alle" is selected, set to null to display all genders
-                    },
-                    color = vm.initialColor.takeIf { it.isNotBlank() },
-                    art = vm.initialArt.takeIf { it.isNotBlank() },
-                    weightFrom = vm.initialWeightFrom,
-                    weightTo = vm.initialWeightTo,
-                    city = vm.initialCity.takeIf { it.isNotBlank() },
-                )
-                onFiltersApplied(filteredAnimals)
-            },
-            onResetClicked = {
-                vm.resetFilterValues()
-                onResetFilters()
-            }
-        )
+                    )
+                    onFiltersApplied(filteredAnimals)
+                },
+                onResetClicked = {
+                    vm.resetFilterValues()
+                    onResetFilters()
+                }
+            )
 
         Spacer(modifier = modifier.height(120.dp))
     }
@@ -357,6 +365,50 @@ private fun CityFilter(city: String, onCityChange: (String) -> Unit) {
         onValueChange = { onCityChange(it) },
         modifier = Modifier.fillMaxWidth()
     )
+}
+
+@Composable
+private fun DistanceToCityFilter(
+    distance: Int,
+    onDistanceSelected: (Int) -> Unit,
+    onClearDistance: () -> Unit
+) {
+    val distances = listOf(0, 5, 10, 20, 50 )
+    var expanded by remember { mutableStateOf(false) }
+
+    Text(text = "Distanz:")
+    Box(modifier = Modifier.fillMaxWidth()) {
+        OutlinedButton(
+            onClick = { expanded = !expanded },
+            modifier = Modifier.align(Alignment.TopEnd),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Gray)
+        ) {
+            Text(
+                text = "Auswählen",
+                style = TextStyle(fontSize = 14.sp)
+            )
+        }
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            distances.forEach { distanceOption ->
+                DropdownMenuItem(onClick = {
+                    onDistanceSelected(distanceOption)
+                    expanded = false // Collapse the dropdown menu after selection
+                }) {
+                    Text(text = "$distanceOption km")
+                }
+            }
+        }
+    }
+    // Anzeigen der ausgewählten Farbe
+    if (distance == 0) {
+        Text(text = "Alle Orte")
+    } else {
+        Text(text ="Alle Orte im Umkreis von $distance km")
+    }
 }
 
 @Composable

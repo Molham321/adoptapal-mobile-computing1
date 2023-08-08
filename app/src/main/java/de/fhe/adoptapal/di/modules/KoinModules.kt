@@ -22,6 +22,7 @@ import de.fhe.adoptapal.domain.GetAnimalByRangeAsync
 import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
 import de.fhe.adoptapal.domain.GetColorAsync
 import de.fhe.adoptapal.domain.GetLatLongForAddress
+import de.fhe.adoptapal.domain.GetLatLongForLocationString
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.GetRatingAsync
 import de.fhe.adoptapal.domain.GetUserAnimalsAsync
@@ -131,10 +132,12 @@ val useCaseModule = module {
 
     // Network
     factory { GetLatLongForAddress(get()) }
+    factory { GetLatLongForLocationString(get()) }
+
 }
 
 val viewModelModule = module {
-    viewModel { HomeScreenViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { HomeScreenViewModel(get(), get(), get(), get(), get(), get(), get()) }
 
     viewModel { DetailScreenViewModel(get(), get(), get(), get()) }
     viewModel { UserDetailScreenViewModel(get(), get(), get(), get()) }
