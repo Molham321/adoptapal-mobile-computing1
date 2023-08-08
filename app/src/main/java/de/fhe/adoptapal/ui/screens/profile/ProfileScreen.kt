@@ -7,13 +7,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -33,7 +36,9 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
     vm.reload()
 
     val user = remember { vm.user }
-    val animalList = remember { vm.animalList }
+    val favoriteAnimalList = remember { vm.favoriteAnimalList }
+    val userAnimalList = remember { vm.userAnimalList }
+    val listState = remember { mutableStateOf(false) }
 
     Column {
         Text(
@@ -93,31 +98,82 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                 }
             }
 
-            if (animalList.value.isNotEmpty()) {
-                item {
-                    Text(
-                        text = "Gemerkte Tiere",
-                        modifier = Modifier.padding(16.dp, 0.dp, 12.dp, 0.dp),
-                        color = colorResource(id = R.color.black),
-                        fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.h5,
-                        fontSize = 20.sp
-                    )
-                }
-                items(
-                    items = animalList.value,
-                    key = { it.id }
+            item{
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp, 0.dp, 0.dp, 0.dp)
                 ) {
-                    AnimalCard(
-                        it,
-                        modifier = modifier,
+                    if (user.value != null) {
+                        Switch(
+                            modifier = Modifier
+                                .width(50.dp),
+                            checked = listState.value,
+                            onCheckedChange = {
+                                listState.value = it
+                            })
+                    }
+                    if(!listState.value) {
+                        Text(
+                            text = "Gemerkte Tiere",
+                            modifier = Modifier.padding(16.dp, 0.dp, 12.dp, 0.dp),
+                            color = colorResource(id = R.color.black),
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.h5,
+                            fontSize = 20.sp
+                        )
+                    } else {
+                        Text(
+                            text = "Hochgeladene Tiere",
+                            modifier = Modifier.padding(16.dp, 0.dp, 12.dp, 0.dp),
+                            color = colorResource(id = R.color.black),
+                            fontWeight = FontWeight.Bold,
+                            style = MaterialTheme.typography.h5,
+                            fontSize = 20.sp
+                        )
+                    }
+                }
+            }
+
+            if(!listState.value) {
+                if (favoriteAnimalList.value.isNotEmpty()) {
+                    item {
+                    }
+                    items(
+                        items = favoriteAnimalList.value,
+                        key = { it.id }
                     ) {
-                        vm.navigateToAnimal(it)
+                        AnimalCard(
+                            it,
+                            modifier = modifier,
+                        ) {
+                            vm.navigateToAnimal(it)
+                        }
+                    }
+                } else {
+                    item {
+                        FullscreenPlaceholderView("Keine Tiere gemerkt", Icons.Filled.Info)
                     }
                 }
             } else {
-                item {
-                    FullscreenPlaceholderView("No Animals", Icons.Filled.Info)
+                if (userAnimalList.value.isNotEmpty()) {
+                    item {
+                    }
+                    items(
+                        items = userAnimalList.value,
+                        key = { it.id }
+                    ) {
+                        AnimalCard(
+                            it,
+                            modifier = modifier,
+                        ) {
+                            vm.navigateToAnimal(it)
+                        }
+                    }
+                } else {
+                    item {
+                        FullscreenPlaceholderView("Keine Tiere hochgeladen", Icons.Filled.Info)
+                    }
                 }
             }
         }

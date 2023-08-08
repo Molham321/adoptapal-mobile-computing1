@@ -1,5 +1,6 @@
 package de.fhe.adoptapal
 
+import android.net.Uri
 import android.util.Log
 import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal
@@ -47,89 +48,86 @@ class DBInitialData : KoinComponent {
             val color1 =
                 Color(1, LocalDateTime.of(2023, 5, 30, 22, 11), LocalDateTime.now(), "Weiß")
             repo.insertColor(color1)
-            repo.insertColor(
+            val color2 =
                 Color(
                     2,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
                     "Schwarz"
                 )
-            )
-            repo.insertColor(
+            repo.insertColor(color2)
+            val color3 =
                 Color(
                     3,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
                     "Rot"
                 )
-            )
-            repo.insertColor(
+            repo.insertColor(color3)
+            val color4 =
                 Color(
                     4,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
                     "Grün"
                 )
-            )
-            repo.insertColor(
+            repo.insertColor(color4)
+            val color5 =
                 Color(
                     5,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
                     "Orange"
                 )
-            )
-            repo.insertColor(
+            repo.insertColor(color5)
+            val color6 =
                 Color(
                     6,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
                     "Gelb"
                 )
-            )
-            repo.insertColor(
+            repo.insertColor(color6)
+            val color7 =
                 Color(
                     7,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
                     "Braun"
                 )
-            )
-            repo.insertColor(
+            repo.insertColor(color7)
+            val color8 =
                 Color(
                     8,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
                     "Grau"
                 )
-            )
-
-            repo.insertColor(
+            repo.insertColor(color8)
+            val color9 =
                 Color(
                     9,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
                     "Blau"
                 )
-            )
-
-
-            repo.insertColor(
+            repo.insertColor(color9)
+            val color10 =
                 Color(
                     10,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
                     "Mehrfarbig"
                 )
-            )
-            repo.insertColor(
+            repo.insertColor(color10)
+            val color11 =
                 Color(
                     11,
                     LocalDateTime.of(2023, 5, 30, 22, 11),
                     LocalDateTime.now(),
                     "Andere"
                 )
-            )
+            repo.insertColor(color11)
 
 
             // create animal categories
@@ -207,12 +205,12 @@ class DBInitialData : KoinComponent {
                 id = 2,
                 createdTimestamp = LocalDateTime.of(2023, 5, 30, 22, 11),
                 lastChangeTimestamp = LocalDateTime.now(),
-                houseNumber = "10",
-                street = "Erfurter Straße",
+                houseNumber = "16",
+                street = "Berkaer Straße",
                 city = "Weimar",
-                zipCode = "99423",
-                latitude = 54.313549,
-                longitude = 9.967596
+                zipCode = "99425",
+                latitude = 50.964435,
+                longitude = 11.320641
             )
 
             val address3 = Address(
@@ -226,11 +224,34 @@ class DBInitialData : KoinComponent {
                 latitude = 50.977366,
                 longitude = 11.035729
             )
+            val address4 = Address(
+                id = 4,
+                createdTimestamp = LocalDateTime.of(2023, 7, 30, 12, 23),
+                lastChangeTimestamp = LocalDateTime.now(),
+                houseNumber = "100",
+                street = "Artur-Becker-Straße",
+                city = "Jena",
+                zipCode = "07745",
+                latitude = 50.873348,
+                longitude = 11.590350
+            )
+            val address5 = Address(
+                id = 5,
+                createdTimestamp = LocalDateTime.of(2023, 7, 30, 12, 23),
+                lastChangeTimestamp = LocalDateTime.now(),
+                houseNumber = "1b",
+                street = "Im Malmtal",
+                city = "Rudolstadt",
+                zipCode = "07407",
+                latitude = 50.735930,
+                longitude = 11.334090
+            )
 
             repo.insertAddress(address1)
             repo.insertAddress(address2)
             repo.insertAddress(address3)
-
+            repo.insertAddress(address4)
+            repo.insertAddress(address5)
 
             // create user
             val user1 = User(
@@ -258,15 +279,36 @@ class DBInitialData : KoinComponent {
                 createdTimestamp = LocalDateTime.of(2023, 5, 30, 22, 11),
                 lastChangeTimestamp = LocalDateTime.now(),
                 name = "Richard Klöse",
-                email = "richard.kloese@katze.de",
+                email = "richard.kloese@mail.de",
                 address = address3,
                 phoneNumber = "0178058270420",
                 useCoarseLocation = false
             )
+            val user4 = User(
+                id = 4,
+                createdTimestamp = LocalDateTime.of(2023, 7, 30, 12, 23),
+                lastChangeTimestamp = LocalDateTime.now(),
+                name = "Tierheim Katzentempel",
+                email = "katzentempel@tierheim.de",
+                address = address4,
+                phoneNumber = "0178445578987",
+                useCoarseLocation = false
+            )
+            val user5 = User(
+                id = 5,
+                createdTimestamp = LocalDateTime.of(2023, 7, 30, 12, 23),
+                lastChangeTimestamp = LocalDateTime.now(),
+                name = "Felix Richter",
+                email = "felix.richter@email.com",
+                address = address5,
+                phoneNumber = "0178975312468",
+                useCoarseLocation = true
+            )
             repo.insertUser(user1)
             repo.insertUser(user2)
             repo.insertUser(user3)
-
+            repo.insertUser(user4)
+            repo.insertUser(user5)
 
             // create animal
             repo.insertAnimal(
@@ -276,14 +318,14 @@ class DBInitialData : KoinComponent {
                     LocalDateTime.now(),
                     "Rocky",
                     LocalDate.of(2019, 10, 20),
-                    user1,
+                    user4,
                     animalCategory1,
-                    "Beschreibung des Tiers",
-                    color1,
+                    "Rocky ist ein aufgeweckter und freundlicher Kater.",
+                    color5,
                     null,
                     true,
-                    10.5f,
-                    true
+                    4.5f,
+                    false
                 )
             )
 
@@ -296,10 +338,10 @@ class DBInitialData : KoinComponent {
                     LocalDate.of(2020, 3, 15),
                     user2,
                     animalCategory2,
-                    "Beschreibung des Tiers 2",
-                    color1,
+                    "Der sanfte Riese sucht nach einem liebevollen Zuhause.",
+                    color10,
                     null,
-                    false,
+                    true,
                     8.2f,
                     false
                 )
@@ -314,11 +356,11 @@ class DBInitialData : KoinComponent {
                     LocalDate.of(2017, 7, 10),
                     user2,
                     animalCategory3,
-                    "Beschreibung des Tiers 3",
+                    "Max freut sich auf ein freundliches Zuhause mit vielen freundlichen Fischen.",
                     color1,
                     null,
                     false,
-                    12.7f,
+                    0.7f,
                     false
                 )
             )
@@ -332,12 +374,12 @@ class DBInitialData : KoinComponent {
                     LocalDate.of(2022, 1, 5),
                     user1,
                     animalCategory4,
-                    "Beschreibung des Tiers 4",
-                    color1,
+                    "Luna ist eine Schlange mit einer wunderschönen Musterung.",
+                    color10,
                     null,
-                    true,
+                    false,
                     6.9f,
-                    false
+                    true
                 )
             )
 
@@ -350,12 +392,12 @@ class DBInitialData : KoinComponent {
                     LocalDate.of(2021, 9, 12),
                     user2,
                     animalCategory5,
-                    "Beschreibung des Tiers 5",
-                    color1,
+                    "Charlie der Hamstermann würde am liebsten den ganzen Tag futtern.",
+                    color7,
                     null,
-                    false,
-                    9.1f,
-                    true
+                    true,
+                    1.1f,
+                    false
                 )
             )
 
@@ -368,15 +410,168 @@ class DBInitialData : KoinComponent {
                     LocalDate.of(2020, 5, 8),
                     user1,
                     animalCategory6,
-                    "Beschreibung des Tiers 6",
+                    "Milo ist ein sehr redseliger Kakadu, der sich gern mit seinem Besitzer unterhält.",
                     color1,
                     null,
                     true,
-                    11.3f,
+                    2.3f,
                     true
                 )
             )
 
+            repo.insertAnimal(
+                Animal(
+                    7,
+                    LocalDateTime.of(2023, 7, 30, 12, 23),
+                    LocalDateTime.now(),
+                    "Doris",
+                    LocalDate.of(2019, 4, 22),
+                    user4,
+                    animalCategory1,
+                    "Doris ist eine freundliche und verschmuste Dame.",
+                    color10,
+                    null,
+                    false,
+                    4.5f,
+                    false
+                )
+            )
+            repo.insertAnimal(
+                Animal(
+                    8,
+                    LocalDateTime.of(2023, 7, 30, 12, 23),
+                    LocalDateTime.now(),
+                    "Jojo",
+                    LocalDate.of(2021, 9, 2),
+                    user4,
+                    animalCategory1,
+                    "Jojo ist ein verspielter Kater, der gern neugierig seine Umgebung erkundet.",
+                    color8,
+                    null,
+                    true,
+                    3.2f,
+                    true
+                )
+            )
+            repo.insertAnimal(
+                Animal(
+                    9,
+                    LocalDateTime.of(2023, 7, 30, 12, 23),
+                    LocalDateTime.now(),
+                    "Törtchen",
+                    LocalDate.of(2023, 5, 1),
+                    user4,
+                    animalCategory1,
+                    "Törtchen verbringt am liebsten den ganzen Tag damit zu schlafen.",
+                    color5,
+                    null,
+                    false,
+                    1.0f,
+                    true
+                )
+            )
+            repo.insertAnimal(
+                Animal(
+                    10,
+                    LocalDateTime.of(2023, 8, 8, 21, 21),
+                    LocalDateTime.now(),
+                    "Schneckobert",
+                    LocalDate.of(2023, 1, 18),
+                    user5,
+                    animalCategory7,
+                    "Ein höflicher und stets zuvorkommender Gentleman.",
+                    color7,
+                    null,
+                    true,
+                    0.2f,
+                    true
+                )
+            )
+            repo.insertAnimal(
+                Animal(
+                    11,
+                    LocalDateTime.of(2023, 8, 8, 21, 21),
+                    LocalDateTime.now(),
+                    "Danny",
+                    LocalDate.of(2018, 12, 4),
+                    user5,
+                    animalCategory2,
+                    "Danny ist am liebsten draußen an warmen Sommertagen.",
+                    color2,
+                    null,
+                    true,
+                    3.4f,
+                    false
+                )
+            )
+            repo.insertAnimal(
+                Animal(
+                    12,
+                    LocalDateTime.of(2023, 8, 8, 21, 21),
+                    LocalDateTime.now(),
+                    "Suzi",
+                    LocalDate.of(2021, 8, 12),
+                    user5,
+                    animalCategory6,
+                    "Das Vögelchen mit der schönsten Stimme am Morgen - das ist Suzi!",
+                    color9,
+                    null,
+                    false,
+                    0.6f,
+                    false
+                )
+            )
+            repo.insertAnimal(
+                Animal(
+                    13,
+                    LocalDateTime.of(2023, 8, 8, 21, 21),
+                    LocalDateTime.now(),
+                    "Elizabeth",
+                    LocalDate.of(2023, 2, 13),
+                    user5,
+                    animalCategory5,
+                    "Elizabeth die Hasendame hat wunderschöne, weiche und lange Schlappohren.",
+                    color6,
+                    null,
+                    false,
+                    1.0f,
+                    false
+                )
+            )
+            repo.insertAnimal(
+                Animal(
+                    14,
+                    LocalDateTime.of(2023, 6, 24, 14, 30),
+                    LocalDateTime.now(),
+                    "Akira",
+                    LocalDate.of(2018, 5, 27),
+                    user3,
+                    animalCategory3,
+                    "Die Schuppen von Koi Akira schimmern wirklich wunderschön in der Sonne.",
+                    color3,
+                    null,
+                    true,
+                    0.5f,
+                    false
+                )
+            )
+            repo.insertAnimal(
+                Animal(
+                    15,
+                    LocalDateTime.of(2023, 6, 24, 14, 30),
+                    LocalDateTime.now(),
+                    "Lili",
+                    LocalDate.of(2019, 11, 7),
+                    user3,
+                    animalCategory4,
+                    "Bartagamendame Lili sieht fast aus wie ein kleiner Drache.",
+                    color7,
+                    null,
+                    false,
+                    0.3f,
+                    false
+                )
+            )
 
             val rating = Rating(
                 id = 0,
