@@ -17,6 +17,7 @@ interface LocalStore {
 
 interface NetworkController {
     fun getLatLongFromAddress(address: Address): Flow<Address>
+    fun getLatLongByLocationString(locationString: String): Flow<Location>
 }
 
 

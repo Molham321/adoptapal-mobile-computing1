@@ -18,6 +18,7 @@ import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.RadioButton
@@ -117,6 +118,10 @@ fun SearchScreen(
 
             // City filter
             CityFilter(vm.initialCity, onCityChange = { vm.initialCity = it })
+            // CityDistance filter
+            DistanceToCityFilter(vm.initialDistance,
+                onDistanceSelected = { vm.initialDistance = it},
+                onClearDistance = { vm.initialDistance = 0})
 
             // Breed filter
             BreedFilter(vm.initialBreed, onBreedChange = { vm.initialBreed = it })
@@ -139,6 +144,7 @@ fun SearchScreen(
                         weightFrom = vm.initialWeightFrom,
                         weightTo = vm.initialWeightTo,
                         city = vm.initialCity.takeIf { it.isNotBlank() },
+                        distance = vm.initialDistance
                     )
                     onFiltersApplied(filteredAnimals)
                 },
@@ -283,6 +289,50 @@ private fun CityFilter(city: String, onCityChange: (String) -> Unit) {
         onValueChange = { onCityChange(it) },
         modifier = Modifier.fillMaxWidth()
     )
+}
+
+@Composable
+private fun DistanceToCityFilter(
+    distance: Int,
+    onDistanceSelected: (Int) -> Unit,
+    onClearDistance: () -> Unit
+) {
+    val distances = listOf(0, 5, 10, 20, 50 )
+    var expanded by remember { mutableStateOf(false) }
+
+    Text(text = "Distanz:")
+    Box(modifier = Modifier.fillMaxWidth()) {
+        OutlinedButton(
+            onClick = { expanded = !expanded },
+            modifier = Modifier.align(Alignment.TopEnd),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Gray)
+        ) {
+            Text(
+                text = "Auswählen",
+                style = TextStyle(fontSize = 14.sp)
+            )
+        }
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            distances.forEach { distanceOption ->
+                DropdownMenuItem(onClick = {
+                    onDistanceSelected(distanceOption)
+                    expanded = false // Collapse the dropdown menu after selection
+                }) {
+                    Text(text = "$distanceOption km")
+                }
+            }
+        }
+    }
+    // Anzeigen der ausgewählten Farbe
+    if (distance == 0) {
+        Text(text = "Alle Orte")
+    } else {
+        Text(text ="Alle Orte im Umkreis von $distance km")
+    }
 }
 
 @Composable

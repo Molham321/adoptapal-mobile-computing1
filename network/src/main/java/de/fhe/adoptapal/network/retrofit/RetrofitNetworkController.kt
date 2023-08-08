@@ -3,6 +3,7 @@ package de.fhe.adoptapal.network.retrofit
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import de.fhe.adoptapal.domain.Address
+import de.fhe.adoptapal.domain.Location
 import de.fhe.adoptapal.domain.NetworkController
 import de.fhe.adoptapal.network.core.LoggerFactory
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +26,16 @@ class RetrofitNetworkController() : NetworkController {
         address.longitude = response.data[0].longitude!!
 
         emit(address)
+    }
+
+    override fun getLatLongByLocationString(locationString: String): Flow<Location> = flow {
+        val response = api.getLatLong(locationString)
+        val newLocation =  Location(
+            latitude = response.data[0].latitude!!,
+            longitude = response.data[0].longitude!!
+        )
+
+        emit(newLocation)
     }
 
 
