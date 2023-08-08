@@ -2,6 +2,7 @@ package de.fhe.adoptapal.ui.screens.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -16,21 +17,13 @@ import de.fhe.adoptapal.ui.screens.util.FullscreenPlaceholderView
 
 @Composable
 fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
-    val animalList = remember { vm.animalList }
-    var filterText by remember { mutableStateOf("") }
-
     vm.refreshUser()
-
-    fun clearFilter() {
-        filterText = ""
-    }
 
     Column(modifier = modifier) {
 
         if (vm.showFilterDialog) {
             AlertDialog(
                 onDismissRequest = { vm.showFilterDialog = false },
-//                title = { Text(text = "Filteroptionen") },
                 text = {
                     // Call the SearchScreen composable to display the filter options
                     SearchScreen(
@@ -49,22 +42,10 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
             )
         }
 
-        SearchBar(
-            onSearch = { text -> filterText = text },
-            onClear = { clearFilter() },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        if (animalList.value.isNotEmpty()) {
-
-            var filteredAnimals = vm.getFilteredAnimals(vm.filteredAnimals.value, filterText)
-
-            if (filteredAnimals.isEmpty()) {
-                filteredAnimals = vm.getFilteredAnimals(vm.animalList.value, filterText)
-            }
+        if (vm.filteredAnimals.value.isNotEmpty()) {
 
             AnimalList(
-                animals = filteredAnimals,
+                animals = vm.filteredAnimals.value,
                 modifier = modifier
             ) {
                 vm.navigateToAnimal(it)
