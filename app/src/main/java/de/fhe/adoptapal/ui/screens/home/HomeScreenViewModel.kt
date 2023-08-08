@@ -34,7 +34,7 @@ class HomeScreenViewModel(
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase,
     private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore,
     private val getAllColors: GetAllColors,
-    private val getLatLongForLocationString: GetLatLongForLocationString
+    private val getLatLongForLocationString: GetLatLongForLocationString,
     private val getAllAnimalCategories: GetAllAnimalCategories,
 ) : ViewModel() {
 
@@ -50,6 +50,7 @@ class HomeScreenViewModel(
     var initialArt            by mutableStateOf("")
     var initialSelectedGender by mutableStateOf("Alle")
     var initialBreed          by mutableStateOf(TextFieldValue())
+    var initialDistance       by mutableStateOf(0)
 
     var animalColorList    = mutableStateOf(emptyList<Color>())
     var animalCategoryList = mutableStateOf(emptyList<AnimalCategory>())
@@ -175,7 +176,7 @@ class HomeScreenViewModel(
                         distanceInKm = distance.toDouble()
                     )
             }
-            ageCondition && maleCondition && colorCondition && weightCondition && cityCondition && distanceCondition && nameCondition && descriptionCondition && artCondition
+            ageCondition && maleCondition && colorCondition && weightCondition && (cityCondition || distanceCondition) && nameCondition && descriptionCondition && artCondition
         }
     }
 

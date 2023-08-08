@@ -36,6 +36,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -130,7 +131,11 @@ fun SearchScreen(
                         weightFrom = vm.initialWeightFrom,
                         weightTo = vm.initialWeightTo,
                         city = vm.initialCity.takeIf { it.isNotBlank() },
-                        distance = vm.initialDistance
+                        distance = vm.initialDistance,
+                        art = vm.initialArt.takeIf { it.isNotBlank() },
+                        name = vm.initialName.takeIf { it.isNotBlank() },
+                        description = vm.initialDescription.takeIf { it.isNotBlank() }
+
                     )
                     onFiltersApplied(filteredAnimals)
                 },
@@ -139,35 +144,6 @@ fun SearchScreen(
                     onResetFilters()
                 }
             )
-        // City filter
-        CityFilter(vm.initialCity, onCityChange = { vm.initialCity = it })
-
-        // Apply and Reset buttons
-        FilterButtons(
-            onApplyClicked = {
-                val filteredAnimals = vm.updateAnimalList(
-                    name = vm.initialName.takeIf { it.isNotBlank() },
-                    description = vm.initialDescription.takeIf { it.isNotBlank() },
-                    ageFrom = vm.initialAgeFrom.takeIf { it > 0 },
-                    ageTo = vm.initialAgeTo,
-                    isMale = when (vm.initialSelectedGender) {
-                        "Männlich" -> true
-                        "Weiblich" -> false
-                        else -> null // If "Alle" is selected, set to null to display all genders
-                    },
-                    color = vm.initialColor.takeIf { it.isNotBlank() },
-                    art = vm.initialArt.takeIf { it.isNotBlank() },
-                    weightFrom = vm.initialWeightFrom,
-                    weightTo = vm.initialWeightTo,
-                    city = vm.initialCity.takeIf { it.isNotBlank() },
-                )
-                onFiltersApplied(filteredAnimals)
-            },
-            onResetClicked = {
-                vm.resetFilterValues()
-                onResetFilters()
-            }
-        )
 
         Spacer(modifier = modifier.height(120.dp))
     }
@@ -436,8 +412,6 @@ private fun DistanceToCityFilter(
 }
 
 @Composable
-private fun BreedFilter(breed: TextFieldValue, onBreedChange: (TextFieldValue) -> Unit) {
-    Text(text = "Züchten:")
 private fun NameFilter(name: String, onNameChange: (String) -> Unit) {
     Text(text = "Name:")
     OutlinedTextField(

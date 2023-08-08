@@ -45,7 +45,7 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
         if (vm.filteredAnimals.value.isNotEmpty()) {
 
             AnimalList(
-                userAddress = vm.user.value?.address
+                userAddress = vm.user.value?.address,
                 animals = vm.filteredAnimals.value,
                 modifier = modifier
             ) {
