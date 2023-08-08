@@ -8,9 +8,11 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.fhe.adoptapal.domain.Animal
+import de.fhe.adoptapal.domain.AnimalCategory
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.Color
+import de.fhe.adoptapal.domain.GetAllAnimalCategories
 import de.fhe.adoptapal.domain.GetAllAnimals
 import de.fhe.adoptapal.domain.GetAllColors
 import de.fhe.adoptapal.domain.GetLatLongForAddress
@@ -33,35 +35,35 @@ class HomeScreenViewModel(
     private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore,
     private val getAllColors: GetAllColors,
     private val getLatLongForLocationString: GetLatLongForLocationString
+    private val getAllAnimalCategories: GetAllAnimalCategories,
 ) : ViewModel() {
-    var animalList = mutableStateOf(emptyList<Animal>())
 
-    var dbOp = mutableStateOf(AsyncOperation.undefined())
-
-    var user = mutableStateOf<User?>(null)
-
-    var filteredAnimals = mutableStateOf(emptyList<Animal>())
-
-    var showFilterDialog by mutableStateOf(false)
-
-    var initialAgeFrom by mutableStateOf(0)
-    var initialAgeTo by mutableStateOf(0)
+    var showFilterDialog      by mutableStateOf(false)
+    var initialAgeFrom        by mutableStateOf(0)
+    var initialAgeTo          by mutableStateOf(0)
+    var initialWeightFrom     by mutableStateOf(0)
+    var initialWeightTo       by mutableStateOf(0)
+    var initialCity           by mutableStateOf("")
+    var initialName           by mutableStateOf("")
+    var initialDescription    by mutableStateOf("")
+    var initialColor          by mutableStateOf("")
+    var initialArt            by mutableStateOf("")
     var initialSelectedGender by mutableStateOf("Alle")
-    var initialColor by mutableStateOf("")
-    var initialWeightFrom by mutableStateOf(0)
-    var initialWeightTo by mutableStateOf(0)
-    var initialCity by mutableStateOf("")
-    var initialDistance by  mutableStateOf(0)
-    var initialBreed by mutableStateOf(TextFieldValue())
-    var initialArt by mutableStateOf(TextFieldValue())
-    var animalColorList = mutableStateOf(emptyList<Color>())
-    var filterLocation by mutableStateOf<Location?>(null)
+    var initialBreed          by mutableStateOf(TextFieldValue())
 
+    var animalColorList    = mutableStateOf(emptyList<Color>())
+    var animalCategoryList = mutableStateOf(emptyList<AnimalCategory>())
+    var animalList         = mutableStateOf(emptyList<Animal>())
+    var filteredAnimals    = mutableStateOf(emptyList<Animal>())
+    var dbOp               = mutableStateOf(AsyncOperation.undefined())
+    var user               = mutableStateOf<User?>(null)
+    var filterLocation by mutableStateOf<Location?>(null)
 
     init {
         this.getLoggedInUser()
         this.getAnimalsFromDb()
         this.getColorsFromDb()
+        this.getAnimalCategoriesFromDb()
     }
 
     fun getAnimalsFromDb() {
@@ -70,6 +72,29 @@ class HomeScreenViewModel(
                 dbOp.value = it
                 if (it.status == AsyncOperationState.SUCCESS) {
                     animalList.value = it.payload as List<Animal>
+                    filteredAnimals.value = animalList.value
+                }
+            }
+        }
+    }
+
+    fun getColorsFromDb() {
+        viewModelScope.launch {
+            getAllColors().collect {
+                dbOp.value = it
+                if (it.status == AsyncOperationState.SUCCESS) {
+                    animalColorList.value = it.payload as List<Color>
+                }
+            }
+        }
+    }
+
+    fun getAnimalCategoriesFromDb() {
+        viewModelScope.launch {
+            getAllAnimalCategories().collect {
+                dbOp.value = it
+                if (it.status == AsyncOperationState.SUCCESS) {
+                    animalCategoryList.value = it.payload as List<AnimalCategory>
                 }
             }
         }
@@ -91,60 +116,49 @@ class HomeScreenViewModel(
 
 
     fun getFilteredAnimals(
-        animalList: List<Animal>,
-        filterText: String
+        animalList: List<Animal>
     ): List<Animal> {
-        return animalList.filter { animal ->
-            // Filter based on the search text (filterText)
-            val searchTextMatch = animal.name.contains(filterText, ignoreCase = true) ||
-                    animal.description.contains(filterText, ignoreCase = true) ||
-                    animal.weight.toString().contains(filterText, ignoreCase = true) ||
-                    animal.animalCategory.name.contains(filterText, ignoreCase = true) ||
-                    animal.supplier.address?.city?.contains(filterText, ignoreCase = true) == true
-
-            searchTextMatch
-        }
+        return animalList
     }
-
-    private fun getColorsFromDb() {
-        viewModelScope.launch {
-            getAllColors().collect {
-                dbOp.value = it
-                if (it.status == AsyncOperationState.SUCCESS) {
-                    animalColorList.value = it.payload as List<Color>
-                }
-            }
-        }
-    }
-
 
     fun updateAnimalList(
         ageFrom: Int?,
         ageTo: Int?,
         isMale: Boolean?,
         color: String?,
+        art: String?,
         weightFrom: Int,
         weightTo: Int,
-        city: String?,
+        city: String?,       
+         name: String?,
+        description: String?,
+
         distance: Int
     ): List<Animal> {
         if(city != null) {
             this.getLocationByString(city)
         }
-
         return animalList.value.filter { animal ->
             val ageCondition =
                 (ageFrom == null || animal.birthday.plusYears(ageFrom.toLong()) >= LocalDate.now()) &&
                         (ageTo == null || animal.birthday.plusYears(ageTo.toLong()) <= LocalDate.now())
             val maleCondition = isMale == null || animal.isMale == isMale
-            val colorCondition =
-                color.isNullOrBlank() || animal.color.name.contains(color, ignoreCase = true)
+            val colorCondition = color.isNullOrBlank() || animal.color.name.contains(color, ignoreCase = true)
+            val artCondition   = art.isNullOrBlank()   || animal.animalCategory.name.contains(art, ignoreCase = true)
             val weightCondition = (weightFrom == 0 || animal.weight >= weightFrom) &&
                     (weightTo == 0 || animal.weight <= weightTo)
             val cityCondition = city.isNullOrBlank() || animal.supplier.address?.city?.contains(
                 city,
                 ignoreCase = true
             ) == true
+            val nameCondition = name.isNullOrBlank() || animal.name.contains(
+                name,
+                ignoreCase = true
+            )
+            val descriptionCondition = description.isNullOrBlank() || animal.description.contains(
+                description,
+                ignoreCase = true
+            )
 
             // check if same city
             // check if different City + distance is in range in km from selected city
@@ -161,7 +175,7 @@ class HomeScreenViewModel(
                         distanceInKm = distance.toDouble()
                     )
             }
-            ageCondition && maleCondition && colorCondition && weightCondition && cityCondition && distanceCondition
+            ageCondition && maleCondition && colorCondition && weightCondition && cityCondition && distanceCondition && nameCondition && descriptionCondition && artCondition
         }
     }
 
@@ -185,8 +199,10 @@ class HomeScreenViewModel(
         initialCity = ""
         initialDistance = 0
         filterLocation = null
+        initialName = ""
+        initialDescription = ""
         initialBreed = TextFieldValue()
-        initialArt = TextFieldValue()
+        initialArt = ""
     }
 
     fun openFilterDialog() {
@@ -207,6 +223,25 @@ class HomeScreenViewModel(
     // Navigation
     // -----------------
 
+    fun getColorArray(list: List<Color>): Array<String> {
+        var colorArray = arrayOf<String>()
+
+        list.forEach {
+            colorArray += it.name
+        }
+
+        return colorArray
+    }
+
+    fun getColorMap(list: List<Color>): Map<Long, String> {
+        var colorMap = mutableMapOf<Long, String>()
+
+        list.forEach {
+            colorMap[it.id] = it.name
+        }
+
+        return colorMap
+    }
 
     fun navigateToAddAnimal() {
         navigationManager.navigate(Screen.AddAnimal.navigationCommand())
