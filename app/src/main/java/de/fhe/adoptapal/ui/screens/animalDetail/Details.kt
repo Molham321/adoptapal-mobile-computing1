@@ -36,29 +36,30 @@ import de.fhe.adoptapal.ui.theme.BackgroundGreyOpacity
 import org.koin.androidx.compose.koinViewModel
 
 
-// -----------------------------------------------------
-// Details
-// -----------------------------------------------------
+/**
+ * Composable function to display detailed information about an animal.
+ *
+ * @param animal Animal object to display details for.
+ * @param vm ViewModel for the animal detail screen.
+ * @param modifier Modifier for styling.
+ * @param onItemPressed Callback function when an item is pressed.
+ */
 @Composable
 fun Details(
     animal: Animal,
+    vm: DetailScreenViewModel,
     modifier: Modifier = Modifier,
-    onItemPressed: (itemId: Long) -> Unit = {}
+    onItemPressed: (itemId: Long) -> Unit = {},
+
 ) {
     var animalIsFavorite = remember { mutableStateOf(animal.isFavorite) }
 
-    val vm: DetailScreenViewModel = koinViewModel()
-
-    val contextForToast = LocalContext.current.applicationContext
-
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-        // .background(color = colorResource(id = R.color.background))
     ) {
 
         item {
-
 
             if (animal.imageFilePath == null) {
 
@@ -94,7 +95,7 @@ fun Details(
                 }
                 // val image: Painter = painterResource(R.drawable.hund /*animal.imageFilePath*/)
                 Image(
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxWidth()
                         .height(346.dp),
                     painter = image,
@@ -105,7 +106,7 @@ fun Details(
 
                 Surface(
                     shape = CircleShape,
-                    modifier = Modifier
+                    modifier = modifier
                         .padding(6.dp)
                         .size(52.dp),
                     color = BackgroundGreyOpacity
@@ -119,7 +120,7 @@ fun Details(
                         }
                     ) {
                         Icon(
-                            modifier = Modifier.size(36.dp, 36.dp),
+                            modifier = modifier.size(36.dp, 36.dp),
                             painter = if (animalIsFavorite.value) {
                                 painterResource(id = R.drawable.baseline_bookmark_24)
                             } else {
@@ -135,13 +136,13 @@ fun Details(
                 AsyncImage(
                     model = animal.imageFilePath,
                     contentDescription = null,
-                    modifier = Modifier
+                    modifier = modifier
                         .fillMaxWidth()
                         .height(346.dp),
                     contentScale = ContentScale.Crop
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = modifier.height(16.dp))
 
             AnimalInfoCard(
                 animal.name,
@@ -155,14 +156,14 @@ fun Details(
         // My story details
         item {
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = modifier.height(24.dp))
             Title(title = "Über mich...")
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = modifier.height(16.dp))
             Text(
                 // text = "ABOUT ${animal.name} \n" +
                 //         "${animal.description}",
                 text = "${animal.description}",
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
                 color = colorResource(id = R.color.text),
@@ -173,11 +174,11 @@ fun Details(
 
         item {
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = modifier.height(24.dp))
             Text(
                 // text = "Rasse: ${"Hunde Breed"/*animal.breed*/}",
                 text = "Tierart: ${animal.animalCategory.name}",
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
                 color = colorResource(id = R.color.text),
@@ -185,10 +186,10 @@ fun Details(
                 textAlign = TextAlign.Start
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = modifier.height(24.dp))
             Text(
                 text = "Geburtstag: ${animal.birthday.dayOfMonth}.${animal.birthday.monthValue}.${animal.birthday.year}",
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
                 color = colorResource(id = R.color.text),
@@ -199,12 +200,12 @@ fun Details(
 
         // Quick info
         item {
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = modifier.height(24.dp))
             Title(title = "Metriken")
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = modifier.height(16.dp))
 
             Row(
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -218,7 +219,7 @@ fun Details(
         // Owner info
         item {
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = modifier.height(24.dp))
             Title(title = "Anbieter")
 
             OwnerCard(

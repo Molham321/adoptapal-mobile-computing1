@@ -19,6 +19,7 @@ fun DetailScreen(vm: DetailScreenViewModel, modifier: Modifier = Modifier) {
         vm.animal.value?.let { animal ->
             Details(
                 animal = animal,
+                vm = vm,
                 modifier = modifier
             ) { userId ->
                 vm.navigateToUser(userId)

@@ -24,7 +24,14 @@ import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.ui.screens.sharedComponents.GenderTag
 
-
+/**
+ * Composable function to display information about an animal's name, gender, location, and creation time.
+ *
+ * @param name The name of the animal.
+ * @param gender The gender of the animal.
+ * @param location The location (address) of the animal.
+ * @param createDateTimeDifference The time difference indicating how long ago the animal was created.
+ */
 @Composable
 fun AnimalInfoCard(
     name: String,
