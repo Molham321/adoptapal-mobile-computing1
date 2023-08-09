@@ -1,6 +1,5 @@
 package de.fhe.adoptapal
 
-import android.net.Uri
 import android.util.Log
 import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal

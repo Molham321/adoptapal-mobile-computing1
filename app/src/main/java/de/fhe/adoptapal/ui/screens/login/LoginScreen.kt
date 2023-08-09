@@ -64,7 +64,6 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize(),
-        // .background(color = colorResource(id = R.color.white)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = modifier.height(160.dp))

@@ -33,7 +33,6 @@ fun InputField(
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth(),
-            // shape = RoundedCornerShape(20.dp),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Done,

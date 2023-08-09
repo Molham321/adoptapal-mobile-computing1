@@ -26,6 +26,9 @@ class DetailScreenViewModel(
         getAnimalFromDb(animalId)
     }
 
+    /**
+     * get animal from database (id comes from selected list entry on home screen)
+     */
     fun getAnimalFromDb(id: Long) {
         viewModelScope.launch {
             getAnimalAsync.invoke(id).collect {
@@ -37,6 +40,10 @@ class DetailScreenViewModel(
         }
     }
 
+    /**
+     * marks animal as favourite / unmarks animal as favourite when icon button is clicked
+     * --> function displays message on screen
+     */
     fun saveAnimalAsFavorite(animal: Animal) {
         viewModelScope.launch {
             updateAnimalAsync(animal).collect {

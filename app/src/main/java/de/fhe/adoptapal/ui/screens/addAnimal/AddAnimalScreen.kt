@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import de.fhe.adoptapal.R
-import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
 import de.fhe.adoptapal.ui.screens.util.FileSystemHandler
 import de.fhe.adoptapal.ui.theme.LightModeSecondary
 
@@ -67,7 +66,6 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
 
 
-    val scaffoldState = LocalScaffoldState.current
     val contextForToast = LocalContext.current.applicationContext
 
     var birthdateError by remember { mutableStateOf("") }

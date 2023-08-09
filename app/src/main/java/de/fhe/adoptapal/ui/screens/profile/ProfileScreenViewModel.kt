@@ -13,7 +13,6 @@ import de.fhe.adoptapal.domain.GetUserAnimalsAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -30,6 +29,12 @@ class ProfileScreenViewModel(
     var userAnimalList = mutableStateOf(emptyList<Animal>())
 
 
+    /**
+    * 1. get current user from database (if user is logged in)
+    * 2. get all favourite animals of user (later saved locally on user's phone so no login is needed)
+    * 3. if there is a logged in user: get all uploaded animals of said user with the respective user id
+    *
+    */
     init {
         Log.i("Profile", "init class")
         this.getUser()
@@ -39,6 +44,11 @@ class ProfileScreenViewModel(
         }
     }
 
+    /**
+    * function is runBlocking, to guarantee a user when profile page is opened (and user is logged in)
+    * otherwise (when no user is logged in) function will end and page will be opened without user data
+    * --> favourite animals will still be displayed
+    */
     fun getUser() {
         Log.i("Profile", "init")
         runBlocking {
@@ -63,6 +73,9 @@ class ProfileScreenViewModel(
         // this.getUser()
     }
 
+    /**
+    * gets all favourite animals from database (saved on user's phone locally)
+    */
     fun getFavoriteAnimalsFromDb() {
         viewModelScope.launch {
             getAllFavoriteAnimalsAsync().collect {
@@ -74,6 +87,9 @@ class ProfileScreenViewModel(
         }
     }
 
+    /**
+    * gets all animals uploaded by the currently logged in user (with id of that user)
+    */
     fun getUserAnimalsFromDb(id: Long) {
         viewModelScope.launch {
             getUserAnimalsAsync(id).collect {

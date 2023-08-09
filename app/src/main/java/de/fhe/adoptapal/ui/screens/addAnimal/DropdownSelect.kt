@@ -16,7 +16,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.ui.theme.LightModeText
 
@@ -29,12 +28,7 @@ fun DropdownSelect(
     dropdownItems: Map<Long, String> = mapOf<Long, String>(),
     onValueChange: (Long) -> Unit
 ) {
-    // val listItems = arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel")
-    // val disabledItem = 1
-    val contextForToast = LocalContext.current.applicationContext
-
     var expanded by remember { mutableStateOf(false) }
-    // var expanded = true
     var selectedValue by remember { mutableStateOf("") }
 
     Box(
@@ -51,14 +45,11 @@ fun DropdownSelect(
         ) {
             if (selectedValue == "") {
                 Text(
-                    // text = "Tierrasse   v",
-                    // text = dropdownCat + "   v",
                     text = ("* " + dropdownCat),
                     color = Color.White
                 )
             } else {
                 Text(
-                    // text = "Tierrasse   v",
                     text = dropdownCat + ": " + dropdownItems[dropdownValue],
                     color = Color.White
                 )
@@ -80,38 +71,11 @@ fun DropdownSelect(
                         selectedValue = entry.value
                         onValueChange(entry.key)
                         expanded = false
-//                        println("ausgewählt: " + entry.value)
-//                        println("richtige ID: " + entry.key)
-//                        println("Tier ID: " + dropdownValue)
                     }
                 ) {
                     Text(text = entry.value, color = LightModeText)
                 }
             }
         }
-
-        // drop down menu
-//        DropdownMenu(
-//            expanded = expanded,
-//            onDismissRequest = {
-//                expanded = false
-//            }
-//        ) {
-//            // adding items
-//            listItems.forEachIndexed { itemIndex, itemValue ->
-//                DropdownMenuItem(
-//                    onClick = {
-//                        selectedValue = itemValue
-//                        onValueChange(itemValue)
-////                        Toast.makeText(contextForToast, itemValue, Toast.LENGTH_SHORT)
-////                            .show()
-//                        expanded = false
-//                    },
-//                    // enabled = (itemIndex != disabledItem)
-//                ) {
-//                    Text(text = itemValue)
-//                }
-//            }
-//        }
     }
 }

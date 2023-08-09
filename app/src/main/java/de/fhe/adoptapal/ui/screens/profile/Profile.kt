@@ -62,11 +62,6 @@ fun ProfileItem(label: String, value: String) {
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .padding(vertical = 4.dp)
-//            .border(
-//                width = 1.dp,
-//                color = Color.Gray,
-//                shape = RoundedCornerShape(4.dp)
-//            )
             .padding(4.dp)
     ) {
         Text(
