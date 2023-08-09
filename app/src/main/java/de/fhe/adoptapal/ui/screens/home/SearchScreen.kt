@@ -133,7 +133,7 @@ fun SearchScreen(
             onApplyClicked = {
                 // Apply filters and invoke callback
                 val filteredAnimals = vm.updateAnimalList(
-                    ageFrom = vm.initialAgeFrom.takeIf { it > 0 },
+                    ageFrom = vm.initialAgeFrom,
                     ageTo = vm.initialAgeTo,
                     isMale = when (vm.initialSelectedGender) {
                         "Männlich" -> true

@@ -25,6 +25,7 @@ import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
+import java.time.Period
 
 /**
  * ViewModel class for the HomeScreen.
@@ -147,14 +148,14 @@ class HomeScreenViewModel(
      * Update the filtered animal list based on filter criteria.
      */
     fun updateAnimalList(
-        ageFrom: Int?,
-        ageTo: Int?,
+        ageFrom: Int,
+        ageTo: Int,
         isMale: Boolean?,
         color: String?,
         art: String?,
         weightFrom: Int,
         weightTo: Int,
-        city: String?,
+        city: String?,       
         name: String?,
         description: String?,
 
@@ -164,45 +165,61 @@ class HomeScreenViewModel(
             this.getLocationByString(city)
         }
         return animalList.value.filter { animal ->
-            val ageCondition =
-                (ageFrom == null || animal.birthday.plusYears(ageFrom.toLong()) >= LocalDate.now()) &&
-                        (ageTo == null || animal.birthday.plusYears(ageTo.toLong()) <= LocalDate.now())
-            val maleCondition = isMale == null || animal.isMale == isMale
-            val colorCondition =
-                color.isNullOrBlank() || animal.color.name.contains(color, ignoreCase = true)
-            val artCondition =
-                art.isNullOrBlank() || animal.animalCategory.name.contains(art, ignoreCase = true)
-            val weightCondition = (weightFrom == 0 || animal.weight >= weightFrom) &&
-                    (weightTo == 0 || animal.weight <= weightTo)
-            val cityCondition = city.isNullOrBlank() || animal.supplier.address?.city?.contains(
-                city,
-                ignoreCase = true
-            ) == true
+
+            // check if animal is within selected age
+            // if both ages are 0 then all animals are selected
+            val animalAge = Period.between(animal.birthday, LocalDate.now()).years
+            val bothAgesZero = ageFrom == 0 && ageTo == 0
+            val ageCondition = if (bothAgesZero) (true) else (animalAge in ageFrom..ageTo)
+
+            // check the selected gender -> null is all genders
+            val genderCondition = isMale == null || animal.isMale == isMale
+
+            // check the selected color
+            val colorCondition = color.isNullOrBlank() || animal.color.name.contains(color, ignoreCase = true)
+
+            // check the selected animalCategory
+            val animalCategoryCondition   = art.isNullOrBlank()   || animal.animalCategory.name.contains(art, ignoreCase = true)
+
+
+            // check if animal weight is within selected weight
+            val weightIsZero = weightTo == 0 && weightFrom == 0
+            val weightCondition = if (weightIsZero) (true) else ( animal.weight.toInt() in  weightFrom .. weightTo)
+
+            // String is part of animal name
             val nameCondition = name.isNullOrBlank() || animal.name.contains(
                 name,
                 ignoreCase = true
             )
+
+            // String is part of animal description
             val descriptionCondition = description.isNullOrBlank() || animal.description.contains(
                 description,
                 ignoreCase = true
             )
 
-            // check if same city
-            // check if different City + distance is in range in km from selected city
-            // city need to be requested from API to get Location data LatLonng
-            // bei = 0 alle Orte
-            // bei = 5 , die Stadt und alles im Radius von 5 km
-            Log.i("HSVM", "location $distance")
-            // load location once
-            var distanceCondition = true
-            if (!city.isNullOrBlank() && distance > 0) {
-                distanceCondition = this.filterLocation!!.isWithinRangeOf(
-                    animal.supplier.address!!.latitude,
-                    animal.supplier.address!!.longitude,
-                    distanceInKm = distance.toDouble()
-                )
+            // check if the city is similar or the same
+            val cityCondition = city.isNullOrBlank() || animal.supplier.address?.city?.contains(
+                city,
+                ignoreCase = true
+            ) == true
+
+            // distance is only relevant if the city condition is not already met
+            // then calculate if the supplier location is within the selected city's radius
+            var distanceCondition = false
+            if(!cityCondition){
+                if(!city.isNullOrBlank() ) {
+                    distanceCondition = this.filterLocation!!.isWithinRangeOf(
+                            animal.supplier.address!!.latitude,
+                            animal.supplier.address!!.longitude,
+                            distanceInKm = distance.toDouble()
+                        )
+                }
             }
-            ageCondition && maleCondition && colorCondition && weightCondition && (cityCondition || distanceCondition) && nameCondition && descriptionCondition && artCondition
+
+            ageCondition && genderCondition && colorCondition && weightCondition
+                    && (cityCondition || distanceCondition)
+                    && nameCondition && descriptionCondition && animalCategoryCondition
         }
     }
 
