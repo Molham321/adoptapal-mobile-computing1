@@ -13,16 +13,23 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+/**
+ * Composable function to display a rounded corner tag with text inside.
+ *
+ * @param text Text to display in the tag.
+ * @param color Background color of the tag.
+ */
 @Composable
 fun BoxTag(text: String, color: Color = Color.Red) {
     Box(
         modifier = Modifier
             .wrapContentWidth()
             .clip(RoundedCornerShape(12.dp))
-            .background(color.copy(.08f))
+            .background(color.copy(alpha = 0.08f)) // Adjust the alpha value for transparency
     ) {
         Text(
-            text = text, modifier = Modifier.padding(12.dp, 6.dp, 12.dp, 6.dp),
+            text = text,
+            modifier = Modifier.padding(12.dp, 6.dp),
             style = MaterialTheme.typography.caption,
             color = color
         )

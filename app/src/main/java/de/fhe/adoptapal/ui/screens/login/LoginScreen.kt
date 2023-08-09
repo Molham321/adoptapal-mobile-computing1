@@ -34,24 +34,37 @@ import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
+import de.fhe.adoptapal.ui.screens.sharedComponents.InputField
 import de.fhe.adoptapal.ui.screens.sharedComponents.PasswordInputField
 
+/**
+ * Composable function to display the login screen.
+ *
+ * @param vm The ViewModel associated with the login screen.
+ * @param modifier Modifier to be applied to the entire screen.
+ */
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
+    // Collect the save state from the ViewModel
     val saveState by remember(vm) { vm.saveFeedbackFlow }
         .collectAsState(AsyncOperation.undefined())
 
+    // State variables for user email and password fields
     var userEmailTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var userPasswordTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
 
+    // State variables for error messages
     var userEmailError by remember { mutableStateOf("") }
     var userPasswordError by remember { mutableStateOf("") }
 
+    // State variable for editing state
     var editingState by remember { mutableStateOf(false) }
 
+    // Scaffold state for showing snackbar
     val scaffoldState = LocalScaffoldState.current
 
+    // Show snackbar when save state changes
     LaunchedEffect(saveState) {
         if (saveState.status != AsyncOperationState.UNDEFINED) {
             scaffoldState.snackbarHostState.showSnackbar(
@@ -64,13 +77,11 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxSize(),
-        // .background(color = colorResource(id = R.color.white)),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = modifier.height(160.dp))
         Text(
             text = "Willkommen zurück!",
-
             modifier = modifier
                 .fillMaxWidth()
                 .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -80,6 +91,7 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
             textAlign = TextAlign.Center
         )
         Spacer(modifier = modifier.height(20.dp))
+        // User email input field
         InputField(
             text = userEmailTextFieldValue,
             editing = true,
@@ -98,6 +110,7 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
             )
         }
 
+        // User password input field
         PasswordInputField(
             text = userPasswordTextFieldValue,
             editing = true,
@@ -116,6 +129,7 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
             )
         }
         Spacer(modifier = modifier.height(20.dp))
+        // Login button
         Button(
             onClick = {
                 val isEmailValid = vm.validateEmail(userEmailTextFieldValue.text)
@@ -140,10 +154,11 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
             modifier = Modifier
                 .width(250.dp)
                 .padding(16.dp, 8.dp, 16.dp, 8.dp),
-
-            ) {
+        ) {
             Text(text = "Anmeldung")
         }
+
+        // Register button
         Button(
             onClick = { vm.navigateToRegister() },
             shape = RoundedCornerShape(20.dp),
@@ -154,10 +169,9 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
             modifier = modifier
                 .fillMaxWidth()
                 .padding(16.dp, 8.dp, 16.dp, 8.dp)
-
         ) {
             Text(
-                text = "Noch kein Mitglied? zur Regisrierung",
+                text = "Noch kein Mitglied? zur Registrierung",
                 textDecoration = TextDecoration.Underline
             )
         }

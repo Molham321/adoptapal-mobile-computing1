@@ -39,33 +39,46 @@ import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
+import de.fhe.adoptapal.ui.screens.sharedComponents.InputField
 import de.fhe.adoptapal.ui.screens.sharedComponents.PasswordInputField
 
+/**
+ * Composable function to display the register screen.
+ *
+ * @param vm The ViewModel associated with the register screen.
+ * @param modifier Modifier to be applied to the entire screen.
+ */
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
 
     val applicationContext = LocalContext.current.applicationContext
 
+    // Collect the save state from the ViewModel
     val saveState by remember(vm) { vm.saveFeedbackFlow }
         .collectAsState(AsyncOperation.undefined())
 
+    // State variables for user registration form fields
     var userNameTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var userEmailTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var userPhoneNumberTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var userPasswordTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var userConfirmPasswordTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
 
+    // State variables for error messages
     var userNameError by remember { mutableStateOf(("")) }
     var userEmailError by remember { mutableStateOf("") }
-    var userPhoneNumberError by remember { (mutableStateOf("")) }
+    var userPhoneNumberError by remember { mutableStateOf("") }
     var userPasswordError by remember { mutableStateOf("") }
-    var userConfirmPasswordError by remember { (mutableStateOf("")) }
+    var userConfirmPasswordError by remember { mutableStateOf("") }
 
+    // State variable for editing state
     var editingState by remember { mutableStateOf(false) }
 
+    // Scaffold state for showing snackbar
     val scaffoldState = LocalScaffoldState.current
 
+    // Show snackbar when save state changes
     LaunchedEffect(saveState) {
         if (saveState.status != AsyncOperationState.UNDEFINED) {
             scaffoldState.snackbarHostState.showSnackbar(
@@ -84,7 +97,6 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(30.dp))
         Text(
             text = "Willkommen bei AdoptAPal!",
-
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -94,6 +106,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(20.dp))
+        // User name input field
         InputField(
             text = userNameTextFieldValue,
             editing = true,
@@ -122,6 +135,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             textAlign = TextAlign.Center
         )
 
+        // User email input field
         InputField(
             text = userEmailTextFieldValue,
             editing = true,
@@ -131,6 +145,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             },
             inputPlaceholder = stringResource(id = R.string.email)
         )
+
         if (userEmailError.isNotBlank()) {
             Text(
                 text = userEmailError,
@@ -139,6 +154,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             )
         }
 
+        // User phone number input field
         InputField(
             text = userPhoneNumberTextFieldValue,
             editing = true,
@@ -157,6 +173,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             )
         }
 
+        // User password input field
         PasswordInputField(
             text = userPasswordTextFieldValue,
             editing = true,
@@ -175,6 +192,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             )
         }
 
+        // User confirm password input field
         PasswordInputField(
             text = userConfirmPasswordTextFieldValue,
             editing = true,
@@ -194,9 +212,9 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
         }
 
         Spacer(modifier = Modifier.height(20.dp))
+        // Register button
         Button(
             onClick = {
-
                 val isNameValid = vm.validateName(userNameTextFieldValue.text)
                 val isEmailValid = vm.validateEmail(userEmailTextFieldValue.text)
                 val isPhoneNumberValid = vm.validatePhoneNumber(userPhoneNumberTextFieldValue.text)
@@ -251,18 +269,16 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                             "Passwort und Passwort wiederholung müssen identisch sein"
                     }
                 }
-
-
             },
-
             shape = RoundedCornerShape(20.dp),
             modifier = Modifier
                 .width(250.dp)
-                .padding(16.dp, 8.dp, 16.dp, 8.dp),
-
-            ) {
+                .padding(16.dp, 8.dp, 16.dp, 8.dp)
+        ) {
             Text(text = "Registrieren")
         }
+
+        // Navigate to login screen button
         Button(
             onClick = { vm.navigateToLogin() },
             shape = RoundedCornerShape(20.dp),
@@ -272,9 +288,8 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
             elevation = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp, 8.dp, 16.dp, 8.dp),
-
-            ) {
+                .padding(16.dp, 8.dp, 16.dp, 8.dp)
+        ) {
             Text(
                 text = "Bereits Mitglied? zum Anmeldung",
                 textDecoration = TextDecoration.Underline

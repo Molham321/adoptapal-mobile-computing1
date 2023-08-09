@@ -13,6 +13,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
+/**
+ * Composable function to create a customized top app bar based on the provided [Screen] information.
+ *
+ * @param screen The current screen represented by a [Screen] object.
+ * @param navController The navigation controller for handling back navigation (optional).
+ */
 @Composable
 fun AppBar(screen: Screen, navController: NavHostController? = null) {
     TopAppBar(
@@ -40,12 +46,14 @@ fun AppBar(screen: Screen, navController: NavHostController? = null) {
     )
 }
 
+/**
+ * Preview function for the [AppBar] with the Home screen.
+ */
 @Preview()
 @Composable
 fun HomeAppBar() {
     AppBar(screen = Screen.Home)
 }
-
 @Preview()
 @Composable
 fun DetailsAppBar() {
