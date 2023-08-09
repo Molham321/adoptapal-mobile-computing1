@@ -242,13 +242,11 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                         Toast.LENGTH_LONG
                     ).show()
 
-                    // Clear Form
                     userNameTextFieldValue = TextFieldValue("")
                     userEmailTextFieldValue = TextFieldValue("")
                     userPhoneNumberTextFieldValue = TextFieldValue("")
                     userPasswordTextFieldValue = TextFieldValue("")
                     userConfirmPasswordTextFieldValue = TextFieldValue("")
-                    // To hide keyboard
                     editingState = false
                 } else {
                     if (!isNameValid) {

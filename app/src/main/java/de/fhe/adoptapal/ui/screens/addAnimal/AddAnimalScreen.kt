@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import de.fhe.adoptapal.R
-import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
 import de.fhe.adoptapal.ui.screens.util.FileSystemHandler
 import de.fhe.adoptapal.ui.theme.LightModeSecondary
 
@@ -67,7 +66,6 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
 
 
-    val scaffoldState = LocalScaffoldState.current
     val contextForToast = LocalContext.current.applicationContext
 
     var birthdateError by remember { mutableStateOf("") }
@@ -122,7 +120,6 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
         Spacer(Modifier.height(15.dp))
 
-        // DropdownSelect("Tierrasse", animalCategoryDropdownValue, arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel", "Fisch"))
         DropdownSelect(
             "Tierart",
             animalCategoryDropdownValue,
@@ -136,7 +133,6 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
         Spacer(Modifier.height(15.dp))
 
-        // DropdownSelect("Fellfarbe", animalColorDropdownValue, arrayOf("schwarz", "weiß", "blond", "orange", "braun", "gemustert", "kein Fell"))
         DropdownSelect(
             "Farbe des Tieres",
             animalColorDropdownValue,
@@ -255,11 +251,6 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                     .padding(8.dp)
                     .fillMaxWidth(),
                 onClick = {
-                    // println(message = "$animalNameTextFieldValue")
-//                Toast.makeText(contextForToast, "${animalBirthdateValue} ${animalDescriptionTextFieldValue.text}", Toast.LENGTH_SHORT)
-//                    .show()
-
-                    // save image if one was selected
                     var imageUri: String? = null
                     if (selectedImageUri != null) {
                         val file = FileSystemHandler.createImageFile(context)
@@ -295,7 +286,6 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                         )
                             .show()
 
-                        // clear form
                         animalNameTextFieldValue = TextFieldValue("")
                         animalDescriptionTextFieldValue = TextFieldValue("")
                         animalCategoryDropdownValue = 0
@@ -304,7 +294,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                         animalWeightTextFieldValue = TextFieldValue("")
                         animalGenderValue = false
 
-                        animalNameEditingState = false // To hide keyboard
+                        animalNameEditingState = false
                         animalDescriptionEditingState = false
                         animalCategoryEditingState = false
                         animalColorEditingState = false

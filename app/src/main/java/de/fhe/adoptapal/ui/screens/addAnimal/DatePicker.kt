@@ -21,62 +21,45 @@ import androidx.compose.ui.unit.dp
 import java.util.Calendar
 import java.util.Date
 
-// Creating a composable function to
-// create two Images and a spacer between them
-// Calling this function as content
-// in the above function
 @Composable
 fun DatePicker(
     birthdateValue: String,
     editing: Boolean = false,
     onValueChange: (String) -> Unit
 ) {
-    // Fetching the Local Context
     val mContext = LocalContext.current
 
-    // Declaring integer values
-    // for year, month and day
     val mYear: Int
     val mMonth: Int
     val mDay: Int
 
-    // Initializing a Calendar
     val mCalendar = Calendar.getInstance()
 
-    // Fetching current year, month and day
     mYear = mCalendar.get(Calendar.YEAR)
     mMonth = mCalendar.get(Calendar.MONTH)
     mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
 
     mCalendar.time = Date()
 
-    // Declaring a string value to
-    // store date in string format
     val mDate = remember { mutableStateOf("") }
 
-    // Declaring DatePickerDialog and setting
-    // initial values as current values (present year, month and day)
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDay: Int ->
-            // mDate.value = "$mDayOfMonth.${mMonth+1}.$mYear"
             val correctMonth = mMonth + 1
             if (correctMonth < 10) {
                 if (mDay < 10) {
                     mDate.value = "0$mDay.0$correctMonth.$mYear"
                 } else {
-                    // mDate.value = "$mYear-0$correctMonth-$mDay"
                     mDate.value = "$mDay.0$correctMonth.$mYear"
                 }
             } else {
                 if (mDay < 10) {
                     mDate.value = "0$mDay.$correctMonth.$mYear"
                 } else {
-                    // mDate.value = "$mYear-0$correctMonth-$mDay"
                     mDate.value = "$mDay.$correctMonth.$mYear"
                 }
             }
-            // mDate.value = "$mYear-${mMonth+1}-$mDay"
             onValueChange(mDate.value)
         }, mYear, mMonth, mDay
     )
@@ -87,8 +70,6 @@ fun DatePicker(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        // Creating a button that on
-        // click displays/shows the DatePickerDialog
         Button(
             modifier = Modifier
                 .padding(8.dp)
@@ -104,11 +85,5 @@ fun DatePicker(
                 Text(text = "Geburtsdatum: " + birthdateValue, color = Color.White)
             }
         }
-
-        // Adding a space of 100dp height
-//        Spacer(modifier = Modifier.size(100.dp))
-//
-//        // Displaying the mDate value in the Text
-//        Text(text = "Selected Date: ${mDate.value}", fontSize = 30.sp, textAlign = TextAlign.Center)
     }
 }

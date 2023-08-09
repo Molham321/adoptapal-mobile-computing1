@@ -14,7 +14,6 @@ import de.fhe.adoptapal.domain.GetAllColors
 import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
 import de.fhe.adoptapal.domain.GetColorAsync
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
-import de.fhe.adoptapal.domain.GetUserAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
@@ -33,7 +32,6 @@ class AddAnimalScreenViewModel(
     private val navigationManager: NavigationManager,
     private val getAllAnimalCategories: GetAllAnimalCategories,
     private val getAllColors: GetAllColors,
-    private val getUserAsync: GetUserAsync,
     private val getAnimalCategoryAsync: GetAnimalCategoryAsync,
     private val getAnimalColorAsync: GetColorAsync,
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase
@@ -44,27 +42,32 @@ class AddAnimalScreenViewModel(
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
 
-//    var animalCategoryArray = arrayOf<String>()
-//    var animalCategories = mutableStateOf(emptyArray<String>())
-
+    /**
+    * first get all AnimalCategories and Colors from database to display them
+    * in a respective dropdown list for the user to select
+    */
     init {
         this.getAnimalCategoriesFromDb()
         this.getColorsFromDb()
     }
 
+    /**
+    * get all AnimalCategories from database
+    */
     private fun getAnimalCategoriesFromDb() {
         viewModelScope.launch {
             getAllAnimalCategories().collect {
                 dbOp.value = it
                 if (it.status == AsyncOperationState.SUCCESS) {
                     animalCategoryList.value = it.payload as List<AnimalCategory>
-                    // animalCategoryArray = it.payload as Array<String>
-                    // println(animalCategoryArray.joinToString(" "))
                 }
             }
         }
     }
 
+    /**
+    * get all Colors from database
+    */
     private fun getColorsFromDb() {
         viewModelScope.launch {
             getAllColors().collect {
@@ -76,7 +79,9 @@ class AddAnimalScreenViewModel(
         }
     }
 
-
+    /**
+    * fills an array with all AnimalCategories (AnimalCategories are received in form of a list from database)
+    */
     fun getCategoryArray(list: List<AnimalCategory>): Array<String> {
         var categoryArray = arrayOf<String>()
 
@@ -87,6 +92,9 @@ class AddAnimalScreenViewModel(
         return categoryArray
     }
 
+    /**
+    * fills an array with all Colors (Colors are received in form of a list from database)
+    */
     fun getColorArray(list: List<Color>): Array<String> {
         var colorArray = arrayOf<String>()
 
@@ -97,8 +105,13 @@ class AddAnimalScreenViewModel(
         return colorArray
     }
 
+    /**
+    * fills a map with all AnimalCategories (value) and their id (key)
+    * --> can be displayed easier in a dropdown this way; id is
+    * needed to save a new animal to the database
+    */
     fun getCategoryMap(list: List<AnimalCategory>): Map<Long, String> {
-        var categoryMap = mutableMapOf<Long, String>()
+        val categoryMap = mutableMapOf<Long, String>()
 
         list.forEach {
             categoryMap[it.id] = it.name
@@ -107,8 +120,13 @@ class AddAnimalScreenViewModel(
         return categoryMap
     }
 
+    /**
+    * fills a map with all Colors (value) and their id (key)
+    * --> can be displayed easier in a dropdown this way; id is
+    * needed to save a new animal to the database
+    */
     fun getColorMap(list: List<Color>): Map<Long, String> {
-        var colorMap = mutableMapOf<Long, String>()
+        val colorMap = mutableMapOf<Long, String>()
 
         list.forEach {
             colorMap[it.id] = it.name
@@ -118,6 +136,25 @@ class AddAnimalScreenViewModel(
     }
 
 
+    /**
+    * saves a new animal to database
+    *
+    * animalName: from respective input field
+    * birthdate: from respective datepicker (string is parsed into LocalDate)
+    * user: currently logged in user is received from database
+    * category: id from respective dropdown --> AnimalCategory with id is received from database
+    *           (runBlocking to ensure AnimalCategory entry is present at point of animal insert
+    *            --> only AnimalCategories from database will be displayed in dropdown so value is never null)
+    * animalCategory: from respective input field
+    * color: id from respective dropdown --> Color with id is received from database
+    *        (runBlocking to ensure Color entry is present at point of animal insert
+    *         --> only Colors from database will be displayed in dropdown so value is never null)
+    * imageFilePath: null if no image is selected, otherwise filePath of uploaded image
+    * animalGender: from respective switch
+    * animalWeight: from respective input field
+    *
+    * after successful animal insert: user is redirected to home
+    */
     fun addAnimal(
         animalName: String,
         animalDescription: String,
@@ -133,13 +170,6 @@ class AddAnimalScreenViewModel(
             if (animalName.isBlank()) {
                 saveFeedbackFlow.emit(AsyncOperation.error("Animal name, description, category, color, birthdate and weight missing"))
             } else {
-                println(animalName)
-                println(animalDescription)
-                println(animalCategory)
-                println(animalColor)
-                println(animalBirthdate)
-                println(animalWeight)
-                println(animalGender)
 
                 val birthdate =
                     LocalDate.parse(animalBirthdate, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
@@ -166,9 +196,7 @@ class AddAnimalScreenViewModel(
                     }
                 }
 
-                // println("selected date: " + birthdate)
-
-                var newAnimal = Animal(
+                val newAnimal = Animal(
                     animalName,
                     birthdate,
                     user!!,
@@ -215,6 +243,9 @@ class AddAnimalScreenViewModel(
         navigationManager.navigate(GoBackDestination)
     }
 
+    /**
+     * validate that birthdate is not greater than current date
+     */
     fun validateBirthdate(animalBirthdateValue: String): Boolean {
         val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
 
@@ -233,6 +264,9 @@ class AddAnimalScreenViewModel(
         return true
     }
 
+    /**
+     * validate that weight consists of numbers separated by a dot
+     */
     fun validateWeight(text: String): Boolean {
         val regex = Regex("""^\d+(\.\d+)?$""")
         return regex.matches(text)
