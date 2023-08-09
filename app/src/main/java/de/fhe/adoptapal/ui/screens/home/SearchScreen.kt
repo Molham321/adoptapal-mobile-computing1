@@ -116,34 +116,34 @@ fun SearchScreen(
             onWeightFromChange = { vm.initialWeightFrom = it },
             onWeightToChange = { vm.initialWeightTo = it })
 
-            // Apply and Reset buttons
-            FilterButtons(
-                onApplyClicked = {
-                    val filteredAnimals = vm.updateAnimalList(
-                        ageFrom = vm.initialAgeFrom.takeIf { it > 0 },
-                        ageTo = vm.initialAgeTo,
-                        isMale = when (vm.initialSelectedGender) {
-                            "Männlich" -> true
-                            "Weiblich" -> false
-                            else -> null // If "Alle" is selected, set to null to display all genders
-                        },
-                        color = vm.initialColor.takeIf { it.isNotBlank() },
-                        weightFrom = vm.initialWeightFrom,
-                        weightTo = vm.initialWeightTo,
-                        city = vm.initialCity.takeIf { it.isNotBlank() },
-                        distance = vm.initialDistance,
-                        art = vm.initialArt.takeIf { it.isNotBlank() },
-                        name = vm.initialName.takeIf { it.isNotBlank() },
-                        description = vm.initialDescription.takeIf { it.isNotBlank() }
+        // Apply and Reset buttons
+        FilterButtons(
+            onApplyClicked = {
+                val filteredAnimals = vm.updateAnimalList(
+                    ageFrom = vm.initialAgeFrom,
+                    ageTo = vm.initialAgeTo,
+                    isMale = when (vm.initialSelectedGender) {
+                        "Männlich" -> true
+                        "Weiblich" -> false
+                        else -> null // If "Alle" is selected, set to null to display all genders
+                    },
+                    color = vm.initialColor.takeIf { it.isNotBlank() },
+                    weightFrom = vm.initialWeightFrom,
+                    weightTo = vm.initialWeightTo,
+                    city = vm.initialCity.takeIf { it.isNotBlank() },
+                    distance = vm.initialDistance,
+                    art = vm.initialArt.takeIf { it.isNotBlank() },
+                    name = vm.initialName.takeIf { it.isNotBlank() },
+                    description = vm.initialDescription.takeIf { it.isNotBlank() }
 
-                    )
-                    onFiltersApplied(filteredAnimals)
-                },
-                onResetClicked = {
-                    vm.resetFilterValues()
-                    onResetFilters()
-                }
-            )
+                )
+                onFiltersApplied(filteredAnimals)
+            },
+            onResetClicked = {
+                vm.resetFilterValues()
+                onResetFilters()
+            }
+        )
 
         Spacer(modifier = modifier.height(120.dp))
     }
@@ -373,7 +373,7 @@ private fun DistanceToCityFilter(
     onDistanceSelected: (Int) -> Unit,
     onClearDistance: () -> Unit
 ) {
-    val distances = listOf(0, 5, 10, 20, 50 )
+    val distances = listOf(0, 5, 10, 20, 50, 100 )
     var expanded by remember { mutableStateOf(false) }
 
     Text(text = "Distanz:")

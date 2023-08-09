@@ -10,8 +10,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.lang.Exception
 
 
 class RetrofitNetworkController() : NetworkController {
@@ -29,13 +31,23 @@ class RetrofitNetworkController() : NetworkController {
     }
 
     override fun getLatLongByLocationString(locationString: String): Flow<Location> = flow {
-        val response = api.getLatLong(locationString)
-        val newLocation =  Location(
-            latitude = response.data[0].latitude!!,
-            longitude = response.data[0].longitude!!
-        )
+        try {
+            val response = api.getLatLong(locationString)
+            val newLocation =  Location(
+                latitude = response.data[0].latitude!!,
+                longitude = response.data[0].longitude!!
+            )
 
-        emit(newLocation)
+            emit(newLocation)
+        } catch (ex: HttpException) {
+            LoggerFactory.getLogger().info("Retrofit", ex.message())
+            val fheLocation = Location(50.98464,11.042537)
+            emit(fheLocation)
+        } catch (ex: Exception) {
+            ex.message?.let { LoggerFactory.getLogger().info("Retrofit", it) }
+            val fheLocation = Location(50.98464,11.042537)
+            emit(fheLocation)
+        }
     }
 
 
