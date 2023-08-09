@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.ui.screens.home.AnimalCard
-import de.fhe.adoptapal.ui.screens.userDetail.RatingBar
 import de.fhe.adoptapal.ui.screens.util.FullscreenPlaceholderView
 
 @Composable
@@ -61,13 +60,6 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
             if (user.value != null) {
                 item {
                     Column(modifier = modifier) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp, 0.dp, 0.dp, 0.dp)
-                        ) {
-                            RatingBar(rating = 4.0)
-                        }
 
                         Spacer(modifier = modifier.height(24.dp))
                         Text(
@@ -146,6 +138,7 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                         AnimalCard(
                             it,
                             modifier = modifier,
+                            userAddress = vm.user.value?.address
                         ) {
                             vm.navigateToAnimal(it)
                         }
@@ -166,6 +159,7 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                         AnimalCard(
                             it,
                             modifier = modifier,
+                            userAddress = vm.user.value?.address
                         ) {
                             vm.navigateToAnimal(it)
                         }
