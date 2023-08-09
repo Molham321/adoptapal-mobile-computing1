@@ -70,7 +70,6 @@ class ProfileScreenViewModel(
         viewModelScope.launch {
             getUser()
         }
-        // this.getUser()
     }
 
     /**

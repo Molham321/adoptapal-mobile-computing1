@@ -14,7 +14,6 @@ import de.fhe.adoptapal.domain.GetAllColors
 import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
 import de.fhe.adoptapal.domain.GetColorAsync
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
-import de.fhe.adoptapal.domain.GetUserAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
@@ -33,7 +32,6 @@ class AddAnimalScreenViewModel(
     private val navigationManager: NavigationManager,
     private val getAllAnimalCategories: GetAllAnimalCategories,
     private val getAllColors: GetAllColors,
-    private val getUserAsync: GetUserAsync,
     private val getAnimalCategoryAsync: GetAnimalCategoryAsync,
     private val getAnimalColorAsync: GetColorAsync,
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase
