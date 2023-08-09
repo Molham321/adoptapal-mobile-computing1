@@ -147,6 +147,6 @@ val viewModelModule = module {
 
     viewModel { RegisterScreenViewModel(get(), get()) }
     viewModel { AddAnimalScreenViewModel(get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { ProfileScreenViewModel(get(), get(), get(), get()) }
+    viewModel { ProfileScreenViewModel(get(), get(), get(), get(), get()) }
     viewModel { SettingsScreenViewModel(get(), get(), get(), get()) }
 }
