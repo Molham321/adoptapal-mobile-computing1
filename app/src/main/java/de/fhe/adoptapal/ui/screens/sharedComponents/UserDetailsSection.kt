@@ -35,7 +35,7 @@ fun UserDetailsAndAnimalCards(
 
         if (animalList.isNotEmpty()) {
             Text(
-                text = "Gemerkte Tiere",
+                text = "Hochgeladene Tiere",
                 modifier = Modifier.padding(16.dp, 0.dp, 12.dp, 0.dp),
                 color = colorResource(id = R.color.black),
                 fontWeight = FontWeight.Bold,
@@ -75,7 +75,7 @@ fun UserDetailsSection(user: User?, modifier: Modifier = Modifier) {
             )
             Spacer(modifier = modifier.height(24.dp))
             Text(
-                text = "Telefon: ${it.phoneNumber}",
+                text = "Telefon: ${it.phoneNumber ?: "N/A"}",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
