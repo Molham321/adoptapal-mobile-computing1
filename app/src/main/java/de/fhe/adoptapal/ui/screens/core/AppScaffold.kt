@@ -17,7 +17,10 @@ import org.koin.androidx.compose.getKoin
 
 val LocalScaffoldState =
     staticCompositionLocalOf<ScaffoldState> { error("no scaffolded state set") }
-
+/**
+ * Composable function responsible for setting up the main scaffold layout of the app.
+ * This includes the top and bottom app bars, navigation host, and scaffold state.
+ */
 @Composable
 fun AppScaffold() {
     val scaffoldState = rememberScaffoldState()

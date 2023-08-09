@@ -36,7 +36,13 @@ import de.fhe.adoptapal.ui.screens.sharedComponents.composeEmail
 import de.fhe.adoptapal.ui.theme.BackgroundGreyOpacity
 import de.fhe.adoptapal.ui.theme.LightModeText
 
-
+/**
+ * Composable function to display an owner card containing information about the animal's supplier.
+ *
+ * @param animal The [Animal] for which to display the supplier information.
+ * @param image The resource ID of the image representing the supplier.
+ * @param onItemPressed Callback function to be invoked when the owner card is pressed.
+ */
 @Composable
 fun OwnerCard(
     animal: Animal,

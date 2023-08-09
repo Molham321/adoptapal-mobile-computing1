@@ -29,6 +29,14 @@ import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
+/**
+ * Composable function responsible for defining the navigation routes within the app.
+ *
+ * @param navigationManager The navigation manager responsible for handling navigation commands.
+ * @param navController The navigation controller for managing navigation.
+ * @param onNavigation Callback function for when navigation to a new screen occurs.
+ * @param modifier The modifier to apply to the composable.
+ */
 @Composable
 fun AppNavigationHost(
     navigationManager: NavigationManager,

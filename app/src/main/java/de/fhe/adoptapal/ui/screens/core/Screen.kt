@@ -39,6 +39,14 @@ val RootScreens = listOf(
     Screen.Profile
 )
 
+/**
+ * Represents the possible screens in the application.
+ *
+ * @property title The title to be displayed in the app bar.
+ * @property icon The icon associated with the screen.
+ * @property route The navigation route for the screen.
+ * @property hasReturn Indicates whether the screen has a return functionality.
+ */
 sealed class Screen(
     val title: String = "Title",
     val icon: ImageVector = Icons.Filled.Favorite,
@@ -55,8 +63,9 @@ sealed class Screen(
         override val destination = route
     }
 
-    // Actual Screen Definitions
-
+    /**
+     * Represents the Home screen.
+     */
     object Home : Screen(
         title = "Home",
         icon = Icons.Filled.Home,
@@ -104,6 +113,9 @@ sealed class Screen(
         }
     }
 
+    /**
+     * Represents the Detail screen.
+     */
     object Detail : Screen(
         title = "Details",
         icon = Icons.Filled.ArrowBack,
@@ -129,6 +141,9 @@ sealed class Screen(
         }
     }
 
+    /**
+     * Represents the Map screen.
+     */
     object Map : Screen(
         title = "Karte",
         icon = Icons.Filled.Place,
@@ -253,6 +268,9 @@ sealed class Screen(
         }
     }
 
+    /**
+     * Represents the Undefined screen.
+     */
     object Undefined : Screen(
         title = "Undefined",
         icon = Icons.Filled.Warning,

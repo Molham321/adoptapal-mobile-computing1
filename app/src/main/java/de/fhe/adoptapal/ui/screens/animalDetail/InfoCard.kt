@@ -24,6 +24,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
 
+/**
+ * Composable function to display an info card with a title and value.
+ *
+ * @param title Title to display above the value.
+ * @param value Value to display in the info card.
+ */
 @Composable
 fun InfoCard(title: String, value: String) {
     Box(
