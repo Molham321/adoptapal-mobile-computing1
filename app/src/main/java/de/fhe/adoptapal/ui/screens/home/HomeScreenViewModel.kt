@@ -284,10 +284,13 @@ class HomeScreenViewModel(
     /**
      * Log out the user.
      */
-    fun logout() { // TODO fix or delete
+    fun logout() {
         viewModelScope.launch {
-            setLoggedInUserInDataStore(0)
-            user.value = null
+            setLoggedInUserInDataStore(0).collect { result ->
+                if (result.status == AsyncOperationState.SUCCESS) {
+                    user.value = null
+                }
+            }
         }
     }
 }
