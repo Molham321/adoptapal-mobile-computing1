@@ -77,7 +77,26 @@ fun AnimalCard(
                     "Katze" -> {
                         image = painterResource(id = R.drawable.andresllanezas_katze)
                     }
-                    // ... add more cases for different animal categories
+
+                    "Hund" -> {
+                        image = painterResource(id = R.drawable.andresllanezas_hund)
+                    }
+
+                    "Fisch" -> {
+                        image = painterResource(id = R.drawable.andresllanezas_fisch)
+                    }
+
+                    "Reptil" -> {
+                        image = painterResource(id = R.drawable.andresllanezas_reptil)
+                    }
+
+                    "Nagetier" -> {
+                        image = painterResource(id = R.drawable.andresllanezas_nagetier)
+                    }
+
+                    "Vogel" -> {
+                        image = painterResource(id = R.drawable.andresllanezas_vogel)
+                    }
 
                     else -> {
                         image = painterResource(id = R.drawable.andresllanezas_andere)

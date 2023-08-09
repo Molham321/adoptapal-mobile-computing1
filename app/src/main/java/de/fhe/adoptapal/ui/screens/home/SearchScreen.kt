@@ -91,33 +91,6 @@ fun SearchScreen(
             onRangeToChange = { vm.initialWeightTo = it }
         )
 
-        // Apply and Reset buttons
-        FilterButtons(
-            onApplyClicked = {
-                val filteredAnimals = vm.updateAnimalList(
-                    ageFrom = vm.initialAgeFrom,
-                    ageTo = vm.initialAgeTo,
-                    isMale = when (vm.initialSelectedGender) {
-                        "Männlich" -> true
-                        "Weiblich" -> false
-                        else -> null // If "Alle" is selected, set to null to display all genders
-                    },
-                    color = vm.initialColor.takeIf { it.isNotBlank() },
-                    weightFrom = vm.initialWeightFrom,
-                    weightTo = vm.initialWeightTo,
-                    city = vm.initialCity.takeIf { it.isNotBlank() },
-                    distance = vm.initialDistance,
-                    art = vm.initialArt.takeIf { it.isNotBlank() },
-                    name = vm.initialName.takeIf { it.isNotBlank() },
-                    description = vm.initialDescription.takeIf { it.isNotBlank() }
-
-                )
-                onFiltersApplied(filteredAnimals)
-            },
-            onResetClicked = {
-                vm.resetFilterValues()
-                onResetFilters()
-            }
         // Gender filter
         GenderFilter(
             selectedGender = vm.initialSelectedGender,
@@ -160,7 +133,7 @@ fun SearchScreen(
             onApplyClicked = {
                 // Apply filters and invoke callback
                 val filteredAnimals = vm.updateAnimalList(
-                    ageFrom = vm.initialAgeFrom.takeIf { it > 0 },
+                    ageFrom = vm.initialAgeFrom,
                     ageTo = vm.initialAgeTo,
                     isMale = when (vm.initialSelectedGender) {
                         "Männlich" -> true
