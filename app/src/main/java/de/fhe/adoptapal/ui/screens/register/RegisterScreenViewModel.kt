@@ -13,58 +13,108 @@ import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for the Register screen.
+ *
+ * @param insertUserAsyncUseCase Use case to insert a new user.
+ * @param navigationManager Manager for screen navigation.
+ */
 class RegisterScreenViewModel(
     private val insertUserAsyncUseCase: InsertUserAsync,
     val navigationManager: NavigationManager,
 ) : ViewModel() {
 
+    // State for saving feedback flow
     var saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
 
+    /**
+     * Function to add a new user.
+     *
+     * @param userName The user's name.
+     * @param userEmail The user's email.
+     * @param userPhoneNumber The user's phone number.
+     */
     fun addUser(userName: String, userEmail: String, userPhoneNumber: String) {
         viewModelScope.launch {
 
             if (userName.isBlank() || userEmail.isBlank()) {
-                saveFeedbackFlow.emit(AsyncOperation.error("Name oder Email fehlt"))
+                saveFeedbackFlow.emit(AsyncOperation.error("Name or Email missing"))
             } else {
                 val newUser = User(userName, userEmail, userPhoneNumber, null)
                 saveFeedbackFlow.emit(AsyncOperation.saving("Saving user now!"))
-                insertUserAsyncUseCase(newUser).collect {
-                    if (it.status == AsyncOperationState.SUCCESS) {
-                        saveFeedbackFlow.emit(it)
+                insertUserAsyncUseCase(newUser).collect { result ->
+                    if (result.status == AsyncOperationState.SUCCESS) {
+                        saveFeedbackFlow.emit(result)
                         navigationManager.navigate(GoBackDestination)
                     }
-                    if (it.status == AsyncOperationState.ERROR) {
-                        Log.i("RegisterScreenVW", it.message)
-                        saveFeedbackFlow.emit(it)
+                    if (result.status == AsyncOperationState.ERROR) {
+                        Log.i("RegisterScreenVW", result.message)
+                        saveFeedbackFlow.emit(result)
                     }
                 }
             }
         }
     }
 
+    // Validation functions
+
+    /**
+     * Function to validate the format of a name.
+     *
+     * @param name The name to be validated.
+     * @return True if the name format is valid, false otherwise.
+     */
     fun validateName(name: String): Boolean {
         val namePattern = "^[a-zA-ZäöüÄÖÜß\\s-]+$"
         return name.matches(namePattern.toRegex())
     }
 
+    /**
+     * Function to validate the format of an email address.
+     *
+     * @param email The email address to be validated.
+     * @return True if the email format is valid, false otherwise.
+     */
     fun validateEmail(email: String): Boolean {
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
         return email.matches(emailPattern.toRegex())
     }
 
+    /**
+     * Function to validate the format of a phone number.
+     *
+     * @param phoneNumber The phone number to be validated.
+     * @return True if the phone number format is valid, false otherwise.
+     */
     fun validatePhoneNumber(phoneNumber: String): Boolean {
         val phonePattern = "^(\\+49|0)(\\d{3,4})[ -]?(\\d{3,})([ -]?\\d{1,5})?\$"
         return phoneNumber.matches(phonePattern.toRegex()) || phoneNumber == ""
     }
 
+    /**
+     * Function to validate the password length.
+     *
+     * @param password The password to be validated.
+     * @return True if the password length is valid, false otherwise.
+     */
     fun validatePassword(password: String): Boolean {
         return password.length >= 3
     }
 
+    /**
+     * Function to validate the confirmation password.
+     *
+     * @param password The password to be compared.
+     * @param confirmPassword The confirmation password to be compared.
+     * @return True if the passwords match, false otherwise.
+     */
     fun validateConfirmPassword(password: String, confirmPassword: String): Boolean {
         return password == confirmPassword
     }
 
+    /**
+     * Function to navigate to the login screen.
+     */
     fun navigateToLogin() {
         navigationManager.navigate(Screen.Login.navigationCommand())
     }

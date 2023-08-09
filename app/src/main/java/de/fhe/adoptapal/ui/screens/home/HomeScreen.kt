@@ -2,6 +2,7 @@ package de.fhe.adoptapal.ui.screens.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
@@ -14,23 +15,23 @@ import androidx.compose.ui.Modifier
 import de.fhe.adoptapal.ui.screens.sharedComponents.AnimalList
 import de.fhe.adoptapal.ui.screens.util.FullscreenPlaceholderView
 
+/**
+ * A Composable function that represents the main screen of the application's home page.
+ *
+ * @param vm The ViewModel associated with the HomeScreen.
+ * @param modifier The modifier for styling or layout adjustments.
+ */
 @Composable
 fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
-    val animalList = remember { vm.animalList }
-    var filterText by remember { mutableStateOf("") }
-
+    // Refresh the user data when the screen is composed
     vm.refreshUser()
-
-    fun clearFilter() {
-        filterText = ""
-    }
 
     Column(modifier = modifier) {
 
+        // Display the filter dialog if necessary
         if (vm.showFilterDialog) {
             AlertDialog(
                 onDismissRequest = { vm.showFilterDialog = false },
-//                title = { Text(text = "Filteroptionen") },
                 text = {
                     // Call the SearchScreen composable to display the filter options
                     SearchScreen(
@@ -49,29 +50,21 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
             )
         }
 
-        SearchBar(
-            onSearch = { text -> filterText = text },
-            onClear = { clearFilter() },
-            modifier = Modifier.fillMaxWidth()
-        )
+        // Display the AnimalList or placeholder view based on filtered animals
+        if (vm.filteredAnimals.value.isNotEmpty()) {
 
-        if (animalList.value.isNotEmpty()) {
-
-            var filteredAnimals = vm.getFilteredAnimals(vm.filteredAnimals.value, filterText)
-
-            if (filteredAnimals.isEmpty()) {
-                filteredAnimals = vm.getFilteredAnimals(vm.animalList.value, filterText)
-            }
-
+            // Display the list of filtered animals
             AnimalList(
-                animals = filteredAnimals,
+                userAddress = vm.user.value?.address,
+                animals = vm.filteredAnimals.value,
                 modifier = modifier
             ) {
+                // Navigate to the selected animal's details screen
                 vm.navigateToAnimal(it)
             }
         } else {
+            // Display a placeholder view when no animals are available
             FullscreenPlaceholderView("Keine Tiere", Icons.Filled.Info)
         }
     }
 }
-

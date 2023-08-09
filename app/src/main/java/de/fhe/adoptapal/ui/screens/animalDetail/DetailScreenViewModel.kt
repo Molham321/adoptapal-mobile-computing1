@@ -12,6 +12,14 @@ import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel for the animal detail screen.
+ *
+ * @param navigationManager Navigation manager to handle screen navigation.
+ * @param animalId ID of the animal to display details for.
+ * @param getAnimalAsync Use case for retrieving an animal.
+ * @param updateAnimalAsync Use case for updating an animal.
+ */
 class DetailScreenViewModel(
     private val navigationManager: NavigationManager,
     private val animalId: Long,
@@ -19,15 +27,21 @@ class DetailScreenViewModel(
     private val updateAnimalAsync: UpdateAnimalAsync
 ) : ViewModel() {
 
+    // Mutable state to hold the animal details
     var animal = mutableStateOf<Animal?>(null)
+
+    // Mutable state to handle database operation status
     var dbOp = mutableStateOf(AsyncOperation.undefined())
 
     init {
+        // Initialize by retrieving animal details from the database
         getAnimalFromDb(animalId)
     }
 
     /**
-     * get animal from database (id comes from selected list entry on home screen)
+     * Retrieves animal details from the database.
+     *
+     * @param id ID of the animal to retrieve.
      */
     fun getAnimalFromDb(id: Long) {
         viewModelScope.launch {
@@ -41,18 +55,24 @@ class DetailScreenViewModel(
     }
 
     /**
-     * marks animal as favourite / unmarks animal as favourite when icon button is clicked
-     * --> function displays message on screen
+     * Marks an animal as favorite and updates the database.
+     *
+     * @param animal Animal to mark as favorite.
      */
     fun saveAnimalAsFavorite(animal: Animal) {
         viewModelScope.launch {
             updateAnimalAsync(animal).collect {
-
+                // Handle the result of the update if needed
             }
         }
         println("Tier ${animal.name} mit id ${animal.id} gemerkt: ${animal.isFavorite}")
     }
 
+    /**
+     * Navigates to the user detail screen.
+     *
+     * @param userId ID of the user to display details for.
+     */
     fun navigateToUser(userId: Long) {
         navigationManager.navigate(Screen.UserDetail.navigationCommand(userId))
     }

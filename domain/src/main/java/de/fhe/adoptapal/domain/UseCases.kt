@@ -1,6 +1,7 @@
 package de.fhe.adoptapal.domain;
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
 
@@ -358,6 +359,17 @@ class GetLatLongForAddress(private val networkController: NetworkController) {
                 updatedAddress as Any
             )
         )
+    }
+}
+
+
+
+class GetLatLongForLocationString(private val networkController: NetworkController) {
+    operator fun invoke(locationString: String) : Flow<AsyncOperation> = flow {
+        emit(AsyncOperation.loading("Start loading latLong for $locationString"))
+        networkController.getLatLongByLocationString(locationString).collect{
+            emit(AsyncOperation.success("Successfully got address", it as Any))
+        }
     }
 }
 
