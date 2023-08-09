@@ -15,7 +15,6 @@ import de.fhe.adoptapal.domain.Color
 import de.fhe.adoptapal.domain.GetAllAnimalCategories
 import de.fhe.adoptapal.domain.GetAllAnimals
 import de.fhe.adoptapal.domain.GetAllColors
-import de.fhe.adoptapal.domain.GetLatLongForAddress
 import de.fhe.adoptapal.domain.GetLatLongForLocationString
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.Location
@@ -25,9 +24,19 @@ import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.koin.core.KoinApplication.Companion.init
 import java.time.LocalDate
 
+/**
+ * ViewModel class for the HomeScreen.
+ *
+ * @param navigationManager The navigation manager for handling screen transitions.
+ * @param getAllAnimals Use case for retrieving animals from the database.
+ * @param getLoggedInUserFromDataStoreAndDatabase Use case for retrieving logged-in user data.
+ * @param setLoggedInUserInDataStore Use case for setting logged-in user data.
+ * @param getAllColors Use case for retrieving animal colors from the database.
+ * @param getLatLongForLocationString Use case for getting latitude and longitude from a location string.
+ * @param getAllAnimalCategories Use case for retrieving animal categories from the database.
+ */
 class HomeScreenViewModel(
     private val navigationManager: NavigationManager,
     private val getAllAnimals: GetAllAnimals,
@@ -38,28 +47,32 @@ class HomeScreenViewModel(
     private val getAllAnimalCategories: GetAllAnimalCategories,
 ) : ViewModel() {
 
-    var showFilterDialog      by mutableStateOf(false)
-    var initialAgeFrom        by mutableStateOf(0)
-    var initialAgeTo          by mutableStateOf(0)
-    var initialWeightFrom     by mutableStateOf(0)
-    var initialWeightTo       by mutableStateOf(0)
-    var initialCity           by mutableStateOf("")
-    var initialName           by mutableStateOf("")
-    var initialDescription    by mutableStateOf("")
-    var initialColor          by mutableStateOf("")
-    var initialArt            by mutableStateOf("")
+    // Mutable state properties for UI components
+    var showFilterDialog by mutableStateOf(false)
+    var initialAgeFrom by mutableStateOf(0)
+    var initialAgeTo by mutableStateOf(0)
+    var initialWeightFrom by mutableStateOf(0)
+    var initialWeightTo by mutableStateOf(0)
+    var initialCity by mutableStateOf("")
+    var initialName by mutableStateOf("")
+    var initialDescription by mutableStateOf("")
+    var initialColor by mutableStateOf("")
+    var initialArt by mutableStateOf("")
     var initialSelectedGender by mutableStateOf("Alle")
-    var initialBreed          by mutableStateOf(TextFieldValue())
-    var initialDistance       by mutableStateOf(0)
+    var initialBreed by mutableStateOf(TextFieldValue())
+    var initialDistance by mutableStateOf(0)
 
-    var animalColorList    = mutableStateOf(emptyList<Color>())
+    var animalColorList = mutableStateOf(emptyList<Color>())
     var animalCategoryList = mutableStateOf(emptyList<AnimalCategory>())
-    var animalList         = mutableStateOf(emptyList<Animal>())
-    var filteredAnimals    = mutableStateOf(emptyList<Animal>())
-    var dbOp               = mutableStateOf(AsyncOperation.undefined())
-    var user               = mutableStateOf<User?>(null)
+    var animalList = mutableStateOf(emptyList<Animal>())
+    var filteredAnimals = mutableStateOf(emptyList<Animal>())
+    var dbOp = mutableStateOf(AsyncOperation.undefined())
+    var user = mutableStateOf<User?>(null)
     var filterLocation by mutableStateOf<Location?>(null)
 
+    /**
+     * Initialize the ViewModel by fetching initial data.
+     */
     init {
         this.getLoggedInUser()
         this.getAnimalsFromDb()
@@ -67,6 +80,9 @@ class HomeScreenViewModel(
         this.getAnimalCategoriesFromDb()
     }
 
+    /**
+     * Fetch animals from the database.
+     */
     fun getAnimalsFromDb() {
         viewModelScope.launch {
             getAllAnimals().collect {
@@ -79,6 +95,9 @@ class HomeScreenViewModel(
         }
     }
 
+    /**
+     * Fetch animal colors from the database.
+     */
     fun getColorsFromDb() {
         viewModelScope.launch {
             getAllColors().collect {
@@ -90,6 +109,9 @@ class HomeScreenViewModel(
         }
     }
 
+    /**
+     * Fetch animal categories from the database.
+     */
     fun getAnimalCategoriesFromDb() {
         viewModelScope.launch {
             getAllAnimalCategories().collect {
@@ -101,6 +123,9 @@ class HomeScreenViewModel(
         }
     }
 
+    /**
+     * Fetch the logged-in user data from the data store and database.
+     */
     fun getLoggedInUser() {
         viewModelScope.launch {
             getLoggedInUserFromDataStoreAndDatabase().collect {
@@ -111,10 +136,16 @@ class HomeScreenViewModel(
         }
     }
 
+    /**
+     * Refresh the logged-in user data.
+     */
     fun refreshUser() {
         this.getLoggedInUser()
     }
 
+    /**
+     * Update the filtered animal list based on filter criteria.
+     */
     fun updateAnimalList(
         ageFrom: Int?,
         ageTo: Int?,
@@ -123,13 +154,13 @@ class HomeScreenViewModel(
         art: String?,
         weightFrom: Int,
         weightTo: Int,
-        city: String?,       
-         name: String?,
+        city: String?,
+        name: String?,
         description: String?,
 
         distance: Int
     ): List<Animal> {
-        if(city != null) {
+        if (city != null) {
             this.getLocationByString(city)
         }
         return animalList.value.filter { animal ->
@@ -137,8 +168,10 @@ class HomeScreenViewModel(
                 (ageFrom == null || animal.birthday.plusYears(ageFrom.toLong()) >= LocalDate.now()) &&
                         (ageTo == null || animal.birthday.plusYears(ageTo.toLong()) <= LocalDate.now())
             val maleCondition = isMale == null || animal.isMale == isMale
-            val colorCondition = color.isNullOrBlank() || animal.color.name.contains(color, ignoreCase = true)
-            val artCondition   = art.isNullOrBlank()   || animal.animalCategory.name.contains(art, ignoreCase = true)
+            val colorCondition =
+                color.isNullOrBlank() || animal.color.name.contains(color, ignoreCase = true)
+            val artCondition =
+                art.isNullOrBlank() || animal.animalCategory.name.contains(art, ignoreCase = true)
             val weightCondition = (weightFrom == 0 || animal.weight >= weightFrom) &&
                     (weightTo == 0 || animal.weight <= weightTo)
             val cityCondition = city.isNullOrBlank() || animal.supplier.address?.city?.contains(
@@ -162,26 +195,34 @@ class HomeScreenViewModel(
             Log.i("HSVM", "location $distance")
             // load location once
             var distanceCondition = true
-            if(!city.isNullOrBlank() && distance > 0) {
+            if (!city.isNullOrBlank() && distance > 0) {
                 distanceCondition = this.filterLocation!!.isWithinRangeOf(
-                        animal.supplier.address!!.latitude,
-                        animal.supplier.address!!.longitude,
-                        distanceInKm = distance.toDouble()
-                    )
+                    animal.supplier.address!!.latitude,
+                    animal.supplier.address!!.longitude,
+                    distanceInKm = distance.toDouble()
+                )
             }
             ageCondition && maleCondition && colorCondition && weightCondition && (cityCondition || distanceCondition) && nameCondition && descriptionCondition && artCondition
         }
     }
 
-
+    /**
+     * Update the filtered animal list with the provided filtered animals.
+     */
     fun updateFilteredAnimalList(filteredAnimals: List<Animal>) {
         this.filteredAnimals.value = filteredAnimals
     }
 
+    /**
+     * Reset all filter values and display all animals.
+     */
     fun resetFiltersAndShowAllAnimals() {
         filteredAnimals.value = animalList.value
     }
 
+    /**
+     * Reset all filter values to their initial state.
+     */
     fun resetFilterValues() {
         // Hier werden die Filterwerte zurückgesetzt
         initialAgeFrom = 0
@@ -199,12 +240,18 @@ class HomeScreenViewModel(
         initialArt = ""
     }
 
+    /**
+     * Open the filter dialog.
+     */
     fun openFilterDialog() {
         showFilterDialog = true
     }
 
+    /**
+     * Get the array of colors for UI selection.
+     */
     private fun getLocationByString(locationString: String) {
-         runBlocking {
+        runBlocking {
             getLatLongForLocationString(locationString).collect {
                 if (it.status == AsyncOperationState.SUCCESS) {
                     filterLocation = it.payload as Location
@@ -213,47 +260,34 @@ class HomeScreenViewModel(
         }
     }
 
-    // -----------------
-    // Navigation
-    // -----------------
-
-    fun getColorArray(list: List<Color>): Array<String> {
-        var colorArray = arrayOf<String>()
-
-        list.forEach {
-            colorArray += it.name
-        }
-
-        return colorArray
-    }
-
-    fun getColorMap(list: List<Color>): Map<Long, String> {
-        var colorMap = mutableMapOf<Long, String>()
-
-        list.forEach {
-            colorMap[it.id] = it.name
-        }
-
-        return colorMap
-    }
-
+    /**
+     * Navigate to the "Add Animal" screen.
+     */
     fun navigateToAddAnimal() {
         navigationManager.navigate(Screen.AddAnimal.navigationCommand())
     }
 
+    /**
+     * Navigate to the "Login" screen.
+     */
     fun navigateToLogin() {
         navigationManager.navigate(Screen.Login.navigationCommand())
     }
 
+    /**
+     * Navigate to the "Animal Detail" screen with the specified animal ID.
+     */
     fun navigateToAnimal(animalId: Long) {
         navigationManager.navigate(Screen.Detail.navigationCommand(animalId))
     }
 
+    /**
+     * Log out the user.
+     */
     fun logout() { // TODO fix or delete
         viewModelScope.launch {
             setLoggedInUserInDataStore(0)
             user.value = null
         }
     }
-
 }

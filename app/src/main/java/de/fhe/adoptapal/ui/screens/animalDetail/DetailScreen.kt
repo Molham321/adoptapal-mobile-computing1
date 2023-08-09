@@ -4,17 +4,24 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
+/**
+ * Composable function representing the detail screen for an animal.
+ *
+ * @param vm ViewModel for the detail screen.
+ * @param modifier Modifier for the layout.
+ */
 @Composable
 fun DetailScreen(vm: DetailScreenViewModel, modifier: Modifier = Modifier) {
 
     Column(modifier = modifier) {
 
-        if (vm.animal.value != null) {
+        // Display details of the animal if available
+        vm.animal.value?.let { animal ->
             Details(
-                animal = vm.animal.value!!,
+                animal = animal,
                 modifier = modifier
-            ) {
-                vm.navigateToUser(it)
+            ) { userId ->
+                vm.navigateToUser(userId)
             }
         }
     }

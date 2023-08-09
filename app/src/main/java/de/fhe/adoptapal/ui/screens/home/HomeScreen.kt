@@ -15,12 +15,20 @@ import androidx.compose.ui.Modifier
 import de.fhe.adoptapal.ui.screens.sharedComponents.AnimalList
 import de.fhe.adoptapal.ui.screens.util.FullscreenPlaceholderView
 
+/**
+ * A Composable function that represents the main screen of the application's home page.
+ *
+ * @param vm The ViewModel associated with the HomeScreen.
+ * @param modifier The modifier for styling or layout adjustments.
+ */
 @Composable
 fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
+    // Refresh the user data when the screen is composed
     vm.refreshUser()
 
     Column(modifier = modifier) {
 
+        // Display the filter dialog if necessary
         if (vm.showFilterDialog) {
             AlertDialog(
                 onDismissRequest = { vm.showFilterDialog = false },
@@ -42,18 +50,21 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
             )
         }
 
+        // Display the AnimalList or placeholder view based on filtered animals
         if (vm.filteredAnimals.value.isNotEmpty()) {
 
+            // Display the list of filtered animals
             AnimalList(
                 userAddress = vm.user.value?.address,
                 animals = vm.filteredAnimals.value,
                 modifier = modifier
             ) {
+                // Navigate to the selected animal's details screen
                 vm.navigateToAnimal(it)
             }
         } else {
+            // Display a placeholder view when no animals are available
             FullscreenPlaceholderView("Keine Tiere", Icons.Filled.Info)
         }
     }
 }
-

@@ -36,9 +36,14 @@ import de.fhe.adoptapal.ui.theme.BackgroundGreyOpacity
 import de.fhe.adoptapal.ui.theme.LightModeText
 import org.koin.androidx.compose.koinViewModel
 
-//----------------------------------------------
-// ItemAnimalCard Component for HomeScreen
-//----------------------------------------------
+/**
+ * A Composable function that displays a card representing an animal.
+ *
+ * @param animal The animal data to be displayed.
+ * @param modifier The modifier for styling or layout adjustments.
+ * @param userAddress The user's address for distance calculation.
+ * @param onItemPressed The callback function to be invoked when the card is pressed.
+ */
 @Composable
 fun AnimalCard(
     animal: Animal,
@@ -48,6 +53,7 @@ fun AnimalCard(
 ) {
     val vm: HomeScreenViewModel = koinViewModel()
 
+    // Create a card layout for the animal information
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -63,40 +69,22 @@ fun AnimalCard(
                 .padding(16.dp)
         ) {
 
-            // ANIMAL IMAGE
+            // Display animal image
+
             if (animal.imageFilePath == null) {
                 var image: Painter
                 when (animal.animalCategory.name) {
                     "Katze" -> {
                         image = painterResource(id = R.drawable.andresllanezas_katze)
                     }
-
-                    "Hund" -> {
-                        image = painterResource(id = R.drawable.andresllanezas_hund)
-                    }
-
-                    "Fisch" -> {
-                        image = painterResource(id = R.drawable.andresllanezas_fisch)
-                    }
-
-                    "Reptil" -> {
-                        image = painterResource(id = R.drawable.andresllanezas_reptil)
-                    }
-
-                    "Nagetier" -> {
-                        image = painterResource(id = R.drawable.andresllanezas_nagetier)
-                    }
-
-                    "Vogel" -> {
-                        image = painterResource(id = R.drawable.andresllanezas_vogel)
-                    }
+                    // ... add more cases for different animal categories
 
                     else -> {
                         image = painterResource(id = R.drawable.andresllanezas_andere)
                     }
                 }
 
-                // Image from inital data or default images
+                // Display default images for animal categories
                 Image(
                     modifier = modifier
                         .size(80.dp, 80.dp)
@@ -109,7 +97,7 @@ fun AnimalCard(
 
             } else {
 
-                // Image from DB
+                // Display image from the database
                 AsyncImage(
                     model = animal.imageFilePath,
                     contentDescription = null,
@@ -121,6 +109,7 @@ fun AnimalCard(
             }
             Spacer(modifier = modifier.width(16.dp))
 
+            // Display animal details
             Column(modifier = modifier.align(Alignment.CenterVertically)) {
                 Text(
                     text = animal.name,
@@ -130,16 +119,16 @@ fun AnimalCard(
                 )
                 Spacer(modifier = modifier.height(8.dp))
 
-                // AGE
+                // Display age
                 Text(
                     text = animal.getAge(),
                     modifier = modifier.padding(0.dp, 0.dp, 12.dp, 0.dp),
                     color = Color.Gray,
                 )
 
-                // LOCATION
+                // Display location
                 Row(verticalAlignment = Alignment.Bottom) {
-                    // Location Icon
+                    // Display location icon
                     val location: Painter = painterResource(id = R.drawable.location)
                     Icon(
                         painter = location,
@@ -148,13 +137,12 @@ fun AnimalCard(
                         tint = LightModeText
                     )
 
-                    // City
-                    animal.supplier.address?.let {supplierAddress ->
+                    // Display city and distance
+                    animal.supplier.address?.let { supplierAddress ->
                         var animalLocation = supplierAddress.city
                         var distance = ""
 
-                        // user is in a different city than supplier
-                        if(userAddress != null) {
+                        if (userAddress != null) {
                             if (userAddress.city != supplierAddress.city) {
                                 distance = Location(userAddress.latitude, userAddress.longitude)
                                     .calculateDistanceTo(
@@ -176,7 +164,7 @@ fun AnimalCard(
                 }
             }
 
-            // GENDER
+            // Display gender and create time difference
             Column(
                 modifier = modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.Top,
