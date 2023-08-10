@@ -118,8 +118,6 @@ class ProfileScreenViewModel(
         navigationManager.navigate(Screen.Home.navigationCommand())
     }
 
-    // TODO: when user logs out here, they should be automatically logged out in home as well
-    // the other way around it's working (logging out in home and be logged out in profile as well)
     fun logout() {
         viewModelScope.launch {
             setLoggedInUserInDataStore(0).collect { result ->
