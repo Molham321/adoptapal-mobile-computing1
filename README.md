@@ -17,6 +17,17 @@ AdoptAPal ist eine Applikation, die dabei helfen soll, Tiere in der Nähe zu fin
 - Registrierung und Anmeldung
 - Möglichkeit zum Ändern eigener Daten
 
+## Installationsanleitung
+In der AndroidManifest.xml (Zeile 36) muss zur Verwendung von Google Maps ein entsprechender API-Key eingetragen werden.
+
+```
+<meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="[API-KEY]" />
+```
+
+## Testnutzer
+
 ## Aufbau
 ![Sitemap der AdoptAPal App](documentation/SitemapAdoptAPal.png)
 
@@ -37,6 +48,9 @@ AdoptAPal ist eine Applikation, die dabei helfen soll, Tiere in der Nähe zu fin
 - gemerkte Tiere werden aktuell anhand eines bool Wertes in der Animal-Tabelle gespeichert
 - dadurch haben alle Nutzer, die die App nutzen, dieselben Tiere in ihrer Merkliste stehen
 - die Erweiterung der Datenbank um eine spezifische Tabelle könnte dieses Problem lösen (gemerkte Tiere werden je angemeldetem Nutzer gespeichert)
+
+**Prüfung des Passwortes**
+- hier weiter...
 
 **Reload der Karte**
 - die Karte wird nur angezeigt, wenn der Nutzer zustimmt, seinen Standort freizugeben
@@ -61,14 +75,6 @@ AdoptAPal ist eine Applikation, die dabei helfen soll, Tiere in der Nähe zu fin
 - [Positionstack](https://positionstack.com/) (API zur Umwandlung von Adressen in Koordinaten)
 - default Bilder ([Andres Llanezas](https://mrandrelo.myportfolio.com/profiles-project-animal-default-profile-pictures))
 
-## Installationsanleitung
-In der AndroidManifest.xml (Zeile 36) muss zur Verwendung von Google Maps ein entsprechender API-Key eingetragen werden.
-
-```
-<meta-data
-    android:name="com.google.android.geo.API_KEY"
-    android:value="[API-KEY]" />
-```
 
 ## App features
 
