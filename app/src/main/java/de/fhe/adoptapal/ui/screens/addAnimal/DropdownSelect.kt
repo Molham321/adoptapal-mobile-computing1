@@ -45,7 +45,7 @@ fun DropdownSelect(
         ) {
             if (selectedValue == "") {
                 Text(
-                    text = ("* " + dropdownCat),
+                    text = ("* $dropdownCat"),
                     color = Color.White
                 )
             } else {

@@ -128,7 +128,7 @@ fun OwnerCard(
                             .clip(RoundedCornerShape(8.dp))
                     ) {
                         Text(
-                            text = "Anrufen",
+                            text = stringResource(R.string.call),
                             fontSize = 16.sp,
                         )
                     }
@@ -154,7 +154,6 @@ fun OwnerCard(
                     )
                 }
             }
-
         }
     }
 }

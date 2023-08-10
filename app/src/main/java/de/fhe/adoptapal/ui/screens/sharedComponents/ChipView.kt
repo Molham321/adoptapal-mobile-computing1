@@ -13,15 +13,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+/**
+ * A Composable function that displays a chip view with gender information.
+ *
+ * @param gender Whether the gender is male (true) or female (false).
+ * @param colorResource The color resource to be used for the chip's background and text color.
+ */
 @Composable
 fun ChipView(gender: Boolean, colorResource: Color) {
-    var genderValue: String
-
-    if (gender) {
-        genderValue = "Männlich"
+    // Determine the gender value based on the boolean gender parameter
+    val genderValue: String = if (gender) {
+        "Männlich"
     } else {
-        genderValue = "Weiblich"
+        "Weiblich"
     }
+    // Display the chip view with a rounded corner shape, background color, and gender text
     Box(
         modifier = Modifier
             .wrapContentWidth()

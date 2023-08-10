@@ -23,6 +23,14 @@ import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.home.AnimalCard
 import de.fhe.adoptapal.ui.screens.util.FullscreenPlaceholderView
 
+/**
+ * A Composable function that displays user details and a list of animal cards.
+ *
+ * @param user The user whose details are to be displayed.
+ * @param animalList The list of animals to be displayed.
+ * @param modifier The modifier for customization.
+ * @param onAnimalClick The callback for when an animal card is clicked.
+ */
 @Composable
 fun UserDetailsAndAnimalCards(
     user: User?,
@@ -35,7 +43,7 @@ fun UserDetailsAndAnimalCards(
 
         if (animalList.isNotEmpty()) {
             Text(
-                text = "Hochgeladene Tiere",
+                text = stringResource(id = R.string.uploaded_animals),
                 modifier = Modifier.padding(16.dp, 0.dp, 12.dp, 0.dp),
                 color = colorResource(id = R.color.black),
                 fontWeight = FontWeight.Bold,
@@ -53,11 +61,17 @@ fun UserDetailsAndAnimalCards(
                 }
             }
         } else {
-            FullscreenPlaceholderView("No Animals", Icons.Filled.Info)
+            FullscreenPlaceholderView(stringResource(id = R.string.no_animals), Icons.Filled.Info)
         }
     }
 }
 
+/**
+ * A Composable function that displays user details.
+ *
+ * @param user The user whose details are to be displayed.
+ * @param modifier The modifier for customization.
+ */
 @Composable
 fun UserDetailsSection(user: User?, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {

@@ -13,12 +13,20 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import de.fhe.adoptapal.R
 
+/**
+ * A Composable function that displays an animal image with the option to use a default image based on the category.
+ *
+ * @param modifier The [Modifier] to be applied to the image.
+ * @param category The category of the animal (e.g., "Katze", "Hund", "Fisch").
+ * @param imageFilePath The file path of the animal image, or null if not available.
+ */
 @Composable
 fun AnimalImage(
     modifier: Modifier,
     category: String,
     imageFilePath: String?
 ) {
+    // Determine the default image based on the category
     val defaultImage = when (category) {
         "Katze" -> painterResource(id = R.drawable.andresllanezas_katze)
         "Hund" -> painterResource(id = R.drawable.andresllanezas_hund)
@@ -29,6 +37,7 @@ fun AnimalImage(
         else -> painterResource(id = R.drawable.andresllanezas_andere)
     }
 
+    // Display the default image if imageFilePath is null
     if (imageFilePath == null) {
         Image(
             modifier = modifier
@@ -39,7 +48,7 @@ fun AnimalImage(
             contentDescription = "",
             contentScale = ContentScale.Crop
         )
-    } else {
+    } else {  // Display the image from the provided file path
         AsyncImage(
             model = imageFilePath,
             contentDescription = null,

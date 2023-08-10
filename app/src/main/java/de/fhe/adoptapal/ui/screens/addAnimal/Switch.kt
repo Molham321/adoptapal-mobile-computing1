@@ -14,7 +14,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import de.fhe.adoptapal.R
 
 @Composable
 fun Switch(
@@ -31,7 +33,7 @@ fun Switch(
         val mCheckedState = remember { mutableStateOf(false) }
 
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Text(text = "Geschlecht:", modifier = Modifier.width(100.dp))
+            Text(text = stringResource(id = R.string.gender), modifier = Modifier.width(100.dp))
             Spacer(modifier = Modifier.width(20.dp))
             Switch(
                 modifier = Modifier
@@ -43,9 +45,9 @@ fun Switch(
                 })
             Spacer(modifier = Modifier.width(20.dp))
             if (genderValue) {
-                Text(text = "männlich", modifier = Modifier.width(80.dp))
+                Text(text = stringResource(id = R.string.male), modifier = Modifier.width(80.dp))
             } else {
-                Text(text = "weiblich", modifier = Modifier.width(80.dp))
+                Text(text =  stringResource(id = R.string.female), modifier = Modifier.width(80.dp))
             }
         }
     }

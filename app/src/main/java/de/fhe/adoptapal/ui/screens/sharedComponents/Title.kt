@@ -12,6 +12,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
 
+/**
+ * A Composable function that displays a title text with specific styling.
+ *
+ * @param title The text content of the title.
+ */
 @Composable
 fun Title(title: String) {
     Text(

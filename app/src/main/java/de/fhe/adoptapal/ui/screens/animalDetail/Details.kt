@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
@@ -65,7 +66,7 @@ fun Details(
         item {
 
             Spacer(modifier = modifier.height(24.dp))
-            Title(title = "Über mich...")
+            Title(title = stringResource(R.string.about_me))
             Spacer(modifier = modifier.height(16.dp))
             Text(
                 // text = "ABOUT ${animal.name} \n" +
@@ -109,7 +110,7 @@ fun Details(
         // Quick info
         item {
             Spacer(modifier = modifier.height(24.dp))
-            Title(title = "Metriken")
+            Title(title = stringResource(R.string.metrics))
             Spacer(modifier = modifier.height(16.dp))
 
             Row(
@@ -118,9 +119,9 @@ fun Details(
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                InfoCard(title = "Alter", value = animal.getAge())
-                InfoCard(title = "Farbe", value = animal.color.name)
-                InfoCard(title = "Gewicht", value = animal.weight.toString().plus("Kg"))
+                InfoCard(title = stringResource(id = R.string.old), value = animal.getAge())
+                InfoCard(title = stringResource(id = R.string.color), value = animal.color.name)
+                InfoCard(title = stringResource(id = R.string.weight), value = animal.weight.toString().plus("Kg"))
             }
         }
 
@@ -128,7 +129,7 @@ fun Details(
         item {
 
             Spacer(modifier = modifier.height(24.dp))
-            Title(title = "Anbieter")
+            Title(title = stringResource(R.string.offerer))
 
             OwnerCard(
                 animal,

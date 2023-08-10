@@ -39,4 +39,25 @@
     <string name="repeat_password">Passwort wiederholen</string>
     <string name="to_register">Registrieren</string>
     <string name="already_member_for_registration">Bereits Mitglied? zum Anmeldung</string>
+    <string name="upload_a_new_animal">Ein neues Tier hochladen</string>
+    <string name="name_of_the_animal">Name des Tieres</string>
+    <string name="description_of_the_animal">Beschreibung des Tieres</string>
+    <string name="species">Tierart</string>
+    <string name="color_of_animal">Farbe des Tieres</string>
+    <string name="select_image">Bild auswählen</string>
+    <string name="save_animal">Tier speichern</string>
+    <string name="back">zurück</string>
+    <string name="birth_date">* Geburtsdatum</string>
+    <string name="about_me">Über mich...</string>
+    <string name="metrics">Metriken</string>
+    <string name="offerer">Anbieter</string>
+    <string name="call">Anrufen</string>
+    <string name="not_logged_in">Nicht angemeldet</string>
+    <string name="marked_animals">Gemerkte Tiere</string>
+    <string name="uploaded_animals">Hochgeladene Tiere</string>
+    <string name="no_animals_marked">Keine Tiere gemerkt</string>
+    <string name="you_are_not_logged_in_log_in_first">Du bist nicht angemeldet! Melde dich erstmal an.</string>
+    <string name="enter_text">Enter text...</string>
+    <string name="password_visibility_toggle">Password Visibility Toggle</string>
+    <string name="no_users">Keine User!</string>
 </resources>

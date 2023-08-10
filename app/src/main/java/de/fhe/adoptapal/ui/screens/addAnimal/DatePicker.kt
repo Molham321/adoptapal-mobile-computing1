@@ -17,7 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import de.fhe.adoptapal.R
 import java.util.Calendar
 import java.util.Date
 
@@ -80,9 +82,9 @@ fun DatePicker(
             }
         ) {
             if (birthdateValue == "") {
-                Text(text = "* Geburtsdatum", color = Color.White)
+                Text(text = stringResource(R.string.birth_date), color = Color.White)
             } else {
-                Text(text = "Geburtsdatum: " + birthdateValue, color = Color.White)
+                Text(text = "Geburtsdatum: $birthdateValue", color = Color.White)
             }
         }
     }

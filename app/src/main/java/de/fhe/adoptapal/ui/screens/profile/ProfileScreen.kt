@@ -41,7 +41,7 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
 
     Column {
         Text(
-            text = vm.user.value?.name?.uppercase() ?: "Nicht angemeldet",
+            text = vm.user.value?.name?.uppercase() ?: stringResource(R.string.not_logged_in),
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth(),
@@ -107,7 +107,7 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                     }
                     if(!listState.value) {
                         Text(
-                            text = "Gemerkte Tiere",
+                            text = stringResource(R.string.marked_animals),
                             modifier = Modifier.padding(16.dp, 0.dp, 12.dp, 0.dp),
                             color = colorResource(id = R.color.black),
                             fontWeight = FontWeight.Bold,
@@ -116,7 +116,7 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                         )
                     } else {
                         Text(
-                            text = "Hochgeladene Tiere",
+                            text = stringResource(R.string.uploaded_animals),
                             modifier = Modifier.padding(16.dp, 0.dp, 12.dp, 0.dp),
                             color = colorResource(id = R.color.black),
                             fontWeight = FontWeight.Bold,
@@ -145,7 +145,7 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                     }
                 } else {
                     item {
-                        FullscreenPlaceholderView("Keine Tiere gemerkt", Icons.Filled.Info)
+                        FullscreenPlaceholderView(stringResource(R.string.no_animals_marked), Icons.Filled.Info)
                     }
                 }
             } else {
@@ -166,7 +166,7 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                     }
                 } else {
                     item {
-                        FullscreenPlaceholderView("Keine Tiere hochgeladen", Icons.Filled.Info)
+                        FullscreenPlaceholderView(stringResource(id = R.string.no_animals_marked), Icons.Filled.Info)
                     }
                 }
             }

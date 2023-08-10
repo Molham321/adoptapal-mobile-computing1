@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -88,7 +89,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
 
         Text(
-            text = "Ein neues Tier hochladen",
+            text = stringResource(R.string.upload_a_new_animal),
 
             modifier = modifier
                 .fillMaxWidth()
@@ -102,7 +103,11 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
         Spacer(Modifier.height(20.dp))
 
-        InputField(animalNameTextFieldValue, animalNameEditingState, "Name des Tieres") {
+        InputField(
+            animalNameTextFieldValue,
+            animalNameEditingState,
+            stringResource(R.string.name_of_the_animal)
+        ) {
             animalNameTextFieldValue = it
             animalNameEditingState = true
         }
@@ -112,7 +117,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
         InputField(
             animalDescriptionTextFieldValue,
             animalDescriptionEditingState,
-            "Beschreibung des Tieres"
+            stringResource(R.string.description_of_the_animal)
         ) {
             animalDescriptionTextFieldValue = it
             animalDescriptionEditingState = true
@@ -121,7 +126,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
         Spacer(Modifier.height(15.dp))
 
         DropdownSelect(
-            "Tierart",
+            stringResource(R.string.species),
             animalCategoryDropdownValue,
             animalCategoryEditingState,
             vm.getCategoryArray(animalCategoryList.value),
@@ -134,7 +139,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
         Spacer(Modifier.height(15.dp))
 
         DropdownSelect(
-            "Farbe des Tieres",
+            stringResource(R.string.color_of_animal),
             animalColorDropdownValue,
             animalColorEditingState,
             vm.getColorArray(animalColorList.value),
@@ -165,7 +170,10 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
         Spacer(Modifier.height(15.dp))
 
-        InputField(animalWeightTextFieldValue, animalWeightEditingState, "Gewicht") {
+        InputField(
+            animalWeightTextFieldValue, animalWeightEditingState,
+            stringResource(id = R.string.weight)
+        ) {
             animalWeightTextFieldValue = it
             weightError = ""
             animalWeightEditingState = true
@@ -208,10 +216,9 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                         )
                     }) {
-                        Text(text = "Bild auswählen")
+                        Text(text = stringResource(R.string.select_image))
                     }
                 }
-
 
                 AsyncImage(
                     model = selectedImageUri,
@@ -243,7 +250,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
                 }
             ) {
-                Text(text = "Tier speichern")
+                Text(text = stringResource(R.string.save_animal))
             }
         } else {
             Button(
@@ -311,11 +318,9 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                     }
                 }
             ) {
-                Text(text = "Tier speichern")
+                Text(text = stringResource(id = R.string.save_animal))
             }
         }
-
-
 
         Button(
             modifier = Modifier
@@ -326,7 +331,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
                 vm.navigateToUserList()
             }
         ) {
-            Text(text = "zurück")
+            Text(text = stringResource(R.string.back))
 
         }
     }

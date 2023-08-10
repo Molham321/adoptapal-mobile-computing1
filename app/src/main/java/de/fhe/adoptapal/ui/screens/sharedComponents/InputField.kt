@@ -12,11 +12,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.fhe.adoptapal.R
 
 /**
  * Composable function to display an input field with options for customization.
@@ -61,7 +63,7 @@ fun InputFieldPreview() {
     InputField(
         text = inputValue.value,
         onTextChange = { inputValue.value = it },
-        inputPlaceholder = "Enter text...",
+        inputPlaceholder = stringResource(R.string.enter_text),
         editing = true
     )
 }

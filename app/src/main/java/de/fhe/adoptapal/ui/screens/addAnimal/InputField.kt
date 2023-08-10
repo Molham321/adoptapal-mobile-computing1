@@ -54,7 +54,7 @@ fun InputField(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Text
             ),
-            label = { Text("* " + labelValue) },
+            label = { Text("* $labelValue") },
             placeholder = { Text("") },
         )
     } else {
@@ -69,7 +69,7 @@ fun InputField(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Text
             ),
-            label = { Text("* " + labelValue) },
+            label = { Text("* $labelValue") },
             placeholder = { Text("") },
         )
     }
