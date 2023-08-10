@@ -21,7 +21,6 @@ import de.fhe.adoptapal.R
 @Composable
 fun Switch(
     genderValue: Boolean,
-    editing: Boolean = false,
     onValueChange: (Boolean) -> Unit
 ) {
     Column(

@@ -24,6 +24,7 @@
     <string name="profile">Profil</string>
     <string name="e_mail_adresse">E-Mail-Adresse</string>
     <string name="phone_number">Telefonnummer</string>
+    <string name="phone">Telefon</string>
     <string name="address">Adresse</string>
     <string name="street">Straße</string>
     <string name="house_number">Hausnummer</string>
@@ -48,6 +49,7 @@
     <string name="save_animal">Tier speichern</string>
     <string name="back">zurück</string>
     <string name="birth_date">* Geburtsdatum</string>
+    <string name="birthday">* Geburtstag</string>
     <string name="about_me">Über mich...</string>
     <string name="metrics">Metriken</string>
     <string name="offerer">Anbieter</string>

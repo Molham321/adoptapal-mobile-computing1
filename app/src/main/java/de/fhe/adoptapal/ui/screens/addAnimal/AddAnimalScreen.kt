@@ -62,7 +62,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
     var animalBirthdateEditingState by remember { mutableStateOf(false) }
     var animalWeightTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var animalWeightEditingState by remember { mutableStateOf(false) }
-    var animalGenderValue by remember { mutableStateOf<Boolean>(false) }
+    var animalGenderValue by remember { mutableStateOf(false) }
     var animalGenderEditingState by remember { mutableStateOf(false) }
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
 
@@ -128,8 +128,6 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
         DropdownSelect(
             stringResource(R.string.species),
             animalCategoryDropdownValue,
-            animalCategoryEditingState,
-            vm.getCategoryArray(animalCategoryList.value),
             vm.getCategoryMap(animalCategoryList.value)
         ) {
             animalCategoryDropdownValue = it
@@ -141,8 +139,6 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
         DropdownSelect(
             stringResource(R.string.color_of_animal),
             animalColorDropdownValue,
-            animalColorEditingState,
-            vm.getColorArray(animalColorList.value),
             vm.getColorMap(animalColorList.value)
         ) {
             animalColorDropdownValue = it
@@ -192,7 +188,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
         Spacer(Modifier.height(15.dp))
 
-        Switch(animalGenderValue, animalGenderEditingState) {
+        Switch(animalGenderValue) {
             animalGenderValue = it
             animalGenderEditingState = true
         }

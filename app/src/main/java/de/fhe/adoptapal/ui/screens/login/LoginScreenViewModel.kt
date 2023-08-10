@@ -94,7 +94,7 @@ class LoginScreenViewModel(
     /**
      * Function to navigate to the user's profile screen.
      */
-    fun navigateToProfile() {
+    private fun navigateToProfile() {
         navigationManager.navigate(Screen.Profile.navigationCommand())
     }
 }

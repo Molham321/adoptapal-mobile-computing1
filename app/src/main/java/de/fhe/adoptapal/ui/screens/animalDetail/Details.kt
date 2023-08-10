@@ -11,8 +11,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -71,7 +69,7 @@ fun Details(
             Text(
                 // text = "ABOUT ${animal.name} \n" +
                 //         "${animal.description}",
-                text = "${animal.description}",
+                text = animal.description,
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -85,8 +83,7 @@ fun Details(
 
             Spacer(modifier = modifier.height(24.dp))
             Text(
-                // text = "Rasse: ${"Hunde Breed"/*animal.breed*/}",
-                text = "Tierart: ${animal.animalCategory.name}",
+                text = "${stringResource(id = R.string.species)}: ${animal.animalCategory.name}",
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -97,7 +94,7 @@ fun Details(
 
             Spacer(modifier = modifier.height(24.dp))
             Text(
-                text = "Geburtstag: ${animal.birthday.dayOfMonth}.${animal.birthday.monthValue}.${animal.birthday.year}",
+                text = "${stringResource(id = R.string.birthday)}: ${animal.birthday.dayOfMonth}.${animal.birthday.monthValue}.${animal.birthday.year}",
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),

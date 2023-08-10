@@ -62,10 +62,10 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
     // State variable for editing state
     var editingState by remember { mutableStateOf(false) }
 
-    // Scaffold state for showing snackbar
+    // Scaffold state for showing snack-bar
     val scaffoldState = LocalScaffoldState.current
 
-    // Show snackbar when save state changes
+    // Show snack-bar when save state changes
     LaunchedEffect(saveState) {
         if (saveState.status != AsyncOperationState.UNDEFINED) {
             scaffoldState.snackbarHostState.showSnackbar(

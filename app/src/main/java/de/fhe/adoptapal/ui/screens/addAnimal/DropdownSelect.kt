@@ -23,9 +23,7 @@ import de.fhe.adoptapal.ui.theme.LightModeText
 fun DropdownSelect(
     dropdownCat: String = "Dropdown",
     dropdownValue: Long,
-    editing: Boolean = false,
-    listItems: Array<String> = arrayOf("Hund", "Katze", "Nagetier", "Reptil", "Vogel"),
-    dropdownItems: Map<Long, String> = mapOf<Long, String>(),
+    dropdownItems: Map<Long, String> = mapOf(),
     onValueChange: (Long) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }

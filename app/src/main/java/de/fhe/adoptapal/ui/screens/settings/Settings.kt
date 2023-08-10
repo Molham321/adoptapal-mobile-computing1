@@ -11,7 +11,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -119,18 +118,16 @@ fun Settings(
         }
 
         Spacer(modifier = Modifier.height(8.dp))
-        phoneNumber.let {
-            InputField(
-                text = it,
-                onTextChange = {
-                    phoneNumber = it
-                    phoneNumberError = ""
-                },
-                inputPlaceholder = stringResource(R.string.phone_number),
-                editing = true,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
+        InputField(
+            text = phoneNumber,
+            onTextChange = {
+                phoneNumber = it
+                phoneNumberError = ""
+            },
+            inputPlaceholder = stringResource(R.string.phone_number),
+            editing = true,
+            modifier = Modifier.fillMaxWidth()
+        )
 
         if (phoneNumberError.isNotBlank()) {
             Text(

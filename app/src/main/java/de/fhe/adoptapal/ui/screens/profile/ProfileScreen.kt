@@ -75,7 +75,7 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                         )
                         Spacer(modifier = modifier.height(24.dp))
                         Text(
-                            text = "Telefon: ${vm.user.value!!.phoneNumber}",
+                            text = "${stringResource(id = R.string.phone)}: ${vm.user.value!!.phoneNumber}",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -134,7 +134,7 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                     items(
                         items = favoriteAnimalList.value,
                         key = { it.id }
-                    ) {
+                    ) { it ->
                         AnimalCard(
                             it,
                             modifier = modifier,
@@ -155,7 +155,7 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                     items(
                         items = userAnimalList.value,
                         key = { it.id }
-                    ) {
+                    ) { it ->
                         AnimalCard(
                             it,
                             modifier = modifier,

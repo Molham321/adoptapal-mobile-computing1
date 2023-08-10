@@ -21,7 +21,7 @@ import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.ui.screens.core.LocalScaffoldState
 
 /**
- * A Composable function that displays the settings screen. It provides user settings and displays a snackbar
+ * A Composable function that displays the settings screen. It provides user settings and displays a snack-bar
  * based on the status of a save operation.
  *
  * @param vm The [SettingsScreenViewModel] used to manage user settings.
@@ -35,10 +35,10 @@ fun SettingsScreen(vm: SettingsScreenViewModel, modifier: Modifier = Modifier) {
     val saveState by remember(vm) { vm.saveFeedbackFlow }
         .collectAsState(AsyncOperation.undefined())
 
-    // Retrieve the scaffold state for showing snackbar
+    // Retrieve the scaffold state for showing snack-bar
     val scaffoldState = LocalScaffoldState.current
 
-    // Show a snackbar when the save operation state changes
+    // Show a snack-bar when the save operation state changes
     LaunchedEffect(saveState) {
         if (saveState.status != AsyncOperationState.UNDEFINED) {
             scaffoldState.snackbarHostState.showSnackbar(
@@ -50,13 +50,13 @@ fun SettingsScreen(vm: SettingsScreenViewModel, modifier: Modifier = Modifier) {
 
     // Render the UI based on user login status
     if (user.value != null) {
-        Column() {
+        Column {
             Settings(user.value!!) {
                 vm.updateUser(it)
             }
         }
     } else {
-        Column() {
+        Column {
             // Display a message for unauthenticated users
             Text(
                 text = stringResource(R.string.you_are_not_logged_in_log_in_first),

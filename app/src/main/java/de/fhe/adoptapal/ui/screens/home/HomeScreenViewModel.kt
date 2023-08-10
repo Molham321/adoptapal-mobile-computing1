@@ -1,6 +1,5 @@
 package de.fhe.adoptapal.ui.screens.home
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -60,7 +59,7 @@ class HomeScreenViewModel(
     var initialColor by mutableStateOf("")
     var initialArt by mutableStateOf("")
     var initialSelectedGender by mutableStateOf("Alle")
-    var initialBreed by mutableStateOf(TextFieldValue())
+    private var initialBreed by mutableStateOf(TextFieldValue())
     var initialDistance by mutableStateOf(0)
 
     var animalColorList = mutableStateOf(emptyList<Color>())
@@ -69,7 +68,7 @@ class HomeScreenViewModel(
     var filteredAnimals = mutableStateOf(emptyList<Animal>())
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     var user = mutableStateOf<User?>(null)
-    var filterLocation by mutableStateOf<Location?>(null)
+    private var filterLocation by mutableStateOf<Location?>(null)
 
     /**
      * Initialize the ViewModel by fetching initial data.
@@ -99,7 +98,7 @@ class HomeScreenViewModel(
     /**
      * Fetch animal colors from the database.
      */
-    fun getColorsFromDb() {
+    private fun getColorsFromDb() {
         viewModelScope.launch {
             getAllColors().collect {
                 dbOp.value = it
@@ -113,7 +112,7 @@ class HomeScreenViewModel(
     /**
      * Fetch animal categories from the database.
      */
-    fun getAnimalCategoriesFromDb() {
+    private fun getAnimalCategoriesFromDb() {
         viewModelScope.launch {
             getAllAnimalCategories().collect {
                 dbOp.value = it
@@ -241,7 +240,6 @@ class HomeScreenViewModel(
      * Reset all filter values to their initial state.
      */
     fun resetFilterValues() {
-        // Hier werden die Filterwerte zurückgesetzt
         initialAgeFrom = 0
         initialAgeTo = 0
         initialSelectedGender = "Alle"

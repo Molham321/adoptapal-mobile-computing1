@@ -103,11 +103,10 @@ fun AnimalCard(
                     // Display city and distance
                     animal.supplier.address?.let { supplierAddress ->
                         var animalLocation = supplierAddress.city
-                        var distance = ""
 
                         if (userAddress != null) {
                             if (userAddress.city != supplierAddress.city) {
-                                distance = Location(userAddress.latitude, userAddress.longitude)
+                                val distance = Location(userAddress.latitude, userAddress.longitude)
                                     .calculateDistanceTo(
                                         supplierAddress.latitude,
                                         supplierAddress.longitude

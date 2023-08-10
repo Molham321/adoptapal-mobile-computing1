@@ -44,7 +44,7 @@ class SettingsScreenViewModel(
     /**
      * Retrieves the logged-in user's data from the data store and database.
      */
-    fun getUser() {
+    private fun getUser() {
         Log.i("Settings", "init")
         viewModelScope.launch {
             Log.i("Settings", "launching")
