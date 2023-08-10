@@ -53,32 +53,22 @@ AdoptAPal ist eine Applikation, die dabei helfen soll, Tiere in der Nähe zu fin
 ## genutzte Tools und andere Quellen
 - Android Studio (IDE)
 - Gitlab (Versionsverwaltung)
+- drawio (Diagramme)
+- Figma (Mockups)
 - 
-- API zur Umwandlung von Adressen in Koordinaten
+- Retrofit (Netzwerkzugriffe)
+- Google Maps API (Kartenansicht)
+- [Positionstack](https://positionstack.com/) (API zur Umwandlung von Adressen in Koordinaten)
 - default Bilder ([Andres Llanezas](https://mrandrelo.myportfolio.com/profiles-project-animal-default-profile-pictures))
 
 ## Installationsanleitung
-
-Um die vollständige Funktionalität der App sicherzustellen müssen die nächsten Schritte durchgeführt
-werden
-
-In `localhost.properties` muss der GoogleMaps Api Key gesetzt werden, damit die Karte funktioniert,
-diesen kann man (
-hier)[https://developers.google.com/maps/documentation/android-sdk/start?hl=de] ersellen
-Für die Umwandlung von Adressdaten in LatitudeLongitude kann der Google Maps Api verwendet werden.
-Alternativ kann ein kostenloser Api-Key auf (Positionstack)[# https://positionstack.com/] erstellt
-werden und in `localhost.properties` hinterlegt werde.
+In der AndroidManifest.xml (Zeile 36) muss zur Verwendung von Google Maps ein entsprechender API-Key eingetragen werden.
 
 ```
-# https://positionstack.com/ API Key to Convert Address to LatLong Value
-LAT_LONG_API=YOUR_POSITIONSTACK_API_KEY
-# API KEY to use google maps in an app
-MAPS_API_KEY=YOUR_GOOGLE_MAPS_API_KEY
+<meta-data
+    android:name="com.google.android.geo.API_KEY"
+    android:value="[API-KEY]" />
 ```
-
-## Additional information
-
-App needs to be build (green hammer) before it can be installed and run on phone or emulator
 
 ## App features
 
