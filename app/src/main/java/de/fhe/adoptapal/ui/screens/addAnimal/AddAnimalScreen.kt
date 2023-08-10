@@ -151,7 +151,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
 
         Spacer(Modifier.height(15.dp))
 
-        DatePicker(animalBirthdateValue, animalBirthdateEditingState) {
+        DatePicker(animalBirthdateValue) {
             animalBirthdateValue = it
             birthdateError = ""
             animalBirthdateEditingState = true

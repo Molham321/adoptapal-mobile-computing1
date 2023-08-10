@@ -26,20 +26,15 @@ import java.util.Date
 @Composable
 fun DatePicker(
     birthdateValue: String,
-    editing: Boolean = false,
     onValueChange: (String) -> Unit
 ) {
     val mContext = LocalContext.current
 
-    val mYear: Int
-    val mMonth: Int
-    val mDay: Int
-
     val mCalendar = Calendar.getInstance()
 
-    mYear = mCalendar.get(Calendar.YEAR)
-    mMonth = mCalendar.get(Calendar.MONTH)
-    mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
+    val mYear = mCalendar.get(Calendar.YEAR)
+    val mMonth = mCalendar.get(Calendar.MONTH)
+    val mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
 
     mCalendar.time = Date()
 
@@ -47,22 +42,14 @@ fun DatePicker(
 
     val mDatePickerDialog = DatePickerDialog(
         mContext,
-        { _: DatePicker, mYear: Int, mMonth: Int, mDay: Int ->
-            val correctMonth = mMonth + 1
-            if (correctMonth < 10) {
-                if (mDay < 10) {
-                    mDate.value = "0$mDay.0$correctMonth.$mYear"
-                } else {
-                    mDate.value = "$mDay.0$correctMonth.$mYear"
-                }
-            } else {
-                if (mDay < 10) {
-                    mDate.value = "0$mDay.$correctMonth.$mYear"
-                } else {
-                    mDate.value = "$mDay.$correctMonth.$mYear"
-                }
-            }
-            onValueChange(mDate.value)
+        { _: DatePicker, year: Int, month: Int, day: Int ->
+            val correctMonth = month + 1
+            val formattedDay = if (day < 10) "0$day" else "$day"
+            val formattedMonth = if (correctMonth < 10) "0$correctMonth" else "$correctMonth"
+            val formattedDate = "$formattedDay.$formattedMonth.$year"
+
+            mDate.value = formattedDate
+            onValueChange(formattedDate)
         }, mYear, mMonth, mDay
     )
 
