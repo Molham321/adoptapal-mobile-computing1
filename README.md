@@ -18,6 +18,7 @@ AdoptAPal ist eine Applikation, die dabei helfen soll, Tiere in der Nähe zu fin
 - Möglichkeit zum Ändern eigener Daten
 
 ## Aufbau
+![Sitemap der AdoptAPal App](documentation/SitemapAdoptAPal.png)
 
 ## Datenbank
 
