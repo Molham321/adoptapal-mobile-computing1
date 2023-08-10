@@ -80,32 +80,6 @@ class AddAnimalScreenViewModel(
     }
 
     /**
-    * fills an array with all AnimalCategories (AnimalCategories are received in form of a list from database)
-    */
-    fun getCategoryArray(list: List<AnimalCategory>): Array<String> {
-        var categoryArray = arrayOf<String>()
-
-        list.forEach {
-            categoryArray += it.name
-        }
-
-        return categoryArray
-    }
-
-    /**
-    * fills an array with all Colors (Colors are received in form of a list from database)
-    */
-    fun getColorArray(list: List<Color>): Array<String> {
-        var colorArray = arrayOf<String>()
-
-        list.forEach {
-            colorArray += it.name
-        }
-
-        return colorArray
-    }
-
-    /**
     * fills a map with all AnimalCategories (value) and their id (key)
     * --> can be displayed easier in a dropdown this way; id is
     * needed to save a new animal to the database
