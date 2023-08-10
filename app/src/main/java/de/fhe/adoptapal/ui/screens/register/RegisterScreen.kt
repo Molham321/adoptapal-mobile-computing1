@@ -96,7 +96,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
     ) {
         Spacer(modifier = Modifier.height(30.dp))
         Text(
-            text = "Willkommen bei AdoptAPal!",
+            text = stringResource(R.string.welcome_to_adoptapal),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -114,7 +114,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 userNameTextFieldValue = newValue
                 userNameError = ""
             },
-            inputPlaceholder = "Name"
+            inputPlaceholder = stringResource(id = R.string.name)
         )
 
         if (userNameError.isNotBlank()) {
@@ -126,7 +126,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
         }
 
         Text(
-            text = "*ihr Name oder der Name ihrer Einrichtung",
+            text = stringResource(R.string.your_name_or_the_name_of_your_institution),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -162,7 +162,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 userPhoneNumberTextFieldValue = newValue
                 userPhoneNumberError = ""
             },
-            inputPlaceholder = "Telefonnummer"
+            inputPlaceholder = stringResource(id = R.string.phone_number)
         )
 
         if (userPhoneNumberError.isNotBlank()) {
@@ -181,7 +181,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 userPasswordTextFieldValue = newValue
                 userPasswordError = ""
             },
-            inputPlaceholder = "Passwort"
+            inputPlaceholder = stringResource(id = R.string.password)
         )
 
         if (userPasswordError.isNotBlank()) {
@@ -200,7 +200,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 userConfirmPasswordTextFieldValue = newValue
                 userConfirmPasswordError = ""
             },
-            inputPlaceholder = "Passwort wiederholen"
+            inputPlaceholder = stringResource(R.string.repeat_password)
         )
 
         if (userConfirmPasswordError.isNotBlank()) {
@@ -273,7 +273,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 .width(250.dp)
                 .padding(16.dp, 8.dp, 16.dp, 8.dp)
         ) {
-            Text(text = "Registrieren")
+            Text(text = stringResource(R.string.to_register))
         }
 
         // Navigate to login screen button
@@ -289,7 +289,7 @@ fun RegisterScreen(vm: RegisterScreenViewModel, modifier: Modifier = Modifier) {
                 .padding(16.dp, 8.dp, 16.dp, 8.dp)
         ) {
             Text(
-                text = "Bereits Mitglied? zum Anmeldung",
+                text = stringResource(R.string.already_member_for_registration),
                 textDecoration = TextDecoration.Underline
             )
         }

@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -81,7 +82,7 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
     ) {
         Spacer(modifier = modifier.height(160.dp))
         Text(
-            text = "Willkommen zurück!",
+            text = stringResource(R.string.welcome_back),
             modifier = modifier
                 .fillMaxWidth()
                 .padding(16.dp, 0.dp, 16.dp, 0.dp),
@@ -99,7 +100,7 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
                 userEmailTextFieldValue = newValue
                 userEmailError = ""
             },
-            inputPlaceholder = "Email"
+            inputPlaceholder = stringResource(id = R.string.email)
         )
 
         if (userEmailError.isNotBlank()) {
@@ -118,7 +119,7 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
                 userPasswordTextFieldValue = newValue
                 userPasswordError = ""
             },
-            inputPlaceholder = "Passwort"
+            inputPlaceholder = stringResource(R.string.password)
         )
 
         if (userPasswordError.isNotBlank()) {
@@ -155,7 +156,7 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
                 .width(250.dp)
                 .padding(16.dp, 8.dp, 16.dp, 8.dp),
         ) {
-            Text(text = "Anmeldung")
+            Text(text = stringResource(R.string.registration))
         }
 
         // Register button
@@ -171,7 +172,7 @@ fun LoginScreen(vm: LoginScreenViewModel, modifier: Modifier = Modifier) {
                 .padding(16.dp, 8.dp, 16.dp, 8.dp)
         ) {
             Text(
-                text = "Noch kein Mitglied? zur Registrierung",
+                text = stringResource(R.string.not_a_member_yet_for_registration),
                 textDecoration = TextDecoration.Underline
             )
         }

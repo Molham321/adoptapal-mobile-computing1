@@ -26,7 +26,6 @@ class DBInitialData : KoinComponent {
 
 
     private val repo by inject<Repository>()
-//    private val logger by inject<Logger>()
 
     private val logTag = "DB-TEST"
     fun run() {

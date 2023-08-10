@@ -16,6 +16,14 @@ import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
+/**
+ * ViewModel class responsible for managing the user settings screen.
+ *
+ * @param updateUserAsyncUserCase Use case for updating user information asynchronously.
+ * @param navigationManager Responsible for handling navigation within the app.
+ * @param getLoggedInUserFromDataStoreAndDatabase Use case for retrieving the logged-in user.
+ * @param getLatLongForAddress Use case for obtaining latitude and longitude from an address.
+ */
 class SettingsScreenViewModel(
     private val updateUserAsyncUserCase: UpdateUserAsync,
     private val navigationManager: NavigationManager,
@@ -23,14 +31,19 @@ class SettingsScreenViewModel(
     private val getLatLongForAddress: GetLatLongForAddress
 ) : ViewModel() {
 
+    // Mutable state flows for saving operation feedback and user data
     val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     var user = mutableStateOf<User?>(null)
 
+    // Initialize the ViewModel and fetch the user data upon initialization
     init {
         this.getUser()
     }
 
+    /**
+     * Retrieves the logged-in user's data from the data store and database.
+     */
     fun getUser() {
         Log.i("Settings", "init")
         viewModelScope.launch {
@@ -48,6 +61,11 @@ class SettingsScreenViewModel(
         }
     }
 
+    /**
+     * Updates the user's information.
+     *
+     * @param updateUser The updated [User] information.
+     */
     fun updateUser(updateUser: User) {
         viewModelScope.launch {
             // always get latLong on update if the address is not null
@@ -75,6 +93,7 @@ class SettingsScreenViewModel(
         }
     }
 
+    // Validation methods for various user input fields
     fun validateName(name: String): Boolean {
         val namePattern = "^[a-zA-ZäöüÄÖÜß\\s-]+$"
         return name.matches(namePattern.toRegex())

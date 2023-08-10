@@ -32,7 +32,6 @@ import de.fhe.adoptapal.ui.screens.sharedComponents.AnimalImage
 import de.fhe.adoptapal.ui.screens.sharedComponents.GenderTag
 import de.fhe.adoptapal.ui.theme.BackgroundGreyOpacity
 import de.fhe.adoptapal.ui.theme.LightModeText
-import org.koin.androidx.compose.koinViewModel
 
 /**
  * A Composable function that displays a card representing an animal.

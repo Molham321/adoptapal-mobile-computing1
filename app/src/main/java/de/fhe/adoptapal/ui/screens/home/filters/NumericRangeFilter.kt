@@ -8,7 +8,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
+import de.fhe.adoptapal.R
 
 /**
  * A Composable function that displays a numeric range filter with input fields.
@@ -28,7 +30,7 @@ fun NumericRangeFilter(
     onRangeToChange: (Int) -> Unit
 ) {
     // Display the title above the range input fields
-    Text(text = title)
+    Text(text = "$title:")
 
     // Create a row layout to display the numeric range input fields
     Row(
@@ -44,7 +46,7 @@ fun NumericRangeFilter(
         )
 
         // Display "bis" text between the input fields
-        Text(text = "bis")
+        Text(text = stringResource(R.string.to))
 
         // Input field for the ending value of the range
         OutlinedTextField(
