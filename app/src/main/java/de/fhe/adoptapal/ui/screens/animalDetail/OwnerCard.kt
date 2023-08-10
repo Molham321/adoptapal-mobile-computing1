@@ -94,7 +94,7 @@ fun OwnerCard(
                     if (animal.supplier.phoneNumber != null) {
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Telefon: ${animal.supplier.phoneNumber}",
+                            text = "${stringResource(id = R.string.phone)}: ${animal.supplier.phoneNumber}",
                             color = colorResource(id = R.color.text),
                             style = MaterialTheme.typography.caption
                         )
@@ -128,7 +128,7 @@ fun OwnerCard(
                             .clip(RoundedCornerShape(8.dp))
                     ) {
                         Text(
-                            text = "Anrufen",
+                            text = stringResource(R.string.call),
                             fontSize = 16.sp,
                         )
                     }
@@ -154,7 +154,6 @@ fun OwnerCard(
                     )
                 }
             }
-
         }
     }
 }

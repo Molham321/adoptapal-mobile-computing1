@@ -11,6 +11,10 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import de.fhe.adoptapal.ui.screens.map.LOGTAG
 
+/**
+ * Composable function to request location permission for displaying a map.
+ * Uses the Accompanist Permissions library.
+ */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun requestLocationPermission() {

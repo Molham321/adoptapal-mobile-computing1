@@ -17,7 +17,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
-
+/**
+ * A Composable function that displays a fullscreen placeholder view with an icon and text.
+ *
+ * @param text The text to be displayed in the placeholder.
+ * @param icon The vector icon to be displayed in the placeholder.
+ */
 @Composable
 fun FullscreenPlaceholderView(
     text: String,

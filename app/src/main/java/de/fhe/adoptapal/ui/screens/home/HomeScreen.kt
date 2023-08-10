@@ -1,17 +1,13 @@
 package de.fhe.adoptapal.ui.screens.home
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import de.fhe.adoptapal.R
 import de.fhe.adoptapal.ui.screens.sharedComponents.AnimalList
 import de.fhe.adoptapal.ui.screens.util.FullscreenPlaceholderView
 
@@ -64,7 +60,7 @@ fun HomeScreen(vm: HomeScreenViewModel, modifier: Modifier = Modifier) {
             }
         } else {
             // Display a placeholder view when no animals are available
-            FullscreenPlaceholderView("Keine Tiere", Icons.Filled.Info)
+            FullscreenPlaceholderView(text = stringResource(R.string.no_animals), Icons.Filled.Info)
         }
     }
 }

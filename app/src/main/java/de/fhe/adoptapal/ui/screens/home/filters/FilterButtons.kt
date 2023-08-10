@@ -13,7 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import de.fhe.adoptapal.R
 
 /**
  * A Composable function that displays a set of filter buttons in a column layout.
@@ -37,7 +39,7 @@ fun FilterButtons(onApplyClicked: () -> Unit, onResetClicked: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Green)
             ) {
                 Text(
-                    text = "Anwenden",
+                    text = stringResource(R.string.apply),
                     style = MaterialTheme.typography.button,
                     color = MaterialTheme.colors.onSecondary
                 )
@@ -56,7 +58,7 @@ fun FilterButtons(onApplyClicked: () -> Unit, onResetClicked: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(backgroundColor = Color.Red)
             ) {
                 Text(
-                    text = "Zurücksetzen",
+                    text = stringResource(R.string.reset_to_default),
                     style = MaterialTheme.typography.button,
                     color = MaterialTheme.colors.onSecondary
                 )

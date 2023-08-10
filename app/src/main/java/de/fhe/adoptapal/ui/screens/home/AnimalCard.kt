@@ -1,6 +1,5 @@
 package de.fhe.adoptapal.ui.screens.home
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,19 +21,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.Location
+import de.fhe.adoptapal.ui.screens.sharedComponents.AnimalImage
 import de.fhe.adoptapal.ui.screens.sharedComponents.GenderTag
 import de.fhe.adoptapal.ui.theme.BackgroundGreyOpacity
 import de.fhe.adoptapal.ui.theme.LightModeText
-import org.koin.androidx.compose.koinViewModel
 
 /**
  * A Composable function that displays a card representing an animal.
@@ -51,8 +48,6 @@ fun AnimalCard(
     userAddress: Address?,
     onItemPressed: (itemId: Long) -> Unit = {}
 ) {
-    val vm: HomeScreenViewModel = koinViewModel()
-
     // Create a card layout for the animal information
     Card(
         modifier = modifier
@@ -70,62 +65,11 @@ fun AnimalCard(
         ) {
 
             // Display animal image
-
-            if (animal.imageFilePath == null) {
-                var image: Painter
-                when (animal.animalCategory.name) {
-                    "Katze" -> {
-                        image = painterResource(id = R.drawable.andresllanezas_katze)
-                    }
-
-                    "Hund" -> {
-                        image = painterResource(id = R.drawable.andresllanezas_hund)
-                    }
-
-                    "Fisch" -> {
-                        image = painterResource(id = R.drawable.andresllanezas_fisch)
-                    }
-
-                    "Reptil" -> {
-                        image = painterResource(id = R.drawable.andresllanezas_reptil)
-                    }
-
-                    "Nagetier" -> {
-                        image = painterResource(id = R.drawable.andresllanezas_nagetier)
-                    }
-
-                    "Vogel" -> {
-                        image = painterResource(id = R.drawable.andresllanezas_vogel)
-                    }
-
-                    else -> {
-                        image = painterResource(id = R.drawable.andresllanezas_andere)
-                    }
-                }
-
-                // Display default images for animal categories
-                Image(
-                    modifier = modifier
-                        .size(80.dp, 80.dp)
-                        .clip(RoundedCornerShape(16.dp)),
-                    painter = image,
-                    alignment = Alignment.CenterStart,
-                    contentDescription = "",
-                    contentScale = ContentScale.Crop
-                )
-
-            } else {
-
-                // Display image from the database
-                AsyncImage(
-                    model = animal.imageFilePath,
-                    contentDescription = null,
-                    modifier = modifier
-                        .size(80.dp, 80.dp)
-                        .clip(RoundedCornerShape(16.dp)),
-                    contentScale = ContentScale.Crop
-                )
-            }
+            AnimalImage(
+                modifier = modifier,
+                category = animal.animalCategory.name,
+                imageFilePath = animal.imageFilePath
+            )
             Spacer(modifier = modifier.width(16.dp))
 
             // Display animal details
@@ -159,11 +103,10 @@ fun AnimalCard(
                     // Display city and distance
                     animal.supplier.address?.let { supplierAddress ->
                         var animalLocation = supplierAddress.city
-                        var distance = ""
 
                         if (userAddress != null) {
                             if (userAddress.city != supplierAddress.city) {
-                                distance = Location(userAddress.latitude, userAddress.longitude)
+                                val distance = Location(userAddress.latitude, userAddress.longitude)
                                     .calculateDistanceTo(
                                         supplierAddress.latitude,
                                         supplierAddress.longitude

@@ -134,7 +134,7 @@ fun AppNavigationHost(
             val vm: HomeScreenViewModel = koinViewModel()
             Screen.Search.prepareAppBarActions(vm)
             onNavigation(Screen.Search)
-            SearchScreen(vm = vm, onFiltersApplied = { var showFilterDialog = false }) {
+            SearchScreen(vm = vm, onFiltersApplied = {}) {
                 // Reset the filters and show all animals
                 vm.resetFiltersAndShowAllAnimals()
                 vm.showFilterDialog = false // Close the dialog after resetting filters

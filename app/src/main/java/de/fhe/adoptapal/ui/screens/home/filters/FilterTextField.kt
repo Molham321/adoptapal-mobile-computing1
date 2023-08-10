@@ -20,7 +20,7 @@ fun FilterTextField(
     onValueChange: (String) -> Unit
 ) {
     // Display the label above the text field
-    Text(text = label)
+    Text(text = "$label:")
 
     // Create an outlined text field for input
     OutlinedTextField(

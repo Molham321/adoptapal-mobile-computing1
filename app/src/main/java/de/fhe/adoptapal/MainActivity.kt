@@ -8,14 +8,12 @@ import androidx.compose.material.Surface
 import de.fhe.adoptapal.ui.screens.core.AppScaffold
 import de.fhe.adoptapal.ui.theme.AndroidAdoptapalTheme
 
-
+/**
+ * The main activity class that serves as the entry point for the Adoptapal app.
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        Log.i("Test", BuildConfig.LAT_LONG_API_KEY)
-//        Log.i("Test", BuildConfig.MAPS_API_KEY)
-
         setContent {
             AndroidAdoptapalTheme {
                 Surface(color = MaterialTheme.colors.background) {

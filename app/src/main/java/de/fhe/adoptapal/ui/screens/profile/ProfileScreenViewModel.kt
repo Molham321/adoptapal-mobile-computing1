@@ -75,7 +75,7 @@ class ProfileScreenViewModel(
     /**
     * gets all favourite animals from database (saved on user's phone locally)
     */
-    fun getFavoriteAnimalsFromDb() {
+    private fun getFavoriteAnimalsFromDb() {
         viewModelScope.launch {
             getAllFavoriteAnimalsAsync().collect {
                 dbOp.value = it
@@ -89,7 +89,7 @@ class ProfileScreenViewModel(
     /**
     * gets all animals uploaded by the currently logged in user (with id of that user)
     */
-    fun getUserAnimalsFromDb(id: Long) {
+    private fun getUserAnimalsFromDb(id: Long) {
         viewModelScope.launch {
             getUserAnimalsAsync(id).collect {
                 dbOp.value = it

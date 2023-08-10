@@ -6,8 +6,6 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 
-// TODO: create theming here
-
 private val DarkColorPalette = darkColors(
     primary = MainBlue,
     primaryVariant = DarkModeSecondary,
@@ -20,15 +18,6 @@ private val LightColorPalette = lightColors(
     primaryVariant = LightModeSecondary,
     secondary = LightModeSecondary,
     background = BackgroundWhite,
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
 )
 
 @Composable

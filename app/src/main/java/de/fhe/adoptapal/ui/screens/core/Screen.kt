@@ -159,9 +159,6 @@ sealed class Screen(
         override fun prepareAppBarActions(vararg values: Any) {
             if (values[0] !is SettingsScreenViewModel)
                 error("First Parameter must be of type *SettingsScreenVieModel*")
-            val viewModel = values[0] as SettingsScreenViewModel
-
-            appBarActions = {}
         }
     }
 
@@ -196,9 +193,6 @@ sealed class Screen(
         override fun prepareAppBarActions(vararg values: Any) {
             if (values[0] !is AddAnimalScreenViewModel)
                 error("First Parameter must be of type *AddAnimalViewModel*")
-            val viewModel = values[0] as AddAnimalScreenViewModel
-
-            appBarActions = {}
         }
     }
 
@@ -223,9 +217,6 @@ sealed class Screen(
         override fun prepareAppBarActions(vararg values: Any) {
             if (values[0] !is LoginScreenViewModel)
                 error("First Parameter must be of type *LoginScreenViewModel*")
-            val viewModel = values[0] as LoginScreenViewModel
-
-            appBarActions = {}
         }
     }
 
@@ -237,9 +228,6 @@ sealed class Screen(
         override fun prepareAppBarActions(vararg values: Any) {
             if (values[0] !is RegisterScreenViewModel)
                 error("First Parameter must be of type *RegisterScreenViewModel*")
-            val viewModel = values[0] as RegisterScreenViewModel
-
-            appBarActions = {}
         }
     }
 

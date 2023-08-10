@@ -11,7 +11,6 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,29 +19,41 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.User
+import de.fhe.adoptapal.ui.screens.sharedComponents.InputField
 import de.fhe.adoptapal.ui.theme.LightModeSecondary
 import org.koin.androidx.compose.koinViewModel
 
+/**
+ * A Composable function that displays user profile and address settings. Users can edit their profile information
+ * including name, email, phone number, and address details.
+ *
+ * @param user The [User] object representing the user's information.
+ * @param updateUser A callback function to update the user's information.
+ */
 @Composable
 fun Settings(
     user: User,
     updateUser: (user: User) -> Unit = {}
 ) {
     val vm: SettingsScreenViewModel = koinViewModel()
-    var name by remember { mutableStateOf(user.name) }
-    var email by remember { mutableStateOf(user.email) }
-    var phoneNumber by remember { mutableStateOf(user.phoneNumber ?: "") }
 
+    // Mutable state variables to hold the user input values and potential errors
+    var name by remember { mutableStateOf(TextFieldValue(user.name)) }
+    var email by remember { mutableStateOf(TextFieldValue(user.email)) }
+    var phoneNumber by remember { mutableStateOf(TextFieldValue(user.phoneNumber ?: "")) }
 
-    var street by remember { mutableStateOf(user.address?.street ?: "") }
-    var houseNumber by remember { mutableStateOf(user.address?.houseNumber ?: "") }
-    var city by remember { mutableStateOf(user.address?.city ?: "") }
-    var zip by remember { mutableStateOf(user.address?.zipCode ?: "") }
+    var street by remember { mutableStateOf(TextFieldValue(user.address?.street ?: "")) }
+    var houseNumber by remember { mutableStateOf(TextFieldValue(user.address?.houseNumber ?: "")) }
+    var city by remember { mutableStateOf(TextFieldValue(user.address?.city ?: "")) }
+    var zip by remember { mutableStateOf(TextFieldValue(user.address?.zipCode ?: "")) }
 
-
+    // Mutable state variables to hold validation error messages
     var nameError by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf("") }
     var phoneNumberError by remember { mutableStateOf("") }
@@ -59,19 +70,21 @@ fun Settings(
             .padding(16.dp)
             .fillMaxWidth()
     ) {
+        // Display profile section
         Text(
-            text = "Profil",
+            text = stringResource(R.string.profile),
             style = MaterialTheme.typography.h6,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
-        TextField(
-            value = name,
-            onValueChange = {
+        InputField(
+            text = name,
+            onTextChange = {
                 name = it
                 nameError = ""
             },
-            label = { Text("Name") },
+            inputPlaceholder = stringResource(R.string.name),
+            editing = true,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -85,13 +98,14 @@ fun Settings(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        TextField(
-            value = email,
-            onValueChange = {
+        InputField(
+            text = email,
+            onTextChange = {
                 email = it
                 emailError = ""
             },
-            label = { Text("E-Mail-Adresse") },
+            inputPlaceholder = stringResource(R.string.e_mail_adresse),
+            editing = true,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -104,17 +118,16 @@ fun Settings(
         }
 
         Spacer(modifier = Modifier.height(8.dp))
-        phoneNumber.let {
-            TextField(
-                value = it,
-                onValueChange = {
-                    phoneNumber = it
-                    phoneNumberError = ""
-                },
-                label = { Text("Telefonnummer") },
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
+        InputField(
+            text = phoneNumber,
+            onTextChange = {
+                phoneNumber = it
+                phoneNumberError = ""
+            },
+            inputPlaceholder = stringResource(R.string.phone_number),
+            editing = true,
+            modifier = Modifier.fillMaxWidth()
+        )
 
         if (phoneNumberError.isNotBlank()) {
             Text(
@@ -127,18 +140,19 @@ fun Settings(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Adresse",
+            text = stringResource(R.string.address),
             style = MaterialTheme.typography.h6,
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
-        TextField(
-            value = street,
-            onValueChange = {
+        InputField(
+            text = street,
+            onTextChange = {
                 street = it
                 streetError = ""
             },
-            label = { Text("Straße") },
+            inputPlaceholder = stringResource(R.string.street),
+            editing = true,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -151,13 +165,14 @@ fun Settings(
         }
 
         Spacer(modifier = Modifier.height(8.dp))
-        TextField(
-            value = houseNumber,
-            onValueChange = {
+        InputField(
+            text = houseNumber,
+            onTextChange = {
                 houseNumber = it
                 houseNumberError = ""
             },
-            label = { Text("Hausnummer") },
+            inputPlaceholder = stringResource(R.string.house_number),
+            editing = true,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -169,13 +184,14 @@ fun Settings(
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
-        TextField(
-            value = city,
-            onValueChange = {
+        InputField(
+            text = city,
+            onTextChange = {
                 city = it
                 cityError = ""
             },
-            label = { Text("Stadt") },
+            inputPlaceholder = stringResource(id = R.string.city),
+            editing = true,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -188,13 +204,14 @@ fun Settings(
         }
 
         Spacer(modifier = Modifier.height(8.dp))
-        TextField(
-            value = zip,
-            onValueChange = {
+        InputField(
+            text = zip,
+            onTextChange = {
                 zip = it
                 zipError = ""
             },
-            label = { Text("ZIP") },
+            inputPlaceholder = stringResource(R.string.plz),
+            editing = true,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -211,27 +228,27 @@ fun Settings(
         Button(
             onClick = {
 
-                val isNameValid = vm.validateName(name)
-                val isEmailValid = vm.validateEmail(email)
-                val isPhoneNumberValid = vm.validatePhoneNumber(phoneNumber)
+                val isNameValid = vm.validateName(name.text)
+                val isEmailValid = vm.validateEmail(email.text)
+                val isPhoneNumberValid = vm.validatePhoneNumber(phoneNumber.text)
 
-                val isStreetValid = vm.validateStreet(street)
-                val isCityValid = vm.validateCity(city)
-                val isHouseNumberValid = vm.validateHouseNumber(houseNumber)
-                val isZipValid = vm.validateZip(zip)
+                val isStreetValid = vm.validateStreet(street.text)
+                val isCityValid = vm.validateCity(city.text)
+                val isHouseNumberValid = vm.validateHouseNumber(houseNumber.text)
+                val isZipValid = vm.validateZip(zip.text)
 
                 if (isNameValid &&
                     isEmailValid &&
                     isPhoneNumberValid
                 ) {
-                    user.name = name
-                    user.email = email
-                    user.phoneNumber = phoneNumber
+                    user.name = name.text
+                    user.email = email.text
+                    user.phoneNumber = phoneNumber.text
 
                     // create or update address if all address fields are set
-                    if (street != "" || houseNumber != "" || city != "" || zip != "") {
+                    if (street.text != "" || houseNumber.text != "" || city.text != "" || zip.text != "") {
                         if (isStreetValid && isCityValid && isHouseNumberValid && isZipValid) {
-                            user.address = Address(houseNumber, street, city, zip)
+                            user.address = Address(houseNumber.text, street.text, city.text, zip.text)
                             updateUser(user)
                         } else {
                             if (!isStreetValid) {
@@ -266,7 +283,7 @@ fun Settings(
             modifier = Modifier.align(Alignment.End),
             colors = ButtonDefaults.buttonColors(backgroundColor = LightModeSecondary)
         ) {
-            Text(text = "Speichern")
+            Text(text = stringResource(R.string.save))
         }
     }
 }

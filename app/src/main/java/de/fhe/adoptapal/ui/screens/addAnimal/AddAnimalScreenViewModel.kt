@@ -140,7 +140,7 @@ class AddAnimalScreenViewModel(
     * saves a new animal to database
     *
     * animalName: from respective input field
-    * birthdate: from respective datepicker (string is parsed into LocalDate)
+    * birthdate: from respective date-picker (string is parsed into LocalDate)
     * user: currently logged in user is received from database
     * category: id from respective dropdown --> AnimalCategory with id is received from database
     *           (runBlocking to ensure AnimalCategory entry is present at point of animal insert
@@ -223,7 +223,7 @@ class AddAnimalScreenViewModel(
     /**
      * get User from local store
      */
-    fun getLoggedInUser(): User? {
+    private fun getLoggedInUser(): User? {
         var user: User? = null
         runBlocking {
             getLoggedInUserFromDataStoreAndDatabase().collect {

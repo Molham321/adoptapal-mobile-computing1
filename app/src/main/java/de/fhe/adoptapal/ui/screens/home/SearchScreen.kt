@@ -11,10 +11,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.ui.screens.home.filters.DistanceToCityFilter
 import de.fhe.adoptapal.ui.screens.home.filters.FilterButtons
@@ -42,7 +44,9 @@ fun SearchScreen(
     val scrollState = rememberScrollState()
     val colors = vm.animalColorList.value
     val arts = vm.animalCategoryList.value
-    val genderOptions = listOf("Männlich", "Weiblich", "Alle")
+    val genderOptions = listOf(stringResource(R.string.male), stringResource(R.string.female), stringResource(
+            R.string.all)
+        )
 
     Column(
         modifier = modifier
@@ -52,30 +56,28 @@ fun SearchScreen(
     ) {
         // Display the header
         Text(
-            text = "Tiere filtern",
+            text = stringResource(R.string.filter_animals),
             style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold),
             modifier = modifier.align(Alignment.CenterHorizontally)
         )
 
-        // Display filter options
-
         // Name filter
         FilterTextField(
-            label = "Name:",
+            label = stringResource(R.string.name),
             value = vm.initialName,
             onValueChange = { vm.initialName = it }
         )
 
         // Description filter
         FilterTextField(
-            label = "Beschreibung:",
+            label = stringResource(R.string.description),
             value = vm.initialDescription,
             onValueChange = { vm.initialDescription = it }
         )
 
         // Age filter
         NumericRangeFilter(
-            title = "Alter:",
+            title = stringResource(R.string.old),
             rangeFrom = vm.initialAgeFrom,
             rangeTo = vm.initialAgeTo,
             onRangeFromChange = { vm.initialAgeFrom = it },
@@ -84,7 +86,7 @@ fun SearchScreen(
 
         // Weight filter
         NumericRangeFilter(
-            title = "Gewicht:",
+            title = stringResource(R.string.weight),
             rangeFrom = vm.initialWeightFrom,
             rangeTo = vm.initialWeightTo,
             onRangeFromChange = { vm.initialWeightFrom = it },
@@ -100,7 +102,7 @@ fun SearchScreen(
 
         // City filter
         FilterTextField(
-            label = "Stadt:",
+            label = stringResource(R.string.city),
             value = vm.initialCity,
             onValueChange = { vm.initialCity = it }
         )
@@ -114,7 +116,7 @@ fun SearchScreen(
 
         // Color filter
         FilterDropdown(
-            title = "Farbe:",
+            title = stringResource(R.string.color),
             selectedValue = vm.initialColor,
             options = colors,
             onValueSelected = { vm.initialColor = it }
@@ -122,7 +124,7 @@ fun SearchScreen(
 
         // Animal Category filter
         FilterDropdown(
-            title = "Art:",
+            title = stringResource(R.string.type),
             selectedValue = vm.initialArt,
             options = arts,
             onValueSelected = { vm.initialArt = it }

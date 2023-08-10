@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -24,6 +25,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import de.fhe.adoptapal.R
 
+/**
+ * A Composable function that displays a password input field with a visibility toggle button.
+ *
+ * @param text The current text value of the input field.
+ * @param editing Whether the input field is in an editing state.
+ * @param onTextChange The callback for handling text changes.
+ * @param inputPlaceholder The placeholder text to display when the field is empty.
+ */
 @Composable
 fun PasswordInputField(
     text: TextFieldValue,
@@ -37,30 +46,30 @@ fun PasswordInputField(
 
     if (!editing) focusManager.clearFocus()
 
+    // Display the password input field
     OutlinedTextField(
         value = text,
         onValueChange = { newValue -> onTextChange(newValue) },
         modifier = Modifier
             .padding(8.dp),
-        // shape = RoundedCornerShape(20.dp),
         keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
         keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = ImeAction.Done,
             keyboardType = KeyboardType.Text
         ),
         label = { Text(inputPlaceholder) },
-        // placeholder = { Text(inputPlaceholder) },
         visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
         trailingIcon = {
+            // Display the visibility toggle icon button
             IconButton(
                 onClick = { passwordVisible = !passwordVisible },
                 modifier = Modifier
-                    .padding(end = 4.dp) // Adds padding to the end (right) of the IconButton
+                    .padding(end = 4.dp)
             ) {
                 Icon(
                     painter = painterResource(if (passwordVisible) R.drawable.ic_eye else R.drawable.ic_eye_off),
-                    contentDescription = "Password Visibility Toggle",
-                    modifier = Modifier.size(24.dp) // Adjusts the size of the Icon
+                    contentDescription = stringResource(R.string.password_visibility_toggle),
+                    modifier = Modifier.size(24.dp)
                 )
             }
         }

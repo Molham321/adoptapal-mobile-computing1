@@ -9,16 +9,23 @@ import de.fhe.adoptapal.di.modules.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
+/**
+ * The `Application` subclass that serves as the entry point for initializing the app's components using Koin.
+ */
 class Bootstrap : Application() {
 
+    /**
+     * Called when the application is starting. Initializes the app's components using Koin and runs database tests.
+     */
     override fun onCreate() {
         super.onCreate()
 
+        // Initialize Koin dependency injection
         startKoin {
             // TODO: maybe add a logger here
             androidContext(this@Bootstrap)
 
-            // modules
+            // Load app modules using Koin
             modules(databaseModule)
             modules(androidCoreModule)
             modules(viewModelModule)
@@ -26,7 +33,7 @@ class Bootstrap : Application() {
             modules(networkModule)
         }
 
-        // test Database
+        // Test database initialization with initial data
         DBInitialData().run()
     }
 }

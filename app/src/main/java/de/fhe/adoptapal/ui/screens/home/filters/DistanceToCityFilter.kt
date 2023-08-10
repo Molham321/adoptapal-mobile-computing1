@@ -15,8 +15,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
+import de.fhe.adoptapal.R
 
 @Composable
 fun DistanceToCityFilter(
@@ -27,7 +29,7 @@ fun DistanceToCityFilter(
     val distances = listOf(0, 5, 10, 20, 50)
     var expanded by remember { mutableStateOf(false) }
 
-    Text(text = "Distanz:")
+    Text(text = stringResource(R.string.distance))
     Box(modifier = Modifier.fillMaxWidth()) {
         OutlinedButton(
             onClick = { expanded = !expanded },
@@ -35,7 +37,7 @@ fun DistanceToCityFilter(
             colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.Gray)
         ) {
             Text(
-                text = "Auswählen",
+                text = stringResource(R.string.choose),
                 style = TextStyle(fontSize = 14.sp)
             )
         }
@@ -56,7 +58,7 @@ fun DistanceToCityFilter(
     }
     // Anzeigen der ausgewählten Farbe
     if (distance == 0) {
-        Text(text = "Alle Orte")
+        Text(text = stringResource(R.string.all_places))
     } else {
         Text(text = "Alle Orte im Umkreis von $distance km")
     }
