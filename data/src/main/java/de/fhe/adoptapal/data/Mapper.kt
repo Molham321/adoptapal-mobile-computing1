@@ -4,9 +4,11 @@ import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AnimalCategory
 import de.fhe.adoptapal.domain.Color
-import de.fhe.adoptapal.domain.Rating
 import de.fhe.adoptapal.domain.User
 
+// ------------
+// Animal Mapper
+// ------------
 fun AnimalModel.toDomain(supplier: User, animalCategory: AnimalCategory, color: Color) = Animal(
     id = id,
     createdTimestamp = createdTimestamp,
@@ -40,6 +42,9 @@ fun Animal.fromDomain() =
     )
 
 
+// ------------
+// Color Mapper
+// ------------
 fun ColorModel.toDomain() = Color(
     id = id,
     createdTimestamp = createdTimestamp,
@@ -53,6 +58,9 @@ fun Color.fromDomain() = ColorModel(
     name = name
 )
 
+// ------------
+// Animal Category Mapper
+// ------------
 fun AnimalCategoryModel.toDomain() = AnimalCategory(
     id = id,
     createdTimestamp = createdTimestamp,
@@ -66,6 +74,9 @@ fun AnimalCategory.fromDomain() = AnimalCategoryModel(
     name = name
 )
 
+// ------------
+// Address Mapper
+// ------------
 fun AddressModel.toDomain() = Address(
     id = id,
     createdTimestamp = createdTimestamp,
@@ -92,6 +103,9 @@ fun Address.fromDomain() =
     )
 
 
+// ------------
+// User Mapper
+// ------------
 fun UserModel.toDomain(address: Address?) = User(
     id = id,
     createdTimestamp = createdTimestamp,
@@ -99,8 +113,7 @@ fun UserModel.toDomain(address: Address?) = User(
     name = name,
     email = email,
     address = address,
-    phoneNumber = phoneNumber,
-    useCoarseLocation = useCoarseLocation
+    phoneNumber = phoneNumber
 )
 
 fun User.fromDomain() = UserModel(
@@ -109,27 +122,5 @@ fun User.fromDomain() = UserModel(
     name = name,
     email = email,
     addressId = address?.id,
-    phoneNumber = phoneNumber,
-    useCoarseLocation = useCoarseLocation
-)
-
-fun RatingModel.toDomain(seeker: User, supplier: User) = Rating(
-    id = id,
-    createdTimestamp = createdTimestamp,
-    lastChangeTimestamp = lastChangeTimestamp,
-    seeker = seeker,
-    supplier = supplier,
-    rating = rating,
-    comment = comment
-)
-
-fun Rating.fromDomain() = RatingModel(
-    id = id,
-    createdTimestamp = createdTimestamp,
-    lastChangeTimestamp = lastChangeTimestamp,
-    supplierId = supplier.id,
-    seekerId = seeker.id,
-    rating = rating,
-    comment = comment
-
+    phoneNumber = phoneNumber
 )

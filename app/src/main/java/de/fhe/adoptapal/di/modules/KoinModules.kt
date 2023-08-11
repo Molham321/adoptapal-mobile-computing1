@@ -6,31 +6,20 @@ import de.fhe.adoptapal.android_core.LoggerImpl
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
 import de.fhe.adoptapal.domain.CreateAnimalAsync
-import de.fhe.adoptapal.domain.CreateAnimalCategoryAsync
-import de.fhe.adoptapal.domain.CreateColorAsync
-import de.fhe.adoptapal.domain.DeleteAnimalAsync
-import de.fhe.adoptapal.domain.GetAddressAsync
 import de.fhe.adoptapal.domain.GetAllAnimalCategories
 import de.fhe.adoptapal.domain.GetAllAnimals
 import de.fhe.adoptapal.domain.GetAllColors
 import de.fhe.adoptapal.domain.GetAllFavoriteAnimalsAsync
-import de.fhe.adoptapal.domain.GetAllRatingsBySeekerId
-import de.fhe.adoptapal.domain.GetAllRatingsBySupplierId
 import de.fhe.adoptapal.domain.GetAllUsers
 import de.fhe.adoptapal.domain.GetAnimalAsync
-import de.fhe.adoptapal.domain.GetAnimalByRangeAsync
 import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
 import de.fhe.adoptapal.domain.GetColorAsync
 import de.fhe.adoptapal.domain.GetLatLongForAddress
 import de.fhe.adoptapal.domain.GetLatLongForLocationString
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
-import de.fhe.adoptapal.domain.GetRatingAsync
 import de.fhe.adoptapal.domain.GetUserAnimalsAsync
 import de.fhe.adoptapal.domain.GetUserAsync
 import de.fhe.adoptapal.domain.GetUserByEmailAsync
-import de.fhe.adoptapal.domain.GetUsersByRangeAsync
-import de.fhe.adoptapal.domain.InsertAddressAsync
-import de.fhe.adoptapal.domain.InsertRatingAsync
 import de.fhe.adoptapal.domain.InsertUserAsync
 import de.fhe.adoptapal.domain.LocalStore
 import de.fhe.adoptapal.domain.Logger
@@ -57,11 +46,9 @@ val databaseModule = module {
         RepositoryImpl(
             AppDatabase.getUserModelDao(get()),
             AppDatabase.getAddressModelDao(get()),
-            AppDatabase.getRatingModelDao(get()),
             AppDatabase.getAnimalModelDao(get()),
             AppDatabase.getAnimalCategoryModelDao(get()),
             AppDatabase.getColorModelDao(get()),
-            AppDatabase.getRequestModelDao(get())
         )
     }
 }
@@ -90,41 +77,27 @@ val networkModule = module {
 val useCaseModule = module {
     // animal
     factory { GetAllAnimals(get()) }
-    factory { GetAnimalByRangeAsync(get()) }
     factory { CreateAnimalAsync(get()) }
     factory { GetAnimalAsync(get()) }
     factory { GetUserAnimalsAsync(get()) }
     factory { UpdateAnimalAsync(get()) }
     factory { GetAllFavoriteAnimalsAsync(get()) }
-    factory { DeleteAnimalAsync(get()) }
 
     // color
     factory { GetAllColors(get()) }
-    factory { CreateColorAsync(get()) }
     factory { GetColorAsync(get()) }
 
     // animal category
     factory { GetAllAnimalCategories(get()) }
-    factory { CreateAnimalCategoryAsync(get()) }
     factory { GetAnimalCategoryAsync(get()) }
 
     // user
     factory { GetAllUsers(get()) }
-    factory { GetUsersByRangeAsync(get()) }
     factory { GetUserAsync(get()) }
     factory { GetUserByEmailAsync(get()) }
     factory { InsertUserAsync(get()) }
     factory { UpdateUserAsync(get()) }
 
-    // Address
-    factory { GetAddressAsync(get()) }
-    factory { InsertAddressAsync(get()) }
-
-    // Rating
-    factory { GetRatingAsync(get()) }
-    factory { InsertRatingAsync(get()) }
-    factory { GetAllRatingsBySeekerId(get()) }
-    factory { GetAllRatingsBySupplierId(get()) }
 
     // LocalStore
     factory { GetLoggedInUserFromDataStoreAndDatabase(get(), get()) }

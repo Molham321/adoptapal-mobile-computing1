@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal
-import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.home.AnimalCard
 
 /**

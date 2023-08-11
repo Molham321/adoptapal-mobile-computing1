@@ -7,29 +7,28 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 
+/**
+ * Database Configuration
+ */
 @Database(
     entities = [
         UserModel::class,
         AddressModel::class,
-        RatingModel::class,
         AnimalModel::class,
         ColorModel::class,
         AnimalCategoryModel::class,
-        RequestModel::class,
-    ], version = 2
+    ], version = 4
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun userModelDao(): UserModelDao
     abstract fun addressModelDao(): AddressModelDao
-    abstract fun ratingModelDao(): RatingModelDao
     abstract fun animalModelDao(): AnimalModelDao
     abstract fun animalCategoryDao(): AnimalCategoryModelDao
     abstract fun colorModelDao(): ColorModelDao
-    abstract fun requestModelDao(): RequestModelDao
 
     companion object {
-        var db: AppDatabase? = null
+        private var db: AppDatabase? = null
 
         private fun getDatabase(app: Context): AppDatabase {
             if (db == null) {
@@ -50,10 +49,6 @@ abstract class AppDatabase : RoomDatabase() {
             return getDatabase(app).addressModelDao()
         }
 
-        fun getRatingModelDao(app: Context): RatingModelDao {
-            return getDatabase(app).ratingModelDao()
-        }
-
         fun getAnimalModelDao(app: Context): AnimalModelDao {
             return getDatabase(app).animalModelDao()
         }
@@ -65,10 +60,6 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getColorModelDao(app: Context): ColorModelDao {
             return getDatabase(app).colorModelDao()
-        }
-
-        fun getRequestModelDao(app: Context): RequestModelDao {
-            return getDatabase(app).requestModelDao()
         }
     }
 }

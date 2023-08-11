@@ -5,8 +5,6 @@ import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AnimalCategory
 import de.fhe.adoptapal.domain.Color
-import de.fhe.adoptapal.domain.Location
-import de.fhe.adoptapal.domain.Rating
 import de.fhe.adoptapal.domain.Repository
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.domain.UserEmailUniqueException
@@ -17,11 +15,9 @@ import java.time.LocalDateTime
 class RepositoryImpl(
     private val userModelDao: UserModelDao,
     private val addressModelDao: AddressModelDao,
-    private val ratingModelDao: RatingModelDao,
     private val animalModelDao: AnimalModelDao,
     private val animalCategoryModelDao: AnimalCategoryModelDao,
-    private val colorModelDao: ColorModelDao,
-    private val requestModelDao: RequestModelDao
+    private val colorModelDao: ColorModelDao
 ) : Repository {
 
     // ----------------
@@ -35,8 +31,8 @@ class RepositoryImpl(
         }
     }
 
-    override fun getUserAnimals(usderId: Long): Flow<List<Animal>> {
-        return animalModelDao.getUserAnimalsAsFlow(usderId).map { animalEntityList ->
+    override fun getUserAnimals(userId: Long): Flow<List<Animal>> {
+        return animalModelDao.getUserAnimalsAsFlow(userId).map { animalEntityList ->
             animalEntityList.map { animalEntity ->
                 getAnimalWithContent(animalEntity)
             }
@@ -51,26 +47,14 @@ class RepositoryImpl(
         }
     }
 
-    override fun getAnimalsByRange(location: Location, range: Double): Flow<List<Animal>> {
-        return this.getAllAnimals().map { animalList ->
-            animalList.filter { animal ->
-                animal.supplier.address?.let {
-                    location.isWithinRangeOf(
-                        it.latitude,
-                        it.longitude,
-                        range
-                    )
-                } ?: false
-            }
-        }
-    }
-
-
     override suspend fun getAnimal(animalId: Long): Animal? {
         val animalEntity = animalModelDao.get(animalId)
         return if (animalEntity != null) getAnimalWithContent(animalEntity) else null
     }
 
+    /**
+     * get animal with all connected classes
+     */
     private suspend fun getAnimalWithContent(animalEntity: AnimalModel): Animal {
         // get Data for Animal
         val animalCategory = animalCategoryModelDao.get(animalEntity.animalCategoryId)
@@ -88,17 +72,13 @@ class RepositoryImpl(
     }
 
     override suspend fun insertAnimal(animal: Animal): Long {
-        return animalModelDao.upsert(animal.fromDomain());
+        return animalModelDao.upsert(animal.fromDomain())
     }
 
-    override suspend fun updateAnimal(animal: Animal): Long {
-        val updateAnimal = animal.fromDomain()
+    override suspend fun updateAnimal(animalToUpdate: Animal): Long {
+        val updateAnimal = animalToUpdate.fromDomain()
         updateAnimal.lastChangeTimestamp = LocalDateTime.now()
         return animalModelDao.upsert(updateAnimal)
-    }
-
-    override suspend fun deleteAnimal(animal: Animal) {
-        animalModelDao.delete(animal.fromDomain())
     }
 
     // ----------------
@@ -150,15 +130,6 @@ class RepositoryImpl(
         }
     }
 
-    override fun getUsersByRange(location: Location, distance: Double): Flow<List<User>> {
-        return this.getAllUsers().map { userList ->
-            userList.filter { user ->
-                user.address?.let { location.isWithinRangeOf(it.latitude, it.longitude, distance) }
-                    ?: false
-            }
-        }
-    }
-
     override suspend fun getUser(userId: Long): User? {
         val userModel = userModelDao.get(userId)
         val addressModel = userModel?.addressId?.let { addressModelDao.get(it) }
@@ -182,6 +153,9 @@ class RepositoryImpl(
         return userModelDao.upsert(user.fromDomain())
     }
 
+    /**
+     * updating user and its address
+     */
     @Throws(UserEmailUniqueException::class)
     override suspend fun updateUser(user: User): Long {
         Log.i("Repository", "update user")
@@ -194,7 +168,6 @@ class RepositoryImpl(
 
         userModelDao.get(user.id)?.let { savedEntity ->
 
-            var addressId: Long? = null
             // update users address if exists
             if (user.address != null) {
                 Log.i("Repository", "update or create user address")
@@ -225,40 +198,6 @@ class RepositoryImpl(
 
     override suspend fun insertAddress(address: Address): Long {
         return addressModelDao.upsert(address.fromDomain())
-    }
-
-    // ----------------
-    // Rating
-    // ----------------
-
-    override suspend fun getRating(ratingId: Long): Rating? {
-        val ratingModel = ratingModelDao.get(ratingId) ?: return null
-        val seeker = getUser(ratingModel.seekerId) ?: return null
-        val supplier = getUser(ratingModel.supplierId) ?: return null
-
-        return ratingModel.toDomain(seeker, supplier)
-    }
-
-    override suspend fun insertRating(rating: Rating): Long {
-        return ratingModelDao.upsert(rating.fromDomain())
-    }
-
-    override suspend fun getAllRatingsBySupplierIdAsFlow(supplierId: Long): Flow<List<Rating>> {
-        val supplier = getUser(supplierId)
-        return ratingModelDao.getAllBySupplierIdAsFlow(supplierId).map { ratingModelList ->
-            ratingModelList.map { ratingModel ->
-                ratingModel.toDomain(getUser(ratingModel.seekerId)!!, supplier!!)
-            }
-        }
-    }
-
-    override suspend fun getAllRatingsBySeekerIdAsFlow(seekerId: Long): Flow<List<Rating>> {
-        val seeker = getUser(seekerId)
-        return ratingModelDao.getAllBySupplierIdAsFlow(seekerId).map { ratingModelList ->
-            ratingModelList.map { ratingModel ->
-                ratingModel.toDomain(seeker!!, getUser(ratingModel.supplierId)!!)
-            }
-        }
     }
 
 }

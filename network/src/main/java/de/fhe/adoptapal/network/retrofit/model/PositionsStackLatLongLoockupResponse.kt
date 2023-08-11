@@ -1,10 +1,15 @@
 package de.fhe.adoptapal.network.retrofit.model
 
-
+/**
+ * Positionstack Api Return value list
+ */
 data class PositionsStackLatLongLookupResponse(
     val data: List<Result>
 )
 
+/**
+ * Positionstack Api Return value
+ */
 data class Result(
     var latitude: Double? = null,
     var longitude: Double? = null,

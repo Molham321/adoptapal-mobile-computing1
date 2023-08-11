@@ -13,11 +13,16 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.lang.Exception
 
 
-class RetrofitNetworkController() : NetworkController {
+/**
+ * Retrofit Networl implementation
+ */
+class RetrofitNetworkController : NetworkController {
 
+    /**
+     * Address to latLong conversion
+     */
     override fun getLatLongFromAddress(address: Address): Flow<Address> = flow {
         val stringAddress =
             "${address.street} ${address.houseNumber}, ${address.city} ${address.zipCode}"
@@ -30,6 +35,10 @@ class RetrofitNetworkController() : NetworkController {
         emit(address)
     }
 
+    /**
+     * Search location String to LatLong conversion
+     * uses FHE Address as Fallback
+     */
     override fun getLatLongByLocationString(locationString: String): Flow<Location> = flow {
         try {
             val response = api.getLatLong(locationString)
@@ -41,19 +50,12 @@ class RetrofitNetworkController() : NetworkController {
             emit(newLocation)
         } catch (ex: HttpException) {
             LoggerFactory.getLogger().info("Retrofit", ex.message())
-            val fheLocation = Location(50.98464,11.042537)
-            emit(fheLocation)
+            emit(fheFallbackLatLong)
         } catch (ex: Exception) {
             ex.message?.let { LoggerFactory.getLogger().info("Retrofit", it) }
-            val fheLocation = Location(50.98464,11.042537)
-            emit(fheLocation)
+            emit(fheFallbackLatLong)
         }
     }
-
-
-    /*
-        Internal Helper
-     */
 
     private var api: Api
 
@@ -85,6 +87,10 @@ class RetrofitNetworkController() : NetworkController {
             .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
             .build()
             .create(Api::class.java)
+    }
+
+    companion object {
+        private val fheFallbackLatLong = Location(50.98464,11.042537)
     }
 
 }

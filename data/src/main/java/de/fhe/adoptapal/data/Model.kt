@@ -3,7 +3,6 @@ package de.fhe.adoptapal.data
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import de.fhe.adoptapal.domain.RatingEnum
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -32,19 +31,6 @@ data class UserModel(
     val email: String,
     val addressId: Long?,
     val phoneNumber: String?,
-    val useCoarseLocation: Boolean
-)
-
-@Entity
-data class RatingModel(
-    @PrimaryKey(autoGenerate = true) var id: Long = 0,
-    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
-    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
-    var isDeleted: Boolean = false,
-    val supplierId: Long,
-    val seekerId: Long,
-    val rating: RatingEnum,
-    val comment: String
 )
 
 @Entity
@@ -82,15 +68,3 @@ data class AnimalCategoryModel(
     var isDeleted: Boolean = false,
     val name: String
 )
-
-@Entity
-data class RequestModel(
-    @PrimaryKey(autoGenerate = true) var id: Long = 0,
-    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
-    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
-    var isDeleted: Boolean = false,
-    val seekerId: Long,
-    val animalCategoryId: Long,
-    val description: String
-)
-

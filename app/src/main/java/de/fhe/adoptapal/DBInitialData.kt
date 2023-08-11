@@ -5,8 +5,6 @@ import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AnimalCategory
 import de.fhe.adoptapal.domain.Color
-import de.fhe.adoptapal.domain.Rating
-import de.fhe.adoptapal.domain.RatingEnum
 import de.fhe.adoptapal.domain.Repository
 import de.fhe.adoptapal.domain.User
 import kotlinx.coroutines.CoroutineScope
@@ -260,7 +258,6 @@ class DBInitialData : KoinComponent {
                 email = "hans.meyer@fakemail.io",
                 address = address1,
                 phoneNumber = null,
-                useCoarseLocation = true
             )
             val user2 = User(
                 id = 2,
@@ -270,7 +267,6 @@ class DBInitialData : KoinComponent {
                 email = "gabi.schnitzler@tierheim.de",
                 address = address2,
                 phoneNumber = "017801870420",
-                useCoarseLocation = false
             )
             val user3 = User(
                 id = 3,
@@ -280,7 +276,6 @@ class DBInitialData : KoinComponent {
                 email = "richard.kloese@mail.de",
                 address = address3,
                 phoneNumber = "0178058270420",
-                useCoarseLocation = false
             )
             val user4 = User(
                 id = 4,
@@ -290,7 +285,6 @@ class DBInitialData : KoinComponent {
                 email = "katzentempel@tierheim.de",
                 address = address4,
                 phoneNumber = "0178445578987",
-                useCoarseLocation = false
             )
             val user5 = User(
                 id = 5,
@@ -300,7 +294,6 @@ class DBInitialData : KoinComponent {
                 email = "felix.richter@email.com",
                 address = address5,
                 phoneNumber = "0178975312468",
-                useCoarseLocation = true
             )
             repo.insertUser(user1)
             repo.insertUser(user2)
@@ -571,20 +564,7 @@ class DBInitialData : KoinComponent {
                 )
             )
 
-            val rating = Rating(
-                id = 0,
-                createdTimestamp = LocalDateTime.now(),
-                lastChangeTimestamp = LocalDateTime.now(),
-                seeker = user1,
-                supplier = user2,
-                rating = RatingEnum.FOUR_STARS,
-                comment = "Schöne Tiere, Mitarbeiter sind aber nicht nett",
-            )
-
-            repo.insertRating(rating)
-
-
-
+            // quick test animal creation
             runBlocking {
                 repo.getAllAnimals().collect {
                     it.forEach { animal ->
