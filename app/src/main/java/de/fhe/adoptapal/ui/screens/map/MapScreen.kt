@@ -62,7 +62,7 @@ fun Map(mapCenterPosition: LatLng, vm: MapScreenViewModel) {
     Log.i(LOGTAG, "UI SETTONGS")
     Column {
         Log.i(LOGTAG, "COLUIN")
-        MarkerDebugView(mapCenterMarkerState)
+        // MarkerDebugView(mapCenterMarkerState)
         Log.i(LOGTAG, "DEBUG")
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
