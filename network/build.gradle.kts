@@ -47,14 +47,4 @@ dependencies {
     implementation(Libs.Retrofit.core)
     implementation(Libs.Retrofit.converter_moshi)
     implementation(Libs.Retrofit.logging_interceptor)
-
-    implementation(Libs.Ktor.core)
-    implementation(Libs.Ktor.engine)
-    implementation(Libs.Ktor.logging)
-    implementation(Libs.Ktor.content_negotiation)
-    implementation(Libs.Ktor.json_serialization)
-
-    testImplementation(Libs.JUnit.core)
-    androidTestImplementation(Libs.JUnit.ktx)
-    androidTestImplementation(Libs.AndroidX.Espresso.core)
 }

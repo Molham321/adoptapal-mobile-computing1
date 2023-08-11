@@ -3,7 +3,6 @@ plugins {
     id(Libs.Plugins.kotlin_android)
 }
 
-
 android {
     namespace = "de.fhe.adoptapal"
     compileSdk = Config.compile_sdk_version
@@ -15,9 +14,6 @@ android {
         targetSdk = Config.target_sdk_version
         versionCode = Config.version_code
         versionName = Config.version_name
-
-        // set api key to AndroidManifest from application.properties
-//        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -81,7 +77,7 @@ dependencies {
     implementation(Libs.AndroidX.Lifecycle.viewmodel)
     implementation(Libs.AndroidX.Lifecycle.viewModelCompose)
 
-    implementation("io.coil-kt:coil-compose:2.1.0") // usedto diplay image from uri
+    implementation(Libs.Coil.compose) // usedto diplay image from uri
 
     implementation(Libs.Koin.core)
     implementation(Libs.Koin.android)
@@ -98,23 +94,20 @@ dependencies {
     implementation(Libs.Accompanist.placeholder)
     implementation(Libs.Accompanist.permission)
 
-    testImplementation(Libs.JUnit.core)
     androidTestImplementation(Libs.AndroidX.Compose.uiTest)
     androidTestImplementation(Libs.AndroidX.Espresso.core)
     androidTestImplementation(Libs.JUnit.ktx)
     androidTestImplementation(Libs.Koin.test)
 
-    // Unit Test
-    testImplementation("junit:junit:4.12")
-    testImplementation("com.google.truth:truth:1.0.1")
-    androidTestImplementation("com.google.truth:truth:1.0.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+    // Test dependencies
+    testImplementation(Libs.Google.truth)
+    androidTestImplementation(Libs.Google.truth)
 
-    testImplementation("androidx.arch.core:core-testing:2.1.0")
-    testImplementation("io.mockk:mockk:1.12.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0")
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("androidx.test:core:1.5.0")
+    testImplementation(Libs.AndroidX.Arch.coreTest)
+    testImplementation(Libs.Mockk.mockk)
+    testImplementation(Libs.JetBrains.kotlinxTest)
+    testImplementation(Libs.JUnit.core)
+    testImplementation(Libs.AndroidX.Test.core)
 
     debugImplementation(Libs.AndroidX.Compose.tooling)
 }

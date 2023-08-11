@@ -33,6 +33,11 @@ object Libs {
         const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
     }
 
+    object Coil {
+        private const val version = "2.3.0"
+        const val compose = "io.coil-kt:coil-compose:$version"
+    }
+
     object AndroidX {
         const val coreKtx = "androidx.core:core-ktx:1.10.0"
 
@@ -100,6 +105,24 @@ object Libs {
             private const val version = "1.9.0"
             const val core = "com.google.android.material:material:$version"
         }
+
+        object Test {
+            private const val version = "1.5.0"
+
+            const val core = "androidx.test:core:$version"
+        }
+
+        object Arch {
+            private const val version = "2.2.0"
+
+            const val coreTest = "androidx.arch.core:core-testing:$version"
+        }
+    }
+
+    object Mockk {
+        private const val version = "1.12.0"
+
+        const val mockk = "io.mockk:mockk:$version"
     }
 
     // https://developer.android.com/jetpack/androidx/releases/room
@@ -194,6 +217,17 @@ object Libs {
 
         // Added for Android 12 workaround (exported = true) TODO: Remove as soon as possible
         const val ktx = "androidx.test.ext:junit-ktx:$version"
+    }
+
+    object JetBrains {
+        private const val version  ="1.5.0"
+
+        const val kotlinxTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
+    }
+    object Google {
+        private const val version = "1.0.1"
+
+        const val truth = "com.google.truth:truth:$version"
     }
 
     @JvmStatic
