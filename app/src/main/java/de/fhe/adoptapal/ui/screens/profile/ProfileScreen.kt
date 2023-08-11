@@ -159,14 +159,14 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                         AnimalCard(
                             it,
                             modifier = modifier,
-                            userAddress = vm.user.value?.address
+                            userAddress = vm.user.value?.address,
                         ) {
                             vm.navigateToAnimal(it)
                         }
                     }
                 } else {
                     item {
-                        FullscreenPlaceholderView(stringResource(id = R.string.no_animals_marked), Icons.Filled.Info)
+                        FullscreenPlaceholderView(stringResource(id = R.string.no_animals_uploaded), Icons.Filled.Info)
                     }
                 }
             }

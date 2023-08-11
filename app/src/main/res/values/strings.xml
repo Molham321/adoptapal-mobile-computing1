@@ -58,6 +58,7 @@
     <string name="marked_animals">Gemerkte Tiere</string>
     <string name="uploaded_animals">Hochgeladene Tiere</string>
     <string name="no_animals_marked">Keine Tiere gemerkt</string>
+    <string name="no_animals_uploaded">Keine Tiere hochgeladen</string>
     <string name="you_are_not_logged_in_log_in_first">Du bist nicht angemeldet! Melde dich erstmal an.</string>
     <string name="enter_text">Enter text...</string>
     <string name="password_visibility_toggle">Password Visibility Toggle</string>
