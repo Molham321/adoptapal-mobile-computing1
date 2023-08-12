@@ -102,6 +102,17 @@ class ProfileScreenViewModel(
         }
     }
 
+    fun logout() {
+        viewModelScope.launch {
+            setLoggedInUserInDataStore(0).collect { result ->
+                if (result.status == AsyncOperationState.SUCCESS) {
+                    user.value = null
+                    navigateToHome()
+                }
+            }
+        }
+    }
+
     fun navigateToSettings() {
         navigationManager.navigate(Screen.Settings.navigationCommand())
     }
@@ -118,14 +129,4 @@ class ProfileScreenViewModel(
         navigationManager.navigate(Screen.Home.navigationCommand())
     }
 
-    fun logout() {
-        viewModelScope.launch {
-            setLoggedInUserInDataStore(0).collect { result ->
-                if (result.status == AsyncOperationState.SUCCESS) {
-                    user.value = null
-                    navigateToHome()
-                }
-            }
-        }
-    }
 }
