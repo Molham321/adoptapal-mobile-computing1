@@ -55,6 +55,21 @@ class DetailScreenViewModel(
     }
 
     /**
+     * Marks an animal as favorite and updates the database.
+     *
+     * @param animal Animal to mark as favorite.
+     */
+    fun saveAnimalAsFavorite(animal: Animal) {
+        viewModelScope.launch {
+            updateAnimalAsync(animal).collect {
+                // Handle the result of the update if needed
+            }
+        }
+        println("Tier ${animal.name} mit id ${animal.id} gemerkt: ${animal.isFavorite}")
+    }
+
+
+    /**
      * Navigates to the user detail screen.
      *
      * @param userId ID of the user to display details for.
