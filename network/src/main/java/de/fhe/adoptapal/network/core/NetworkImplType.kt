@@ -3,7 +3,10 @@ package de.fhe.adoptapal.network.core
 import de.fhe.adoptapal.domain.NetworkController
 import de.fhe.adoptapal.network.retrofit.RetrofitNetworkController
 
-sealed class NetworkImplType() {
+/**
+ * Base Network implementation definition
+ */
+sealed class NetworkImplType {
     val implementation: NetworkController by lazy { initImpl() }
 
     open fun initImpl(): NetworkController {
@@ -11,8 +14,9 @@ sealed class NetworkImplType() {
     }
 }
 
-object DEFAULT : NetworkImplType()
-
+/**
+ * Retrofit Network implementation type
+ */
 object RETROFIT : NetworkImplType() {
     override fun initImpl(): NetworkController {
         return RetrofitNetworkController()

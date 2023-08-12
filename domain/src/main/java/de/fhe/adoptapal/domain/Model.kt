@@ -55,21 +55,20 @@ data class User(
     var name: String,
     var email: String,
     var address: Address?,
-    var phoneNumber: String?,
-    var useCoarseLocation: Boolean,
+    var phoneNumber: String?
 ) {
     constructor(
         name: String,
         email: String,
         phoneNumber: String?,
         address: Address?
-    ) : this(0, LocalDateTime.now(), LocalDateTime.now(), name, email, address, phoneNumber, true)
+    ) : this(0, LocalDateTime.now(), LocalDateTime.now(), name, email, address, phoneNumber)
 
     constructor(
         name: String,
         email: String,
         phoneNumber: String?
-    ) : this(0, LocalDateTime.now(), LocalDateTime.now(), name, email, null, phoneNumber, true)
+    ) : this(0, LocalDateTime.now(), LocalDateTime.now(), name, email, null, phoneNumber)
 
 }
 
@@ -84,22 +83,6 @@ data class Address(
     var latitude: Double,
     var longitude: Double
 ) {
-    fun simpleEquals(address: Address?): Boolean {
-        if (address == null) {
-            return false
-        }
-
-        if (this.houseNumber == address.houseNumber &&
-            this.street == address.street &&
-            this.city == address.city &&
-            this.zipCode == address.zipCode
-        ) {
-            return true
-        }
-
-        return false
-    }
-
     constructor(houseNumber: String, street: String, city: String, zipCode: String) : this(
         0,
         LocalDateTime.now(),
@@ -131,7 +114,7 @@ data class Location(
             this.longitude,
             lat2,
             long2,
-            distanceInKm.toDouble()
+            distanceInKm
         )
     }
 
@@ -169,9 +152,8 @@ data class Location(
             // Apply the Haversine formula
             val a = sin(dLat / 2).pow(2) + cos(lat1Rad) * cos(lat2Rad) * sin(dLon / 2).pow(2)
             val c = 2 * atan2(sqrt(a), sqrt(1 - a))
-            val distance = EARTH_RADIUS * c
 
-            return distance
+            return EARTH_RADIUS * c
         }
     }
 }
@@ -263,25 +245,3 @@ data class AnimalCategory(
 ) {
     constructor(name: String) : this(0, LocalDateTime.now(), LocalDateTime.now(), name)
 }
-
-
-data class Rating(
-    var id: Long = 0,
-    var createdTimestamp: LocalDateTime = LocalDateTime.now(),
-    var lastChangeTimestamp: LocalDateTime = LocalDateTime.now(),
-    var seeker: User,
-    var supplier: User,
-    var rating: RatingEnum,
-    var comment: String
-) {
-    constructor(seeker: User, supplier: User, rating: RatingEnum, comment: String) : this(
-        0,
-        LocalDateTime.now(),
-        LocalDateTime.now(),
-        seeker,
-        supplier,
-        rating,
-        comment
-    )
-}
-

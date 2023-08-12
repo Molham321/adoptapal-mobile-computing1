@@ -6,6 +6,9 @@ import timber.log.Timber
 
 private const val CALLER_STACK_TRACE_POSITION = 4
 
+/**
+ * Logger implementation
+ */
 class LoggerImpl : Logger {
 
     companion object {

@@ -1,7 +1,6 @@
-package de.fhe.adoptapal.domain;
+package de.fhe.adoptapal.domain
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
 
@@ -18,15 +17,6 @@ class GetAllAnimals(private val repository: Repository) {
     }
 }
 
-class GetAnimalByRangeAsync(private val repository: Repository) {
-    operator fun invoke(location: Location, distance: Double): Flow<AsyncOperation> = flow {
-        emit(AsyncOperation.loading("Start loading animals by range..."))
-        repository.getUsersByRange(location, distance).collect {
-            emit(AsyncOperation.success("Users loaded", it))
-            emit(AsyncOperation.undefined())
-        }
-    }
-}
 
 class CreateAnimalAsync(private val repository: Repository) {
     operator fun invoke(newAnimal: Animal): Flow<AsyncOperation> = flow {
@@ -76,14 +66,6 @@ class GetAllFavoriteAnimalsAsync(private val repository: Repository) {
     }
 }
 
-class DeleteAnimalAsync(private val repository: Repository) {
-    operator fun invoke(animal: Animal): Flow<AsyncOperation> = flow {
-        emit(AsyncOperation.loading("Deleting animal with id ${animal.id}"))
-        repository.deleteAnimal(animal)
-        emit(AsyncOperation.success("Deleted animal with id ${animal.id}"))
-    }
-}
-
 
 // ----------------
 // COLORS
@@ -95,14 +77,6 @@ class GetAllColors(private val repository: Repository) {
             emit(AsyncOperation.success("Colors loaded", it))
             emit(AsyncOperation.undefined())
         }
-    }
-}
-
-class CreateColorAsync(private val repository: Repository) {
-    operator fun invoke(newColor: Color): Flow<AsyncOperation> = flow {
-        emit(AsyncOperation.loading("Start creating color..."))
-        val colorId = repository.insertColor(newColor)
-        emit(AsyncOperation.success("Color saved with ID $colorId", colorId))
     }
 }
 
@@ -131,19 +105,6 @@ class GetAllAnimalCategories(private val repository: Repository) {
     }
 }
 
-class CreateAnimalCategoryAsync(private val repository: Repository) {
-    operator fun invoke(newAnimalCategory: AnimalCategory): Flow<AsyncOperation> = flow {
-        emit(AsyncOperation.loading("Start creating animalCategory..."))
-        val animalCategoryId = repository.insertAnimalCategory(newAnimalCategory)
-        emit(
-            AsyncOperation.success(
-                "AnimalCategory saved with ID $animalCategoryId",
-                animalCategoryId
-            )
-        )
-    }
-}
-
 class GetAnimalCategoryAsync(private val repository: Repository) {
     operator fun invoke(animalCategoryId: Long): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading animalCategory with id $animalCategoryId"))
@@ -168,16 +129,6 @@ class GetAllUsers(private val repository: Repository) {
     operator fun invoke(): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading users..."))
         repository.getAllUsers().collect {
-            emit(AsyncOperation.success("Users loaded", it))
-            emit(AsyncOperation.undefined())
-        }
-    }
-}
-
-class GetUsersByRangeAsync(private val repository: Repository) {
-    operator fun invoke(location: Location, distance: Double): Flow<AsyncOperation> = flow {
-        emit(AsyncOperation.loading("Start loading users by range..."))
-        repository.getUsersByRange(location, distance).collect {
             emit(AsyncOperation.success("Users loaded", it))
             emit(AsyncOperation.undefined())
         }
@@ -233,75 +184,6 @@ class UpdateUserAsync(private val repository: Repository) {
     }
 }
 
-
-// ----------------
-// Address
-// ----------------
-class GetAddressAsync(private val repository: Repository) {
-    operator fun invoke(addressId: Long): Flow<AsyncOperation> = flow {
-        emit(AsyncOperation.loading("Start loading address with id $addressId"))
-        val address = repository.getAddress(addressId)
-        if (address != null) {
-            emit(AsyncOperation.success("Successfully loaded address with id $addressId", address))
-        } else {
-            emit(AsyncOperation.error("Failed to load address with id $addressId"))
-        }
-    }
-}
-
-class InsertAddressAsync(private val repository: Repository) {
-    operator fun invoke(address: Address): Flow<AsyncOperation> = flow {
-        emit(AsyncOperation.loading("Start saving address..."))
-        val addressId = repository.insertAddress(address)
-        emit(AsyncOperation.success("Created address with id $addressId", addressId))
-    }
-}
-
-// ----------------
-// Rating
-// ----------------
-
-class GetRatingAsync(private val repository: Repository) {
-    operator fun invoke(ratingId: Long): Flow<AsyncOperation> = flow {
-        emit(AsyncOperation.loading("Start loading rating with id $ratingId"))
-        val rating = repository.getRating(ratingId)
-        if (rating != null) {
-            emit(AsyncOperation.success("Successfully loaded rating with id $ratingId", rating))
-        } else {
-            emit(AsyncOperation.error("Failed to load rating with id $ratingId"))
-        }
-    }
-}
-
-class InsertRatingAsync(private val repository: Repository) {
-    operator fun invoke(rating: Rating): Flow<AsyncOperation> = flow {
-        emit(AsyncOperation.loading("Start saving rating..."))
-        val ratingId = repository.insertRating(rating)
-        emit(AsyncOperation.success("Created rating with id $ratingId", rating))
-    }
-}
-
-class GetAllRatingsBySeekerId(private val repository: Repository) {
-    operator fun invoke(seekerId: Long): Flow<AsyncOperation> = flow {
-        emit(AsyncOperation.loading("Start loading ratings for seeker with id $seekerId..."))
-        repository.getAllRatingsBySeekerIdAsFlow(seekerId).collect {
-            emit(AsyncOperation.success("Ratings loaded", it))
-            emit(AsyncOperation.undefined())
-        }
-    }
-}
-
-class GetAllRatingsBySupplierId(private val repository: Repository) {
-    operator fun invoke(supplierId: Long): Flow<AsyncOperation> = flow {
-        emit(AsyncOperation.loading("Start loading ratings for supplier with id $supplierId..."))
-        repository.getAllRatingsBySupplierIdAsFlow(supplierId).collect {
-            emit(AsyncOperation.success("Ratings loaded", it))
-            emit(AsyncOperation.undefined())
-        }
-    }
-}
-
-
 // ----------------
 // Datastore
 // ----------------
@@ -322,7 +204,7 @@ class GetLoggedInUserFromDataStoreAndDatabase(
 
         // get userId from datastore
         val result = localStore.load(LocalStoreKey.LOGGED_IN_USER_ID.name)
-        if (!result.isBlank()) {
+        if (result.isNotBlank()) {
             val user = repository.getUser(result.toLong())
             if (user != null) {
                 emit(AsyncOperation.success("User found and loaded", user))

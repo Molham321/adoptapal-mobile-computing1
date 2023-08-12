@@ -41,9 +41,6 @@ interface AddressModelDao {
     @Query("SELECT * FROM AddressModel")
     fun getAllAsFlow(): Flow<List<AddressModel>>
 
-    @Query("SELECT * FROM AddressModel")
-    suspend fun getAll(): List<AddressModel>
-
     @Query("SELECT * FROM AddressModel WHERE id = :id")
     suspend fun get(id: Long): AddressModel?
 
@@ -61,44 +58,6 @@ interface AddressModelDao {
 }
 
 @Dao
-interface RatingModelDao {
-
-    @Query("SELECT * FROM RatingModel")
-    fun getAllAsFlow(): Flow<List<RatingModel>>
-
-    @Query("SELECT * FROM RatingModel")
-    suspend fun getAll(): List<RatingModel>
-
-    @Query("SELECT * FROM RatingModel WHERE id = :id")
-    suspend fun get(id: Long): RatingModel?
-
-
-    @Query("SELECT * FROM RatingModel WHERE supplierId = :supplierId")
-    fun getAllBySupplierIdAsFlow(supplierId: Long): Flow<List<RatingModel>>
-
-    @Query("SELECT * FROM RatingModel WHERE seekerId = :seekerId")
-    fun getAllBySeekerIdAsFlow(seekerId: Long): Flow<List<RatingModel>>
-
-
-    @Query("SELECT * FROM RatingModel WHERE rating > :rating")
-    suspend fun getByRatingIsAbove(rating: Int): RatingModel?
-
-
-    @Upsert
-    suspend fun upsert(entity: RatingModel): Long
-
-    @Delete
-    suspend fun delete(entity: RatingModel)
-
-    @Delete
-    suspend fun delete(vararg entities: RatingModel)
-
-    @Query("DELETE FROM RatingModel")
-    suspend fun deleteAll()
-}
-
-
-@Dao
 interface AnimalModelDao {
 
     @Query("SELECT * FROM AnimalModel")
@@ -109,9 +68,6 @@ interface AnimalModelDao {
 
     @Query("SELECT * FROM AnimalModel WHERE isFavorite = 1")
     fun getAllFavoriteAnimalsAsFlow(): Flow<List<AnimalModel>>
-
-    @Query("SELECT * FROM AnimalModel")
-    suspend fun getAll(): List<AnimalModel>
 
     @Query("SELECT * FROM AnimalModel WHERE id = :id")
     suspend fun get(id: Long): AnimalModel?
@@ -145,9 +101,6 @@ interface AnimalCategoryModelDao {
     @Query("SELECT * FROM AnimalCategoryModel")
     fun getAllAsFlow(): Flow<List<AnimalCategoryModel>>
 
-    @Query("SELECT * FROM AnimalCategoryModel")
-    suspend fun getAll(): List<AnimalCategoryModel>
-
     @Query("SELECT * FROM AnimalCategoryModel WHERE id = :id")
     suspend fun get(id: Long): AnimalCategoryModel?
 
@@ -170,9 +123,6 @@ interface ColorModelDao {
     @Query("SELECT * FROM ColorModel")
     fun getAllAsFlow(): Flow<List<ColorModel>>
 
-    @Query("SELECT * FROM ColorModel")
-    suspend fun getAll(): List<ColorModel>
-
     @Query("SELECT * FROM ColorModel WHERE id = :id")
     suspend fun get(id: Long): ColorModel?
 
@@ -186,36 +136,5 @@ interface ColorModelDao {
     suspend fun delete(vararg entities: ColorModel)
 
     @Query("DELETE FROM ColorModel")
-    suspend fun deleteAll()
-}
-
-@Dao
-interface RequestModelDao {
-
-    @Query("SELECT * FROM RequestModel")
-    fun getAllAsFlow(): Flow<List<RequestModel>>
-
-    @Query("SELECT * FROM RequestModel")
-    suspend fun getAll(): List<RequestModel>
-
-    @Query("SELECT * FROM RequestModel WHERE id = :id")
-    suspend fun get(id: Long): RequestModel?
-
-    @Query("SELECT * FROM RequestModel WHERE animalCategoryId = :animalCategoryId")
-    suspend fun getByAnimalCategoryId(animalCategoryId: Long): RequestModel?
-
-    @Query("SELECT * FROM RequestModel WHERE seekerId = :seekerId")
-    suspend fun getBySeekerId(seekerId: Long): RequestModel?
-
-    @Upsert
-    suspend fun upsert(entity: RequestModel): Long
-
-    @Delete
-    suspend fun delete(entity: RequestModel)
-
-    @Delete
-    suspend fun delete(vararg entities: RequestModel)
-
-    @Query("DELETE FROM RequestModel")
     suspend fun deleteAll()
 }
