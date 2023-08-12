@@ -6,8 +6,12 @@ import androidx.lifecycle.viewModelScope
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
+import de.fhe.adoptapal.domain.DeleteAnimalAsync
 import de.fhe.adoptapal.domain.GetAnimalAsync
+import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.UpdateAnimalAsync
+import de.fhe.adoptapal.domain.User
+import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.launch
@@ -24,11 +28,16 @@ class DetailScreenViewModel(
     private val navigationManager: NavigationManager,
     private val animalId: Long,
     private val getAnimalAsync: GetAnimalAsync,
-    private val updateAnimalAsync: UpdateAnimalAsync
-) : ViewModel() {
+    private val updateAnimalAsync: UpdateAnimalAsync,
+    private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase,
+    private val deleteAnimalAsync: DeleteAnimalAsync
+
+    ) : ViewModel() {
 
     // Mutable state to hold the animal details
     var animal = mutableStateOf<Animal?>(null)
+
+    var loggedInUser = mutableStateOf<User?>(null)
 
     // Mutable state to handle database operation status
     var dbOp = mutableStateOf(AsyncOperation.undefined())
@@ -36,6 +45,7 @@ class DetailScreenViewModel(
     init {
         // Initialize by retrieving animal details from the database
         getAnimalFromDb(animalId)
+        getLoggedInUser()
     }
 
     /**
@@ -66,6 +76,38 @@ class DetailScreenViewModel(
             }
         }
         println("Tier ${animal.name} mit id ${animal.id} gemerkt: ${animal.isFavorite}")
+    }
+
+    /**
+     * Fetch the logged-in user data from the data store and database.
+     */
+    fun getLoggedInUser() {
+        viewModelScope.launch {
+            getLoggedInUserFromDataStoreAndDatabase().collect {
+                if (it.status == AsyncOperationState.SUCCESS) {
+                    loggedInUser.value = it.payload as User
+                }
+            }
+        }
+    }
+
+    fun deleteAnimal() {
+        viewModelScope.launch {
+            animal.value?.let { animal ->
+                deleteAnimalAsync(animal).collect {
+                    if (it.status == AsyncOperationState.SUCCESS) {
+                        navigationManager.navigate(GoBackDestination)
+                    }
+                }
+            }
+        }
+    }
+
+    fun isLoggedinUserAnimalSupplier(): Boolean {
+        if(animal.value?.supplier?.id == loggedInUser.value?.id ) {
+            return true
+        }
+        return false
     }
 
 

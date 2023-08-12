@@ -6,6 +6,7 @@ import de.fhe.adoptapal.android_core.LoggerImpl
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
 import de.fhe.adoptapal.domain.CreateAnimalAsync
+import de.fhe.adoptapal.domain.DeleteAnimalAsync
 import de.fhe.adoptapal.domain.GetAllAnimalCategories
 import de.fhe.adoptapal.domain.GetAllAnimals
 import de.fhe.adoptapal.domain.GetAllColors
@@ -82,7 +83,8 @@ val useCaseModule = module {
     factory { GetUserAnimalsAsync(get()) }
     factory { UpdateAnimalAsync(get()) }
     factory { GetAllFavoriteAnimalsAsync(get()) }
-
+    factory { DeleteAnimalAsync(get()) }
+    
     // color
     factory { GetAllColors(get()) }
     factory { GetColorAsync(get()) }
@@ -106,13 +108,12 @@ val useCaseModule = module {
     // Network
     factory { GetLatLongForAddress(get()) }
     factory { GetLatLongForLocationString(get()) }
-
 }
 
 val viewModelModule = module {
     viewModel { HomeScreenViewModel(get(), get(), get(), get(), get(), get(), get()) }
 
-    viewModel { DetailScreenViewModel(get(), get(), get(), get()) }
+    viewModel { DetailScreenViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { UserDetailScreenViewModel(get(), get(), get(), get()) }
 
     viewModel { LoginScreenViewModel(get(), get(), get()) }
