@@ -132,6 +132,10 @@ class HomeScreenViewModel(
                 if (it.status == AsyncOperationState.SUCCESS) {
                     user.value = it.payload as User
                 }
+
+                if(it.status == AsyncOperationState.ERROR) {
+                    user.value = null
+                }
             }
         }
     }

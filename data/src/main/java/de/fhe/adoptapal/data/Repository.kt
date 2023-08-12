@@ -81,6 +81,11 @@ class RepositoryImpl(
         return animalModelDao.upsert(updateAnimal)
     }
 
+    override suspend fun deleteAnimal(animal: Animal) {
+        animalModelDao.delete(animal.fromDomain())
+    }
+
+
     // ----------------
     // Colors
     // ----------------

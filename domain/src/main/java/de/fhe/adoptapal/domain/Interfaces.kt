@@ -29,6 +29,7 @@ interface Repository {
     suspend fun getAnimal(animalId: Long): Animal?
     suspend fun insertAnimal(animal: Animal): Long
     suspend fun updateAnimal(animalToUpdate: Animal): Long
+    suspend fun deleteAnimal(animal: Animal)
 
     // Colors
     fun getAllColors(): Flow<List<Color>>
