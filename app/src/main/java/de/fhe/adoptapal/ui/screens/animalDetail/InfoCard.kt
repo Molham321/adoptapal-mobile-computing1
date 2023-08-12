@@ -34,7 +34,7 @@ import de.fhe.adoptapal.R
 fun InfoCard(title: String, value: String) {
     Box(
         modifier = Modifier
-            .size(90.dp)
+            .size(95.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(color = colorResource(id = R.color.card))
             .padding(12.dp),
@@ -48,7 +48,7 @@ fun InfoCard(title: String, value: String) {
                 text = value,
                 modifier = Modifier.fillMaxWidth(),
                 color = colorResource(id = R.color.text),
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.subtitle2,
                 fontWeight = FontWeight.W600,
                 textAlign = TextAlign.Center
             )

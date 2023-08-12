@@ -117,30 +117,30 @@ fun Details(
             )
         }
 
-        item {
-
-            Spacer(modifier = modifier.height(24.dp))
-            Text(
-                text = "${stringResource(id = R.string.species)}: ${animal.animalCategory.name}",
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(16.dp, 0.dp, 16.dp, 0.dp),
-                color = colorResource(id = R.color.text),
-                style = MaterialTheme.typography.body2,
-                textAlign = TextAlign.Start
-            )
-
-            Spacer(modifier = modifier.height(24.dp))
-            Text(
-                text = "${stringResource(id = R.string.birthday)}: ${animal.birthday.dayOfMonth}.${animal.birthday.monthValue}.${animal.birthday.year}",
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(16.dp, 0.dp, 16.dp, 0.dp),
-                color = colorResource(id = R.color.text),
-                style = MaterialTheme.typography.body2,
-                textAlign = TextAlign.Start
-            )
-        }
+//        item {
+//
+//            Spacer(modifier = modifier.height(24.dp))
+//            Text(
+//                text = "${stringResource(id = R.string.species)}: ${animal.animalCategory.name}",
+//                modifier = modifier
+//                    .fillMaxWidth()
+//                    .padding(16.dp, 0.dp, 16.dp, 0.dp),
+//                color = colorResource(id = R.color.text),
+//                style = MaterialTheme.typography.body2,
+//                textAlign = TextAlign.Start
+//            )
+//
+//            Spacer(modifier = modifier.height(24.dp))
+//            Text(
+//                text = "${stringResource(id = R.string.birthday)}: ${animal.birthday.dayOfMonth}.${animal.birthday.monthValue}.${animal.birthday.year}",
+//                modifier = modifier
+//                    .fillMaxWidth()
+//                    .padding(16.dp, 0.dp, 16.dp, 0.dp),
+//                color = colorResource(id = R.color.text),
+//                style = MaterialTheme.typography.body2,
+//                textAlign = TextAlign.Start
+//            )
+//        }
 
         // Quick info
         item {
@@ -152,11 +152,23 @@ fun Details(
                 modifier = modifier
                     .fillMaxWidth()
                     .padding(16.dp, 0.dp, 16.dp, 0.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 InfoCard(title = stringResource(id = R.string.old), value = animal.getAge())
                 InfoCard(title = stringResource(id = R.string.color), value = animal.color.name)
                 InfoCard(title = stringResource(id = R.string.weight), value = animal.weight.toString().plus("Kg"))
+            }
+
+            Spacer(modifier = modifier.height(10.dp))
+
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(64.dp, 0.dp, 64.dp, 0.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                InfoCard(title = "Tierart", value = animal.animalCategory.name)
+                InfoCard(title = "Geburtstag", value = "${animal.birthday.dayOfMonth}.${animal.birthday.monthValue}.${animal.birthday.year}")
             }
         }
 
