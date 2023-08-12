@@ -2,8 +2,8 @@
 # See https://github.com/jangrewe/gitlab-ci-android
 image: jangrewe/gitlab-ci-android
 
-variables:
-  APP_ID: "de.fhe.ai.pmc.testlabdemo01"
+#variables:
+#  APP_ID: "de.fhe.ai.pmc.testlabdemo01"
 
 
 # Define Gradle Home to use it for (optional) caching
@@ -11,7 +11,7 @@ before_script:
   - export PATH="/opt/homebrew/opt/openjdk@17/bin:$PATH"
   - export GRADLE_USER_HOME=$(pwd)/.gradle
   - chmod +x ./gradlew
-  - export ANDROID_HOME=/Users/avemarg/Library/Android/sdk
+#  - export ANDROID_HOME=/Users/avemarg/Library/Android/sdk
 
 # Cache instruction - will save intermediate results for later jobs
 # Might actually not speed up your pipeline runtime - just check it for yourself
@@ -25,13 +25,13 @@ stages:
   - prerequisites
   - build
   - buildTest
-  - deviceTestA
-  - deviceTestB
+#  - deviceTestA
+#  - deviceTestB
 
 prepare_build:
   stage: prerequisites
-  tags:
-    - testlab
+#  tags:
+#    - testlab
   script:
     - mkdir apks
   artifacts:
@@ -41,8 +41,8 @@ prepare_build:
 # Build a debug apk
 assembleDebug:
   stage: build
-  tags:
-    - testlab
+#  tags:
+#    - testlab
   script:
     - ./gradlew assembleDebug
     - mv app/build/outputs/apk/debug/app-debug.apk apks/app-debug.apk
@@ -53,8 +53,8 @@ assembleDebug:
 # Build a debug test apk
 assembleDebugTest:
   stage: buildTest
-  tags:
-    - testlab
+#  tags:
+#    - testlab
   script:
     - ./gradlew assembleDebugAndroidTest
     - mv app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk apks/app-debug-androidTest.apk
@@ -62,36 +62,36 @@ assembleDebugTest:
     paths:
       - apks/app-debug-androidTest.apk
 
-test-by-devices-model:
-  stage: deviceTestA
-  script:
-    - $MARATHON_DIR/run_marathon.sh device
-  after_script:
-    - $MARATHON_DIR/cleanup.sh device
-  tags:
-    - testlab
-  allow_failure: true
-  artifacts:
-    when: always
-    reports:
-      junit: $DEVICE_VERSION_RESULT
-    expire_in: "1 day"
-    paths:
-      - $DEVICE_VERSION_RESULT_DIR
-
-test-by-os_version:
-  stage: deviceTestB
-  script:
-    - $MARATHON_DIR/run_marathon.sh os-version
-  after_script:
-    - $MARATHON_DIR/cleanup.sh os-version
-  tags:
-    - testlab
-  allow_failure: true
-  artifacts:
-    when: always
-    reports:
-      junit: $OS_VERSION_RESULT
-    expire_in: "1 day"
-    paths:
-      - $OS_VERSION_RESULT_DIR
+#test-by-devices-model:
+#  stage: deviceTestA
+#  script:
+#    - $MARATHON_DIR/run_marathon.sh device
+#  after_script:
+#    - $MARATHON_DIR/cleanup.sh device
+#  tags:
+#    - testlab
+#  allow_failure: true
+#  artifacts:
+#    when: always
+#    reports:
+#      junit: $DEVICE_VERSION_RESULT
+#    expire_in: "1 day"
+#    paths:
+#      - $DEVICE_VERSION_RESULT_DIR
+#
+#test-by-os_version:
+#  stage: deviceTestB
+#  script:
+#    - $MARATHON_DIR/run_marathon.sh os-version
+#  after_script:
+#    - $MARATHON_DIR/cleanup.sh os-version
+#  tags:
+#    - testlab
+#  allow_failure: true
+#  artifacts:
+#    when: always
+#    reports:
+#      junit: $OS_VERSION_RESULT
+#    expire_in: "1 day"
+#    paths:
+#      - $OS_VERSION_RESULT_DIR

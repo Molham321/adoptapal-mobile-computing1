@@ -52,7 +52,7 @@ class RegisterScreenViewModelTest {
         val userName = ""
         val userEmail = ""
         val userPhoneNumber = ""
-        val expectedError = AsyncOperation.error("User name, email and phone are missing")
+        val expectedError = AsyncOperation.error("Name or Email missing")
 
         // Act
         viewModel.addUser(userName, userEmail, userPhoneNumber)

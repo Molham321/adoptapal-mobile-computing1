@@ -30,7 +30,7 @@ class DetailScreenViewModelTest {
     @Before
     fun setup() {
         Dispatchers.setMain(TestCoroutineDispatcher())
-        viewModel = DetailScreenViewModel(navigationManager, 1L, getAnimalAsync)
+        viewModel = DetailScreenViewModel(navigationManager, 1L, getAnimalAsync, mockk())
     }
 
     @Test

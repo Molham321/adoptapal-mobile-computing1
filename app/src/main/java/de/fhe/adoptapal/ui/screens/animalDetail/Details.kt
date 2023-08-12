@@ -96,7 +96,6 @@ fun Details(
                 animal.supplier.address,
                 animal.getCreateTimeDifference()
             )
-
         }
 
         // My story details

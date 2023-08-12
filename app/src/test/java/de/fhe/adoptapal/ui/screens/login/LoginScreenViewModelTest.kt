@@ -69,7 +69,7 @@ class LoginScreenViewModelTest {
             // Assert
             assertEquals(AsyncOperationState.ERROR, viewModel.saveFeedbackFlow.value.status)
             assertEquals(
-                "please enter Email and Password",
+                "Please enter Email and Password",
                 viewModel.saveFeedbackFlow.value.message
             )
         }
