@@ -122,6 +122,6 @@ Alle Datenbanktabellen erben von einer "BaseEntity", die ihnen grundlegende Attr
 
 
 ## Präsentationen
-- Auftaktpräsentation
+- [Auftaktpräsentation](documentation/AdoptAPal_Auftaktpräsentation.pdf)
 - [Zwischenpräsentation](documentation/AdoptAPal_Zwischenpräsentation.pdf)
 - [Abschlusspräsentation](documentation/AdoptAPal_Abschlusspräsentation.pdf)
