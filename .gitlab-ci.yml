@@ -28,13 +28,13 @@ cache:
   paths:
     - .gradle/
 
-  build:
-    stage: build
-    script:
-      - ./gradlew assembleDebug
-    artifacts:
-      paths:
-        - app/build/outputs/apk/app-debug.apk
+build:
+  stage: build
+  script:
+    - ./gradlew assembleDebug
+  artifacts:
+    paths:
+      - app/build/outputs/apk/app-debug.apk
 
 #prepare_build:
 #  stage: prerequisites
