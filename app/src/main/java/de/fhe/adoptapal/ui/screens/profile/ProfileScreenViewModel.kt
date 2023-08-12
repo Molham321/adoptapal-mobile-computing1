@@ -13,12 +13,14 @@ import de.fhe.adoptapal.domain.GetUserAnimalsAsync
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
+import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
 class ProfileScreenViewModel(
     private val navigationManager: NavigationManager,
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase,
+    private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore,
     private val getAllFavoriteAnimalsAsync: GetAllFavoriteAnimalsAsync,
     private val getUserAnimalsAsync: GetUserAnimalsAsync
 ) : ViewModel() {
@@ -100,6 +102,17 @@ class ProfileScreenViewModel(
         }
     }
 
+    fun logout() {
+        viewModelScope.launch {
+            setLoggedInUserInDataStore(0).collect { result ->
+                if (result.status == AsyncOperationState.SUCCESS) {
+                    user.value = null
+                    navigateToHome()
+                }
+            }
+        }
+    }
+
     fun navigateToSettings() {
         navigationManager.navigate(Screen.Settings.navigationCommand())
     }
@@ -107,4 +120,13 @@ class ProfileScreenViewModel(
     fun navigateToAnimal(animalId: Long) {
         navigationManager.navigate(Screen.Detail.navigationCommand(animalId))
     }
+
+    fun navigateToLogin() {
+        navigationManager.navigate(Screen.Login.navigationCommand())
+    }
+
+    fun navigateToHome() {
+        navigationManager.navigate(Screen.Home.navigationCommand())
+    }
+
 }
