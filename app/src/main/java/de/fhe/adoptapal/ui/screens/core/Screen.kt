@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
@@ -126,8 +127,16 @@ sealed class Screen(
                 error("First Parameter must be of type *Context*")
             if (values[1] !is DetailScreenViewModel)
                 error("Second Parameter must be of type *DetailScreenViewModel")
+            val viewModel = values[1] as DetailScreenViewModel
 
-            appBarActions = {}
+            appBarActions = {
+                if (viewModel.isLoggedinUserAnimalSupplier()) {
+                    IconButton(onClick = {viewModel.deleteAnimal()}
+                    ) {
+                        Icon(Icons.Filled.Delete, contentDescription = null)
+                    }
+                }
+            }
         }
 
         override fun navigationCommand(vararg value: Any) = object : NavigationCommand {

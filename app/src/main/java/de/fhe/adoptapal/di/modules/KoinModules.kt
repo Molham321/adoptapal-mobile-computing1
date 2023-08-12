@@ -108,13 +108,12 @@ val useCaseModule = module {
     // Network
     factory { GetLatLongForAddress(get()) }
     factory { GetLatLongForLocationString(get()) }
-
 }
 
 val viewModelModule = module {
     viewModel { HomeScreenViewModel(get(), get(), get(), get(), get(), get(), get()) }
 
-    viewModel { DetailScreenViewModel(get(), get(), get(), get()) }
+    viewModel { DetailScreenViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { UserDetailScreenViewModel(get(), get(), get(), get()) }
 
     viewModel { LoginScreenViewModel(get(), get(), get()) }
