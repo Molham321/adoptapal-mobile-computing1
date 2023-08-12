@@ -52,4 +52,7 @@ dependencies {
     implementation(Libs.Room.runtime)
     implementation(Libs.Room.ktx)
     androidTestImplementation(Libs.Room.testing)
+
+    testImplementation(Libs.JUnit.core)
+
 }
