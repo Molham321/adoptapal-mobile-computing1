@@ -2,6 +2,14 @@
 # See https://github.com/jangrewe/gitlab-ci-android
 image: jangrewe/gitlab-ci-android
 
+# Build Stages - release and deploy not used currently
+stages:
+  #  - prerequisites
+  - build
+#  - buildTest
+#  - deviceTestA
+#  - deviceTestB
+
 #variables:
 #  APP_ID: "de.fhe.ai.pmc.testlabdemo01"
 
@@ -20,23 +28,23 @@ cache:
   paths:
     - .gradle/
 
-# Build Stages - release and deploy not used currently
-stages:
-  - prerequisites
-#  - build
-#  - buildTest
-#  - deviceTestA
-#  - deviceTestB
+  build:
+    stage: build
+    script:
+      - ./gradlew assembleDebug
+    artifacts:
+      paths:
+        - app/build/outputs/apk/app-debug.apk
 
-prepare_build:
-  stage: prerequisites
-#  tags:
-#    - testlab
-  script:
-    - mkdir apks
-  artifacts:
-    paths:
-      - apks/
+#prepare_build:
+#  stage: prerequisites
+##  tags:
+##    - testlab
+#  script:
+#    - mkdir apks
+#  artifacts:
+#    paths:
+#      - apks/
 
 ## Build a debug apk
 #assembleDebug:
