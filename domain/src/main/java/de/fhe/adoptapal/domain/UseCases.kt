@@ -66,6 +66,14 @@ class GetAllFavoriteAnimalsAsync(private val repository: Repository) {
     }
 }
 
+class DeleteAnimalAsync(private val repository: Repository) {
+    operator fun invoke(animal: Animal): Flow<AsyncOperation> = flow {
+        emit(AsyncOperation.loading("Deleting animal with id ${animal.id}"))
+        repository.deleteAnimal(animal)
+        emit(AsyncOperation.success("Deleted animal with id ${animal.id}"))
+    }
+}
+
 
 // ----------------
 // COLORS
