@@ -2,7 +2,6 @@ package de.fhe.adoptapal.ui.screens.util
 
 import android.Manifest
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +12,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -22,7 +20,10 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import de.fhe.adoptapal.R
+import de.fhe.adoptapal.ui.screens.core.NavigationManager
+import de.fhe.adoptapal.ui.screens.core.Screen
 import de.fhe.adoptapal.ui.screens.map.LOGTAG
+import org.koin.androidx.compose.getKoin
 
 /**
  * Composable function to request location permission for displaying a map.
@@ -30,9 +31,9 @@ import de.fhe.adoptapal.ui.screens.map.LOGTAG
  */
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun requestLocationPermission() {
+fun RequestLocationPermission() {
 
-    val contextForToast = LocalContext.current.applicationContext
+    val navigationManager by getKoin().inject<NavigationManager>()
 
     // Location permission states
     val coarseLocationPermissionState = rememberPermissionState(
@@ -48,11 +49,7 @@ fun requestLocationPermission() {
         // can show map now
         Log.i(LOGTAG, "Location permissions granted")
 
-        Toast.makeText(
-            contextForToast,
-            "Bitte klicken Sie erneut auf den Menüpunkt \"Karte\".",
-            Toast.LENGTH_LONG
-        ).show()
+        navigationManager.navigate(Screen.Map.navigationCommand())
     } else {
         Column(
             modifier = Modifier
