@@ -2,9 +2,11 @@
 
 Eine Android App für Mobile Computing 1. Entwickelt von Molham Al-khodari, Martin Kühlborn und Anna-Lisa Merkel.
 
+
 ## Was ist AdoptAPal?
 
 AdoptAPal ist eine Applikation, die dabei helfen soll, Tiere in der Nähe zu finden, die zur Adoption angeboten werden, und deren Anbieter zu kontaktieren. Dabei sollen sowohl die Anbieter (Privatpersonen, Züchter, Tierheime) als auch die Interessenten die App nutzen können. Eine Registrierung ist nur notwendig, wenn man als Anbieter Tiere hochladen möchte. Der Großteil der Funktionalitäten ist auch ohne Registrierung erreichbar.
+
 
 ## Kernfunktionalitäten
 - Listenansicht mit allen hochgeladenen Tieren
@@ -17,6 +19,7 @@ AdoptAPal ist eine Applikation, die dabei helfen soll, Tiere in der Nähe zu fin
 - Registrierung und Anmeldung
 - Möglichkeit zum Ändern eigener Daten
 
+
 ## Installationsanleitung
 Grundsätzlich kann das Repository einfach geklont und mit Android Studio geöffnet werden.
 
@@ -28,6 +31,7 @@ In der AndroidManifest.xml (Zeile 36) muss zur Verwendung von Google Maps ein en
     android:value="[API-KEY]" />
 ```
 
+
 ## Testnutzer
 | Name | Email-Adresse |
 | --- | --- |
@@ -38,6 +42,8 @@ In der AndroidManifest.xml (Zeile 36) muss zur Verwendung von Google Maps ein en
 | Felix Richter | felix.richter@email.com |
 
 Die Passwörter der Testnutzer sind unwichtig, sodass jedes beliebige funktioniert. Überprüft wird nur, ob überhaupt ein Passwort eingegeben wurde (siehe Abschnitt "bekannte Bugs / Verbesserungsmöglichkeiten").
+
+
 ## Aufbau
 ![Sitemap der AdoptAPal App](documentation/SitemapAdoptAPal.png)
 
@@ -61,10 +67,12 @@ Die Passwörter der Testnutzer sind unwichtig, sodass jedes beliebige funktionie
 
 Über die Bottom-Bar-Navigation erreicht werden, können die Seiten "Karte", "Home" und "Profil" jederzeit. Bis auf die Seiten "Tier hinzufügen" und "Einstellungen" können alle Seiten auch ohne Anmeldung erreicht werden.
 
+
 ## Datenbank
 ![Datenbank der AdoptAPal App](documentation/Database-Entity-Diagram.png)
 
 Alle Datenbanktabellen erben von einer "BaseEntity", die ihnen grundlegende Attribute wie eine ID oder einen Erstellungszeitpunkt bereitstellt. Im Mittelpunkt steht die Tabelle "Animal" so wie auch das Tier im Mittelpunkt der AdoptAPal App steht. Die Tierarten und Farben, die ein Tier haben kann, sind in den separaten Tabellen "AnimalCategory" und "Color" vorhanden. Des Weiteren gibt es Tabellen für die Daten der einzelnen Nutzer ("User") und deren Adressen ("Address").
+
 
 ## bekannte Bugs / Verbesserungsmöglichkeiten
 **Erweiterung um eine Bewertungsfunktion**
@@ -96,6 +104,7 @@ Alle Datenbanktabellen erben von einer "BaseEntity", die ihnen grundlegende Attr
 **CICD Testpipeline**
 - die Testpipeline funktionierte zuvor
 - da das Testlab nun aber offline ist, läuft es natürlich nicht mehr
+
 
 ## genutzte Tools und andere Quellen
 - Android Studio (IDE)
