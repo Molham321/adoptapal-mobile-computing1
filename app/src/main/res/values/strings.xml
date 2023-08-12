@@ -50,7 +50,7 @@
     <string name="back">zurück</string>
     <string name="birth_date">Geburtsdatum</string>
     <string name="birthday">Geburtstag</string>
-    <string name="about_me">Über mich...</string>
+    <string name="about_me">Über mich…</string>
     <string name="metrics">Metriken</string>
     <string name="offerer">Anbieter</string>
     <string name="call">Anrufen</string>
@@ -60,7 +60,7 @@
     <string name="no_animals_marked">Keine Tiere gemerkt</string>
     <string name="no_animals_uploaded">Keine Tiere hochgeladen</string>
     <string name="you_are_not_logged_in_log_in_first">Du bist nicht angemeldet! Melde dich erstmal an.</string>
-    <string name="enter_text">Enter text...</string>
+    <string name="enter_text">Enter text…</string>
     <string name="password_visibility_toggle">Password Visibility Toggle</string>
     <string name="no_users">Keine User!</string>
 </resources>

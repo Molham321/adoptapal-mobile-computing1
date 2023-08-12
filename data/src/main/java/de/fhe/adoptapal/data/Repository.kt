@@ -1,6 +1,5 @@
 package de.fhe.adoptapal.data
 
-import android.util.Log
 import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AnimalCategory
@@ -19,6 +18,8 @@ class RepositoryImpl(
     private val animalCategoryModelDao: AnimalCategoryModelDao,
     private val colorModelDao: ColorModelDao
 ) : Repository {
+
+    private val logger = LoggerFactory.getLogger()
 
     // ----------------
     // Animal
@@ -163,7 +164,7 @@ class RepositoryImpl(
      */
     @Throws(UserEmailUniqueException::class)
     override suspend fun updateUser(user: User): Long {
-        Log.i("Repository", "update user")
+        logger.info("Repository", "update user")
 
         // check if email is unique
         val userByEmail = userModelDao.getUserByEmail(user.email)
@@ -175,7 +176,7 @@ class RepositoryImpl(
 
             // update users address if exists
             if (user.address != null) {
-                Log.i("Repository", "update or create user address")
+                logger.info("Repository", "update or create user address")
                 user.address?.id = addressModelDao.upsert(user.address!!.fromDomain())
             }
 

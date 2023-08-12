@@ -59,7 +59,7 @@ class UserDetailScreenViewModel(
      *
      * @param id The ID of the user.
      */
-    fun getUserAnimalsFromDb(id: Long) {
+    private fun getUserAnimalsFromDb(id: Long) {
         viewModelScope.launch {
             getUserAnimalsAsync(id).collect {
                 dbOp.value = it

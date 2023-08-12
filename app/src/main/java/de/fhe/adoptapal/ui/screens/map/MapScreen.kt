@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -19,6 +18,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
+import de.fhe.adoptapal.android_core.LoggerFactory
 import de.fhe.adoptapal.ui.screens.util.RequestLocationPermission
 
 const val LOGTAG = "MAPS"
@@ -50,19 +50,21 @@ fun MapScreen(vm: MapScreenViewModel) {
 @Composable
 fun Map(mapCenterPosition: LatLng, vm: MapScreenViewModel) {
 
+    val logger = LoggerFactory.getLogger()
+
     val userList = remember { vm.userList }
 
-    Log.i(LOGTAG, "remember state")
+    logger.info(LOGTAG, "remember state")
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(mapCenterPosition, DEFAULT_ZOOM)
     }
-    Log.i(LOGTAG, "cameraPosition")
+    logger.info(LOGTAG, "cameraPosition")
     val mapProperties by remember { mutableStateOf(MapConfig.properties) }
     val mapUiSettings by remember { mutableStateOf(MapConfig.uiSettings) }
 
-    Log.i(LOGTAG, "UI SETTINGS")
+    logger.info(LOGTAG, "UI SETTINGS")
     Column {
-        Log.i(LOGTAG, "DEBUG")
+        logger.info(LOGTAG, "DEBUG")
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState,
@@ -90,6 +92,8 @@ fun Map(mapCenterPosition: LatLng, vm: MapScreenViewModel) {
 @Composable
 private fun requestLocation(context: Context): LatLng? {
 
+    val logger = LoggerFactory.getLogger()
+
     val mapCenterPosition = remember { mutableStateOf<LatLng?>(null) }
     val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 
@@ -106,13 +110,13 @@ private fun requestLocation(context: Context): LatLng? {
     fusedLocationClient.lastLocation
         .addOnSuccessListener { location: Location? ->
             if (location != null) {
-                Log.i(
+                logger.info(
                     LOGTAG,
                     "Location in MapScreen is not null with lat: ${location.latitude} and long: ${location.longitude}"
                 )
                 mapCenterPosition.value = LatLng(location.latitude, location.longitude)
             } else {
-                Log.i(LOGTAG, "Location was null")
+                logger.info(LOGTAG, "Location was null")
             }
         }
 

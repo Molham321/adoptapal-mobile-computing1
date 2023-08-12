@@ -1,7 +1,6 @@
 package de.fhe.adoptapal.ui.screens.util
 
 import android.Manifest
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +19,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import de.fhe.adoptapal.R
+import de.fhe.adoptapal.core.LoggerFactory
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import de.fhe.adoptapal.ui.screens.map.LOGTAG
@@ -32,6 +32,8 @@ import org.koin.androidx.compose.getKoin
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun RequestLocationPermission() {
+
+    val logger = LoggerFactory.getLogger()
 
     val navigationManager by getKoin().inject<NavigationManager>()
 
@@ -47,7 +49,7 @@ fun RequestLocationPermission() {
     if (coarseLocationPermissionState.status.isGranted && fineLocationPermissionState.status.isGranted) {
         // location permission granted
         // can show map now
-        Log.i(LOGTAG, "Location permissions granted")
+        logger.info(LOGTAG, "Location permissions granted")
 
         navigationManager.navigate(Screen.Map.navigationCommand())
     } else {

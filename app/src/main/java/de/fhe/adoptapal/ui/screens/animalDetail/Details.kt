@@ -46,7 +46,7 @@ fun Details(
 
     ) {
 
-    var animalIsFavorite = remember { mutableStateOf(animal.isFavorite) }
+    val animalIsFavorite = remember { mutableStateOf(animal.isFavorite) }
 
     LazyColumn(
         modifier = modifier

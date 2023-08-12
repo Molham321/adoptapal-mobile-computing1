@@ -49,48 +49,48 @@ fun AppBar(screen: Screen, navController: NavHostController? = null) {
 /**
  * Preview function for the [AppBar] with the Home screen.
  */
-@Preview()
+@Preview
 @Composable
 fun HomeAppBar() {
     AppBar(screen = Screen.Home)
 }
-@Preview()
+@Preview
 @Composable
 fun DetailsAppBar() {
     AppBar(screen = Screen.Detail)
 }
 
-@Preview()
+@Preview
 @Composable
 fun MapAppBar() {
     AppBar(screen = Screen.Map)
 }
 
-@Preview()
+@Preview
 @Composable
 fun SettingsAppBar() {
     AppBar(screen = Screen.Settings)
 }
 
-@Preview()
+@Preview
 @Composable
 fun ProfileAppBar() {
     AppBar(screen = Screen.Profile)
 }
 
-@Preview()
+@Preview
 @Composable
 fun LoginAppBar() {
     AppBar(screen = Screen.Login)
 }
 
-@Preview()
+@Preview
 @Composable
 fun RegisterAppBar() {
     AppBar(screen = Screen.Register)
 }
 
-@Preview()
+@Preview
 @Composable
 fun UserDetailAppBar() {
     AppBar(screen = Screen.UserDetail)

@@ -1,9 +1,9 @@
 package de.fhe.adoptapal.ui.screens.login
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.fhe.adoptapal.android_core.LoggerFactory
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.GetUserByEmailAsync
@@ -28,6 +28,8 @@ class LoginScreenViewModel(
     private val navigationManager: NavigationManager,
 ) : ViewModel() {
 
+    private val logger = LoggerFactory.getLogger()
+
     // State for database operation status
     var dbOp = mutableStateOf(AsyncOperation.undefined())
 
@@ -51,7 +53,7 @@ class LoginScreenViewModel(
                         val user = result.payload as User
                         // Set logged-in user credentials in local store
                         setLoggedInUserInDataStore(user.id).collect()
-                        Log.i("Login", "Logged in user with userId: ${user.id}")
+                        logger.info("Login", "Logged in user with userId: ${user.id}")
                         navigateToProfile()
                     } else {
                         saveFeedbackFlow.emit(AsyncOperation.error("Email or Password not correct"))
