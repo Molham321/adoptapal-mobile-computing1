@@ -27,9 +27,37 @@ In der AndroidManifest.xml (Zeile 36) muss zur Verwendung von Google Maps ein en
 ```
 
 ## Testnutzer
+| Name | Email-Adresse |
+| --- | --- |
+| Hans Meyer | hans.meyer@fakemail.io |
+| Gabi Schnitzler | gabi.schnitzler@tierheim.de |
+| Richard Klöse | richard.kloese@mail.de |
+| Tierheim Katzentempel | katzentempel@tierheim.de |
+| Felix Richter | felix.richter@email.com |
 
+Die Passwörter der Testnutzer sind unwichtig, sodass jedes beliebige funktioniert. Überprüft wird nur, ob überhaupt ein Passwort eingegeben wurde (siehe Abschnitt "bekannte Bugs / Verbesserungsmöglichkeiten").
 ## Aufbau
 ![Sitemap der AdoptAPal App](documentation/SitemapAdoptAPal.png)
+
+**Home:** Startseite der App mit einer Liste aller hochgeladenen Tiere
+
+**Tier hinzufügen:** Formular zum Hochladen eines neuen Tieres, nur nach Anmeldung verfügbar
+
+**Karte:** Kartenansicht, die die Standorte aller Anbieter zeigt und per Klick auf einen Marker zum Profil des Anbieters navigiert
+
+**Profil:** zeigt gemerkte Tiere und (nach Anmeldung) hochgeladene Tiere, nur für den entsprechenden Nutzer sichtbar
+
+**Login:** Formular zum Anmelden in der App
+
+**Registrierung:** Formular zum Registrieren in der App
+
+**Einstellungen:** Formular zum Ändern der eigenen Nutzerdaten, nur nach Anmeldung verfügbar
+
+**Detailseite Tier:** detaillierte Informationen zu jedem Tier und Angabe des Anbieters
+
+**Öffentliches Profil:** zeigt Kontaktinformationen und hochgeladene Tiere des jeweiligen Nutzers, für alle Nutzer sichtbar
+
+Über die Bottom-Bar-Navigation erreicht werden, können die Seiten "Karte", "Home" und "Profil" jederzeit. Bis auf die Seiten "Tier hinzufügen" und "Einstellungen" können alle Seiten auch ohne Anmeldung erreicht werden.
 
 ## Datenbank
 ![Datenbank der AdoptAPal App](documentation/Database-Entity-Diagram.png)
@@ -61,12 +89,15 @@ In der AndroidManifest.xml (Zeile 36) muss zur Verwendung von Google Maps ein en
 - besser wäre es, den aktuellen Standort des Nutzers zur Berechnung der Entfernung zu verwenden
 - dies konnte allerdings nicht umgesetzt werden
 
+**CICD Testpipeline**
+- die Testpipeline funktionierte zuvor
+- da das Testlab nun aber offline ist, läuft es natürlich nicht mehr
+
 ## genutzte Tools und andere Quellen
 - Android Studio (IDE)
 - Gitlab (Versionsverwaltung)
 - drawio (Diagramme)
 - Figma (Mockups)
-- 
 - Retrofit (Netzwerkzugriffe)
 - Google Maps API (Kartenansicht)
 - [Positionstack](https://positionstack.com/) (API zur Umwandlung von Adressen in Koordinaten)
