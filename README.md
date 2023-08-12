@@ -18,6 +18,8 @@ AdoptAPal ist eine Applikation, die dabei helfen soll, Tiere in der Nähe zu fin
 - Möglichkeit zum Ändern eigener Daten
 
 ## Installationsanleitung
+Grundsätzlich kann das Repository einfach geklont und mit Android Studio geöffnet werden.
+
 In der AndroidManifest.xml (Zeile 36) muss zur Verwendung von Google Maps ein entsprechender API-Key eingetragen werden.
 
 ```
@@ -62,6 +64,8 @@ Die Passwörter der Testnutzer sind unwichtig, sodass jedes beliebige funktionie
 ## Datenbank
 ![Datenbank der AdoptAPal App](documentation/Database-Entity-Diagram.png)
 
+Alle Datenbanktabellen erben von einer "BaseEntity", die ihnen grundlegende Attribute wie eine ID oder einen Erstellungszeitpunkt bereitstellt. Im Mittelpunkt steht die Tabelle "Animal" so wie auch das Tier im Mittelpunkt der AdoptAPal App steht. Die Tierarten und Farben, die ein Tier haben kann, sind in den separaten Tabellen "AnimalCategory" und "Color" vorhanden. Des Weiteren gibt es Tabellen für die Daten der einzelnen Nutzer ("User") und deren Adressen ("Address").
+
 ## bekannte Bugs / Verbesserungsmöglichkeiten
 **Erweiterung um eine Bewertungsfunktion**
 - Nutzer können die Möglichkeit erhalten, einen Anbieter mit einem bis fünf Sternen zu bewerten
@@ -100,12 +104,5 @@ Die Passwörter der Testnutzer sind unwichtig, sodass jedes beliebige funktionie
 - Figma (Mockups)
 - Retrofit (Netzwerkzugriffe)
 - Google Maps API (Kartenansicht)
-- [Positionstack](https://positionstack.com/) (API zur Umwandlung von Adressen in Koordinaten)
+- [Positionstack](https://positionstack.com/) (API zur Umwandlung von Adressen in LatLong Koordinaten)
 - default Bilder ([Andres Llanezas](https://mrandrelo.myportfolio.com/profiles-project-animal-default-profile-pictures))
-
-
-## App features
-
-- Address to LatLong conversion with positionstack-Api
-- MapsScreen with clickable markers for each user to navigate to user screen
-- login simulation with
