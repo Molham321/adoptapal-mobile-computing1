@@ -1,7 +1,6 @@
 package de.fhe.adoptapal.ui.screens.register
 
 import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -51,8 +50,6 @@ import de.fhe.adoptapal.ui.screens.sharedComponents.PasswordInputField
 @Composable
 fun RegisterScreen(vm: RegisterScreenViewModel) {
 
-    val applicationContext = LocalContext.current.applicationContext
-
     // Collect the save state from the ViewModel
     val saveState by remember(vm) { vm.saveFeedbackFlow }
         .collectAsState(AsyncOperation.undefined())
@@ -60,14 +57,12 @@ fun RegisterScreen(vm: RegisterScreenViewModel) {
     // State variables for user registration form fields
     var userNameTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var userEmailTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
-    var userPhoneNumberTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var userPasswordTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
     var userConfirmPasswordTextFieldValue by remember { mutableStateOf(TextFieldValue("")) }
 
     // State variables for error messages
     var userNameError by remember { mutableStateOf(("")) }
     var userEmailError by remember { mutableStateOf("") }
-    var userPhoneNumberError by remember { mutableStateOf("") }
     var userPasswordError by remember { mutableStateOf("") }
     var userConfirmPasswordError by remember { mutableStateOf("") }
 
@@ -153,25 +148,6 @@ fun RegisterScreen(vm: RegisterScreenViewModel) {
             )
         }
 
-        // User phone number input field
-        InputField(
-            text = userPhoneNumberTextFieldValue,
-            editing = true,
-            onTextChange = { newValue ->
-                userPhoneNumberTextFieldValue = newValue
-                userPhoneNumberError = ""
-            },
-            inputPlaceholder = stringResource(id = R.string.phone_number)
-        )
-
-        if (userPhoneNumberError.isNotBlank()) {
-            Text(
-                text = userPhoneNumberError,
-                color = Color.Red,
-                style = MaterialTheme.typography.caption
-            )
-        }
-
         // User password input field
         PasswordInputField(
             text = userPasswordTextFieldValue,
@@ -216,7 +192,6 @@ fun RegisterScreen(vm: RegisterScreenViewModel) {
             onClick = {
                 val isNameValid = vm.validateName(userNameTextFieldValue.text)
                 val isEmailValid = vm.validateEmail(userEmailTextFieldValue.text)
-                val isPhoneNumberValid = vm.validatePhoneNumber(userPhoneNumberTextFieldValue.text)
                 val isPasswordValid = vm.validatePassword(userPasswordTextFieldValue.text)
                 val isConfirmPasswordValid = vm.validateConfirmPassword(
                     userPasswordTextFieldValue.text,
@@ -225,25 +200,16 @@ fun RegisterScreen(vm: RegisterScreenViewModel) {
 
                 if (isNameValid &&
                     isEmailValid &&
-                    isPhoneNumberValid &&
                     isPasswordValid &&
                     isConfirmPasswordValid
                 ) {
                     vm.addUser(
                         userNameTextFieldValue.text,
-                        userEmailTextFieldValue.text,
-                        userPhoneNumberTextFieldValue.text
+                        userEmailTextFieldValue.text
                     )
-
-                    Toast.makeText(
-                        applicationContext,
-                        "Bitte logge dich ein",
-                        Toast.LENGTH_LONG
-                    ).show()
 
                     userNameTextFieldValue = TextFieldValue("")
                     userEmailTextFieldValue = TextFieldValue("")
-                    userPhoneNumberTextFieldValue = TextFieldValue("")
                     userPasswordTextFieldValue = TextFieldValue("")
                     userConfirmPasswordTextFieldValue = TextFieldValue("")
                     editingState = false
@@ -253,10 +219,6 @@ fun RegisterScreen(vm: RegisterScreenViewModel) {
                     }
                     if (!isEmailValid) {
                         userEmailError = "Ungültige Email"
-                    }
-                    if (!isPhoneNumberValid) {
-                        userPhoneNumberError =
-                            "Ungültige Telefonnummer +49/0 und mindestens 7 Zeichen"
                     }
                     if (!isPasswordValid) {
                         userPasswordError = "Das Passwort muss mindestens 3 Zeichen lang sein"
