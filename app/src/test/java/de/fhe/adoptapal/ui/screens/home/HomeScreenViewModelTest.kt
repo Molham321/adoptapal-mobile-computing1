@@ -44,7 +44,10 @@ class HomeScreenViewModelTest {
             navigationManager,
             getAllAnimals,
             getLoggedInUserFromDataStoreAndDatabase,
-            setLoggedInUserInDataStore
+            setLoggedInUserInDataStore,
+            mockk(),
+            mockk(),
+            mockk()
         )
     }
 

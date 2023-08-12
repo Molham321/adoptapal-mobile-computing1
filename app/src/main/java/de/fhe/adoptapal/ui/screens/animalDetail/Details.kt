@@ -7,12 +7,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
+import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -20,6 +28,7 @@ import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.ui.screens.sharedComponents.AnimalImage
 import de.fhe.adoptapal.ui.screens.sharedComponents.Title
+import de.fhe.adoptapal.ui.theme.BackgroundGreyOpacity
 
 /**
  * Composable function to display detailed information about an animal.
@@ -31,10 +40,13 @@ import de.fhe.adoptapal.ui.screens.sharedComponents.Title
 @Composable
 fun Details(
     animal: Animal,
+    vm: DetailScreenViewModel,
     modifier: Modifier = Modifier,
     onItemPressed: (itemId: Long) -> Unit = {},
 
     ) {
+
+    var animalIsFavorite = remember { mutableStateOf(animal.isFavorite) }
 
     LazyColumn(
         modifier = modifier
@@ -51,13 +63,39 @@ fun Details(
             )
             Spacer(modifier = modifier.height(16.dp))
 
+            Surface(
+                shape = CircleShape,
+                modifier = modifier
+                    .padding(6.dp)
+                    .size(52.dp),
+                color = BackgroundGreyOpacity
+            ) {
+                IconToggleButton(
+                    checked = animalIsFavorite.value,
+                    onCheckedChange = {
+                        animalIsFavorite.value = it
+                        animal.isFavorite = it
+                        vm.saveAnimalAsFavorite(animal)
+                    }
+                ) {
+                    Icon(
+                        modifier = modifier.size(36.dp, 36.dp),
+                        painter = if (animalIsFavorite.value) {
+                            painterResource(id = R.drawable.baseline_bookmark_24)
+                        } else {
+                            painterResource(id = R.drawable.baseline_bookmark_border_24)
+                        },
+                        contentDescription = null
+                    )
+                }
+            }
+
             AnimalInfoCard(
                 animal.name,
                 animal.isMale,
                 animal.supplier.address,
                 animal.getCreateTimeDifference()
             )
-
         }
 
         // My story details

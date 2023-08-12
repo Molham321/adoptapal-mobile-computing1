@@ -37,7 +37,8 @@ class ProfileScreenViewModelTest {
         viewModel = ProfileScreenViewModel(
             navigationManager,
             getLoggedInUserFromDataStoreAndDatabase,
-            getAllFavoriteAnimalsAsync
+            getAllFavoriteAnimalsAsync,
+            mockk()
         )
     }
 
