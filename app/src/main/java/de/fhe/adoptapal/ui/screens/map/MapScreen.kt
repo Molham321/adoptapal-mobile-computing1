@@ -25,6 +25,10 @@ const val LOGTAG = "MAPS"
 
 private const val DEFAULT_ZOOM = 17f
 
+/**
+ * base map composable
+ * open Map or request Location permission first
+ */
 @Composable
 fun MapScreen(vm: MapScreenViewModel) {
 
@@ -40,6 +44,7 @@ fun MapScreen(vm: MapScreenViewModel) {
 
 
 /**
+ * google maps screen
  * Maps Compose: https://github.com/googlemaps/android-maps-compose
  */
 @Composable
@@ -66,7 +71,7 @@ fun Map(mapCenterPosition: LatLng, vm: MapScreenViewModel) {
             onPOIClick = { println("POI clicked: ${it.name}") }
         ) {
 
-            // set POI for each user from list
+            // add animal supplier as Location markers to map
             userList.value.forEach { user ->
                 if (user.address != null) {
                     val latLng = LatLng(user.address!!.latitude, user.address!!.longitude)
@@ -79,6 +84,9 @@ fun Map(mapCenterPosition: LatLng, vm: MapScreenViewModel) {
     }
 }
 
+/**
+ * request Location and permission if not already granted
+ */
 @Composable
 private fun requestLocation(context: Context): LatLng? {
 

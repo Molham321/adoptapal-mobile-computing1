@@ -13,10 +13,11 @@ import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.launch
 
-
+/**
+ * ViewModel for Map screen
+ */
 class MapScreenViewModel(
     private val navigationManager: NavigationManager,
-    private val repository: Repository,
     private val getAllUsers: GetAllUsers
 ) : ViewModel() {
 
@@ -28,6 +29,9 @@ class MapScreenViewModel(
         this.getUsersFromDB()
     }
 
+    /**
+     * load users from database
+     */
     private fun getUsersFromDB() {
         viewModelScope.launch {
             getAllUsers().collect {

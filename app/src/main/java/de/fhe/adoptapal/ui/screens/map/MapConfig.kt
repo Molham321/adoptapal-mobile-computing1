@@ -4,6 +4,9 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapType
 import com.google.maps.android.compose.MapUiSettings
 
+/**
+ * base configuration for google maps
+ */
 object MapConfig {
     val properties = MapProperties(
         maxZoomPreference = 18f,
