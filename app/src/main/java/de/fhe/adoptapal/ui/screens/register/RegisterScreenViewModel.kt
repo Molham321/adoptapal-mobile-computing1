@@ -6,11 +6,13 @@ import androidx.lifecycle.viewModelScope
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.InsertUserAsync
+import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
@@ -21,6 +23,7 @@ import kotlinx.coroutines.launch
  */
 class RegisterScreenViewModel(
     private val insertUserAsyncUseCase: InsertUserAsync,
+    private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore,
     val navigationManager: NavigationManager,
 ) : ViewModel() {
 
@@ -32,20 +35,20 @@ class RegisterScreenViewModel(
      *
      * @param userName The user's name.
      * @param userEmail The user's email.
-     * @param userPhoneNumber The user's phone number.
      */
-    fun addUser(userName: String, userEmail: String, userPhoneNumber: String) {
+    fun addUser(userName: String, userEmail: String) {
         viewModelScope.launch {
 
             if (userName.isBlank() || userEmail.isBlank()) {
                 saveFeedbackFlow.emit(AsyncOperation.error("Name or Email missing"))
             } else {
-                val newUser = User(userName, userEmail, userPhoneNumber, null)
+                val newUser = User(userName, userEmail, null, null)
                 saveFeedbackFlow.emit(AsyncOperation.saving("Saving user now!"))
                 insertUserAsyncUseCase(newUser).collect { result ->
                     if (result.status == AsyncOperationState.SUCCESS) {
-                        saveFeedbackFlow.emit(result)
-                        navigationManager.navigate(GoBackDestination)
+                        val userID = result.payload as Long
+                        setLoggedInUserInDataStore(userID).collect()
+                        navigateToProfile()
                     }
                     if (result.status == AsyncOperationState.ERROR) {
                         Log.i("RegisterScreenVW", result.message)
@@ -54,6 +57,13 @@ class RegisterScreenViewModel(
                 }
             }
         }
+    }
+
+    /**
+     * Function to navigate to the user's profile screen.
+     */
+    private fun navigateToProfile() {
+        navigationManager.navigate(Screen.Profile.navigationCommand())
     }
 
     // Validation functions

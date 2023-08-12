@@ -69,7 +69,7 @@ fun DatePicker(
             }
         ) {
             if (birthdateValue == "") {
-                Text(text = stringResource(R.string.birth_date), color = Color.White)
+                Text(text = "* ${stringResource(R.string.birth_date)}", color = Color.White)
             } else {
                 Text(text = "Geburtsdatum: $birthdateValue", color = Color.White)
             }

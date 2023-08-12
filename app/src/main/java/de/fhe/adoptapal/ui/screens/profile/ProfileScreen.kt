@@ -75,7 +75,7 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                         )
                         Spacer(modifier = modifier.height(24.dp))
                         Text(
-                            text = "${stringResource(id = R.string.phone)}: ${vm.user.value!!.phoneNumber}",
+                            text = "${stringResource(id = R.string.phone)}: ${vm.user.value!!.phoneNumber ?: "N/A"}",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(16.dp, 0.dp, 16.dp, 0.dp),
