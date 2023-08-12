@@ -85,6 +85,10 @@ Alle Datenbanktabellen erben von einer "BaseEntity", die ihnen grundlegende Attr
 - Nutzer können auf diese Gesuche reagieren und mit den Erstellern in Kontakt treten
 - auch diese Funktion war zu Beginn geplant, fiel aber der Zeit zum Opfer
 
+**Bearbeiten von Tieren**
+- dieses Feature konnte leider aus Zeitgründen nicht umgesetzt werden
+- das Löschen von hochgeladenen Tieren ist jedoch möglich
+
 **Erweiterung um eine Datenbanktabelle für gemerkte Tiere**
 - gemerkte Tiere werden aktuell anhand eines bool Wertes in der Animal-Tabelle gespeichert
 - dadurch haben alle Nutzer, die die App nutzen, dieselben Tiere in ihrer Merkliste stehen
@@ -115,3 +119,9 @@ Alle Datenbanktabellen erben von einer "BaseEntity", die ihnen grundlegende Attr
 - Google Maps API (Kartenansicht)
 - [Positionstack](https://positionstack.com/) (API zur Umwandlung von Adressen in LatLong Koordinaten)
 - default Bilder ([Andres Llanezas](https://mrandrelo.myportfolio.com/profiles-project-animal-default-profile-pictures))
+
+
+## Präsentationen
+- Auftaktpräsentation
+- [Zwischenpräsentation](documentation/AdoptAPal_Zwischenpräsentation.pdf)
+- [Abschlusspräsentation](documentation/AdoptAPal_Abschlusspräsentation.pdf)
