@@ -18,6 +18,7 @@ AdoptAPal ist eine Applikation, die dabei helfen soll, Tiere in der Nähe zu fin
 - Speichern einzelner Tiere für später und dazugehörige Merkliste
 - Registrierung und Anmeldung
 - Möglichkeit zum Ändern eigener Daten
+- Frage nach Erlaubnis zur Standortfreigabe (vor dem Anzeigen der Kartenansicht)
 
 
 ## Installationsanleitung
