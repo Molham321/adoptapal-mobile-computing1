@@ -32,6 +32,7 @@ In der AndroidManifest.xml (Zeile 36) muss zur Verwendung von Google Maps ein en
 ![Sitemap der AdoptAPal App](documentation/SitemapAdoptAPal.png)
 
 ## Datenbank
+![Datenbank der AdoptAPal App](documentation/Database-Entity-Diagram.png)
 
 ## bekannte Bugs / Verbesserungsmöglichkeiten
 **Erweiterung um eine Bewertungsfunktion**
@@ -50,13 +51,9 @@ In der AndroidManifest.xml (Zeile 36) muss zur Verwendung von Google Maps ein en
 - die Erweiterung der Datenbank um eine spezifische Tabelle könnte dieses Problem lösen (gemerkte Tiere werden je angemeldetem Nutzer gespeichert)
 
 **Prüfung des Passwortes**
-- hier weiter...
-
-**Reload der Karte**
-- die Karte wird nur angezeigt, wenn der Nutzer zustimmt, seinen Standort freizugeben
-- nach Freigabe des Standortes wird allerdings nicht sofort die Karte angezeigt; der Nutzer muss erneut auf den Menüpunkt "Karte" klicken um die Seite neu zu laden und die Karte anzuzeigen
-- Grund dafür ist wahrscheinlich die Funktionsweise der verwendeten API
-- dies ist ein bekannter Bug, der nicht behoben werden konnte
+- Passwörter werden aktuell nicht in der Datenbank gespeichert
+- wenn ein Nutzer sich einloggt, wird lediglich geprüft ob ein Passwort eingegeben wurde, jedoch nicht, ob es auch zu der Email-Adresse passt, die bei der Registrierung angegeben wurde
+- in Zukunft werden Passwörter im separaten Backend gespeicht, wie auch der Rest der Nutzerdaten
 
 **Entfernung zwischen Nutzer und Tier**
 - gibt ein Nutzer eine Adresse an, wird ihm in der Listenansicht der Tiere die Entfernung zwischen ihm und dem Standort des Tieres angezeigt
