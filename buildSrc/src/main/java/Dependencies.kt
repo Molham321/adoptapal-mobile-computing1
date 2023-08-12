@@ -19,7 +19,7 @@ object Libs {
     }
 
     object Kotlin {
-        private const val version = "1.8.20"
+        const val version = "1.8.20"
         const val stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$version"
         const val gradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$version"
         const val extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$version"
@@ -154,7 +154,7 @@ object Libs {
 
     // https://github.com/detekt/detekt
     object Detekt {
-        private const val version = "1.20.0"
+        const val version = "1.20.0"
         const val core = "io.gitlab.arturbosch.detekt"
         const val formatting = "io.gitlab.arturbosch.detekt:detekt-formatting:$version"
     }
