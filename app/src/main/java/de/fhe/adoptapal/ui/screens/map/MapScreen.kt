@@ -19,14 +19,11 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.google.maps.android.compose.rememberMarkerState
-import de.fhe.adoptapal.ui.screens.util.requestLocationPermission
+import de.fhe.adoptapal.ui.screens.util.RequestLocationPermission
 
 const val LOGTAG = "MAPS"
 
 private const val DEFAULT_ZOOM = 17f
-private const val DEFAULT_LAT = 50.985248
-private const val DEFAULT_LONG = 11.042582
 
 @Composable
 fun MapScreen(vm: MapScreenViewModel) {
@@ -51,7 +48,6 @@ fun Map(mapCenterPosition: LatLng, vm: MapScreenViewModel) {
     val userList = remember { vm.userList }
 
     Log.i(LOGTAG, "remember state")
-    val mapCenterMarkerState = rememberMarkerState(position = mapCenterPosition)
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(mapCenterPosition, DEFAULT_ZOOM)
     }
@@ -59,10 +55,8 @@ fun Map(mapCenterPosition: LatLng, vm: MapScreenViewModel) {
     val mapProperties by remember { mutableStateOf(MapConfig.properties) }
     val mapUiSettings by remember { mutableStateOf(MapConfig.uiSettings) }
 
-    Log.i(LOGTAG, "UI SETTONGS")
+    Log.i(LOGTAG, "UI SETTINGS")
     Column {
-        Log.i(LOGTAG, "COLUIN")
-        MarkerDebugView(mapCenterMarkerState)
         Log.i(LOGTAG, "DEBUG")
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
@@ -99,7 +93,7 @@ private fun requestLocation(context: Context): LatLng? {
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) != PackageManager.PERMISSION_GRANTED
     ) {
-        requestLocationPermission()
+        RequestLocationPermission()
     }
     fusedLocationClient.lastLocation
         .addOnSuccessListener { location: Location? ->
