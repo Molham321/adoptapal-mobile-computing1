@@ -114,6 +114,7 @@ Alle Datenbanktabellen erben von einer "BaseEntity", die ihnen grundlegende Attr
 ## Schwierigkeiten bei der Arbeit
 - Testen bzw. Mocken der Klassen
 - Arbeit mit asynchronen Daten
+- Android Studio (Lange Buildzeiten, sehr Resourcenintensiv)
 
 
 ## genutzte Tools und andere Quellen
