@@ -31,10 +31,10 @@ import de.fhe.adoptapal.ui.theme.LightModeSecondary
 @Composable
 fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Modifier) {
 
-    val animal = remember { vm.animal.value }
+    val animal = remember { vm.animal }
 
-    if (animal != null) {
-        var name by remember { mutableStateOf(TextFieldValue(animal.name)) }
+    if (animal.value != null) {
+        var name by remember { mutableStateOf(TextFieldValue(animal.value!!.name)) }
 
         var nameError by remember { mutableStateOf("") }
 
@@ -83,8 +83,8 @@ fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Mod
 
             Button(
                 onClick = {
-                    animal.name = name.text
-                    vm.updateAnimal(animal)
+                    animal.value!!.name = name.text
+                    vm.updateAnimal(animal.value!!)
                 }
             ) {
                 Text(text = "Tier updaten ")

@@ -1,6 +1,7 @@
 package de.fhe.adoptapal.ui.screens.core
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
@@ -170,7 +171,12 @@ sealed class Screen(
                         }
                     }
 
-                    IconButton(onClick = { viewModel.animal.value?.id?.let { viewModel.navigateToUpdateAnimal(animalId = it) } }
+                    IconButton(onClick = {
+
+                        viewModel.animal.value?.id?.let {
+                            viewModel.navigateToUpdateAnimal(it)
+                        }
+                    }
                     ) {
                         Icon(Icons.Filled.Edit, contentDescription = null,)
                     }
@@ -297,7 +303,17 @@ sealed class Screen(
         title = "Update Animal",
         icon = Icons.Filled.ArrowBack,
         route = "UpdateAnimal/{animalId}"
-    )
+    ) {
+        override fun navigationCommand(vararg value: Any) = object : NavigationCommand {
+
+            override val arguments = listOf(
+                navArgument("animalId") {
+                    type = NavType.LongType
+                }
+            )
+            override val destination = "UpdateAnimal/${value[0]}"
+        }
+    }
 
     object UserDetail : Screen(
         title = "Nutzer Details",
