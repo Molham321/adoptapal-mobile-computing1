@@ -1,11 +1,18 @@
 package de.fhe.adoptapal.ui.screens.updateAnimal
 
 import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
+import de.fhe.adoptapal.ui.screens.addAnimal.InputField as DecimalInput
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
@@ -19,12 +26,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import de.fhe.adoptapal.R
 import de.fhe.adoptapal.domain.AnimalCategory
 import de.fhe.adoptapal.ui.screens.addAnimal.DatePicker
@@ -59,10 +68,18 @@ fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Mod
         var animalBirthdateEditingState by remember { mutableStateOf(false) }
 
         var animalWeightTextFieldValue by remember { mutableStateOf(TextFieldValue(animal.value?.weight.toString() ?: "")) }
+        var animalWeightEditingState by remember { mutableStateOf(false) }
 
         var animalGenderValue by remember { mutableStateOf(animal.value?.isMale ?: false) }
         var animalGenderEditingState by remember { mutableStateOf(false) }
 
+        var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+
+        val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickVisualMedia(),
+            onResult = { uri ->
+                selectedImageUri = uri
+            })
 
         var error by remember { mutableStateOf("") }
         var animalNameError by remember { mutableStateOf("") }
@@ -144,27 +161,6 @@ fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Mod
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            //Update Animal Description
-            InputField(
-                text = animalDescriptionTextFieldValue,
-                onTextChange = {
-                    animalDescriptionTextFieldValue = it
-                    animalDescriptionError = ""
-                },
-                inputPlaceholder = stringResource(R.string.description),
-                editing = true,
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            if (animalDescriptionError.isNotBlank()) {
-                Text(
-                    text = animalDescriptionError,
-                    color = Color.Red,
-                    style = MaterialTheme.typography.caption
-                )
-            }
-            Spacer(modifier = Modifier.height(16.dp))
-
             // Update Animal Category
             DropdownSelect(
                 stringResource(R.string.species),
@@ -201,22 +197,23 @@ fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Mod
             }
 
             // animal Weight
-            InputField(
-                text = animalWeightTextFieldValue,
-                onTextChange = {
-                    animalWeightTextFieldValue = it
-                    animalWeightError = ""
-                },
-                inputPlaceholder = stringResource(R.string.weight),
-                editing = true,
-                modifier = Modifier.fillMaxWidth()
-            )
+            DecimalInput(
+                animalWeightTextFieldValue, animalWeightEditingState,
+                stringResource(id = R.string.weight)
+            ) {
+                animalWeightTextFieldValue = it
+                animalWeightError = ""
+                animalWeightEditingState = true
+            }
 
             if (animalWeightError.isNotBlank()) {
                 Text(
                     text = animalWeightError,
                     color = Color.Red,
-                    style = MaterialTheme.typography.caption
+                    style = MaterialTheme.typography.caption,
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(16.dp, 0.dp, 16.dp, 0.dp),
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -227,8 +224,44 @@ fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Mod
                 animalGenderEditingState = true
             }
 
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp)
+            ) {
+                Column(modifier = Modifier.fillMaxWidth()) {
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        Button(onClick = {
+                            singlePhotoPickerLauncher.launch(
+                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                            )
+                        }) {
+                            Text(text = stringResource(R.string.select_image))
+                        }
+                    }
+
+                    AsyncImage(
+                        model = selectedImageUri,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .height(50.dp)
+                            .width(70.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+            }
+
             Button(
                 onClick = {
+                    val weightValidation = vm.validateWeight(animalWeightTextFieldValue.text)
+                    if(!weightValidation) {
+                        animalWeightError = "Geben Sie ein korrektes Gewicht ein"
+                    }
+
                     if (animalNameTextFieldValue.text.isNotBlank() &&
                         animalDescriptionTextFieldValue.text.isNotBlank() &&
                         animalBirthdateValue.isNotBlank() &&
@@ -237,6 +270,7 @@ fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Mod
                     {
 
                         error = ""
+                        animalWeightError = ""
 
                         vm.updateAnimal(
                             animalNameTextFieldValue.text,
