@@ -64,6 +64,7 @@ fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Mod
         var animalGenderEditingState by remember { mutableStateOf(false) }
 
 
+        var error by remember { mutableStateOf("") }
         var animalNameError by remember { mutableStateOf("") }
         var animalDescriptionError by remember { mutableStateOf("") }
         var animalCategoryError by remember { mutableStateOf("") }
@@ -89,6 +90,14 @@ fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Mod
                 style = MaterialTheme.typography.h1,
                 textAlign = TextAlign.Center
             )
+
+            if(error.isNotBlank()) {
+                Text(
+                    text = error,
+                    color = Color.Red,
+                    style = MaterialTheme.typography.caption
+                )
+            }
 
 
             Spacer(Modifier.height(20.dp))
@@ -220,15 +229,28 @@ fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Mod
 
             Button(
                 onClick = {
-                    vm.updateAnimal(
-                        animalNameTextFieldValue.text,
-                        animalDescriptionTextFieldValue.text,
-                        animalCategoryDropdownValue,
-                        animalColorDropdownValue,
-                        animalBirthdateValue,
-                        animalWeightTextFieldValue.text.toFloat(),
-                        animalGenderValue,
-                    )
+                    if (animalNameTextFieldValue.text.isNotBlank() &&
+                        animalDescriptionTextFieldValue.text.isNotBlank() &&
+                        animalBirthdateValue.isNotBlank() &&
+                        animalWeightTextFieldValue.text.isNotBlank() &&
+                        vm.validateWeight(animalWeightTextFieldValue.text))
+                    {
+
+                        error = ""
+
+                        vm.updateAnimal(
+                            animalNameTextFieldValue.text,
+                            animalDescriptionTextFieldValue.text,
+                            animalCategoryDropdownValue,
+                            animalColorDropdownValue,
+                            animalBirthdateValue,
+                            animalWeightTextFieldValue.text.toFloat(),
+                            animalGenderValue,
+                        )
+                    } else {
+                        error = "Bitte füllen Sie alle Pflichtfelder aus, bevor Sie fortfahren."
+                    }
+
                 }
             ) {
                 Text(text = "Tier updaten ")
