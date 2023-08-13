@@ -2,8 +2,11 @@ package de.fhe.adoptapal.ui.screens.core
 
 import android.content.Context
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
@@ -19,6 +22,8 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.navigation.NamedNavArgument
@@ -127,17 +132,47 @@ sealed class Screen(
                 error("First Parameter must be of type *Context*")
             if (values[1] !is DetailScreenViewModel)
                 error("Second Parameter must be of type *DetailScreenViewModel")
+            val context = values[0] as Context
             val viewModel = values[1] as DetailScreenViewModel
 
             appBarActions = {
                 if (viewModel.isLoggedinUserAnimalSupplier()) {
-                    IconButton(onClick = {viewModel.deleteAnimal()}
-                    ) {
-                        Icon(Icons.Filled.Delete, contentDescription = null)
+                    val showDeleteConfirmation = remember { mutableStateOf(false) }
+
+                    if (showDeleteConfirmation.value) {
+                        AlertDialog(
+                            onDismissRequest = { showDeleteConfirmation.value = false },
+                            title = { Text("Tier löschen") },
+                            text = { Text("Bist du sicher, dass du das Tier löschen möchtest?") },
+                            confirmButton = {
+                                Button(
+                                    onClick = {
+                                        viewModel.deleteAnimal()
+                                        showDeleteConfirmation.value = false
+                                    }
+                                ) {
+                                    Text("Löschen")
+                                }
+                            },
+                            dismissButton = {
+                                Button(
+                                    onClick = { showDeleteConfirmation.value = false }
+                                ) {
+                                    Text("Abbrechen")
+                                }
+                            }
+                        )
+                    } else {
+                        IconButton(
+                            onClick = { showDeleteConfirmation.value = true }
+                        ) {
+                            Icon(Icons.Filled.Delete, contentDescription = null)
+                        }
                     }
                 }
             }
         }
+
 
         override fun navigationCommand(vararg value: Any) = object : NavigationCommand {
 

@@ -3,7 +3,7 @@ package de.fhe.adoptapal.ui.screens.profile
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.fhe.adoptapal.android_core.LoggerFactory
+import de.fhe.adoptapal.core.LoggerFactory
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState

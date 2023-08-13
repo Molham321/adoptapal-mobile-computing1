@@ -3,6 +3,7 @@ package de.fhe.adoptapal.di.modules
 import de.fhe.adoptapal.BuildConfig
 import de.fhe.adoptapal.android_core.LocalStoreImpl
 import de.fhe.adoptapal.android_core.LoggerImpl
+import de.fhe.adoptapal.core.LoggerFactory
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
 import de.fhe.adoptapal.domain.CreateAnimalAsync
@@ -108,6 +109,9 @@ val useCaseModule = module {
     // Network
     factory { GetLatLongForAddress(get()) }
     factory { GetLatLongForLocationString(get()) }
+
+    //Timper
+    factory { LoggerFactory}
 }
 
 val viewModelModule = module {
