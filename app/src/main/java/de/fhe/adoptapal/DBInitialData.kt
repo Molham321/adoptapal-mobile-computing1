@@ -1,6 +1,6 @@
 package de.fhe.adoptapal
 
-import android.util.Log
+import de.fhe.adoptapal.core.LoggerFactory
 import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AnimalCategory
@@ -22,6 +22,7 @@ import java.time.LocalDateTime
  */
 class DBInitialData : KoinComponent {
 
+    private val logger = LoggerFactory.getLogger()
 
     private val repo by inject<Repository>()
 
@@ -32,11 +33,11 @@ class DBInitialData : KoinComponent {
         dbScope.launch {
 
             if (repo.getUser(1) != null) {
-                Log.i(logTag, "User found, so no more example data is created")
+                logger.info(logTag, "User found, so no more example data is created")
                 return@launch
             }
 
-            Log.i(logTag, "Koin DB-Test started")
+            logger.info(logTag, "Koin DB-Test started")
 
             repo.deleteAllUsers()
 
@@ -568,7 +569,7 @@ class DBInitialData : KoinComponent {
             runBlocking {
                 repo.getAllAnimals().collect {
                     it.forEach { animal ->
-                        Log.i(logTag, animal.toString())
+                        logger.info(logTag, animal.toString())
                     }
                 }
             }

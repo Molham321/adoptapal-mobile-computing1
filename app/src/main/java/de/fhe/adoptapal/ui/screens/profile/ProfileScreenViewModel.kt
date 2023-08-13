@@ -1,19 +1,19 @@
 package de.fhe.adoptapal.ui.screens.profile
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.fhe.adoptapal.android_core.LoggerFactory
 import de.fhe.adoptapal.domain.Animal
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.GetAllFavoriteAnimalsAsync
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
 import de.fhe.adoptapal.domain.GetUserAnimalsAsync
+import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
-import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
@@ -24,6 +24,9 @@ class ProfileScreenViewModel(
     private val getAllFavoriteAnimalsAsync: GetAllFavoriteAnimalsAsync,
     private val getUserAnimalsAsync: GetUserAnimalsAsync
 ) : ViewModel() {
+
+    private val LOGTAG = "ProfileVM"
+    private val logger = LoggerFactory.getLogger()
 
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     var user = mutableStateOf<User?>(null)
@@ -38,7 +41,7 @@ class ProfileScreenViewModel(
     *
     */
     init {
-        Log.i("Profile", "init class")
+        logger.info(LOGTAG, "init class")
         this.getUser()
         this.getFavoriteAnimalsFromDb()
         if(user.value != null) {
@@ -52,17 +55,17 @@ class ProfileScreenViewModel(
     * --> favourite animals will still be displayed
     */
     fun getUser() {
-        Log.i("Profile", "init")
+        logger.info(LOGTAG, "init")
         runBlocking {
-            Log.i("Profile", "launching")
+            logger.info(LOGTAG, "launching")
             getLoggedInUserFromDataStoreAndDatabase().collect {
-                Log.i("Profile", "Collecting")
+                logger.info(LOGTAG, "Collecting")
                 if (it.status == AsyncOperationState.SUCCESS) {
-                    Log.i("Profile", "found user with id: ${(it.payload as User).id}")
+                    logger.info(LOGTAG, "found user with id: ${(it.payload as User).id}")
                     user.value = it.payload as User
                 }
                 if (it.status == AsyncOperationState.ERROR) {
-                    Log.i("Profile", "Failed to load user")
+                    logger.info(LOGTAG, "Failed to load user")
                 }
             }
         }
@@ -125,7 +128,7 @@ class ProfileScreenViewModel(
         navigationManager.navigate(Screen.Login.navigationCommand())
     }
 
-    fun navigateToHome() {
+    private fun navigateToHome() {
         navigationManager.navigate(Screen.Home.navigationCommand())
     }
 

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.flow
 class GetAllAnimals(private val repository: Repository) {
     operator fun invoke(): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading animals..."))
-        repository.getAllAnimals().collect() {
+        repository.getAllAnimals().collect {
             emit(AsyncOperation.success("Users loaded", it))
             emit(AsyncOperation.undefined())
         }
@@ -49,7 +49,7 @@ class GetAnimalAsync(private val repository: Repository) {
 class GetUserAnimalsAsync(private val repository: Repository) {
     operator fun invoke(userId: Long): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading user animals..."))
-        repository.getUserAnimals(userId).collect() {
+        repository.getUserAnimals(userId).collect {
             emit(AsyncOperation.success("Users loaded", it))
             emit(AsyncOperation.undefined())
         }
@@ -59,7 +59,7 @@ class GetUserAnimalsAsync(private val repository: Repository) {
 class GetAllFavoriteAnimalsAsync(private val repository: Repository) {
     operator fun invoke(): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading favorite animals..."))
-        repository.getAllFavoriteAnimals().collect() {
+        repository.getAllFavoriteAnimals().collect {
             emit(AsyncOperation.success("Users loaded", it))
             emit(AsyncOperation.undefined())
         }
@@ -81,7 +81,7 @@ class DeleteAnimalAsync(private val repository: Repository) {
 class GetAllColors(private val repository: Repository) {
     operator fun invoke(): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading colors..."))
-        repository.getAllColors().collect() {
+        repository.getAllColors().collect {
             emit(AsyncOperation.success("Colors loaded", it))
             emit(AsyncOperation.undefined())
         }
@@ -106,7 +106,7 @@ class GetColorAsync(private val repository: Repository) {
 class GetAllAnimalCategories(private val repository: Repository) {
     operator fun invoke(): Flow<AsyncOperation> = flow {
         emit(AsyncOperation.loading("Start loading animalCategories..."))
-        repository.getAllAnimalCategories().collect() {
+        repository.getAllAnimalCategories().collect {
             emit(AsyncOperation.success("AnimalCategories loaded", it))
             emit(AsyncOperation.undefined())
         }

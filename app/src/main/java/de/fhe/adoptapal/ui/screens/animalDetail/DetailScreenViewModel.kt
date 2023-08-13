@@ -37,7 +37,7 @@ class DetailScreenViewModel(
     // Mutable state to hold the animal details
     var animal = mutableStateOf<Animal?>(null)
 
-    var loggedInUser = mutableStateOf<User?>(null)
+    private var loggedInUser = mutableStateOf<User?>(null)
 
     // Mutable state to handle database operation status
     var dbOp = mutableStateOf(AsyncOperation.undefined())
@@ -81,7 +81,7 @@ class DetailScreenViewModel(
     /**
      * Fetch the logged-in user data from the data store and database.
      */
-    fun getLoggedInUser() {
+    private fun getLoggedInUser() {
         viewModelScope.launch {
             getLoggedInUserFromDataStoreAndDatabase().collect {
                 if (it.status == AsyncOperationState.SUCCESS) {

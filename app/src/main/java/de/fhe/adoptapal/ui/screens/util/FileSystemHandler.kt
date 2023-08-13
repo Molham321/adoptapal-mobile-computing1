@@ -3,7 +3,7 @@ package de.fhe.adoptapal.ui.screens.util
 import android.content.Context
 import android.graphics.Bitmap
 import android.os.Environment
-import android.util.Log
+import de.fhe.adoptapal.core.LoggerFactory
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -14,9 +14,13 @@ import java.util.Date
  * Class used to save profile pictures of FamilyMembers to file system
  */
 class FileSystemHandler {
+
+
     companion object {
         private const val PREFIX_PROFILE_IMAGE_FILE: String = "FC_ProfileImage_"
         private const val EXTENSION_PROFILE_IMAGE_FILE: String = ".jpg"
+
+        private val logger = LoggerFactory.getLogger()
 
         /**
          * saves a bitmap to a given file
@@ -56,7 +60,7 @@ class FileSystemHandler {
                 val fileNameSting = filePath.takeLast(filePath.length - 7)
                 val file = File(fileNameSting)
                 file.delete()
-                Log.i("FM", "image: $fileNameSting deleted")
+                logger.info("FM", "image: $fileNameSting deleted")
                 true
             } catch (e: Exception) {
                 e.printStackTrace()
