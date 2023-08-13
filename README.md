@@ -18,6 +18,7 @@ AdoptAPal ist eine Applikation, die dabei helfen soll, Tiere in der Nähe zu fin
 - Speichern einzelner Tiere für später und dazugehörige Merkliste
 - Registrierung und Anmeldung
 - Möglichkeit zum Ändern eigener Daten
+- Möglichkeit zum Bearbeiten und Löschen hochgeladener Tiere
 - Frage nach Erlaubnis zur Standortfreigabe (vor dem Anzeigen der Kartenansicht)
 
 
@@ -46,7 +47,7 @@ Die Passwörter der Testnutzer sind unwichtig, sodass jedes beliebige funktionie
 
 
 ## Aufbau
-![Sitemap der AdoptAPal App](documentation/SitemapAdoptAPal.png)
+![Sitemap der AdoptAPal App](documentation/SitemapAdoptAPalV2.png)
 
 **Home:** Startseite der App mit einer Liste aller hochgeladenen Tiere
 
@@ -61,6 +62,8 @@ Die Passwörter der Testnutzer sind unwichtig, sodass jedes beliebige funktionie
 **Registrierung:** Formular zum Registrieren in der App
 
 **Einstellungen:** Formular zum Ändern der eigenen Nutzerdaten, nur nach Anmeldung verfügbar
+
+**Tier bearbeiten** Formular zum Ändern der Daten eines Tieres, nur nach Anmeldung für den Eigentümer des entsprechenden Tieres verfügbar
 
 **Detailseite Tier:** detaillierte Informationen zu jedem Tier und Angabe des Anbieters
 
@@ -85,10 +88,6 @@ Alle Datenbanktabellen erben von einer "BaseEntity", die ihnen grundlegende Attr
 - auf dieser Seite könnten Nutzer beiträge erstellen wie "Ich suche einen schwarzen Labrador, wird in in meiner Nähe einer angeboten?" oder "Ich habe eine Gruppe junger Kaninchen abzugeben"
 - Nutzer können auf diese Gesuche reagieren und mit den Erstellern in Kontakt treten
 - auch diese Funktion war zu Beginn geplant, fiel aber der Zeit zum Opfer
-
-**Bearbeiten von Tieren**
-- dieses Feature konnte leider aus Zeitgründen nicht umgesetzt werden
-- das Löschen von hochgeladenen Tieren ist jedoch möglich
 
 **Erweiterung um eine Datenbanktabelle für gemerkte Tiere**
 - gemerkte Tiere werden aktuell anhand eines bool Wertes in der Animal-Tabelle gespeichert
