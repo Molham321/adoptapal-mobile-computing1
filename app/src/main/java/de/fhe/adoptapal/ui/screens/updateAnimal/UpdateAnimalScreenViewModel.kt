@@ -1,5 +1,6 @@
 package de.fhe.adoptapal.ui.screens.updateAnimal
 
+import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -18,6 +19,7 @@ import de.fhe.adoptapal.domain.UpdateAnimalAsync
 import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
+import de.fhe.adoptapal.ui.screens.util.FileSystemHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -169,6 +171,7 @@ class UpdateAnimalScreenViewModel(
         animalBirthdate: String,
         animalWeight: Float,
         animalGender: Boolean,
+        imageUri: String?
     ) {
         viewModelScope.launch {
 
@@ -194,6 +197,11 @@ class UpdateAnimalScreenViewModel(
                 }
             }
 
+            // delete original image if a new one was selected
+            if(animal.value!!.imageFilePath != null && animal.value!!.imageFilePath != imageUri) {
+                animal.value!!.imageFilePath?.let { FileSystemHandler.deleteFile(it) }
+            }
+
             animal.value!!.name = animalName
             animal.value!!.description = animalDescription
             animal.value!!.animalCategory = category.value!!
@@ -201,6 +209,7 @@ class UpdateAnimalScreenViewModel(
             animal.value!!.weight = animalWeight
             animal.value!!.isMale = animalGender
             animal.value!!.birthday = birthdate
+            animal.value!!.imageFilePath = imageUri
 
             updateAnimalAsync( animal.value!!).collect {
                 if (it.status == AsyncOperationState.SUCCESS) {

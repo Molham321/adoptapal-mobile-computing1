@@ -1,5 +1,6 @@
 package de.fhe.adoptapal.ui.screens.updateAnimal
 
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -27,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -39,12 +41,16 @@ import de.fhe.adoptapal.domain.AnimalCategory
 import de.fhe.adoptapal.ui.screens.addAnimal.DatePicker
 import de.fhe.adoptapal.ui.screens.addAnimal.DropdownSelect
 import de.fhe.adoptapal.ui.screens.addAnimal.Switch
+import de.fhe.adoptapal.ui.screens.sharedComponents.AnimalImage
 import de.fhe.adoptapal.ui.screens.sharedComponents.InputField
+import de.fhe.adoptapal.ui.screens.util.FileSystemHandler
 import de.fhe.adoptapal.ui.theme.LightModeSecondary
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Modifier) {
+
+    val context = LocalContext.current
 
     val animal = remember { vm.animal }
 
@@ -235,6 +241,21 @@ fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Mod
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
+
+                        val imagePathToShow : String? = if(selectedImageUri != null) selectedImageUri.toString()  else animal.value?.imageFilePath
+
+                        animal.value?.animalCategory?.name?.let {
+                            AnimalImage(
+                                modifier = modifier
+                                    .width(100.dp)
+                                    .height(100.dp)
+                                ,
+                                category = it,
+                                imageFilePath = imagePathToShow
+                            )
+                        }
+
+
                         Button(onClick = {
                             singlePhotoPickerLauncher.launch(
                                 PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
@@ -244,18 +265,13 @@ fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Mod
                         }
                     }
 
-                    AsyncImage(
-                        model = selectedImageUri,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .height(50.dp)
-                            .width(70.dp),
-                        contentScale = ContentScale.Crop
-                    )
                 }
             }
 
             Button(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth(),
                 onClick = {
                     val weightValidation = vm.validateWeight(animalWeightTextFieldValue.text)
                     if(!weightValidation) {
@@ -272,6 +288,21 @@ fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Mod
                         error = ""
                         animalWeightError = ""
 
+
+                        // save image if a new one was selected
+                        var imageUri: String? = animal.value!!.imageFilePath
+                        if (selectedImageUri != null && selectedImageUri.toString() != imageUri) {
+                            val file = FileSystemHandler.createImageFile(context)
+                            val imageStream =
+                                context.contentResolver.openInputStream(selectedImageUri!!)
+                            val imageBmp = BitmapFactory.decodeStream(imageStream)
+
+                            FileSystemHandler.saveFile(file!!, imageBmp)
+
+                            imageUri = file.absolutePath
+                        }
+
+
                         vm.updateAnimal(
                             animalNameTextFieldValue.text,
                             animalDescriptionTextFieldValue.text,
@@ -280,6 +311,7 @@ fun UpdateAnimalScreen(vm: UpdateAnimalScreenViewModel, modifier: Modifier = Mod
                             animalBirthdateValue,
                             animalWeightTextFieldValue.text.toFloat(),
                             animalGenderValue,
+                            imageUri
                         )
                     } else {
                         error = "Bitte füllen Sie alle Pflichtfelder aus, bevor Sie fortfahren."
