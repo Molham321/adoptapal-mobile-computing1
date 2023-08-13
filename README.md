@@ -111,6 +111,10 @@ Alle Datenbanktabellen erben von einer "BaseEntity", die ihnen grundlegende Attr
 - da das Testlab nun aber offline ist, läuft es natürlich nicht mehr
 
 
+## Schwierigkeiten bei der Arbeit
+- Testen, mocken der Klassen
+
+
 ## genutzte Tools und andere Quellen
 - Android Studio (IDE)
 - Gitlab (Versionsverwaltung)
