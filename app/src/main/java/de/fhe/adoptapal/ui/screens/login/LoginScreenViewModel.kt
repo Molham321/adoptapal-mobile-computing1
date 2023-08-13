@@ -3,7 +3,7 @@ package de.fhe.adoptapal.ui.screens.login
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.fhe.adoptapal.android_core.LoggerFactory
+import de.fhe.adoptapal.core.LoggerFactory
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.GetUserByEmailAsync
@@ -26,9 +26,10 @@ class LoginScreenViewModel(
     private val getUserByEmailAsyncUseCase: GetUserByEmailAsync,
     private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore,
     private val navigationManager: NavigationManager,
+    private val loggerFactory: LoggerFactory
 ) : ViewModel() {
 
-    private val logger = LoggerFactory.getLogger()
+    val logger = loggerFactory.getLogger()
 
     // State for database operation status
     var dbOp = mutableStateOf(AsyncOperation.undefined())

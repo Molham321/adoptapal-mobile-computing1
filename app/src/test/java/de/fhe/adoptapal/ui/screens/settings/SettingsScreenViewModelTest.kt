@@ -2,6 +2,7 @@ package de.fhe.adoptapal.ui.screens.settings
 
 import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import de.fhe.adoptapal.core.LoggerFactory
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.GetLatLongForAddress
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
@@ -35,6 +36,8 @@ class SettingsScreenViewModelTest {
     private var getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase =
         mockk(relaxed = true)
     private val getLatLongForAddress: GetLatLongForAddress = mockk(relaxed = true)
+    private val loggerFactory: LoggerFactory = mockk(relaxed = true)
+
 
     @Before
     fun setup() {
@@ -45,7 +48,8 @@ class SettingsScreenViewModelTest {
             updateUserAsyncUseCase,
             navigationManager,
             getLoggedInUserFromDataStoreAndDatabase,
-            getLatLongForAddress
+            getLatLongForAddress,
+            loggerFactory
         )
     }
 

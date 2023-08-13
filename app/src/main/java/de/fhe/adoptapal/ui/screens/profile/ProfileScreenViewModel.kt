@@ -22,11 +22,13 @@ class ProfileScreenViewModel(
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase,
     private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore,
     private val getAllFavoriteAnimalsAsync: GetAllFavoriteAnimalsAsync,
-    private val getUserAnimalsAsync: GetUserAnimalsAsync
+    private val getUserAnimalsAsync: GetUserAnimalsAsync,
+    private val loggerFactory: LoggerFactory
 ) : ViewModel() {
 
+    val logger = loggerFactory.getLogger()
+
     private val LOGTAG = "ProfileVM"
-    private val logger = LoggerFactory.getLogger()
 
     var dbOp = mutableStateOf(AsyncOperation.undefined())
     var user = mutableStateOf<User?>(null)

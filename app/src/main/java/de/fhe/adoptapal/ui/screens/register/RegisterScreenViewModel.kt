@@ -23,10 +23,11 @@ import kotlinx.coroutines.launch
 class RegisterScreenViewModel(
     private val insertUserAsyncUseCase: InsertUserAsync,
     private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore,
-    val navigationManager: NavigationManager,
+    private val navigationManager: NavigationManager,
+    private val loggerFactory: LoggerFactory
 ) : ViewModel() {
 
-    private val logger = LoggerFactory.getLogger()
+    private val logger = loggerFactory.getLogger()
 
     // State for saving feedback flow
     var saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())

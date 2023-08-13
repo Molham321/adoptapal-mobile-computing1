@@ -28,11 +28,13 @@ class SettingsScreenViewModel(
     private val updateUserAsyncUserCase: UpdateUserAsync,
     private val navigationManager: NavigationManager,
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase,
-    private val getLatLongForAddress: GetLatLongForAddress
+    private val getLatLongForAddress: GetLatLongForAddress,
+    private val loggerFactory: LoggerFactory
+
 ) : ViewModel() {
 
     private val LOGTAG = "SettingsVM"
-    private val logger = LoggerFactory.getLogger()
+    private val logger = loggerFactory.getLogger()
 
     // Mutable state flows for saving operation feedback and user data
     val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())

@@ -116,11 +116,11 @@ val viewModelModule = module {
     viewModel { DetailScreenViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { UserDetailScreenViewModel(get(), get(), get(), get()) }
 
-    viewModel { LoginScreenViewModel(get(), get(), get()) }
+    viewModel { LoginScreenViewModel(get(), get(), get(), get()) }
     viewModel { MapScreenViewModel(get(), get()) }
 
-    viewModel { RegisterScreenViewModel(get(), get(), get()) }
+    viewModel { RegisterScreenViewModel(get(), get(), get(), get()) }
     viewModel { AddAnimalScreenViewModel(get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { ProfileScreenViewModel(get(), get(), get(), get(), get()) }
-    viewModel { SettingsScreenViewModel(get(), get(), get(), get()) }
+    viewModel { ProfileScreenViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { SettingsScreenViewModel(get(), get(), get(), get(), get()) }
 }
