@@ -47,7 +47,7 @@ Die Passwörter der Testnutzer sind unwichtig, sodass jedes beliebige funktionie
 
 
 ## Aufbau
-![Sitemap der AdoptAPal App](documentation/SitemapAppV2.png)
+![Sitemap der AdoptAPal App](documentation/SitemapAdoptAPalV2.png)
 
 **Home:** Startseite der App mit einer Liste aller hochgeladenen Tiere
 
