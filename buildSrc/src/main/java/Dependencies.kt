@@ -47,7 +47,7 @@ object Libs {
         }
 
         object Compose {
-            const val version = "1.4.1"
+            private const val version = "1.4.1"
             const val compiler_version = "1.4.5"
 
             const val ui = "androidx.compose.ui:ui:$version"

@@ -134,13 +134,13 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                     items(
                         items = favoriteAnimalList.value,
                         key = { it.id }
-                    ) { it ->
+                    ) {
                         AnimalCard(
                             it,
                             modifier = modifier,
                             userAddress = vm.user.value?.address
-                        ) {
-                            vm.navigateToAnimal(it)
+                        ) {animalId ->
+                            vm.navigateToAnimal(animalId)
                         }
                     }
                 } else {
@@ -155,13 +155,13 @@ fun ProfileScreen(vm: ProfileScreenViewModel, modifier: Modifier = Modifier) {
                     items(
                         items = userAnimalList.value,
                         key = { it.id }
-                    ) { it ->
+                    ) {
                         AnimalCard(
                             it,
                             modifier = modifier,
                             userAddress = vm.user.value?.address,
-                        ) {
-                            vm.navigateToAnimal(it)
+                        ) {animalId ->
+                            vm.navigateToAnimal(animalId)
                         }
                     }
                 } else {

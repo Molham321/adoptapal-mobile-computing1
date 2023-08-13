@@ -1,7 +1,9 @@
 package de.fhe.adoptapal.ui.screens.register
 
+import de.fhe.adoptapal.core.LoggerFactory
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.InsertUserAsync
+import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import io.mockk.coEvery
@@ -20,12 +22,15 @@ import org.junit.Test
 class RegisterScreenViewModelTest {
     private lateinit var viewModel: RegisterScreenViewModel
     private var insertUserAsyncUseCase: InsertUserAsync = mockk(relaxed = true)
+    private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore = mockk(relaxed = true)
     private var navigationManager: NavigationManager = mockk(relaxed = true)
+    private val loggerFactory: LoggerFactory = mockk(relaxed = true)
+
 
     @Before
     fun setup() {
         Dispatchers.setMain(TestCoroutineDispatcher())
-        viewModel = RegisterScreenViewModel(insertUserAsyncUseCase, navigationManager)
+        viewModel = RegisterScreenViewModel(insertUserAsyncUseCase, setLoggedInUserInDataStore, navigationManager, loggerFactory)
     }
 
     @Test
@@ -40,7 +45,7 @@ class RegisterScreenViewModelTest {
         coEvery { insertUserAsyncUseCase(newUser) } returns flowOf(successOperation)
 
         // Act
-        viewModel.addUser(userName, userEmail, userPhoneNumber)
+        viewModel.addUser(userName, userEmail)
 
         // Assert
         assertEquals(successOperation, viewModel.saveFeedbackFlow.value)
@@ -51,11 +56,10 @@ class RegisterScreenViewModelTest {
         // Arrange
         val userName = ""
         val userEmail = ""
-        val userPhoneNumber = ""
         val expectedError = AsyncOperation.error("Name or Email missing")
 
         // Act
-        viewModel.addUser(userName, userEmail, userPhoneNumber)
+        viewModel.addUser(userName, userEmail)
 
         // Assert
         assertEquals(expectedError, viewModel.saveFeedbackFlow.value)

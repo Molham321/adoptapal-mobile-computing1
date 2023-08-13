@@ -1,5 +1,6 @@
 package de.fhe.adoptapal.ui.screens.login
 
+import de.fhe.adoptapal.core.LoggerFactory
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.GetUserByEmailAsync
@@ -25,6 +26,7 @@ class LoginScreenViewModelTest {
     private val getUserByEmailAsyncUseCase: GetUserByEmailAsync = mockk(relaxed = true)
     private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore = mockk(relaxed = true)
     private val navigationManager: NavigationManager = mockk(relaxed = true)
+    private val loggerFactory: LoggerFactory = mockk(relaxed = true)
 
     @Before
     fun setup() {
@@ -32,7 +34,8 @@ class LoginScreenViewModelTest {
         viewModel = LoginScreenViewModel(
             getUserByEmailAsyncUseCase,
             setLoggedInUserInDataStore,
-            navigationManager
+            navigationManager,
+            loggerFactory
         )
     }
 

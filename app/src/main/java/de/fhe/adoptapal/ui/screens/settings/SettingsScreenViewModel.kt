@@ -1,9 +1,9 @@
 package de.fhe.adoptapal.ui.screens.settings
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.fhe.adoptapal.core.LoggerFactory
 import de.fhe.adoptapal.domain.Address
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
@@ -28,8 +28,13 @@ class SettingsScreenViewModel(
     private val updateUserAsyncUserCase: UpdateUserAsync,
     private val navigationManager: NavigationManager,
     private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase,
-    private val getLatLongForAddress: GetLatLongForAddress
+    private val getLatLongForAddress: GetLatLongForAddress,
+    private val loggerFactory: LoggerFactory
+
 ) : ViewModel() {
+
+    private val LOGTAG = "SettingsVM"
+    private val logger = loggerFactory.getLogger()
 
     // Mutable state flows for saving operation feedback and user data
     val saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
@@ -45,17 +50,17 @@ class SettingsScreenViewModel(
      * Retrieves the logged-in user's data from the data store and database.
      */
     private fun getUser() {
-        Log.i("Settings", "init")
+        logger.info(LOGTAG, "init")
         viewModelScope.launch {
-            Log.i("Settings", "launching")
+            logger.info(LOGTAG, "launching")
             getLoggedInUserFromDataStoreAndDatabase().collect {
-                Log.i("Settings", "Collecting")
+                logger.info(LOGTAG, "Collecting")
                 if (it.status == AsyncOperationState.SUCCESS) {
-                    Log.i("Settings", "found user with id: ${(it.payload as User).id}")
+                    logger.info(LOGTAG, "found user with id: ${(it.payload as User).id}")
                     user.value = it.payload as User
                 }
                 if (it.status == AsyncOperationState.ERROR) {
-                    Log.i("Settings", "Failed to load user")
+                    logger.info(LOGTAG, "Failed to load user")
                 }
             }
         }
@@ -83,7 +88,7 @@ class SettingsScreenViewModel(
                     saveFeedbackFlow.emit(it)
                     navigationManager.navigate(GoBackDestination)
                 } else {
-                    Log.i("Error!", "das hat nicht funktioniert!")
+                    logger.info(LOGTAG, "Error, update hat nicht funktioniert!")
                 }
 
                 if (it.status == AsyncOperationState.ERROR) {

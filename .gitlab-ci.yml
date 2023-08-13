@@ -1,6 +1,6 @@
 # Base Image for executing jobs - contains Java and Android SDK with some additional libraries
 # See https://github.com/jangrewe/gitlab-ci-android
-image: jangrewe/gitlab-ci-android
+#image: jangrewe/gitlab-ci-android
 
 variables:
   APP_ID: "de.fhe.ai.pmc.testlabdemo01"

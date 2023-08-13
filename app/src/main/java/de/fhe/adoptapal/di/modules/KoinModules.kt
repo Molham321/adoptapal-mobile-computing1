@@ -3,6 +3,7 @@ package de.fhe.adoptapal.di.modules
 import de.fhe.adoptapal.BuildConfig
 import de.fhe.adoptapal.android_core.LocalStoreImpl
 import de.fhe.adoptapal.android_core.LoggerImpl
+import de.fhe.adoptapal.core.LoggerFactory
 import de.fhe.adoptapal.data.AppDatabase
 import de.fhe.adoptapal.data.RepositoryImpl
 import de.fhe.adoptapal.domain.CreateAnimalAsync
@@ -109,6 +110,9 @@ val useCaseModule = module {
     // Network
     factory { GetLatLongForAddress(get()) }
     factory { GetLatLongForLocationString(get()) }
+
+    //Timper
+    factory { LoggerFactory}
 }
 
 val viewModelModule = module {
@@ -118,11 +122,11 @@ val viewModelModule = module {
     viewModel { UpdateAnimalScreenViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { UserDetailScreenViewModel(get(), get(), get(), get()) }
 
-    viewModel { LoginScreenViewModel(get(), get(), get()) }
-    viewModel { MapScreenViewModel(get(), get(), get()) }
+    viewModel { LoginScreenViewModel(get(), get(), get(), get()) }
+    viewModel { MapScreenViewModel(get(), get()) }
 
-    viewModel { RegisterScreenViewModel(get(), get(), get()) }
+    viewModel { RegisterScreenViewModel(get(), get(), get(), get()) }
     viewModel { AddAnimalScreenViewModel(get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { ProfileScreenViewModel(get(), get(), get(), get(), get()) }
-    viewModel { SettingsScreenViewModel(get(), get(), get(), get()) }
+    viewModel { ProfileScreenViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { SettingsScreenViewModel(get(), get(), get(), get(), get()) }
 }

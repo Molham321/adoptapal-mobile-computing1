@@ -2,7 +2,6 @@ package de.fhe.adoptapal.ui.screens.addAnimal
 
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -38,11 +37,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import de.fhe.adoptapal.R
+import de.fhe.adoptapal.core.LoggerFactory
 import de.fhe.adoptapal.ui.screens.util.FileSystemHandler
 import de.fhe.adoptapal.ui.theme.LightModeSecondary
 
 @Composable
 fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier) {
+
+    val logger = LoggerFactory.getLogger()
 
     val animalCategoryList = remember { vm.animalCategoryList }
     val animalColorList = remember { vm.animalColorList }
@@ -83,7 +85,7 @@ fun AddAnimalScreen(vm: AddAnimalScreenViewModel, modifier: Modifier = Modifier)
         val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
             contract = ActivityResultContracts.PickVisualMedia(),
             onResult = { uri ->
-                Log.i("ImageUpload", uri.toString())
+                logger.info("ImageUpload", uri.toString())
                 selectedImageUri = uri
             })
 

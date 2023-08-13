@@ -1,9 +1,11 @@
 package de.fhe.adoptapal.ui.screens.profile
 
 import android.util.Log
+import de.fhe.adoptapal.android_core.LoggerFactory
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.GetAllFavoriteAnimalsAsync
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
+import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import io.mockk.coEvery
@@ -25,9 +27,10 @@ class ProfileScreenViewModelTest {
 
     private lateinit var viewModel: ProfileScreenViewModel
     private val navigationManager: NavigationManager = mockk(relaxed = true)
-    private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase =
-        mockk(relaxed = true)
+    private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore = mockk(relaxed = true)
+    private val getLoggedInUserFromDataStoreAndDatabase: GetLoggedInUserFromDataStoreAndDatabase = mockk(relaxed = true)
     private val getAllFavoriteAnimalsAsync: GetAllFavoriteAnimalsAsync = mockk(relaxed = true)
+    private val loggerFactory: LoggerFactory = mockk(relaxed = true)
 
     @Before
     fun setup() {
@@ -37,8 +40,10 @@ class ProfileScreenViewModelTest {
         viewModel = ProfileScreenViewModel(
             navigationManager,
             getLoggedInUserFromDataStoreAndDatabase,
+            setLoggedInUserInDataStore,
             getAllFavoriteAnimalsAsync,
-            mockk()
+            mockk(),
+            loggerFactory
         )
     }
 
@@ -58,20 +63,6 @@ class ProfileScreenViewModelTest {
         // Assert
         assertEquals(user, viewModel.user.value)
     }
-
-// todo: was ist wenn user nicht gefunden?
-
-//    @Test
-//    fun `getUser should do nothing when user is not available`() = runBlockingTest {
-//        // Arrange
-//        coEvery { getLoggedInUserFromDataStoreAndDatabase() } returns flowOf(error("No logged in user found"))
-//
-//        // Act
-//        viewModel.getUser()
-//
-//        // Assert
-//        assertEquals(null, viewModel.user.value)
-//    }
 
     @Test
     fun `reload should call getUser to update user`() = runBlockingTest {

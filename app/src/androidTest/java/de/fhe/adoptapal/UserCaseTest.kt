@@ -50,7 +50,7 @@ import java.time.LocalDate
 @RunWith(AndroidJUnit4::class)
 class UseCaseTests : KoinTest {
 
-    val koinTestModule = module {
+    private val koinTestModule = module {
 
         single<Repository> {
             RepositoryImpl(
@@ -113,6 +113,9 @@ class UseCaseTests : KoinTest {
         unloadKoinModules(koinTestModule)
     }
 
+    /**
+     * test find user by email address
+     */
     @Test
     fun testGetUserByEmailAsyncUseCase() = runBlocking {
 
@@ -133,6 +136,9 @@ class UseCaseTests : KoinTest {
         }
     }
 
+    /**
+     * test update an existing user
+     */
     @Test
     fun testUpdateUserAsyncUseCase() = runBlocking {
 
@@ -188,8 +194,11 @@ class UseCaseTests : KoinTest {
 
     }
 
+    /**
+     * test setting and getting userId and user from datastore
+     */
     @Test
-    fun testGetAndSetLoggerInUser() = runBlocking {
+    fun testGetAndSetLoggedInUser() = runBlocking {
 
         // prepare
         val user = User("TestName1", "Test@Mail.de", "1234", null)
@@ -197,7 +206,7 @@ class UseCaseTests : KoinTest {
 
         // test
         val setLoggedInUserInDataStore = get<SetLoggedInUserInDataStore>()
-        //setLoggedInUserInDataStore(userId)
+        setLoggedInUserInDataStore(userId)
 
         // check
         val getLoggedInUserFromDataStoreAndDatabase = get<GetLoggedInUserFromDataStoreAndDatabase>()
@@ -211,8 +220,11 @@ class UseCaseTests : KoinTest {
 
     }
 
+    /**
+     * test update an animal
+     */
     @Test
-    fun testUpdateAnimal() = runBlocking { // TODO: move to a different place
+    fun testUpdateAnimal() = runBlocking {
         // prepare
         val repository = get<Repository>()
         val user = repository.getUser(1)!!

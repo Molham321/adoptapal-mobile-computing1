@@ -22,6 +22,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.R
 
 /**
@@ -34,7 +35,7 @@ import de.fhe.adoptapal.R
 fun InfoCard(title: String, value: String) {
     Box(
         modifier = Modifier
-            .size(90.dp)
+            .size(95.dp)
             .clip(RoundedCornerShape(12.dp))
             .background(color = colorResource(id = R.color.card))
             .padding(12.dp),
@@ -48,8 +49,9 @@ fun InfoCard(title: String, value: String) {
                 text = value,
                 modifier = Modifier.fillMaxWidth(),
                 color = colorResource(id = R.color.text),
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.subtitle2,
                 fontWeight = FontWeight.W600,
+                fontSize = 13.sp,
                 textAlign = TextAlign.Center
             )
 

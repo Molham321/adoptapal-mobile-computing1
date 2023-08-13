@@ -1,14 +1,13 @@
 package de.fhe.adoptapal.ui.screens.register
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.fhe.adoptapal.core.LoggerFactory
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.AsyncOperationState
 import de.fhe.adoptapal.domain.InsertUserAsync
 import de.fhe.adoptapal.domain.SetLoggedInUserInDataStore
 import de.fhe.adoptapal.domain.User
-import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,8 +23,11 @@ import kotlinx.coroutines.launch
 class RegisterScreenViewModel(
     private val insertUserAsyncUseCase: InsertUserAsync,
     private val setLoggedInUserInDataStore: SetLoggedInUserInDataStore,
-    val navigationManager: NavigationManager,
+    private val navigationManager: NavigationManager,
+    private val loggerFactory: LoggerFactory
 ) : ViewModel() {
+
+    private val logger = loggerFactory.getLogger()
 
     // State for saving feedback flow
     var saveFeedbackFlow = MutableStateFlow(AsyncOperation.undefined())
@@ -51,7 +53,7 @@ class RegisterScreenViewModel(
                         navigateToProfile()
                     }
                     if (result.status == AsyncOperationState.ERROR) {
-                        Log.i("RegisterScreenVW", result.message)
+                        logger.info("RegisterScreenVW", result.message)
                         saveFeedbackFlow.emit(result)
                     }
                 }
@@ -88,17 +90,6 @@ class RegisterScreenViewModel(
     fun validateEmail(email: String): Boolean {
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
         return email.matches(emailPattern.toRegex())
-    }
-
-    /**
-     * Function to validate the format of a phone number.
-     *
-     * @param phoneNumber The phone number to be validated.
-     * @return True if the phone number format is valid, false otherwise.
-     */
-    fun validatePhoneNumber(phoneNumber: String): Boolean {
-        val phonePattern = "^(\\+49|0)(\\d{3,4})[ -]?(\\d{3,})([ -]?\\d{1,5})?\$"
-        return phoneNumber.matches(phonePattern.toRegex()) || phoneNumber == ""
     }
 
     /**
