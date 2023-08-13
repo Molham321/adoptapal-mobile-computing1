@@ -1,7 +1,6 @@
 package de.fhe.adoptapal.ui.screens.core
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
@@ -137,7 +136,7 @@ sealed class Screen(
             val viewModel = values[1] as DetailScreenViewModel
 
             appBarActions = {
-                if (viewModel.isLoggedinUserAnimalSupplier()) {
+                if (viewModel.isLoggedInUserAnimalSupplier()) {
                     val showDeleteConfirmation = remember { mutableStateOf(false) }
 
                     if (showDeleteConfirmation.value) {

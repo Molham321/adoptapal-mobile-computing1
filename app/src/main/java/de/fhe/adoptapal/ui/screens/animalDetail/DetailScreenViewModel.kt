@@ -14,6 +14,7 @@ import de.fhe.adoptapal.domain.User
 import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
 import de.fhe.adoptapal.ui.screens.core.Screen
+import de.fhe.adoptapal.ui.screens.util.FileSystemHandler
 import kotlinx.coroutines.launch
 
 /**
@@ -92,8 +93,10 @@ class DetailScreenViewModel(
     }
 
     fun deleteAnimal() {
+
         viewModelScope.launch {
             animal.value?.let { animal ->
+                animal.imageFilePath?.let { FileSystemHandler.deleteFile(it) }
                 deleteAnimalAsync(animal).collect {
                     if (it.status == AsyncOperationState.SUCCESS) {
                         navigationManager.navigate(GoBackDestination)
@@ -103,7 +106,7 @@ class DetailScreenViewModel(
         }
     }
 
-    fun isLoggedinUserAnimalSupplier(): Boolean {
+    fun isLoggedInUserAnimalSupplier(): Boolean {
         if(animal.value?.supplier?.id == loggedInUser.value?.id ) {
             return true
         }
