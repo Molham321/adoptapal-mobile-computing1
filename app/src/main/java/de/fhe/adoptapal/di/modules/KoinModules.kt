@@ -119,7 +119,7 @@ val viewModelModule = module {
     viewModel { HomeScreenViewModel(get(), get(), get(), get(), get(), get(), get()) }
 
     viewModel { DetailScreenViewModel(get(), get(), get(), get(), get(), get()) }
-    viewModel { UpdateAnimalScreenViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { UpdateAnimalScreenViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { UserDetailScreenViewModel(get(), get(), get(), get()) }
 
     viewModel { LoginScreenViewModel(get(), get(), get(), get()) }

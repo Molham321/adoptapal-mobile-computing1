@@ -12,13 +12,18 @@ import de.fhe.adoptapal.domain.Color
 import de.fhe.adoptapal.domain.GetAllAnimalCategories
 import de.fhe.adoptapal.domain.GetAllColors
 import de.fhe.adoptapal.domain.GetAnimalAsync
+import de.fhe.adoptapal.domain.GetAnimalCategoryAsync
+import de.fhe.adoptapal.domain.GetColorAsync
 import de.fhe.adoptapal.domain.UpdateAnimalAsync
 import de.fhe.adoptapal.ui.screens.core.GoBackDestination
 import de.fhe.adoptapal.ui.screens.core.NavigationManager
+import de.fhe.adoptapal.ui.screens.core.Screen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 
@@ -29,6 +34,8 @@ class UpdateAnimalScreenViewModel(
     private val updateAnimalAsync: UpdateAnimalAsync,
     private val getAllAnimalCategories: GetAllAnimalCategories,
     private val getAllColors: GetAllColors,
+    private val getAnimalCategoryAsync: GetAnimalCategoryAsync,
+    private val getAnimalColorAsync: GetColorAsync
 ) : ViewModel() {
 
     var animalCategoryList = mutableStateOf(emptyList<AnimalCategory>())
@@ -154,12 +161,51 @@ class UpdateAnimalScreenViewModel(
         return regex.matches(text)
     }
 
-    fun updateAnimal(updateAnimal: Animal) {
+    fun updateAnimal(
+        animalName: String,
+        animalDescription: String,
+        animalCategory: Long,
+        animalColor: Long,
+        animalBirthdate: String,
+        animalWeight: Float,
+        animalGender: Boolean,
+    ) {
         viewModelScope.launch {
-            updateAnimalAsync(updateAnimal).collect {
+
+            val birthdate =
+                LocalDate.parse(animalBirthdate, DateTimeFormatter.ofPattern("dd.MM.yyyy"))
+
+            val category = mutableStateOf<AnimalCategory?>(null)
+            val color = mutableStateOf<Color?>(null)
+
+            runBlocking {
+                getAnimalCategoryAsync(animalCategory).collect {
+                    dbOp.value = it
+                    if (it.status == AsyncOperationState.SUCCESS) {
+                        category.value = it.payload as AnimalCategory
+                    }
+                }
+
+                getAnimalColorAsync(animalColor).collect {
+                    dbOp.value = it
+                    if (it.status == AsyncOperationState.SUCCESS) {
+                        color.value = it.payload as Color
+                    }
+                }
+            }
+
+            animal.value!!.name = animalName
+            animal.value!!.description = animalDescription
+            animal.value!!.animalCategory = category.value!!
+            animal.value!!.color = color.value!!
+            animal.value!!.weight = animalWeight
+            animal.value!!.isMale = animalGender
+            animal.value!!.birthday = birthdate
+
+            updateAnimalAsync( animal.value!!).collect {
                 if (it.status == AsyncOperationState.SUCCESS) {
                     saveFeedbackFlow.emit(it)
-                    navigationManager.navigate(GoBackDestination)
+                    navigateToUserList()
                 } else {
                     Log.i("Error!", "Das hat nicht funktioniert!")
                 }
@@ -172,6 +218,6 @@ class UpdateAnimalScreenViewModel(
     }
 
     fun navigateToUserList() {
-        navigationManager.navigate(GoBackDestination)
+        navigationManager.navigate(Screen.Profile.navigationCommand())
     }
 }
