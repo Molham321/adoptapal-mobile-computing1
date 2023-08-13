@@ -37,6 +37,7 @@ import de.fhe.adoptapal.ui.screens.map.MapScreenViewModel
 import de.fhe.adoptapal.ui.screens.profile.ProfileScreenViewModel
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreenViewModel
+import de.fhe.adoptapal.ui.screens.updateAnimal.UpdateAnimalScreenViewModel
 import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreenViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -114,6 +115,7 @@ val viewModelModule = module {
     viewModel { HomeScreenViewModel(get(), get(), get(), get(), get(), get(), get()) }
 
     viewModel { DetailScreenViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { UpdateAnimalScreenViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { UserDetailScreenViewModel(get(), get(), get(), get()) }
 
     viewModel { LoginScreenViewModel(get(), get(), get()) }

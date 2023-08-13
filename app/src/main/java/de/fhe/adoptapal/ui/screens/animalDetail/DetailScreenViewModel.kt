@@ -119,4 +119,8 @@ class DetailScreenViewModel(
     fun navigateToUser(userId: Long) {
         navigationManager.navigate(Screen.UserDetail.navigationCommand(userId))
     }
+
+    fun navigateToUpdateAnimal(animalId: Long) {
+        navigationManager.navigate(Screen.UpdateAnimal.navigationCommand(animalId))
+    }
 }

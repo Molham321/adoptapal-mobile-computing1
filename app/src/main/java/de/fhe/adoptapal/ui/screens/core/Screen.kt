@@ -135,6 +135,11 @@ sealed class Screen(
                     ) {
                         Icon(Icons.Filled.Delete, contentDescription = null)
                     }
+
+                    IconButton(onClick = { viewModel.animal.value?.id?.let { viewModel.navigateToUpdateAnimal(animalId = it) } }
+                    ) {
+                        Icon(Icons.Filled.Edit, contentDescription = null,)
+                    }
                 }
             }
         }
@@ -228,8 +233,6 @@ sealed class Screen(
         override fun prepareAppBarActions(vararg values: Any) {
             if (values[0] !is HomeScreenViewModel)
                 error("First Parameter must be of type *HomeScreenViewModel*")
-
-            appBarActions = {}
         }
     }
 
@@ -255,6 +258,12 @@ sealed class Screen(
         }
     }
 
+    object UpdateAnimal : Screen(
+        title = "Update Animal",
+        icon = Icons.Filled.ArrowBack,
+        route = "UpdateAnimal/{animalId}"
+    )
+
     object UserDetail : Screen(
         title = "Nutzer Details",
         icon = Icons.Filled.ArrowBack,
@@ -265,8 +274,6 @@ sealed class Screen(
                 error("First Parameter must be of type *Context*")
             if (values[1] !is UserDetailScreenViewModel)
                 error("Second Parameter must be of type *UserDetailScreenViewModel")
-
-            appBarActions = {}
         }
 
         override fun navigationCommand(vararg value: Any) = object : NavigationCommand {
