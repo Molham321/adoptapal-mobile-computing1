@@ -24,6 +24,8 @@ import de.fhe.adoptapal.ui.screens.register.RegisterScreen
 import de.fhe.adoptapal.ui.screens.register.RegisterScreenViewModel
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreen
 import de.fhe.adoptapal.ui.screens.settings.SettingsScreenViewModel
+import de.fhe.adoptapal.ui.screens.updateAnimal.UpdateAnimalScreen
+import de.fhe.adoptapal.ui.screens.updateAnimal.UpdateAnimalScreenViewModel
 import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreen
 import de.fhe.adoptapal.ui.screens.userDetail.UserDetailScreenViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -140,17 +142,32 @@ fun AppNavigationHost(
                 vm.showFilterDialog = false // Close the dialog after resetting filters
             }
         }
+
         composable(Screen.Login.route) {
             val vm: LoginScreenViewModel = koinViewModel()
             Screen.Login.prepareAppBarActions(vm)
             onNavigation(Screen.Login)
             LoginScreen(vm)
         }
+
         composable(Screen.Register.route) {
             val vm: RegisterScreenViewModel = koinViewModel()
             Screen.Register.prepareAppBarActions(vm)
             onNavigation(Screen.Register)
             RegisterScreen(vm)
+        }
+
+        composable(
+            Screen.UpdateAnimal.route,
+            Screen.UpdateAnimal.navigationCommand(0).arguments
+        ) { entry ->
+            val animalId = entry.arguments?.getLong("animalId")
+            val vm: UpdateAnimalScreenViewModel = koinViewModel(parameters = { parametersOf(animalId) })
+
+            Screen.UpdateAnimal.prepareAppBarActions(LocalContext.current, vm)
+            onNavigation(Screen.UpdateAnimal)
+
+            UpdateAnimalScreen(vm)
         }
     }
 }

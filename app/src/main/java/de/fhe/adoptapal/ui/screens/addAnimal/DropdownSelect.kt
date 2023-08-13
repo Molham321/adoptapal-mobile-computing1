@@ -27,7 +27,7 @@ fun DropdownSelect(
     onValueChange: (Long) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedValue by remember { mutableStateOf("") }
+    var selectedValue by remember { mutableStateOf(if(dropdownValue != 0L) dropdownItems[dropdownValue] else "") }
 
     Box(
         contentAlignment = Alignment.Center

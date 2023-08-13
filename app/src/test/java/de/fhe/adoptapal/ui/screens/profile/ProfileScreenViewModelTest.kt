@@ -1,7 +1,7 @@
 package de.fhe.adoptapal.ui.screens.profile
 
 import android.util.Log
-import de.fhe.adoptapal.android_core.LoggerFactory
+import de.fhe.adoptapal.core.LoggerFactory
 import de.fhe.adoptapal.domain.AsyncOperation
 import de.fhe.adoptapal.domain.GetAllFavoriteAnimalsAsync
 import de.fhe.adoptapal.domain.GetLoggedInUserFromDataStoreAndDatabase
