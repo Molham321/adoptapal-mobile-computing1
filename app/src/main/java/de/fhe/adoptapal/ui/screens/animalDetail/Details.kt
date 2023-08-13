@@ -117,31 +117,6 @@ fun Details(
             )
         }
 
-//        item {
-//
-//            Spacer(modifier = modifier.height(24.dp))
-//            Text(
-//                text = "${stringResource(id = R.string.species)}: ${animal.animalCategory.name}",
-//                modifier = modifier
-//                    .fillMaxWidth()
-//                    .padding(16.dp, 0.dp, 16.dp, 0.dp),
-//                color = colorResource(id = R.color.text),
-//                style = MaterialTheme.typography.body2,
-//                textAlign = TextAlign.Start
-//            )
-//
-//            Spacer(modifier = modifier.height(24.dp))
-//            Text(
-//                text = "${stringResource(id = R.string.birthday)}: ${animal.birthday.dayOfMonth}.${animal.birthday.monthValue}.${animal.birthday.year}",
-//                modifier = modifier
-//                    .fillMaxWidth()
-//                    .padding(16.dp, 0.dp, 16.dp, 0.dp),
-//                color = colorResource(id = R.color.text),
-//                style = MaterialTheme.typography.body2,
-//                textAlign = TextAlign.Start
-//            )
-//        }
-
         // Quick info
         item {
             Spacer(modifier = modifier.height(24.dp))

@@ -22,6 +22,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import de.fhe.adoptapal.R
 
 /**
@@ -50,6 +51,7 @@ fun InfoCard(title: String, value: String) {
                 color = colorResource(id = R.color.text),
                 style = MaterialTheme.typography.subtitle2,
                 fontWeight = FontWeight.W600,
+                fontSize = 13.sp,
                 textAlign = TextAlign.Center
             )
 
